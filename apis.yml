@@ -22,7 +22,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/rapid7/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
   - aid: rapid7:insightvm-api
@@ -102,6 +102,9 @@ common:
     url: https://www.rapid7.com/services/support/
   - type: StatusPage
     url: https://status.rapid7.com
+  - name: MCP Server
+    url: https://github.com/rapid7/rapid7-bulk-export-mcp
+    type: MCPServer
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
