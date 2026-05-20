@@ -84,6 +84,8 @@ apis:
         url: https://docs.rapid7.com/insightidr/api-overview/
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/rapid7
   - type: Website
     url: https://www.rapid7.com
   - type: Documentation
