@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Page on-call from Rapid7 InsightIDR critical investigations
+  description: When an InsightIDR investigation crosses a critical severity threshold, create a PagerDuty incident on the SOC on-call service with deep links and a high urgency so responders are paged in seconds, not minutes.
+  tags:
+  - Rapid7
+  - Integration
+  - On-call
+  - pagerduty
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    PAGERDUTY_API_KEY: PAGERDUTY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List InsightIDR investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: idr-v1-investigations-id-alerts
+      path: /idr/v1/investigations/{id}/alerts
+      operations:
+      - name: listinvestigationalerts
+        method: GET
+        description: Get alerts attached to the investigation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  - type: http
+    namespace: pagerduty
+    baseUri: https://api.pagerduty.com
+    description: PagerDuty Events API v2 operations consumed by this integration.
+    resources:
+    - name: v2-enqueue
+      path: /v2/enqueue
+      operations:
+      - name: triggerevent
+        method: POST
+        description: 'PagerDuty Events API v2: triggerEvent'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-pagerduty-mcp
+    description: MCP adapter for the rapid7-pagerduty integration.
+    tools:
+    - name: rapid7_pagerduty
+      description: Execute the rapid7 pagerduty integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-pagerduty-rest
+    port: 8080
+    description: REST adapter for the rapid7-pagerduty integration.
+    resources:
+    - path: /rapid7-pagerduty
+      name: rapid7-pagerduty
+      description: REST surface for the rapid7-pagerduty integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-pagerduty integration.
+        call: rapid7_pagerduty
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

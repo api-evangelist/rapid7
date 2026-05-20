@@ -1,0 +1,974 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — Tag
+  description: 'InsightVM API — Tag. 21 operations. Lead operation: Tags. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Tag
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-tag
+    baseUri: https://localhost:3780
+    description: InsightVM API — Tag business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3-tags
+      path: /api/3/tags
+      operations:
+      - name: gettags
+        method: GET
+        description: Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: name
+        - name: type
+          in: query
+          type: string
+          description: type
+        - name: page
+          in: query
+          type: integer
+          description: The index of the page (zero-based) to retrieve.
+        - name: size
+          in: query
+          type: integer
+          description: The number of records per page to retrieve.
+        - name: sort
+          in: query
+          type: array
+          description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+      - name: createtag
+        method: POST
+        description: Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag
+          in: body
+          type: string
+          description: The details of the tag.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-tags-id
+      path: /api/3/tags/{id}
+      operations:
+      - name: gettag
+        method: GET
+        description: Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+      - name: updatetag
+        method: PUT
+        description: Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag
+          in: body
+          type: string
+          description: The details of the tag.
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletetag
+        method: DELETE
+        description: Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-tags-id-asset-groups
+      path: /api/3/tags/{id}/asset_groups
+      operations:
+      - name: gettagassetgroups
+        method: GET
+        description: Tag Asset Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+      - name: settaggedassetgroups
+        method: PUT
+        description: Tag Asset Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: assetGroupIds
+          in: body
+          type: array
+          description: The asset groups to add to the tag.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: untagallassetgroups
+        method: DELETE
+        description: Tag Asset Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-tags-id-asset-groups-assetgroupid
+      path: /api/3/tags/{id}/asset_groups/{assetGroupId}
+      operations:
+      - name: tagassetgroup
+        method: PUT
+        description: Tag Asset Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: assetGroupId
+          in: path
+          type: integer
+          description: The asset group identifier.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: untagassetgroup
+        method: DELETE
+        description: Tag Asset Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: assetGroupId
+          in: path
+          type: integer
+          description: The asset group identifier.
+          required: true
+    - name: api-3-tags-id-assets
+      path: /api/3/tags/{id}/assets
+      operations:
+      - name: gettaggedassets
+        method: GET
+        description: Tag Assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-tags-id-assets-assetid
+      path: /api/3/tags/{id}/assets/{assetId}
+      operations:
+      - name: tagasset
+        method: PUT
+        description: Tag Asset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: assetId
+          in: path
+          type: integer
+          description: The identifier of the asset.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: untagasset
+        method: DELETE
+        description: Tag Asset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: assetId
+          in: path
+          type: integer
+          description: The identifier of the asset.
+          required: true
+    - name: api-3-tags-id-search-criteria
+      path: /api/3/tags/{id}/search_criteria
+      operations:
+      - name: gettagsearchcriteria
+        method: GET
+        description: Tag Search Criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+      - name: updatetagsearchcriteria
+        method: PUT
+        description: Tag Search Criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: criterial
+          in: body
+          type: string
+          description: The details of the search criteria.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removetagsearchcriteria
+        method: DELETE
+        description: Tag Search Criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-tags-id-sites
+      path: /api/3/tags/{id}/sites
+      operations:
+      - name: gettaggedsites
+        method: GET
+        description: Tag Sites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+      - name: settaggedsites
+        method: PUT
+        description: Tag Sites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: sites
+          in: body
+          type: array
+          description: The sites to add to the tag.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removetaggedsites
+        method: DELETE
+        description: Tag Sites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-tags-id-sites-siteid
+      path: /api/3/tags/{id}/sites/{siteId}
+      operations:
+      - name: tagsite
+        method: PUT
+        description: Tag Site
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: siteId
+          in: path
+          type: integer
+          description: The identifier of the site.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: untagsite
+        method: DELETE
+        description: Tag Site
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: siteId
+          in: path
+          type: integer
+          description: The identifier of the site.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-tag-rest
+    port: 8080
+    description: REST adapter for InsightVM API — Tag. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3/tags
+      name: api-3-tags
+      description: REST surface for api-3-tags.
+      operations:
+      - method: GET
+        name: gettags
+        description: Tags
+        call: insightvm-console-swagger-tag.gettags
+        with:
+          name: rest.name
+          type: rest.type
+          page: rest.page
+          size: rest.size
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtag
+        description: Tags
+        call: insightvm-console-swagger-tag.createtag
+        with:
+          tag: rest.tag
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}
+      name: api-3-tags-id
+      description: REST surface for api-3-tags-id.
+      operations:
+      - method: GET
+        name: gettag
+        description: Tag
+        call: insightvm-console-swagger-tag.gettag
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetag
+        description: Tag
+        call: insightvm-console-swagger-tag.updatetag
+        with:
+          tag: rest.tag
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetag
+        description: Tag
+        call: insightvm-console-swagger-tag.deletetag
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/asset_groups
+      name: api-3-tags-id-asset-groups
+      description: REST surface for api-3-tags-id-asset-groups.
+      operations:
+      - method: GET
+        name: gettagassetgroups
+        description: Tag Asset Groups
+        call: insightvm-console-swagger-tag.gettagassetgroups
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: settaggedassetgroups
+        description: Tag Asset Groups
+        call: insightvm-console-swagger-tag.settaggedassetgroups
+        with:
+          id: rest.id
+          assetGroupIds: rest.assetGroupIds
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: untagallassetgroups
+        description: Tag Asset Groups
+        call: insightvm-console-swagger-tag.untagallassetgroups
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/asset_groups/{assetGroupId}
+      name: api-3-tags-id-asset-groups-assetgroupid
+      description: REST surface for api-3-tags-id-asset-groups-assetgroupid.
+      operations:
+      - method: PUT
+        name: tagassetgroup
+        description: Tag Asset Group
+        call: insightvm-console-swagger-tag.tagassetgroup
+        with:
+          id: rest.id
+          assetGroupId: rest.assetGroupId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: untagassetgroup
+        description: Tag Asset Group
+        call: insightvm-console-swagger-tag.untagassetgroup
+        with:
+          id: rest.id
+          assetGroupId: rest.assetGroupId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/assets
+      name: api-3-tags-id-assets
+      description: REST surface for api-3-tags-id-assets.
+      operations:
+      - method: GET
+        name: gettaggedassets
+        description: Tag Assets
+        call: insightvm-console-swagger-tag.gettaggedassets
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/assets/{assetId}
+      name: api-3-tags-id-assets-assetid
+      description: REST surface for api-3-tags-id-assets-assetid.
+      operations:
+      - method: PUT
+        name: tagasset
+        description: Tag Asset
+        call: insightvm-console-swagger-tag.tagasset
+        with:
+          id: rest.id
+          assetId: rest.assetId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: untagasset
+        description: Tag Asset
+        call: insightvm-console-swagger-tag.untagasset
+        with:
+          id: rest.id
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/search_criteria
+      name: api-3-tags-id-search-criteria
+      description: REST surface for api-3-tags-id-search-criteria.
+      operations:
+      - method: GET
+        name: gettagsearchcriteria
+        description: Tag Search Criteria
+        call: insightvm-console-swagger-tag.gettagsearchcriteria
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetagsearchcriteria
+        description: Tag Search Criteria
+        call: insightvm-console-swagger-tag.updatetagsearchcriteria
+        with:
+          id: rest.id
+          criterial: rest.criterial
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removetagsearchcriteria
+        description: Tag Search Criteria
+        call: insightvm-console-swagger-tag.removetagsearchcriteria
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/sites
+      name: api-3-tags-id-sites
+      description: REST surface for api-3-tags-id-sites.
+      operations:
+      - method: GET
+        name: gettaggedsites
+        description: Tag Sites
+        call: insightvm-console-swagger-tag.gettaggedsites
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: settaggedsites
+        description: Tag Sites
+        call: insightvm-console-swagger-tag.settaggedsites
+        with:
+          id: rest.id
+          sites: rest.sites
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removetaggedsites
+        description: Tag Sites
+        call: insightvm-console-swagger-tag.removetaggedsites
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/tags/{id}/sites/{siteId}
+      name: api-3-tags-id-sites-siteid
+      description: REST surface for api-3-tags-id-sites-siteid.
+      operations:
+      - method: PUT
+        name: tagsite
+        description: Tag Site
+        call: insightvm-console-swagger-tag.tagsite
+        with:
+          id: rest.id
+          siteId: rest.siteId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: untagsite
+        description: Tag Site
+        call: insightvm-console-swagger-tag.untagsite
+        with:
+          id: rest.id
+          siteId: rest.siteId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-tag-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — Tag. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-gettags
+      description: Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettags
+      with:
+        name: tools.name
+        type: tools.type
+        page: tools.page
+        size: tools.size
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createtag
+      description: Tags
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-tag.createtag
+      with:
+        tag: tools.tag
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettag
+      description: Tag
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettag
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatetag
+      description: Tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.updatetag
+      with:
+        tag: tools.tag
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletetag
+      description: Tag
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.deletetag
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettagassetgroups
+      description: Tag Asset Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettagassetgroups
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-settaggedassetgroups
+      description: Tag Asset Groups
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.settaggedassetgroups
+      with:
+        id: tools.id
+        assetGroupIds: tools.assetGroupIds
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-untagallassetgroups
+      description: Tag Asset Groups
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.untagallassetgroups
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-tagassetgroup
+      description: Tag Asset Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.tagassetgroup
+      with:
+        id: tools.id
+        assetGroupId: tools.assetGroupId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-untagassetgroup
+      description: Tag Asset Group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.untagassetgroup
+      with:
+        id: tools.id
+        assetGroupId: tools.assetGroupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettaggedassets
+      description: Tag Assets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettaggedassets
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-tagasset
+      description: Tag Asset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.tagasset
+      with:
+        id: tools.id
+        assetId: tools.assetId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-untagasset
+      description: Tag Asset
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.untagasset
+      with:
+        id: tools.id
+        assetId: tools.assetId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettagsearchcriteria
+      description: Tag Search Criteria
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettagsearchcriteria
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatetagsearchcriteria
+      description: Tag Search Criteria
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.updatetagsearchcriteria
+      with:
+        id: tools.id
+        criterial: tools.criterial
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removetagsearchcriteria
+      description: Tag Search Criteria
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.removetagsearchcriteria
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettaggedsites
+      description: Tag Sites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.gettaggedsites
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-settaggedsites
+      description: Tag Sites
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.settaggedsites
+      with:
+        id: tools.id
+        sites: tools.sites
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removetaggedsites
+      description: Tag Sites
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.removetaggedsites
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-tagsite
+      description: Tag Site
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-tag.tagsite
+      with:
+        id: tools.id
+        siteId: tools.siteId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-untagsite
+      description: Tag Site
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-tag.untagsite
+      with:
+        id: tools.id
+        siteId: tools.siteId
+      outputParameters:
+      - type: object
+        mapping: $.

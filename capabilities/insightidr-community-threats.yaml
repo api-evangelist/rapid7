@@ -1,0 +1,235 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightIDR API — Community Threats
+  description: 'InsightIDR API — Community Threats. 4 operations. Lead operation: Create a Community Threat. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Community Threats
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightidr-community-threats
+    baseUri: https://{region}.api.insight.rapid7.com
+    description: InsightIDR API — Community Threats business capability. Self-contained, no shared references.
+    resources:
+    - name: idr-v1-customthreats
+      path: /idr/v1/customthreats
+      operations:
+      - name: createcommunitythreat
+        method: POST
+        description: Create a Community Threat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: idr-v1-customthreats-key-key-indicators-replace
+      path: /idr/v1/customthreats/key/{key}/indicators/replace
+      operations:
+      - name: replaceindicators
+        method: POST
+        description: Replace indicators for a Community Threat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: path
+          type: string
+          description: The key of a Community Threat for which the indicators are going to be added.
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: The input format.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: idr-v1-customthreats-key-key-indicators-add
+      path: /idr/v1/customthreats/key/{key}/indicators/add
+      operations:
+      - name: addindicators
+        method: POST
+        description: Add indicators to a Community Threat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: path
+          type: string
+          description: The key of a Community Threat for which the indicators are going to be added.
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: The input format.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: idr-v1-customthreats-key-key-delete
+      path: /idr/v1/customthreats/key/{key}/delete
+      operations:
+      - name: deletecommunitythreat
+        method: POST
+        description: Delete a Community Threat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: path
+          type: string
+          description: path parameter key.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightidr-community-threats-rest
+    port: 8080
+    description: REST adapter for InsightIDR API — Community Threats. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/idr/v1/customthreats
+      name: idr-v1-customthreats
+      description: REST surface for idr-v1-customthreats.
+      operations:
+      - method: POST
+        name: createcommunitythreat
+        description: Create a Community Threat
+        call: insightidr-community-threats.createcommunitythreat
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/customthreats/key/{key}/indicators/replace
+      name: idr-v1-customthreats-key-key-indicators-replace
+      description: REST surface for idr-v1-customthreats-key-key-indicators-replace.
+      operations:
+      - method: POST
+        name: replaceindicators
+        description: Replace indicators for a Community Threat
+        call: insightidr-community-threats.replaceindicators
+        with:
+          key: rest.key
+          format: rest.format
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/customthreats/key/{key}/indicators/add
+      name: idr-v1-customthreats-key-key-indicators-add
+      description: REST surface for idr-v1-customthreats-key-key-indicators-add.
+      operations:
+      - method: POST
+        name: addindicators
+        description: Add indicators to a Community Threat
+        call: insightidr-community-threats.addindicators
+        with:
+          key: rest.key
+          format: rest.format
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/customthreats/key/{key}/delete
+      name: idr-v1-customthreats-key-key-delete
+      description: REST surface for idr-v1-customthreats-key-key-delete.
+      operations:
+      - method: POST
+        name: deletecommunitythreat
+        description: Delete a Community Threat
+        call: insightidr-community-threats.deletecommunitythreat
+        with:
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightidr-community-threats-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightIDR API — Community Threats. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-createcommunitythreat
+      description: Create a Community Threat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-community-threats.createcommunitythreat
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-replaceindicators
+      description: Replace indicators for a Community Threat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-community-threats.replaceindicators
+      with:
+        key: tools.key
+        format: tools.format
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addindicators
+      description: Add indicators to a Community Threat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-community-threats.addindicators
+      with:
+        key: tools.key
+        format: tools.format
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletecommunitythreat
+      description: Delete a Community Threat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-community-threats.deletecommunitythreat
+      with:
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

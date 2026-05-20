@@ -1,0 +1,123 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Variances Documentation
+  description: 'InsightAppSec API — Variances Documentation. 2 operations. Lead operation: Get Vulnerability Variance Documentation. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Variances Documentation
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-variances-documentation
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Variances Documentation business capability. Self-contained, no shared references.
+    resources:
+    - name: vulnerabilities-variances-documentation
+      path: /vulnerabilities/variances/documentation
+      operations:
+      - name: getdocumentationbyvariances
+        method: POST
+        description: Get Vulnerability Variances Documentation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: vulnerabilities-vuln-id-variances-variance-id-documentation
+      path: /vulnerabilities/{vuln-id}/variances/{variance-id}/documentation
+      operations:
+      - name: getdocumentationbyvariance
+        method: GET
+        description: Get Vulnerability Variance Documentation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vuln-id
+          in: path
+          type: string
+          description: path parameter vuln-id.
+          required: true
+        - name: variance-id
+          in: path
+          type: string
+          description: path parameter variance-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-variances-documentation-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Variances Documentation. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/vulnerabilities/variances/documentation
+      name: vulnerabilities-variances-documentation
+      description: REST surface for vulnerabilities-variances-documentation.
+      operations:
+      - method: POST
+        name: getdocumentationbyvariances
+        description: Get Vulnerability Variances Documentation
+        call: insightappsec-variances-documentation.getdocumentationbyvariances
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vulnerabilities/{vuln-id}/variances/{variance-id}/documentation
+      name: vulnerabilities-vuln-id-variances-variance-id-documentation
+      description: REST surface for vulnerabilities-vuln-id-variances-variance-id-documentation.
+      operations:
+      - method: GET
+        name: getdocumentationbyvariance
+        description: Get Vulnerability Variance Documentation
+        call: insightappsec-variances-documentation.getdocumentationbyvariance
+        with:
+          vuln-id: rest.vuln-id
+          variance-id: rest.variance-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-variances-documentation-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Variances Documentation. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getdocumentationbyvariances
+      description: Get Vulnerability Variances Documentation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-variances-documentation.getdocumentationbyvariances
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getdocumentationbyvariance
+      description: Get Vulnerability Variance Documentation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-variances-documentation.getdocumentationbyvariance
+      with:
+        vuln-id: tools.vuln-id
+        variance-id: tools.variance-id
+      outputParameters:
+      - type: object
+        mapping: $.

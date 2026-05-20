@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stream Rapid7 InsightIDR investigations into Splunk
+  description: When an InsightIDR investigation is opened or updated, forward the investigation record, status, and associated alerts to Splunk via HEC so security teams can correlate with the rest of their telemetry and pivot from a unified SIEM view.
+  tags:
+  - Rapid7
+  - Integration
+  - SIEM
+  - splunk
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    SPLUNK_API_KEY: SPLUNK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List InsightIDR investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: idr-v1-investigations-id-alerts
+      path: /idr/v1/investigations/{id}/alerts
+      operations:
+      - name: listinvestigationalerts
+        method: GET
+        description: List alerts attached to an investigation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  - type: http
+    namespace: splunk
+    baseUri: https://yourorg.splunkcloud.com
+    description: Splunk HTTP Event Collector operations consumed by this integration.
+    resources:
+    - name: services-collector-event
+      path: /services/collector/event
+      operations:
+      - name: postevent
+        method: POST
+        description: 'Splunk HTTP Event Collector: postEvent'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-splunk-mcp
+    description: MCP adapter for the rapid7-splunk integration.
+    tools:
+    - name: rapid7_splunk
+      description: Execute the rapid7 splunk integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-splunk-rest
+    port: 8080
+    description: REST adapter for the rapid7-splunk integration.
+    resources:
+    - path: /rapid7-splunk
+      name: rapid7-splunk
+      description: REST surface for the rapid7-splunk integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-splunk integration.
+        call: rapid7_splunk
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,240 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightIDR API — Attachments
+  description: 'InsightIDR API — Attachments. 5 operations. Lead operation: List attachments. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Attachments
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightidr-attachments
+    baseUri: https://{region}.api.insight.rapid7.com
+    description: InsightIDR API — Attachments business capability. Self-contained, no shared references.
+    resources:
+    - name: idr-v1-attachments
+      path: /idr/v1/attachments
+      operations:
+      - name: listattachments
+        method: GET
+        description: List attachments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: target
+          in: query
+          type: string
+          description: Return attachments with this target.
+          required: true
+        - name: index
+          in: query
+          type: integer
+          description: The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0.
+        - name: size
+          in: query
+          type: integer
+          description: The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100.
+      - name: uploadattachment
+        method: POST
+        description: Upload attachment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: idr-v1-attachments-rrn
+      path: /idr/v1/attachments/{rrn}
+      operations:
+      - name: downloadattachment
+        method: GET
+        description: Download attachment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rrn
+          in: path
+          type: string
+          description: The RRN of the attachment.
+          required: true
+      - name: deleteattachment
+        method: DELETE
+        description: Delete an attachment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rrn
+          in: path
+          type: string
+          description: The RRN of the attachment.
+          required: true
+    - name: idr-v1-attachments-rrn-metadata
+      path: /idr/v1/attachments/{rrn}/metadata
+      operations:
+      - name: getattachment
+        method: GET
+        description: Get attachment information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: rrn
+          in: path
+          type: string
+          description: The RRN of the attachment.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightidr-attachments-rest
+    port: 8080
+    description: REST adapter for InsightIDR API — Attachments. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/idr/v1/attachments
+      name: idr-v1-attachments
+      description: REST surface for idr-v1-attachments.
+      operations:
+      - method: GET
+        name: listattachments
+        description: List attachments
+        call: insightidr-attachments.listattachments
+        with:
+          target: rest.target
+          index: rest.index
+          size: rest.size
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: uploadattachment
+        description: Upload attachment
+        call: insightidr-attachments.uploadattachment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/attachments/{rrn}
+      name: idr-v1-attachments-rrn
+      description: REST surface for idr-v1-attachments-rrn.
+      operations:
+      - method: GET
+        name: downloadattachment
+        description: Download attachment
+        call: insightidr-attachments.downloadattachment
+        with:
+          rrn: rest.rrn
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteattachment
+        description: Delete an attachment
+        call: insightidr-attachments.deleteattachment
+        with:
+          rrn: rest.rrn
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/attachments/{rrn}/metadata
+      name: idr-v1-attachments-rrn-metadata
+      description: REST surface for idr-v1-attachments-rrn-metadata.
+      operations:
+      - method: GET
+        name: getattachment
+        description: Get attachment information
+        call: insightidr-attachments.getattachment
+        with:
+          rrn: rest.rrn
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightidr-attachments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightIDR API — Attachments. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-listattachments
+      description: List attachments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightidr-attachments.listattachments
+      with:
+        target: tools.target
+        index: tools.index
+        size: tools.size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-uploadattachment
+      description: Upload attachment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-attachments.uploadattachment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-downloadattachment
+      description: Download attachment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightidr-attachments.downloadattachment
+      with:
+        rrn: tools.rrn
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteattachment
+      description: Delete an attachment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightidr-attachments.deleteattachment
+      with:
+        rrn: tools.rrn
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getattachment
+      description: Get attachment information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightidr-attachments.getattachment
+      with:
+        rrn: tools.rrn
+      outputParameters:
+      - type: object
+        mapping: $.

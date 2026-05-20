@@ -1,0 +1,67 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — Root
+  description: 'InsightVM API — Root. 1 operations. Lead operation: Resources. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Root
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-root
+    baseUri: https://localhost:3780
+    description: InsightVM API — Root business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3
+      path: /api/3
+      operations:
+      - name: resources
+        method: GET
+        description: Resources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-root-rest
+    port: 8080
+    description: REST adapter for InsightVM API — Root. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3
+      name: api-3
+      description: REST surface for api-3.
+      operations:
+      - method: GET
+        name: resources
+        description: Resources
+        call: insightvm-console-swagger-root.resources
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-root-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — Root. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-resources
+      description: Resources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-root.resources
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.

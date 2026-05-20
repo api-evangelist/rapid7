@@ -1,0 +1,203 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Reports
+  description: 'InsightAppSec API — Reports. 4 operations. Lead operation: Get Reports. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Reports
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-reports
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Reports business capability. Self-contained, no shared references.
+    resources:
+    - name: reports
+      path: /reports
+      operations:
+      - name: getreports
+        method: GET
+        description: Get Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: generatereport
+        method: POST
+        description: Generate Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: reports-report-id
+      path: /reports/{report-id}
+      operations:
+      - name: getreport
+        method: GET
+        description: Get Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: report-id
+          in: path
+          type: string
+          description: path parameter report-id.
+          required: true
+      - name: deletereport
+        method: DELETE
+        description: Delete Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: report-id
+          in: path
+          type: string
+          description: path parameter report-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-reports-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Reports. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/reports
+      name: reports
+      description: REST surface for reports.
+      operations:
+      - method: GET
+        name: getreports
+        description: Get Reports
+        call: insightappsec-reports.getreports
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: generatereport
+        description: Generate Report
+        call: insightappsec-reports.generatereport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reports/{report-id}
+      name: reports-report-id
+      description: REST surface for reports-report-id.
+      operations:
+      - method: GET
+        name: getreport
+        description: Get Report
+        call: insightappsec-reports.getreport
+        with:
+          report-id: rest.report-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletereport
+        description: Delete Report
+        call: insightappsec-reports.deletereport
+        with:
+          report-id: rest.report-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Reports. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getreports
+      description: Get Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-reports.getreports
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-generatereport
+      description: Generate Report
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-reports.generatereport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreport
+      description: Get Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-reports.getreport
+      with:
+        report-id: tools.report-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletereport
+      description: Delete Report
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-reports.deletereport
+      with:
+        report-id: tools.report-id
+      outputParameters:
+      - type: object
+        mapping: $.

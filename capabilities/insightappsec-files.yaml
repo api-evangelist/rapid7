@@ -1,0 +1,329 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Files
+  description: 'InsightAppSec API — Files. 6 operations. Lead operation: Get Files. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Files
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-files
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Files business capability. Self-contained, no shared references.
+    resources:
+    - name: apps-app-id-files
+      path: /apps/{app-id}/files
+      operations:
+      - name: getfiles
+        method: GET
+        description: Get Files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createfile
+        method: POST
+        description: Create File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apps-app-id-files-file-id
+      path: /apps/{app-id}/files/{file-id}
+      operations:
+      - name: getfile
+        method: GET
+        description: Get File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: file-id
+          in: path
+          type: string
+          description: path parameter file-id.
+          required: true
+      - name: updatefile
+        method: PUT
+        description: Update File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: file-id
+          in: path
+          type: string
+          description: path parameter file-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: uploadfile
+        method: POST
+        description: Upload File Content
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: file-id
+          in: path
+          type: string
+          description: path parameter file-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletefile
+        method: DELETE
+        description: Delete File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: file-id
+          in: path
+          type: string
+          description: path parameter file-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-files-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Files. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apps/{app-id}/files
+      name: apps-app-id-files
+      description: REST surface for apps-app-id-files.
+      operations:
+      - method: GET
+        name: getfiles
+        description: Get Files
+        call: insightappsec-files.getfiles
+        with:
+          app-id: rest.app-id
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createfile
+        description: Create File
+        call: insightappsec-files.createfile
+        with:
+          app-id: rest.app-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}/files/{file-id}
+      name: apps-app-id-files-file-id
+      description: REST surface for apps-app-id-files-file-id.
+      operations:
+      - method: GET
+        name: getfile
+        description: Get File
+        call: insightappsec-files.getfile
+        with:
+          app-id: rest.app-id
+          file-id: rest.file-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatefile
+        description: Update File
+        call: insightappsec-files.updatefile
+        with:
+          app-id: rest.app-id
+          file-id: rest.file-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: uploadfile
+        description: Upload File Content
+        call: insightappsec-files.uploadfile
+        with:
+          app-id: rest.app-id
+          file-id: rest.file-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletefile
+        description: Delete File
+        call: insightappsec-files.deletefile
+        with:
+          app-id: rest.app-id
+          file-id: rest.file-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-files-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Files. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getfiles
+      description: Get Files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-files.getfiles
+      with:
+        app-id: tools.app-id
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createfile
+      description: Create File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-files.createfile
+      with:
+        app-id: tools.app-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getfile
+      description: Get File
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-files.getfile
+      with:
+        app-id: tools.app-id
+        file-id: tools.file-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatefile
+      description: Update File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-files.updatefile
+      with:
+        app-id: tools.app-id
+        file-id: tools.file-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-uploadfile
+      description: Upload File Content
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-files.uploadfile
+      with:
+        app-id: tools.app-id
+        file-id: tools.file-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletefile
+      description: Delete File
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-files.deletefile
+      with:
+        app-id: tools.app-id
+        file-id: tools.file-id
+      outputParameters:
+      - type: object
+        mapping: $.

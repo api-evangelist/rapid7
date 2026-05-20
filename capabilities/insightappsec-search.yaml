@@ -1,0 +1,104 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Search
+  description: 'InsightAppSec API — Search. 1 operations. Lead operation: Perform Search. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Search
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-search
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: search
+      path: /search
+      operations:
+      - name: performsearch
+        method: POST
+        description: Perform Search
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limitData
+          in: query
+          type: boolean
+          description: query parameter limitData.
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-search-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Search. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/search
+      name: search
+      description: REST surface for search.
+      operations:
+      - method: POST
+        name: performsearch
+        description: Perform Search
+        call: insightappsec-search.performsearch
+        with:
+          limitData: rest.limitData
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Search. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-performsearch
+      description: Perform Search
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-search.performsearch
+      with:
+        limitData: tools.limitData
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,1040 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — Asset Group
+  description: 'InsightVM API — Asset Group. 22 operations. Lead operation: Agents. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Asset Group
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-asset-group
+    baseUri: https://localhost:3780
+    description: InsightVM API — Asset Group business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3-agents
+      path: /api/3/agents
+      operations:
+      - name: getagents
+        method: GET
+        description: Agents
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: The index of the page (zero-based) to retrieve.
+        - name: size
+          in: query
+          type: integer
+          description: The number of records per page to retrieve.
+        - name: sort
+          in: query
+          type: array
+          description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+    - name: api-3-asset-groups
+      path: /api/3/asset_groups
+      operations:
+      - name: getassetgroups
+        method: GET
+        description: Asset Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: The type of asset group.
+        - name: name
+          in: query
+          type: string
+          description: A search pattern for the name of the asset group. Searches are case-insensitive contains.
+        - name: page
+          in: query
+          type: integer
+          description: The index of the page (zero-based) to retrieve.
+        - name: size
+          in: query
+          type: integer
+          description: The number of records per page to retrieve.
+        - name: sort
+          in: query
+          type: array
+          description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+      - name: createassetgroup
+        method: POST
+        description: Asset Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: assetGroup
+          in: body
+          type: string
+          description: The details of the asset group.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-asset-groups-id
+      path: /api/3/asset_groups/{id}
+      operations:
+      - name: getassetgroup
+        method: GET
+        description: Asset Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+      - name: updateassetgroup
+        method: PUT
+        description: Asset Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: assetGroup
+          in: body
+          type: string
+          description: The details of the asset group.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteassetgroup
+        method: DELETE
+        description: Asset Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+    - name: api-3-asset-groups-id-assets
+      path: /api/3/asset_groups/{id}/assets
+      operations:
+      - name: getassetgroupassets
+        method: GET
+        description: Asset Group Assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+      - name: updateassetgroupassets
+        method: PUT
+        description: Asset Group Assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: assets
+          in: body
+          type: array
+          description: 'The assets to place in the asset group. '
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeallassetsfromassetgroup
+        method: DELETE
+        description: Asset Group Assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+    - name: api-3-asset-groups-id-assets-assetid
+      path: /api/3/asset_groups/{id}/assets/{assetId}
+      operations:
+      - name: addassettoassetgroup
+        method: PUT
+        description: Asset Group Asset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: assetId
+          in: path
+          type: integer
+          description: The identifier of the asset.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeassetfromassetgroup
+        method: DELETE
+        description: Asset Group Asset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: assetId
+          in: path
+          type: integer
+          description: The identifier of the asset.
+          required: true
+    - name: api-3-asset-groups-id-search-criteria
+      path: /api/3/asset_groups/{id}/search_criteria
+      operations:
+      - name: getassetgroupsearchcriteria
+        method: GET
+        description: Asset Group Search Criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+      - name: setassetgroupsearchcriteria
+        method: PUT
+        description: Asset Group Search Criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: criteria
+          in: body
+          type: string
+          description: The search criteria specification.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-3-asset-groups-id-tags
+      path: /api/3/asset_groups/{id}/tags
+      operations:
+      - name: getassetgrouptags
+        method: GET
+        description: Asset Group Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+      - name: setassetgrouptags
+        method: PUT
+        description: Asset Group Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: tags
+          in: body
+          type: array
+          description: The tags to associate to the asset group.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeallassetgrouptags
+        method: DELETE
+        description: Asset Group Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+    - name: api-3-asset-groups-id-tags-tagid
+      path: /api/3/asset_groups/{id}/tags/{tagId}
+      operations:
+      - name: addassetgrouptag
+        method: PUT
+        description: Resources and operations for managing asset groups.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: tagId
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeassetgrouptag
+        method: DELETE
+        description: Resources and operations for managing asset groups.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: tagId
+          in: path
+          type: integer
+          description: The identifier of the tag.
+          required: true
+    - name: api-3-asset-groups-id-users
+      path: /api/3/asset_groups/{id}/users
+      operations:
+      - name: getassetgroupusers
+        method: GET
+        description: Asset Group Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+      - name: setassetgroupusers
+        method: PUT
+        description: Asset Group Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: users
+          in: body
+          type: array
+          description: The users to grant access to the asset group.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-3-asset-groups-id-users-userid
+      path: /api/3/asset_groups/{id}/users/{userId}
+      operations:
+      - name: addassetgroupuser
+        method: PUT
+        description: Asset Group User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: userId
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeassetgroupuser
+        method: DELETE
+        description: Asset Group User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: userId
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-asset-group-rest
+    port: 8080
+    description: REST adapter for InsightVM API — Asset Group. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3/agents
+      name: api-3-agents
+      description: REST surface for api-3-agents.
+      operations:
+      - method: GET
+        name: getagents
+        description: Agents
+        call: insightvm-console-swagger-asset-group.getagents
+        with:
+          page: rest.page
+          size: rest.size
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups
+      name: api-3-asset-groups
+      description: REST surface for api-3-asset-groups.
+      operations:
+      - method: GET
+        name: getassetgroups
+        description: Asset Groups
+        call: insightvm-console-swagger-asset-group.getassetgroups
+        with:
+          type: rest.type
+          name: rest.name
+          page: rest.page
+          size: rest.size
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createassetgroup
+        description: Asset Groups
+        call: insightvm-console-swagger-asset-group.createassetgroup
+        with:
+          assetGroup: rest.assetGroup
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}
+      name: api-3-asset-groups-id
+      description: REST surface for api-3-asset-groups-id.
+      operations:
+      - method: GET
+        name: getassetgroup
+        description: Asset Group
+        call: insightvm-console-swagger-asset-group.getassetgroup
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateassetgroup
+        description: Asset Group
+        call: insightvm-console-swagger-asset-group.updateassetgroup
+        with:
+          id: rest.id
+          assetGroup: rest.assetGroup
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteassetgroup
+        description: Asset Group
+        call: insightvm-console-swagger-asset-group.deleteassetgroup
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/assets
+      name: api-3-asset-groups-id-assets
+      description: REST surface for api-3-asset-groups-id-assets.
+      operations:
+      - method: GET
+        name: getassetgroupassets
+        description: Asset Group Assets
+        call: insightvm-console-swagger-asset-group.getassetgroupassets
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateassetgroupassets
+        description: Asset Group Assets
+        call: insightvm-console-swagger-asset-group.updateassetgroupassets
+        with:
+          id: rest.id
+          assets: rest.assets
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeallassetsfromassetgroup
+        description: Asset Group Assets
+        call: insightvm-console-swagger-asset-group.removeallassetsfromassetgroup
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/assets/{assetId}
+      name: api-3-asset-groups-id-assets-assetid
+      description: REST surface for api-3-asset-groups-id-assets-assetid.
+      operations:
+      - method: PUT
+        name: addassettoassetgroup
+        description: Asset Group Asset
+        call: insightvm-console-swagger-asset-group.addassettoassetgroup
+        with:
+          id: rest.id
+          assetId: rest.assetId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeassetfromassetgroup
+        description: Asset Group Asset
+        call: insightvm-console-swagger-asset-group.removeassetfromassetgroup
+        with:
+          id: rest.id
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/search_criteria
+      name: api-3-asset-groups-id-search-criteria
+      description: REST surface for api-3-asset-groups-id-search-criteria.
+      operations:
+      - method: GET
+        name: getassetgroupsearchcriteria
+        description: Asset Group Search Criteria
+        call: insightvm-console-swagger-asset-group.getassetgroupsearchcriteria
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setassetgroupsearchcriteria
+        description: Asset Group Search Criteria
+        call: insightvm-console-swagger-asset-group.setassetgroupsearchcriteria
+        with:
+          id: rest.id
+          criteria: rest.criteria
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/tags
+      name: api-3-asset-groups-id-tags
+      description: REST surface for api-3-asset-groups-id-tags.
+      operations:
+      - method: GET
+        name: getassetgrouptags
+        description: Asset Group Tags
+        call: insightvm-console-swagger-asset-group.getassetgrouptags
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setassetgrouptags
+        description: Asset Group Tags
+        call: insightvm-console-swagger-asset-group.setassetgrouptags
+        with:
+          id: rest.id
+          tags: rest.tags
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeallassetgrouptags
+        description: Asset Group Tags
+        call: insightvm-console-swagger-asset-group.removeallassetgrouptags
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/tags/{tagId}
+      name: api-3-asset-groups-id-tags-tagid
+      description: REST surface for api-3-asset-groups-id-tags-tagid.
+      operations:
+      - method: PUT
+        name: addassetgrouptag
+        description: Resources and operations for managing asset groups.
+        call: insightvm-console-swagger-asset-group.addassetgrouptag
+        with:
+          id: rest.id
+          tagId: rest.tagId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeassetgrouptag
+        description: Resources and operations for managing asset groups.
+        call: insightvm-console-swagger-asset-group.removeassetgrouptag
+        with:
+          id: rest.id
+          tagId: rest.tagId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/users
+      name: api-3-asset-groups-id-users
+      description: REST surface for api-3-asset-groups-id-users.
+      operations:
+      - method: GET
+        name: getassetgroupusers
+        description: Asset Group Users
+        call: insightvm-console-swagger-asset-group.getassetgroupusers
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setassetgroupusers
+        description: Asset Group Users
+        call: insightvm-console-swagger-asset-group.setassetgroupusers
+        with:
+          id: rest.id
+          users: rest.users
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/asset_groups/{id}/users/{userId}
+      name: api-3-asset-groups-id-users-userid
+      description: REST surface for api-3-asset-groups-id-users-userid.
+      operations:
+      - method: PUT
+        name: addassetgroupuser
+        description: Asset Group User
+        call: insightvm-console-swagger-asset-group.addassetgroupuser
+        with:
+          id: rest.id
+          userId: rest.userId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeassetgroupuser
+        description: Asset Group User
+        call: insightvm-console-swagger-asset-group.removeassetgroupuser
+        with:
+          id: rest.id
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-asset-group-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — Asset Group. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getagents
+      description: Agents
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getagents
+      with:
+        page: tools.page
+        size: tools.size
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgroups
+      description: Asset Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgroups
+      with:
+        type: tools.type
+        name: tools.name
+        page: tools.page
+        size: tools.size
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createassetgroup
+      description: Asset Groups
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-asset-group.createassetgroup
+      with:
+        assetGroup: tools.assetGroup
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgroup
+      description: Asset Group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgroup
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateassetgroup
+      description: Asset Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.updateassetgroup
+      with:
+        id: tools.id
+        assetGroup: tools.assetGroup
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteassetgroup
+      description: Asset Group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.deleteassetgroup
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgroupassets
+      description: Asset Group Assets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgroupassets
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateassetgroupassets
+      description: Asset Group Assets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.updateassetgroupassets
+      with:
+        id: tools.id
+        assets: tools.assets
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeallassetsfromassetgroup
+      description: Asset Group Assets
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.removeallassetsfromassetgroup
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addassettoassetgroup
+      description: Asset Group Asset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.addassettoassetgroup
+      with:
+        id: tools.id
+        assetId: tools.assetId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeassetfromassetgroup
+      description: Asset Group Asset
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.removeassetfromassetgroup
+      with:
+        id: tools.id
+        assetId: tools.assetId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgroupsearchcriteria
+      description: Asset Group Search Criteria
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgroupsearchcriteria
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-setassetgroupsearchcriteria
+      description: Asset Group Search Criteria
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.setassetgroupsearchcriteria
+      with:
+        id: tools.id
+        criteria: tools.criteria
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgrouptags
+      description: Asset Group Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgrouptags
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-setassetgrouptags
+      description: Asset Group Tags
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.setassetgrouptags
+      with:
+        id: tools.id
+        tags: tools.tags
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeallassetgrouptags
+      description: Asset Group Tags
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.removeallassetgrouptags
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addassetgrouptag
+      description: Resources and operations for managing asset groups.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.addassetgrouptag
+      with:
+        id: tools.id
+        tagId: tools.tagId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeassetgrouptag
+      description: Resources and operations for managing asset groups.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.removeassetgrouptag
+      with:
+        id: tools.id
+        tagId: tools.tagId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getassetgroupusers
+      description: Asset Group Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.getassetgroupusers
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-setassetgroupusers
+      description: Asset Group Users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.setassetgroupusers
+      with:
+        id: tools.id
+        users: tools.users
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addassetgroupuser
+      description: Asset Group User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.addassetgroupuser
+      with:
+        id: tools.id
+        userId: tools.userId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeassetgroupuser
+      description: Asset Group User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-asset-group.removeassetgroupuser
+      with:
+        id: tools.id
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.

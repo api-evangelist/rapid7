@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Forward Rapid7 InsightVM findings into AWS Security Hub
+  description: Convert InsightVM vulnerability findings on AWS-tagged assets into ASFF (AWS Security Finding Format) records in Security Hub so cloud security engineers see Rapid7 signal alongside GuardDuty, Inspector, and Macie findings.
+  tags:
+  - Rapid7
+  - Integration
+  - Cloud security
+  - aws-security-hub
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    AWS_SECURITY_HUB_API_KEY: AWS_SECURITY_HUB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: api-3-assets
+      path: /api/3/assets
+      operations:
+      - name: listassets
+        method: GET
+        description: List InsightVM assets (filter for AWS-tagged).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-assets-id-vulnerabilities
+      path: /api/3/assets/{id}/vulnerabilities
+      operations:
+      - name: listassetvulnerabilities
+        method: GET
+        description: List vulnerabilities on the asset.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  - type: http
+    namespace: aws-security-hub
+    baseUri: https://securityhub.us-east-1.amazonaws.com
+    description: AWS Security Hub API operations consumed by this integration.
+    resources:
+    - name: findings-import
+      path: /findings/import
+      operations:
+      - name: batchimportfindings
+        method: POST
+        description: 'AWS Security Hub API: batchImportFindings'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-aws-security-hub-mcp
+    description: MCP adapter for the rapid7-aws-security-hub integration.
+    tools:
+    - name: rapid7_aws_security_hub
+      description: Execute the rapid7 aws security hub integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-aws-security-hub-rest
+    port: 8080
+    description: REST adapter for the rapid7-aws-security-hub integration.
+    resources:
+    - path: /rapid7-aws-security-hub
+      name: rapid7-aws-security-hub
+      description: REST surface for the rapid7-aws-security-hub integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-aws-security-hub integration.
+        call: rapid7_aws_security_hub
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,233 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — Scan Template
+  description: 'InsightVM API — Scan Template. 5 operations. Lead operation: Scan Templates. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Scan Template
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-scan-template
+    baseUri: https://localhost:3780
+    description: InsightVM API — Scan Template business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3-scan-templates
+      path: /api/3/scan_templates
+      operations:
+      - name: getscantemplates
+        method: GET
+        description: Scan Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+      - name: createscantemplate
+        method: POST
+        description: Scan Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scanTemplate
+          in: body
+          type: string
+          description: The details of the scan template.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-scan-templates-id
+      path: /api/3/scan_templates/{id}
+      operations:
+      - name: getscantemplate
+        method: GET
+        description: Scan Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the scan template
+          required: true
+      - name: updatescantemplate
+        method: PUT
+        description: Scan Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the scan template
+          required: true
+        - name: scanTemplate
+          in: body
+          type: string
+          description: The details of the scan template.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletescantemplate
+        method: DELETE
+        description: Scan Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the scan template
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-scan-template-rest
+    port: 8080
+    description: REST adapter for InsightVM API — Scan Template. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3/scan_templates
+      name: api-3-scan-templates
+      description: REST surface for api-3-scan-templates.
+      operations:
+      - method: GET
+        name: getscantemplates
+        description: Scan Templates
+        call: insightvm-console-swagger-scan-template.getscantemplates
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createscantemplate
+        description: Scan Templates
+        call: insightvm-console-swagger-scan-template.createscantemplate
+        with:
+          scanTemplate: rest.scanTemplate
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/scan_templates/{id}
+      name: api-3-scan-templates-id
+      description: REST surface for api-3-scan-templates-id.
+      operations:
+      - method: GET
+        name: getscantemplate
+        description: Scan Template
+        call: insightvm-console-swagger-scan-template.getscantemplate
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatescantemplate
+        description: Scan Template
+        call: insightvm-console-swagger-scan-template.updatescantemplate
+        with:
+          id: rest.id
+          scanTemplate: rest.scanTemplate
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletescantemplate
+        description: Scan Template
+        call: insightvm-console-swagger-scan-template.deletescantemplate
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-scan-template-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — Scan Template. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getscantemplates
+      description: Scan Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-scan-template.getscantemplates
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createscantemplate
+      description: Scan Templates
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-scan-template.createscantemplate
+      with:
+        scanTemplate: tools.scanTemplate
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscantemplate
+      description: Scan Template
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-scan-template.getscantemplate
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatescantemplate
+      description: Scan Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-scan-template.updatescantemplate
+      with:
+        id: tools.id
+        scanTemplate: tools.scanTemplate
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletescantemplate
+      description: Scan Template
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-scan-template.deletescantemplate
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

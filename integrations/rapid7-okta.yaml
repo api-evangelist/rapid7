@@ -1,0 +1,119 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Enrich Rapid7 InsightIDR investigations with Okta user context
+  description: For each user-linked InsightIDR investigation, pull the matching Okta user profile, group membership, and recent sign-in events so analysts have rich identity context inline with the investigation.
+  tags:
+  - Rapid7
+  - Integration
+  - Identity
+  - okta
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    OKTA_API_KEY: OKTA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List InsightIDR investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: idr-v1-accounts-search
+      path: /idr/v1/accounts/_search
+      operations:
+      - name: searchaccounts
+        method: GET
+        description: Search user accounts referenced by investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: okta
+    baseUri: https://yourorg.okta.com
+    description: Okta API operations consumed by this integration.
+    resources:
+    - name: api-v1-users-userid
+      path: /api/v1/users/{userId}
+      operations:
+      - name: getuser
+        method: GET
+        description: 'Okta API: getUser'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Path parameter userId.
+          required: true
+    - name: api-v1-users-userid-logs
+      path: /api/v1/users/{userId}/logs
+      operations:
+      - name: getuserlogs
+        method: GET
+        description: 'Okta API: getUserLogs'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Path parameter userId.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-okta-mcp
+    description: MCP adapter for the rapid7-okta integration.
+    tools:
+    - name: rapid7_okta
+      description: Execute the rapid7 okta integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-okta-rest
+    port: 8080
+    description: REST adapter for the rapid7-okta integration.
+    resources:
+    - path: /rapid7-okta
+      name: rapid7-okta
+      description: REST surface for the rapid7-okta integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-okta integration.
+        call: rapid7_okta
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

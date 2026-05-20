@@ -1,0 +1,129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Reconcile Rapid7 InsightAppSec findings with Snyk projects
+  description: For each InsightAppSec app, look up the matching Snyk project and merge runtime findings with SCA findings so AppSec leads see one prioritized backlog instead of two siloed lists.
+  tags:
+  - Rapid7
+  - Integration
+  - Code security
+  - snyk
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: apps
+      path: /apps
+      operations:
+      - name: listapps
+        method: GET
+        description: List InsightAppSec apps.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: apps-app-id-tags
+      path: /apps/{app-id}/tags
+      operations:
+      - name: listapptags
+        method: GET
+        description: Pull tags to align with Snyk targets.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: Path parameter app-id.
+          required: true
+  - type: http
+    namespace: snyk
+    baseUri: https://api.snyk.io
+    description: Snyk REST API operations consumed by this integration.
+    resources:
+    - name: rest-orgs-org-id-projects
+      path: /rest/orgs/{org_id}/projects
+      operations:
+      - name: listprojects
+        method: GET
+        description: 'Snyk REST API: listProjects'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Path parameter org_id.
+          required: true
+    - name: rest-orgs-org-id-projects-project-id-issues
+      path: /rest/orgs/{org_id}/projects/{project_id}/issues
+      operations:
+      - name: listprojectissues
+        method: GET
+        description: 'Snyk REST API: listProjectIssues'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Path parameter org_id.
+          required: true
+        - name: project_id
+          in: path
+          type: string
+          description: Path parameter project_id.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-snyk-mcp
+    description: MCP adapter for the rapid7-snyk integration.
+    tools:
+    - name: rapid7_snyk
+      description: Execute the rapid7 snyk integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-snyk-rest
+    port: 8080
+    description: REST adapter for the rapid7-snyk integration.
+    resources:
+    - path: /rapid7-snyk
+      name: rapid7-snyk
+      description: REST surface for the rapid7-snyk integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-snyk integration.
+        call: rapid7_snyk
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

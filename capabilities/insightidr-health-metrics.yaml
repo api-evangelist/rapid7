@@ -1,0 +1,91 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightIDR API — Health Metrics
+  description: 'InsightIDR API — Health Metrics. 1 operations. Lead operation: Retrieve health metrics by org. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Health Metrics
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightidr-health-metrics
+    baseUri: https://{region}.api.insight.rapid7.com
+    description: InsightIDR API — Health Metrics business capability. Self-contained, no shared references.
+    resources:
+    - name: idr-v1-health-metrics
+      path: /idr/v1/health-metrics
+      operations:
+      - name: getmetrics
+        method: GET
+        description: Retrieve health metrics by org
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0.
+        - name: size
+          in: query
+          type: integer
+          description: The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100.
+        - name: resourceTypes
+          in: query
+          type: string
+          description: An optional, comma-separated set of resource types. Only resources whose type matches one of the entries in the list are returned. If this parameter is omitted, health metrics with any resource type m
+        - name: orgId
+          in: query
+          type: string
+          description: Optional organization ID to get metrics for. If not specified, metrics for the user's current organization will be returned. User must have access to the specified organization.
+  exposes:
+  - type: rest
+    namespace: insightidr-health-metrics-rest
+    port: 8080
+    description: REST adapter for InsightIDR API — Health Metrics. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/idr/v1/health-metrics
+      name: idr-v1-health-metrics
+      description: REST surface for idr-v1-health-metrics.
+      operations:
+      - method: GET
+        name: getmetrics
+        description: Retrieve health metrics by org
+        call: insightidr-health-metrics.getmetrics
+        with:
+          index: rest.index
+          size: rest.size
+          resourceTypes: rest.resourceTypes
+          orgId: rest.orgId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightidr-health-metrics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightIDR API — Health Metrics. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getmetrics
+      description: Retrieve health metrics by org
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightidr-health-metrics.getmetrics
+      with:
+        index: tools.index
+        size: tools.size
+        resourceTypes: tools.resourceTypes
+        orgId: tools.orgId
+      outputParameters:
+      - type: object
+        mapping: $.

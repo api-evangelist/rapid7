@@ -1,0 +1,74 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightIDR API — Collectors
+  description: 'InsightIDR API — Collectors. 1 operations. Lead operation: Add Collector. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Collectors
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightidr-collectors
+    baseUri: https://{region}.api.insight.rapid7.com
+    description: InsightIDR API — Collectors business capability. Self-contained, no shared references.
+    resources:
+    - name: idr-v1-collectors
+      path: /idr/v1/collectors
+      operations:
+      - name: addcollector
+        method: POST
+        description: Add Collector
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightidr-collectors-rest
+    port: 8080
+    description: REST adapter for InsightIDR API — Collectors. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/idr/v1/collectors
+      name: idr-v1-collectors
+      description: REST surface for idr-v1-collectors.
+      operations:
+      - method: POST
+        name: addcollector
+        description: Add Collector
+        call: insightidr-collectors.addcollector
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightidr-collectors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightIDR API — Collectors. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-addcollector
+      description: Add Collector
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-collectors.addcollector
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

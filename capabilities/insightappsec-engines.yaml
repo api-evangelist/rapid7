@@ -1,0 +1,396 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Engines
+  description: 'InsightAppSec API — Engines. 9 operations. Lead operation: Get Engines. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Engines
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-engines
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Engines business capability. Self-contained, no shared references.
+    resources:
+    - name: engines
+      path: /engines
+      operations:
+      - name: getengines
+        method: GET
+        description: Get Engines
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageConfig
+          in: query
+          type: string
+          description: query parameter pageConfig.
+          required: true
+      - name: createengine
+        method: POST
+        description: Create Engine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: engines-engine-id
+      path: /engines/{engine-id}
+      operations:
+      - name: getengine
+        method: GET
+        description: Get Engine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+      - name: updateengine
+        method: PUT
+        description: Update Engine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteengine
+        method: DELETE
+        description: Delete Engine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+    - name: engines-engine-id-credential
+      path: /engines/{engine-id}/credential
+      operations:
+      - name: getenginecredential
+        method: GET
+        description: Get Engine Credential
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+      - name: regenerateenginecredential
+        method: PUT
+        description: Regenerate Engine Credential
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteenginecredential
+        method: DELETE
+        description: Delete Engine Credential
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+    - name: engines-engine-id-upgrade
+      path: /engines/{engine-id}/upgrade
+      operations:
+      - name: upgradeengine
+        method: POST
+        description: Upgrade Engine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: engine-id
+          in: path
+          type: string
+          description: path parameter engine-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-engines-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Engines. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/engines
+      name: engines
+      description: REST surface for engines.
+      operations:
+      - method: GET
+        name: getengines
+        description: Get Engines
+        call: insightappsec-engines.getengines
+        with:
+          pageConfig: rest.pageConfig
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createengine
+        description: Create Engine
+        call: insightappsec-engines.createengine
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/engines/{engine-id}
+      name: engines-engine-id
+      description: REST surface for engines-engine-id.
+      operations:
+      - method: GET
+        name: getengine
+        description: Get Engine
+        call: insightappsec-engines.getengine
+        with:
+          engine-id: rest.engine-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateengine
+        description: Update Engine
+        call: insightappsec-engines.updateengine
+        with:
+          engine-id: rest.engine-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteengine
+        description: Delete Engine
+        call: insightappsec-engines.deleteengine
+        with:
+          engine-id: rest.engine-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/engines/{engine-id}/credential
+      name: engines-engine-id-credential
+      description: REST surface for engines-engine-id-credential.
+      operations:
+      - method: GET
+        name: getenginecredential
+        description: Get Engine Credential
+        call: insightappsec-engines.getenginecredential
+        with:
+          engine-id: rest.engine-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: regenerateenginecredential
+        description: Regenerate Engine Credential
+        call: insightappsec-engines.regenerateenginecredential
+        with:
+          engine-id: rest.engine-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteenginecredential
+        description: Delete Engine Credential
+        call: insightappsec-engines.deleteenginecredential
+        with:
+          engine-id: rest.engine-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/engines/{engine-id}/upgrade
+      name: engines-engine-id-upgrade
+      description: REST surface for engines-engine-id-upgrade.
+      operations:
+      - method: POST
+        name: upgradeengine
+        description: Upgrade Engine
+        call: insightappsec-engines.upgradeengine
+        with:
+          engine-id: rest.engine-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-engines-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Engines. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getengines
+      description: Get Engines
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-engines.getengines
+      with:
+        pageConfig: tools.pageConfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createengine
+      description: Create Engine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-engines.createengine
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getengine
+      description: Get Engine
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-engines.getengine
+      with:
+        engine-id: tools.engine-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateengine
+      description: Update Engine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-engines.updateengine
+      with:
+        engine-id: tools.engine-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteengine
+      description: Delete Engine
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-engines.deleteengine
+      with:
+        engine-id: tools.engine-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getenginecredential
+      description: Get Engine Credential
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-engines.getenginecredential
+      with:
+        engine-id: tools.engine-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-regenerateenginecredential
+      description: Regenerate Engine Credential
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-engines.regenerateenginecredential
+      with:
+        engine-id: tools.engine-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteenginecredential
+      description: Delete Engine Credential
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-engines.deleteenginecredential
+      with:
+        engine-id: tools.engine-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-upgradeengine
+      description: Upgrade Engine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-engines.upgradeengine
+      with:
+        engine-id: tools.engine-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

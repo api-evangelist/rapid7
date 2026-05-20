@@ -1,0 +1,149 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Open GitHub Security Advisories for InsightAppSec findings
+  description: When InsightAppSec discovers a vulnerability in a deployed app, file (or update) a GitHub repository security advisory in the owning team's repo so AppSec findings live alongside the code that needs to change.
+  tags:
+  - Rapid7
+  - Integration
+  - Code security
+  - github
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    GITHUB_API_KEY: GITHUB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: apps
+      path: /apps
+      operations:
+      - name: listapps
+        method: GET
+        description: List InsightAppSec apps to map back to repos.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: apps-app-id
+      path: /apps/{app-id}
+      operations:
+      - name: getapp
+        method: GET
+        description: Get an InsightAppSec app for the advisory body.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: Path parameter app-id.
+          required: true
+  - type: http
+    namespace: github
+    baseUri: https://api.github.com
+    description: GitHub REST API operations consumed by this integration.
+    resources:
+    - name: repos-owner-repo-security-advisories
+      path: /repos/{owner}/{repo}/security-advisories
+      operations:
+      - name: createrepositoryadvisory
+        method: POST
+        description: 'GitHub REST API: createRepositoryAdvisory'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: repos-owner-repo-security-advisories-ghsa-id
+      path: /repos/{owner}/{repo}/security-advisories/{ghsa_id}
+      operations:
+      - name: updaterepositoryadvisory
+        method: PATCH
+        description: 'GitHub REST API: updateRepositoryAdvisory'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: ghsa_id
+          in: path
+          type: string
+          description: Path parameter ghsa_id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-github-mcp
+    description: MCP adapter for the rapid7-github integration.
+    tools:
+    - name: rapid7_github
+      description: Execute the rapid7 github integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-github-rest
+    port: 8080
+    description: REST adapter for the rapid7-github integration.
+    resources:
+    - path: /rapid7-github
+      name: rapid7-github
+      description: REST surface for the rapid7-github integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-github integration.
+        call: rapid7_github
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

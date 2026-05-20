@@ -1,0 +1,594 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — Report
+  description: 'InsightVM API — Report. 13 operations. Lead operation: Report Formats. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Report
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-report
+    baseUri: https://localhost:3780
+    description: InsightVM API — Report business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3-report-formats
+      path: /api/3/report_formats
+      operations:
+      - name: getreportformats
+        method: GET
+        description: Report Formats
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-report-templates
+      path: /api/3/report_templates
+      operations:
+      - name: getreporttemplates
+        method: GET
+        description: Report Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-report-templates-id
+      path: /api/3/report_templates/{id}
+      operations:
+      - name: getreporttemplate
+        method: GET
+        description: Report Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the report template;
+          required: true
+    - name: api-3-reports
+      path: /api/3/reports
+      operations:
+      - name: getreports
+        method: GET
+        description: Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: The index of the page (zero-based) to retrieve.
+        - name: size
+          in: query
+          type: integer
+          description: The number of records per page to retrieve.
+        - name: sort
+          in: query
+          type: array
+          description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+      - name: createreport
+        method: POST
+        description: Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: report
+          in: body
+          type: string
+          description: The specification of a report configuration.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-reports-id
+      path: /api/3/reports/{id}
+      operations:
+      - name: getreport
+        method: GET
+        description: Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+      - name: updatereport
+        method: PUT
+        description: Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+        - name: report
+          in: body
+          type: string
+          description: The specification of a report configuration.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletereport
+        method: DELETE
+        description: Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+    - name: api-3-reports-id-generate
+      path: /api/3/reports/{id}/generate
+      operations:
+      - name: generatereport
+        method: POST
+        description: Report Generation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-reports-id-history
+      path: /api/3/reports/{id}/history
+      operations:
+      - name: getreportinstances
+        method: GET
+        description: Report Histories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+    - name: api-3-reports-id-history-instance
+      path: /api/3/reports/{id}/history/{instance}
+      operations:
+      - name: getreportinstance
+        method: GET
+        description: Report History
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+        - name: instance
+          in: path
+          type: string
+          description: The identifier of the report instance.
+          required: true
+      - name: deletereportinstance
+        method: DELETE
+        description: Report History
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+        - name: instance
+          in: path
+          type: string
+          description: The identifier of the report instance.
+          required: true
+    - name: api-3-reports-id-history-instance-output
+      path: /api/3/reports/{id}/history/{instance}/output
+      operations:
+      - name: downloadreport
+        method: GET
+        description: Report Download
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the report.
+          required: true
+        - name: instance
+          in: path
+          type: string
+          description: The identifier of the report instance.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-report-rest
+    port: 8080
+    description: REST adapter for InsightVM API — Report. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3/report_formats
+      name: api-3-report-formats
+      description: REST surface for api-3-report-formats.
+      operations:
+      - method: GET
+        name: getreportformats
+        description: Report Formats
+        call: insightvm-console-swagger-report.getreportformats
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/report_templates
+      name: api-3-report-templates
+      description: REST surface for api-3-report-templates.
+      operations:
+      - method: GET
+        name: getreporttemplates
+        description: Report Templates
+        call: insightvm-console-swagger-report.getreporttemplates
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/report_templates/{id}
+      name: api-3-report-templates-id
+      description: REST surface for api-3-report-templates-id.
+      operations:
+      - method: GET
+        name: getreporttemplate
+        description: Report Template
+        call: insightvm-console-swagger-report.getreporttemplate
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports
+      name: api-3-reports
+      description: REST surface for api-3-reports.
+      operations:
+      - method: GET
+        name: getreports
+        description: Reports
+        call: insightvm-console-swagger-report.getreports
+        with:
+          page: rest.page
+          size: rest.size
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createreport
+        description: Reports
+        call: insightvm-console-swagger-report.createreport
+        with:
+          report: rest.report
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports/{id}
+      name: api-3-reports-id
+      description: REST surface for api-3-reports-id.
+      operations:
+      - method: GET
+        name: getreport
+        description: Report
+        call: insightvm-console-swagger-report.getreport
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatereport
+        description: Report
+        call: insightvm-console-swagger-report.updatereport
+        with:
+          id: rest.id
+          report: rest.report
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletereport
+        description: Report
+        call: insightvm-console-swagger-report.deletereport
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports/{id}/generate
+      name: api-3-reports-id-generate
+      description: REST surface for api-3-reports-id-generate.
+      operations:
+      - method: POST
+        name: generatereport
+        description: Report Generation
+        call: insightvm-console-swagger-report.generatereport
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports/{id}/history
+      name: api-3-reports-id-history
+      description: REST surface for api-3-reports-id-history.
+      operations:
+      - method: GET
+        name: getreportinstances
+        description: Report Histories
+        call: insightvm-console-swagger-report.getreportinstances
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports/{id}/history/{instance}
+      name: api-3-reports-id-history-instance
+      description: REST surface for api-3-reports-id-history-instance.
+      operations:
+      - method: GET
+        name: getreportinstance
+        description: Report History
+        call: insightvm-console-swagger-report.getreportinstance
+        with:
+          id: rest.id
+          instance: rest.instance
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletereportinstance
+        description: Report History
+        call: insightvm-console-swagger-report.deletereportinstance
+        with:
+          id: rest.id
+          instance: rest.instance
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/reports/{id}/history/{instance}/output
+      name: api-3-reports-id-history-instance-output
+      description: REST surface for api-3-reports-id-history-instance-output.
+      operations:
+      - method: GET
+        name: downloadreport
+        description: Report Download
+        call: insightvm-console-swagger-report.downloadreport
+        with:
+          id: rest.id
+          instance: rest.instance
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-report-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — Report. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getreportformats
+      description: Report Formats
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreportformats
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreporttemplates
+      description: Report Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreporttemplates
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreporttemplate
+      description: Report Template
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreporttemplate
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreports
+      description: Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreports
+      with:
+        page: tools.page
+        size: tools.size
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createreport
+      description: Reports
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-report.createreport
+      with:
+        report: tools.report
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreport
+      description: Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreport
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatereport
+      description: Report
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.updatereport
+      with:
+        id: tools.id
+        report: tools.report
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletereport
+      description: Report
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-report.deletereport
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-generatereport
+      description: Report Generation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-report.generatereport
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreportinstances
+      description: Report Histories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreportinstances
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getreportinstance
+      description: Report History
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.getreportinstance
+      with:
+        id: tools.id
+        instance: tools.instance
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletereportinstance
+      description: Report History
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-report.deletereportinstance
+      with:
+        id: tools.id
+        instance: tools.instance
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-downloadreport
+      description: Report Download
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-report.downloadreport
+      with:
+        id: tools.id
+        instance: tools.instance
+      outputParameters:
+      - type: object
+        mapping: $.

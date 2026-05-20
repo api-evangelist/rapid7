@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stream Rapid7 InsightIDR alerts into Microsoft Sentinel
+  description: Forward InsightIDR investigations and alerts into a Microsoft Sentinel custom log table so analysts working in Sentinel as their primary SIEM still see Rapid7 detections in their hunting queries and analytics rules.
+  tags:
+  - Rapid7
+  - Integration
+  - SIEM
+  - microsoft-sentinel
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    MICROSOFT_SENTINEL_API_KEY: MICROSOFT_SENTINEL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List InsightIDR investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: idr-v1-investigations-id-alerts
+      path: /idr/v1/investigations/{id}/alerts
+      operations:
+      - name: listinvestigationalerts
+        method: GET
+        description: List alerts attached to investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  - type: http
+    namespace: microsoft-sentinel
+    baseUri: https://yourworkspace.ods.opinsights.azure.com
+    description: Microsoft Sentinel Logs Ingestion API operations consumed by this integration.
+    resources:
+    - name: api-logs
+      path: /api/logs
+      operations:
+      - name: postlogs
+        method: POST
+        description: 'Microsoft Sentinel Logs Ingestion API: postLogs'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-microsoft-sentinel-mcp
+    description: MCP adapter for the rapid7-microsoft-sentinel integration.
+    tools:
+    - name: rapid7_microsoft_sentinel
+      description: Execute the rapid7 microsoft sentinel integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-microsoft-sentinel-rest
+    port: 8080
+    description: REST adapter for the rapid7-microsoft-sentinel integration.
+    resources:
+    - path: /rapid7-microsoft-sentinel
+      name: rapid7-microsoft-sentinel
+      description: REST surface for the rapid7-microsoft-sentinel integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-microsoft-sentinel integration.
+        call: rapid7_microsoft_sentinel
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

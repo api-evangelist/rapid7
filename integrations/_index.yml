@@ -1,0 +1,65 @@
+- slug: rapid7-splunk
+  label: Stream Rapid7 InsightIDR investigations into Splunk
+  partner: splunk
+  category: SIEM
+  use_case: When an InsightIDR investigation is opened or updated, forward the investigation record, status, and associated alerts to Splunk via HEC so security teams can correlate with the rest of their telemetry and pivot from a unified SIEM view.
+- slug: rapid7-datadog
+  label: Forward Rapid7 InsightVM vulnerability findings into Datadog
+  partner: datadog
+  category: Observability
+  use_case: For each new or changed InsightVM vulnerability finding on an asset, emit a Datadog event tagged by asset, severity, and CVE so SREs and platform teams see vuln signal next to their infra telemetry without leaving Datadog.
+- slug: rapid7-servicenow
+  label: Open ServiceNow incidents for InsightIDR investigations
+  partner: servicenow
+  category: ITSM
+  use_case: When an InsightIDR investigation is created with high priority, auto-open a ServiceNow incident with the investigation summary, assignee, and a link back to InsightIDR so SOC handoffs to IT operations are deterministic.
+- slug: rapid7-jira
+  label: Create Jira tickets for InsightVM remediation projects
+  partner: jira
+  category: ITSM
+  use_case: For each InsightVM remediation project task, create a corresponding Jira issue in the right project and component so platform and dev teams work vuln remediation through their existing ticketing flow.
+- slug: rapid7-pagerduty
+  label: Page on-call from Rapid7 InsightIDR critical investigations
+  partner: pagerduty
+  category: On-call
+  use_case: When an InsightIDR investigation crosses a critical severity threshold, create a PagerDuty incident on the SOC on-call service with deep links and a high urgency so responders are paged in seconds, not minutes.
+- slug: rapid7-slack
+  label: Post Rapid7 security alerts to Slack channels
+  partner: slack
+  category: Collaboration
+  use_case: Push high-signal Rapid7 events (new critical InsightVM vuln on a crown-jewel asset, new InsightIDR investigation, InsightAppSec vulnerable finding) to the right Slack channel with a tight summary and a deep link back so the security team triages in chat.
+- slug: rapid7-github
+  label: Open GitHub Security Advisories for InsightAppSec findings
+  partner: github
+  category: Code security
+  use_case: When InsightAppSec discovers a vulnerability in a deployed app, file (or update) a GitHub repository security advisory in the owning team's repo so AppSec findings live alongside the code that needs to change.
+- slug: rapid7-snyk
+  label: Reconcile Rapid7 InsightAppSec findings with Snyk projects
+  partner: snyk
+  category: Code security
+  use_case: For each InsightAppSec app, look up the matching Snyk project and merge runtime findings with SCA findings so AppSec leads see one prioritized backlog instead of two siloed lists.
+- slug: rapid7-aws-security-hub
+  label: Forward Rapid7 InsightVM findings into AWS Security Hub
+  partner: aws-security-hub
+  category: Cloud security
+  use_case: Convert InsightVM vulnerability findings on AWS-tagged assets into ASFF (AWS Security Finding Format) records in Security Hub so cloud security engineers see Rapid7 signal alongside GuardDuty, Inspector, and Macie findings.
+- slug: rapid7-microsoft-sentinel
+  label: Stream Rapid7 InsightIDR alerts into Microsoft Sentinel
+  partner: microsoft-sentinel
+  category: SIEM
+  use_case: Forward InsightIDR investigations and alerts into a Microsoft Sentinel custom log table so analysts working in Sentinel as their primary SIEM still see Rapid7 detections in their hunting queries and analytics rules.
+- slug: rapid7-okta
+  label: Enrich Rapid7 InsightIDR investigations with Okta user context
+  partner: okta
+  category: Identity
+  use_case: For each user-linked InsightIDR investigation, pull the matching Okta user profile, group membership, and recent sign-in events so analysts have rich identity context inline with the investigation.
+- slug: rapid7-anthropic
+  label: Summarize Rapid7 InsightIDR investigations with Claude
+  partner: anthropic
+  category: AI assist
+  use_case: For each open InsightIDR investigation, send the investigation context, alerts, and comments to Claude to produce a concise SOC-grade summary plus next-step recommendation, written back as a comment so analysts get a triage head start.
+- slug: rapid7-snowflake
+  label: Land Rapid7 InsightVM assets and vulnerabilities in Snowflake
+  partner: snowflake
+  category: Data warehouse
+  use_case: Stream InsightVM assets, vulnerabilities, and remediation status into Snowflake so vuln management metrics, MTTR dashboards, and exec reporting join cleanly with the rest of the company's analytics models.

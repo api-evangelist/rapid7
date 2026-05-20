@@ -1,0 +1,296 @@
+# Curated top Rapid7 integrations grouped by category.
+# Each entry becomes one Naftiko capability YAML in integrations/.
+# Categories reflect the systems-of-record that vuln management,
+# SIEM, and SOC teams routinely pair with the Rapid7 Insight Platform
+# (InsightVM, InsightIDR, InsightAppSec).
+
+# SIEM / Observability (2)
+- partner: splunk
+  name: Stream Rapid7 InsightIDR investigations into Splunk
+  category: SIEM
+  use_case: When an InsightIDR investigation is opened or updated, forward the investigation record, status, and associated alerts to Splunk via HEC so security teams can correlate with the rest of their telemetry and pivot from a unified SIEM view.
+  partner_baseUri: https://yourorg.splunkcloud.com
+  partner_api: Splunk HTTP Event Collector
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List InsightIDR investigations.
+    - method: GET
+      path: /idr/v1/investigations/{id}/alerts
+      name: listInvestigationAlerts
+      description: List alerts attached to an investigation.
+  partner_ops:
+    - method: POST
+      path: /services/collector/event
+      name: postEvent
+
+- partner: datadog
+  name: Forward Rapid7 InsightVM vulnerability findings into Datadog
+  category: Observability
+  use_case: For each new or changed InsightVM vulnerability finding on an asset, emit a Datadog event tagged by asset, severity, and CVE so SREs and platform teams see vuln signal next to their infra telemetry without leaving Datadog.
+  partner_baseUri: https://api.datadoghq.com
+  partner_api: Datadog Events API
+  provider_ops:
+    - method: GET
+      path: /api/3/assets
+      name: listAssets
+      description: List InsightVM assets.
+    - method: GET
+      path: /api/3/assets/{id}/vulnerabilities
+      name: listAssetVulnerabilities
+      description: List vulnerabilities on a given asset.
+  partner_ops:
+    - method: POST
+      path: /api/v1/events
+      name: createEvent
+
+# ITSM (2)
+- partner: servicenow
+  name: Open ServiceNow incidents for InsightIDR investigations
+  category: ITSM
+  use_case: When an InsightIDR investigation is created with high priority, auto-open a ServiceNow incident with the investigation summary, assignee, and a link back to InsightIDR so SOC handoffs to IT operations are deterministic.
+  partner_baseUri: https://yourinstance.service-now.com
+  partner_api: ServiceNow Table API
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List investigations to mirror.
+    - method: PUT
+      path: /idr/v1/investigations/{id}/assignee
+      name: setInvestigationAssignee
+      description: Write the ServiceNow assignee back into IDR.
+  partner_ops:
+    - method: POST
+      path: /api/now/table/incident
+      name: createIncident
+    - method: PATCH
+      path: /api/now/table/incident/{sys_id}
+      name: updateIncident
+
+- partner: jira
+  name: Create Jira tickets for InsightVM remediation projects
+  category: ITSM
+  use_case: For each InsightVM remediation project task, create a corresponding Jira issue in the right project and component so platform and dev teams work vuln remediation through their existing ticketing flow.
+  partner_baseUri: https://yourorg.atlassian.net
+  partner_api: Jira Cloud REST API
+  provider_ops:
+    - method: GET
+      path: /api/3/remediation_projects
+      name: listRemediationProjects
+      description: List InsightVM remediation projects.
+    - method: GET
+      path: /api/3/remediation_projects/{id}
+      name: getRemediationProject
+      description: Get a remediation project and its scope.
+  partner_ops:
+    - method: POST
+      path: /rest/api/3/issue
+      name: createIssue
+    - method: PUT
+      path: /rest/api/3/issue/{issueIdOrKey}
+      name: updateIssue
+
+# Alerting / On-call (2)
+- partner: pagerduty
+  name: Page on-call from Rapid7 InsightIDR critical investigations
+  category: On-call
+  use_case: When an InsightIDR investigation crosses a critical severity threshold, create a PagerDuty incident on the SOC on-call service with deep links and a high urgency so responders are paged in seconds, not minutes.
+  partner_baseUri: https://api.pagerduty.com
+  partner_api: PagerDuty Events API v2
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List InsightIDR investigations.
+    - method: GET
+      path: /idr/v1/investigations/{id}/alerts
+      name: listInvestigationAlerts
+      description: Get alerts attached to the investigation.
+  partner_ops:
+    - method: POST
+      path: /v2/enqueue
+      name: triggerEvent
+
+- partner: slack
+  name: Post Rapid7 security alerts to Slack channels
+  category: Collaboration
+  use_case: Push high-signal Rapid7 events (new critical InsightVM vuln on a crown-jewel asset, new InsightIDR investigation, InsightAppSec vulnerable finding) to the right Slack channel with a tight summary and a deep link back so the security team triages in chat.
+  partner_baseUri: https://slack.com
+  partner_api: Slack Web API
+  provider_ops:
+    - method: GET
+      path: /api/3/assets
+      name: listAssets
+      description: List vulnerable assets for the channel summary.
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List investigations for the channel summary.
+  partner_ops:
+    - method: POST
+      path: /api/chat.postMessage
+      name: postMessage
+
+# Code / AppSec (2)
+- partner: github
+  name: Open GitHub Security Advisories for InsightAppSec findings
+  category: Code security
+  use_case: When InsightAppSec discovers a vulnerability in a deployed app, file (or update) a GitHub repository security advisory in the owning team's repo so AppSec findings live alongside the code that needs to change.
+  partner_baseUri: https://api.github.com
+  partner_api: GitHub REST API
+  provider_ops:
+    - method: GET
+      path: /apps
+      name: listApps
+      description: List InsightAppSec apps to map back to repos.
+    - method: GET
+      path: /apps/{app-id}
+      name: getApp
+      description: Get an InsightAppSec app for the advisory body.
+  partner_ops:
+    - method: POST
+      path: /repos/{owner}/{repo}/security-advisories
+      name: createRepositoryAdvisory
+    - method: PATCH
+      path: /repos/{owner}/{repo}/security-advisories/{ghsa_id}
+      name: updateRepositoryAdvisory
+
+- partner: snyk
+  name: Reconcile Rapid7 InsightAppSec findings with Snyk projects
+  category: Code security
+  use_case: For each InsightAppSec app, look up the matching Snyk project and merge runtime findings with SCA findings so AppSec leads see one prioritized backlog instead of two siloed lists.
+  partner_baseUri: https://api.snyk.io
+  partner_api: Snyk REST API
+  provider_ops:
+    - method: GET
+      path: /apps
+      name: listApps
+      description: List InsightAppSec apps.
+    - method: GET
+      path: /apps/{app-id}/tags
+      name: listAppTags
+      description: Pull tags to align with Snyk targets.
+  partner_ops:
+    - method: GET
+      path: /rest/orgs/{org_id}/projects
+      name: listProjects
+    - method: GET
+      path: /rest/orgs/{org_id}/projects/{project_id}/issues
+      name: listProjectIssues
+
+# Cloud security (2)
+- partner: aws-security-hub
+  name: Forward Rapid7 InsightVM findings into AWS Security Hub
+  category: Cloud security
+  use_case: Convert InsightVM vulnerability findings on AWS-tagged assets into ASFF (AWS Security Finding Format) records in Security Hub so cloud security engineers see Rapid7 signal alongside GuardDuty, Inspector, and Macie findings.
+  partner_baseUri: https://securityhub.us-east-1.amazonaws.com
+  partner_api: AWS Security Hub API
+  provider_ops:
+    - method: GET
+      path: /api/3/assets
+      name: listAssets
+      description: List InsightVM assets (filter for AWS-tagged).
+    - method: GET
+      path: /api/3/assets/{id}/vulnerabilities
+      name: listAssetVulnerabilities
+      description: List vulnerabilities on the asset.
+  partner_ops:
+    - method: POST
+      path: /findings/import
+      name: batchImportFindings
+
+- partner: microsoft-sentinel
+  name: Stream Rapid7 InsightIDR alerts into Microsoft Sentinel
+  category: SIEM
+  use_case: Forward InsightIDR investigations and alerts into a Microsoft Sentinel custom log table so analysts working in Sentinel as their primary SIEM still see Rapid7 detections in their hunting queries and analytics rules.
+  partner_baseUri: https://yourworkspace.ods.opinsights.azure.com
+  partner_api: Microsoft Sentinel Logs Ingestion API
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List InsightIDR investigations.
+    - method: GET
+      path: /idr/v1/investigations/{id}/alerts
+      name: listInvestigationAlerts
+      description: List alerts attached to investigations.
+  partner_ops:
+    - method: POST
+      path: /api/logs
+      name: postLogs
+
+# Identity (1)
+- partner: okta
+  name: Enrich Rapid7 InsightIDR investigations with Okta user context
+  category: Identity
+  use_case: For each user-linked InsightIDR investigation, pull the matching Okta user profile, group membership, and recent sign-in events so analysts have rich identity context inline with the investigation.
+  partner_baseUri: https://yourorg.okta.com
+  partner_api: Okta API
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List InsightIDR investigations.
+    - method: GET
+      path: /idr/v1/accounts/_search
+      name: searchAccounts
+      description: Search user accounts referenced by investigations.
+  partner_ops:
+    - method: GET
+      path: /api/v1/users/{userId}
+      name: getUser
+    - method: GET
+      path: /api/v1/users/{userId}/logs
+      name: getUserLogs
+
+# AI assist (1)
+- partner: anthropic
+  name: Summarize Rapid7 InsightIDR investigations with Claude
+  category: AI assist
+  use_case: For each open InsightIDR investigation, send the investigation context, alerts, and comments to Claude to produce a concise SOC-grade summary plus next-step recommendation, written back as a comment so analysts get a triage head start.
+  partner_baseUri: https://api.anthropic.com
+  partner_api: Anthropic Messages API
+  provider_ops:
+    - method: GET
+      path: /idr/v1/investigations
+      name: listInvestigations
+      description: List open InsightIDR investigations.
+    - method: GET
+      path: /idr/v1/investigations/{id}/alerts
+      name: listInvestigationAlerts
+      description: Pull alerts attached to the investigation.
+    - method: POST
+      path: /idr/v1/comments
+      name: createComment
+      description: Write the Claude-generated summary back as a comment.
+  partner_ops:
+    - method: POST
+      path: /v1/messages
+      name: createMessage
+
+# Data warehouse (1)
+- partner: snowflake
+  name: Land Rapid7 InsightVM assets and vulnerabilities in Snowflake
+  category: Data warehouse
+  use_case: Stream InsightVM assets, vulnerabilities, and remediation status into Snowflake so vuln management metrics, MTTR dashboards, and exec reporting join cleanly with the rest of the company's analytics models.
+  partner_baseUri: https://yourorg.snowflakecomputing.com
+  partner_api: Snowflake SQL API
+  provider_ops:
+    - method: GET
+      path: /api/3/assets
+      name: listAssets
+      description: List InsightVM assets.
+    - method: GET
+      path: /api/3/vulnerabilities
+      name: listVulnerabilities
+      description: List the vulnerability catalog.
+    - method: GET
+      path: /api/3/remediation_projects
+      name: listRemediationProjects
+      description: List remediation projects.
+  partner_ops:
+    - method: POST
+      path: /api/v2/statements
+      name: submitStatement

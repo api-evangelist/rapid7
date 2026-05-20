@@ -1,0 +1,413 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Scans
+  description: 'InsightAppSec API — Scans. 9 operations. Lead operation: Get Scans. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Scans
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-scans
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Scans business capability. Self-contained, no shared references.
+    resources:
+    - name: scans
+      path: /scans
+      operations:
+      - name: getscans
+        method: GET
+        description: Get Scans
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: submitscan
+        method: POST
+        description: Submit Scan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: scans-scan-id
+      path: /scans/{scan-id}
+      operations:
+      - name: getscan
+        method: GET
+        description: Get Scan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+      - name: deletescan
+        method: DELETE
+        description: Delete Scan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+    - name: scans-scan-id-action
+      path: /scans/{scan-id}/action
+      operations:
+      - name: getscanaction
+        method: GET
+        description: Get Scan Action
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+      - name: submitscanaction
+        method: PUT
+        description: Submit Scan Action
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: scans-scan-id-engine-events
+      path: /scans/{scan-id}/engine-events
+      operations:
+      - name: getscanengineevents
+        method: GET
+        description: Get Scan Engine Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+    - name: scans-scan-id-execution-details
+      path: /scans/{scan-id}/execution-details
+      operations:
+      - name: getscanexecutiondetails
+        method: GET
+        description: Get Scan Execution Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+    - name: scans-scan-id-platform-events
+      path: /scans/{scan-id}/platform-events
+      operations:
+      - name: getscanplatformevents
+        method: GET
+        description: Get Scan Platform Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scan-id
+          in: path
+          type: string
+          description: path parameter scan-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-scans-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Scans. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/scans
+      name: scans
+      description: REST surface for scans.
+      operations:
+      - method: GET
+        name: getscans
+        description: Get Scans
+        call: insightappsec-scans.getscans
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: submitscan
+        description: Submit Scan
+        call: insightappsec-scans.submitscan
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/{scan-id}
+      name: scans-scan-id
+      description: REST surface for scans-scan-id.
+      operations:
+      - method: GET
+        name: getscan
+        description: Get Scan
+        call: insightappsec-scans.getscan
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletescan
+        description: Delete Scan
+        call: insightappsec-scans.deletescan
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/{scan-id}/action
+      name: scans-scan-id-action
+      description: REST surface for scans-scan-id-action.
+      operations:
+      - method: GET
+        name: getscanaction
+        description: Get Scan Action
+        call: insightappsec-scans.getscanaction
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: submitscanaction
+        description: Submit Scan Action
+        call: insightappsec-scans.submitscanaction
+        with:
+          scan-id: rest.scan-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/{scan-id}/engine-events
+      name: scans-scan-id-engine-events
+      description: REST surface for scans-scan-id-engine-events.
+      operations:
+      - method: GET
+        name: getscanengineevents
+        description: Get Scan Engine Events
+        call: insightappsec-scans.getscanengineevents
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/{scan-id}/execution-details
+      name: scans-scan-id-execution-details
+      description: REST surface for scans-scan-id-execution-details.
+      operations:
+      - method: GET
+        name: getscanexecutiondetails
+        description: Get Scan Execution Details
+        call: insightappsec-scans.getscanexecutiondetails
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/{scan-id}/platform-events
+      name: scans-scan-id-platform-events
+      description: REST surface for scans-scan-id-platform-events.
+      operations:
+      - method: GET
+        name: getscanplatformevents
+        description: Get Scan Platform Events
+        call: insightappsec-scans.getscanplatformevents
+        with:
+          scan-id: rest.scan-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-scans-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Scans. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getscans
+      description: Get Scans
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscans
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-submitscan
+      description: Submit Scan
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-scans.submitscan
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscan
+      description: Get Scan
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscan
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletescan
+      description: Delete Scan
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-scans.deletescan
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscanaction
+      description: Get Scan Action
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscanaction
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-submitscanaction
+      description: Submit Scan Action
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.submitscanaction
+      with:
+        scan-id: tools.scan-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscanengineevents
+      description: Get Scan Engine Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscanengineevents
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscanexecutiondetails
+      description: Get Scan Execution Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscanexecutiondetails
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getscanplatformevents
+      description: Get Scan Platform Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-scans.getscanplatformevents
+      with:
+        scan-id: tools.scan-id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,244 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightIDR API — Investigations
+  description: 'InsightIDR API — Investigations. 4 operations. Lead operation: List investigations. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Investigations
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightidr-investigations
+    baseUri: https://{region}.api.insight.rapid7.com
+    description: InsightIDR API — Investigations business capability. Self-contained, no shared references.
+    resources:
+    - name: idr-v1-investigations-id-status-status
+      path: /idr/v1/investigations/{id}/status/{status}
+      operations:
+      - name: setstatus
+        method: PUT
+        description: Set the status of an investigation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID or RRN of the investigation to change the status of.
+          required: true
+        - name: status
+          in: path
+          type: string
+          description: The new status for the investigation (case-insensitive).
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: idr-v1-investigations-id-assignee
+      path: /idr/v1/investigations/{id}/assignee
+      operations:
+      - name: assignusertoinvestigation
+        method: PUT
+        description: Assign user to investigation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID or RRN of the investigation to assign the user to.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: idr-v1-investigations-bulk-close
+      path: /idr/v1/investigations/bulk_close
+      operations:
+      - name: bulkcloseinvestigations
+        method: POST
+        description: Close investigations in bulk
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List investigations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0.
+        - name: size
+          in: query
+          type: integer
+          description: The optional size of the page to retrieve. Must be an integer greater than 0 or less then or equal to 1000.
+        - name: statuses
+          in: query
+          type: string
+          description: An optional, comma-separated set of investigation statuses. Only investigations whose status matches one of the entries in the list will be returned.  If this parameter, is omitted investigations with
+        - name: start_time
+          in: query
+          type: string
+          description: An optional, ISO-formatted timestamp. Only investigations whose createTime is after this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be retu
+        - name: end_time
+          in: query
+          type: string
+          description: An optional, ISO-formatted timestamp. Only investigations whose createTime is before this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be ret
+  exposes:
+  - type: rest
+    namespace: insightidr-investigations-rest
+    port: 8080
+    description: REST adapter for InsightIDR API — Investigations. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/idr/v1/investigations/{id}/status/{status}
+      name: idr-v1-investigations-id-status-status
+      description: REST surface for idr-v1-investigations-id-status-status.
+      operations:
+      - method: PUT
+        name: setstatus
+        description: Set the status of an investigation
+        call: insightidr-investigations.setstatus
+        with:
+          id: rest.id
+          status: rest.status
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/investigations/{id}/assignee
+      name: idr-v1-investigations-id-assignee
+      description: REST surface for idr-v1-investigations-id-assignee.
+      operations:
+      - method: PUT
+        name: assignusertoinvestigation
+        description: Assign user to investigation
+        call: insightidr-investigations.assignusertoinvestigation
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/investigations/bulk_close
+      name: idr-v1-investigations-bulk-close
+      description: REST surface for idr-v1-investigations-bulk-close.
+      operations:
+      - method: POST
+        name: bulkcloseinvestigations
+        description: Close investigations in bulk
+        call: insightidr-investigations.bulkcloseinvestigations
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/idr/v1/investigations
+      name: idr-v1-investigations
+      description: REST surface for idr-v1-investigations.
+      operations:
+      - method: GET
+        name: listinvestigations
+        description: List investigations
+        call: insightidr-investigations.listinvestigations
+        with:
+          index: rest.index
+          size: rest.size
+          statuses: rest.statuses
+          start_time: rest.start_time
+          end_time: rest.end_time
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightidr-investigations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightIDR API — Investigations. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-setstatus
+      description: Set the status of an investigation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightidr-investigations.setstatus
+      with:
+        id: tools.id
+        status: tools.status
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-assignusertoinvestigation
+      description: Assign user to investigation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightidr-investigations.assignusertoinvestigation
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-bulkcloseinvestigations
+      description: Close investigations in bulk
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightidr-investigations.bulkcloseinvestigations
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-listinvestigations
+      description: List investigations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightidr-investigations.listinvestigations
+      with:
+        index: tools.index
+        size: tools.size
+        statuses: tools.statuses
+        start_time: tools.start_time
+        end_time: tools.end_time
+      outputParameters:
+      - type: object
+        mapping: $.

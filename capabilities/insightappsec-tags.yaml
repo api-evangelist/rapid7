@@ -1,0 +1,257 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Tags
+  description: 'InsightAppSec API — Tags. 5 operations. Lead operation: Get Tags. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Tags
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-tags
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Tags business capability. Self-contained, no shared references.
+    resources:
+    - name: tags
+      path: /tags
+      operations:
+      - name: gettags
+        method: GET
+        description: Get Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: root
+          in: query
+          type: boolean
+          description: query parameter root.
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createtag
+        method: POST
+        description: Create Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tags-tag-id
+      path: /tags/{tag-id}
+      operations:
+      - name: gettag
+        method: GET
+        description: Get Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag-id
+          in: path
+          type: string
+          description: path parameter tag-id.
+          required: true
+      - name: updatetag
+        method: PUT
+        description: Update Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag-id
+          in: path
+          type: string
+          description: path parameter tag-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletetag
+        method: DELETE
+        description: Delete Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag-id
+          in: path
+          type: string
+          description: path parameter tag-id.
+          required: true
+        - name: cascade
+          in: query
+          type: boolean
+          description: query parameter cascade.
+  exposes:
+  - type: rest
+    namespace: insightappsec-tags-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Tags. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/tags
+      name: tags
+      description: REST surface for tags.
+      operations:
+      - method: GET
+        name: gettags
+        description: Get Tags
+        call: insightappsec-tags.gettags
+        with:
+          root: rest.root
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtag
+        description: Create Tag
+        call: insightappsec-tags.createtag
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tags/{tag-id}
+      name: tags-tag-id
+      description: REST surface for tags-tag-id.
+      operations:
+      - method: GET
+        name: gettag
+        description: Get Tag
+        call: insightappsec-tags.gettag
+        with:
+          tag-id: rest.tag-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetag
+        description: Update Tag
+        call: insightappsec-tags.updatetag
+        with:
+          tag-id: rest.tag-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetag
+        description: Delete Tag
+        call: insightappsec-tags.deletetag
+        with:
+          tag-id: rest.tag-id
+          cascade: rest.cascade
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-tags-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Tags. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-gettags
+      description: Get Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-tags.gettags
+      with:
+        root: tools.root
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createtag
+      description: Create Tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-tags.createtag
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettag
+      description: Get Tag
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-tags.gettag
+      with:
+        tag-id: tools.tag-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatetag
+      description: Update Tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-tags.updatetag
+      with:
+        tag-id: tools.tag-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletetag
+      description: Delete Tag
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-tags.deletetag
+      with:
+        tag-id: tools.tag-id
+        cascade: tools.cascade
+      outputParameters:
+      - type: object
+        mapping: $.

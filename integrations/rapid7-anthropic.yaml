@@ -1,0 +1,124 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Summarize Rapid7 InsightIDR investigations with Claude
+  description: For each open InsightIDR investigation, send the investigation context, alerts, and comments to Claude to produce a concise SOC-grade summary plus next-step recommendation, written back as a comment so analysts get a triage head start.
+  tags:
+  - Rapid7
+  - Integration
+  - AI assist
+  - anthropic
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+    ANTHROPIC_API_KEY: ANTHROPIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rapid7
+    baseUri: https://us.api.insight.rapid7.com
+    description: Rapid7 API operations consumed by this integration.
+    resources:
+    - name: idr-v1-investigations
+      path: /idr/v1/investigations
+      operations:
+      - name: listinvestigations
+        method: GET
+        description: List open InsightIDR investigations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: idr-v1-investigations-id-alerts
+      path: /idr/v1/investigations/{id}/alerts
+      operations:
+      - name: listinvestigationalerts
+        method: GET
+        description: Pull alerts attached to the investigation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+    - name: idr-v1-comments
+      path: /idr/v1/comments
+      operations:
+      - name: createcomment
+        method: POST
+        description: Write the Claude-generated summary back as a comment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: anthropic
+    baseUri: https://api.anthropic.com
+    description: Anthropic Messages API operations consumed by this integration.
+    resources:
+    - name: v1-messages
+      path: /v1/messages
+      operations:
+      - name: createmessage
+        method: POST
+        description: 'Anthropic Messages API: createMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: rapid7-anthropic-mcp
+    description: MCP adapter for the rapid7-anthropic integration.
+    tools:
+    - name: rapid7_anthropic
+      description: Execute the rapid7 anthropic integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: rapid7-anthropic-rest
+    port: 8080
+    description: REST adapter for the rapid7-anthropic integration.
+    resources:
+    - path: /rapid7-anthropic
+      name: rapid7-anthropic
+      description: REST surface for the rapid7-anthropic integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the rapid7-anthropic integration.
+        call: rapid7_anthropic
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,462 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Attack Templates
+  description: 'InsightAppSec API — Attack Templates. 10 operations. Lead operation: Get Attack Templates. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Attack Templates
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-attack-templates
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Attack Templates business capability. Self-contained, no shared references.
+    resources:
+    - name: attack-templates
+      path: /attack-templates
+      operations:
+      - name: getattacktemplates
+        method: GET
+        description: Get Attack Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createattacktemplate
+        method: POST
+        description: Create Attack Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: attack-templates-module-configs
+      path: /attack-templates/module-configs
+      operations:
+      - name: getattackmodulesconfigs
+        method: GET
+        description: Get Attack Modules Configs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: attack-templates-attack-template-id
+      path: /attack-templates/{attack-template-id}
+      operations:
+      - name: getattacktemplate
+        method: GET
+        description: Get Attack Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+      - name: updateattacktemplate
+        method: PUT
+        description: Update Attack Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteattacktemplate
+        method: DELETE
+        description: Delete Attack Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+    - name: attack-templates-attack-template-id-modules
+      path: /attack-templates/{attack-template-id}/modules
+      operations:
+      - name: getattackmodules
+        method: GET
+        description: Get Attack Modules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+      - name: createattackmodule
+        method: POST
+        description: Create Attack Module
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: attack-templates-attack-template-id-modules-attack-module-id
+      path: /attack-templates/{attack-template-id}/modules/{attack-module-id}
+      operations:
+      - name: updateattackmodule
+        method: PUT
+        description: Update Attack Module
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+        - name: attack-module-id
+          in: path
+          type: string
+          description: path parameter attack-module-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteattackmodule
+        method: DELETE
+        description: Delete Attack Module
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attack-template-id
+          in: path
+          type: string
+          description: path parameter attack-template-id.
+          required: true
+        - name: attack-module-id
+          in: path
+          type: string
+          description: path parameter attack-module-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-attack-templates-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Attack Templates. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/attack-templates
+      name: attack-templates
+      description: REST surface for attack-templates.
+      operations:
+      - method: GET
+        name: getattacktemplates
+        description: Get Attack Templates
+        call: insightappsec-attack-templates.getattacktemplates
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createattacktemplate
+        description: Create Attack Template
+        call: insightappsec-attack-templates.createattacktemplate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/attack-templates/module-configs
+      name: attack-templates-module-configs
+      description: REST surface for attack-templates-module-configs.
+      operations:
+      - method: GET
+        name: getattackmodulesconfigs
+        description: Get Attack Modules Configs
+        call: insightappsec-attack-templates.getattackmodulesconfigs
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/attack-templates/{attack-template-id}
+      name: attack-templates-attack-template-id
+      description: REST surface for attack-templates-attack-template-id.
+      operations:
+      - method: GET
+        name: getattacktemplate
+        description: Get Attack Template
+        call: insightappsec-attack-templates.getattacktemplate
+        with:
+          attack-template-id: rest.attack-template-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateattacktemplate
+        description: Update Attack Template
+        call: insightappsec-attack-templates.updateattacktemplate
+        with:
+          attack-template-id: rest.attack-template-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteattacktemplate
+        description: Delete Attack Template
+        call: insightappsec-attack-templates.deleteattacktemplate
+        with:
+          attack-template-id: rest.attack-template-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/attack-templates/{attack-template-id}/modules
+      name: attack-templates-attack-template-id-modules
+      description: REST surface for attack-templates-attack-template-id-modules.
+      operations:
+      - method: GET
+        name: getattackmodules
+        description: Get Attack Modules
+        call: insightappsec-attack-templates.getattackmodules
+        with:
+          attack-template-id: rest.attack-template-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createattackmodule
+        description: Create Attack Module
+        call: insightappsec-attack-templates.createattackmodule
+        with:
+          attack-template-id: rest.attack-template-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/attack-templates/{attack-template-id}/modules/{attack-module-id}
+      name: attack-templates-attack-template-id-modules-attack-module-id
+      description: REST surface for attack-templates-attack-template-id-modules-attack-module-id.
+      operations:
+      - method: PUT
+        name: updateattackmodule
+        description: Update Attack Module
+        call: insightappsec-attack-templates.updateattackmodule
+        with:
+          attack-template-id: rest.attack-template-id
+          attack-module-id: rest.attack-module-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteattackmodule
+        description: Delete Attack Module
+        call: insightappsec-attack-templates.deleteattackmodule
+        with:
+          attack-template-id: rest.attack-template-id
+          attack-module-id: rest.attack-module-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-attack-templates-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Attack Templates. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getattacktemplates
+      description: Get Attack Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.getattacktemplates
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createattacktemplate
+      description: Create Attack Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-attack-templates.createattacktemplate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getattackmodulesconfigs
+      description: Get Attack Modules Configs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.getattackmodulesconfigs
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getattacktemplate
+      description: Get Attack Template
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.getattacktemplate
+      with:
+        attack-template-id: tools.attack-template-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateattacktemplate
+      description: Update Attack Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.updateattacktemplate
+      with:
+        attack-template-id: tools.attack-template-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteattacktemplate
+      description: Delete Attack Template
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-attack-templates.deleteattacktemplate
+      with:
+        attack-template-id: tools.attack-template-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getattackmodules
+      description: Get Attack Modules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.getattackmodules
+      with:
+        attack-template-id: tools.attack-template-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createattackmodule
+      description: Create Attack Module
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-attack-templates.createattackmodule
+      with:
+        attack-template-id: tools.attack-template-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateattackmodule
+      description: Update Attack Module
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-attack-templates.updateattackmodule
+      with:
+        attack-template-id: tools.attack-template-id
+        attack-module-id: tools.attack-module-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteattackmodule
+      description: Delete Attack Module
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-attack-templates.deleteattackmodule
+      with:
+        attack-template-id: tools.attack-template-id
+        attack-module-id: tools.attack-module-id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,511 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Apps
+  description: 'InsightAppSec API — Apps. 11 operations. Lead operation: Get Apps. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Apps
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-apps
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Apps business capability. Self-contained, no shared references.
+    resources:
+    - name: apps
+      path: /apps
+      operations:
+      - name: getapps
+        method: GET
+        description: Get Apps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createapp
+        method: POST
+        description: Create App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apps-app-id
+      path: /apps/{app-id}
+      operations:
+      - name: getapp
+        method: GET
+        description: Get App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+      - name: updateapp
+        method: PUT
+        description: Update App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteapp
+        method: DELETE
+        description: Delete App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+    - name: apps-app-id-tags
+      path: /apps/{app-id}/tags
+      operations:
+      - name: getapptags
+        method: GET
+        description: Get App Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+      - name: addapptag
+        method: POST
+        description: Add App Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apps-app-id-tags-tag-id
+      path: /apps/{app-id}/tags/{tag-id}
+      operations:
+      - name: removeapptag
+        method: DELETE
+        description: Remove App Tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: tag-id
+          in: path
+          type: string
+          description: path parameter tag-id.
+          required: true
+    - name: apps-app-id-users
+      path: /apps/{app-id}/users
+      operations:
+      - name: getappusers
+        method: GET
+        description: Get App Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+      - name: addappuser
+        method: POST
+        description: Add App User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apps-app-id-users-user-id
+      path: /apps/{app-id}/users/{user-id}
+      operations:
+      - name: removeappuser
+        method: DELETE
+        description: Remove App User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: app-id
+          in: path
+          type: string
+          description: path parameter app-id.
+          required: true
+        - name: user-id
+          in: path
+          type: string
+          description: path parameter user-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-apps-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Apps. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apps
+      name: apps
+      description: REST surface for apps.
+      operations:
+      - method: GET
+        name: getapps
+        description: Get Apps
+        call: insightappsec-apps.getapps
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapp
+        description: Create App
+        call: insightappsec-apps.createapp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}
+      name: apps-app-id
+      description: REST surface for apps-app-id.
+      operations:
+      - method: GET
+        name: getapp
+        description: Get App
+        call: insightappsec-apps.getapp
+        with:
+          app-id: rest.app-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateapp
+        description: Update App
+        call: insightappsec-apps.updateapp
+        with:
+          app-id: rest.app-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapp
+        description: Delete App
+        call: insightappsec-apps.deleteapp
+        with:
+          app-id: rest.app-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}/tags
+      name: apps-app-id-tags
+      description: REST surface for apps-app-id-tags.
+      operations:
+      - method: GET
+        name: getapptags
+        description: Get App Tags
+        call: insightappsec-apps.getapptags
+        with:
+          app-id: rest.app-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addapptag
+        description: Add App Tag
+        call: insightappsec-apps.addapptag
+        with:
+          app-id: rest.app-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}/tags/{tag-id}
+      name: apps-app-id-tags-tag-id
+      description: REST surface for apps-app-id-tags-tag-id.
+      operations:
+      - method: DELETE
+        name: removeapptag
+        description: Remove App Tag
+        call: insightappsec-apps.removeapptag
+        with:
+          app-id: rest.app-id
+          tag-id: rest.tag-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}/users
+      name: apps-app-id-users
+      description: REST surface for apps-app-id-users.
+      operations:
+      - method: GET
+        name: getappusers
+        description: Get App Users
+        call: insightappsec-apps.getappusers
+        with:
+          app-id: rest.app-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addappuser
+        description: Add App User
+        call: insightappsec-apps.addappuser
+        with:
+          app-id: rest.app-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apps/{app-id}/users/{user-id}
+      name: apps-app-id-users-user-id
+      description: REST surface for apps-app-id-users-user-id.
+      operations:
+      - method: DELETE
+        name: removeappuser
+        description: Remove App User
+        call: insightappsec-apps.removeappuser
+        with:
+          app-id: rest.app-id
+          user-id: rest.user-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-apps-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Apps. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getapps
+      description: Get Apps
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-apps.getapps
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createapp
+      description: Create App
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-apps.createapp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getapp
+      description: Get App
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-apps.getapp
+      with:
+        app-id: tools.app-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateapp
+      description: Update App
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-apps.updateapp
+      with:
+        app-id: tools.app-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteapp
+      description: Delete App
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-apps.deleteapp
+      with:
+        app-id: tools.app-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getapptags
+      description: Get App Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-apps.getapptags
+      with:
+        app-id: tools.app-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addapptag
+      description: Add App Tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-apps.addapptag
+      with:
+        app-id: tools.app-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeapptag
+      description: Remove App Tag
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-apps.removeapptag
+      with:
+        app-id: tools.app-id
+        tag-id: tools.tag-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getappusers
+      description: Get App Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-apps.getappusers
+      with:
+        app-id: tools.app-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addappuser
+      description: Add App User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-apps.addappuser
+      with:
+        app-id: tools.app-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeappuser
+      description: Remove App User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-apps.removeappuser
+      with:
+        app-id: tools.app-id
+        user-id: tools.user-id
+      outputParameters:
+      - type: object
+        mapping: $.

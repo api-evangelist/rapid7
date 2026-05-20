@@ -1,0 +1,245 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Blackouts
+  description: 'InsightAppSec API — Blackouts. 5 operations. Lead operation: Get Blackouts. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Blackouts
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-blackouts
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Blackouts business capability. Self-contained, no shared references.
+    resources:
+    - name: blackouts
+      path: /blackouts
+      operations:
+      - name: getblackouts
+        method: GET
+        description: Get Blackouts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createblackout
+        method: POST
+        description: Create Blackout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: blackouts-blackout-id
+      path: /blackouts/{blackout-id}
+      operations:
+      - name: getblackout
+        method: GET
+        description: Get Blackout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: blackout-id
+          in: path
+          type: string
+          description: path parameter blackout-id.
+          required: true
+      - name: updateblackout
+        method: PUT
+        description: Update Blackout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: blackout-id
+          in: path
+          type: string
+          description: path parameter blackout-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteblackout
+        method: DELETE
+        description: Delete Blackout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: blackout-id
+          in: path
+          type: string
+          description: path parameter blackout-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-blackouts-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Blackouts. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/blackouts
+      name: blackouts
+      description: REST surface for blackouts.
+      operations:
+      - method: GET
+        name: getblackouts
+        description: Get Blackouts
+        call: insightappsec-blackouts.getblackouts
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createblackout
+        description: Create Blackout
+        call: insightappsec-blackouts.createblackout
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/blackouts/{blackout-id}
+      name: blackouts-blackout-id
+      description: REST surface for blackouts-blackout-id.
+      operations:
+      - method: GET
+        name: getblackout
+        description: Get Blackout
+        call: insightappsec-blackouts.getblackout
+        with:
+          blackout-id: rest.blackout-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateblackout
+        description: Update Blackout
+        call: insightappsec-blackouts.updateblackout
+        with:
+          blackout-id: rest.blackout-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteblackout
+        description: Delete Blackout
+        call: insightappsec-blackouts.deleteblackout
+        with:
+          blackout-id: rest.blackout-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-blackouts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Blackouts. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getblackouts
+      description: Get Blackouts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-blackouts.getblackouts
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createblackout
+      description: Create Blackout
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-blackouts.createblackout
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getblackout
+      description: Get Blackout
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-blackouts.getblackout
+      with:
+        blackout-id: tools.blackout-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateblackout
+      description: Update Blackout
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-blackouts.updateblackout
+      with:
+        blackout-id: tools.blackout-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteblackout
+      description: Delete Blackout
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-blackouts.deleteblackout
+      with:
+        blackout-id: tools.blackout-id
+      outputParameters:
+      - type: object
+        mapping: $.

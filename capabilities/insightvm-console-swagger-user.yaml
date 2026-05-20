@@ -1,0 +1,1408 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightVM API — User
+  description: 'InsightVM API — User. 32 operations. Lead operation: Authentication Sources. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - User
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightvm-console-swagger-user
+    baseUri: https://localhost:3780
+    description: InsightVM API — User business capability. Self-contained, no shared references.
+    resources:
+    - name: api-3-authentication-sources
+      path: /api/3/authentication_sources
+      operations:
+      - name: getauthenticationsources
+        method: GET
+        description: Authentication Sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-authentication-sources-id
+      path: /api/3/authentication_sources/{id}
+      operations:
+      - name: getauthenticationsource
+        method: GET
+        description: Authentication Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the authentication source.
+          required: true
+    - name: api-3-authentication-sources-id-users
+      path: /api/3/authentication_sources/{id}/users
+      operations:
+      - name: getauthenticationsourceusers
+        method: GET
+        description: Authentication Source Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the authentication source.
+          required: true
+    - name: api-3-privileges
+      path: /api/3/privileges
+      operations:
+      - name: getprivileges
+        method: GET
+        description: Privileges
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-privileges-id
+      path: /api/3/privileges/{id}
+      operations:
+      - name: getprivilege
+        method: GET
+        description: Privilege
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the privilege.
+          required: true
+    - name: api-3-privileges-id-users
+      path: /api/3/privileges/{id}/users
+      operations:
+      - name: getuserswithprivilege
+        method: GET
+        description: Users With Privilege
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the privilege.
+          required: true
+    - name: api-3-roles
+      path: /api/3/roles
+      operations:
+      - name: getroles
+        method: GET
+        description: Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: api-3-roles-id
+      path: /api/3/roles/{id}
+      operations:
+      - name: getrole
+        method: GET
+        description: Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the role.
+          required: true
+      - name: updaterole
+        method: PUT
+        description: Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role
+          in: body
+          type: string
+          description: The details of the role.
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the role.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleterole
+        method: DELETE
+        description: Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the role.
+          required: true
+    - name: api-3-roles-id-users
+      path: /api/3/roles/{id}/users
+      operations:
+      - name: getroleusers
+        method: GET
+        description: Users With Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The identifier of the role.
+          required: true
+    - name: api-3-users
+      path: /api/3/users
+      operations:
+      - name: getusers
+        method: GET
+        description: Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: The index of the page (zero-based) to retrieve.
+        - name: size
+          in: query
+          type: integer
+          description: The number of records per page to retrieve.
+        - name: sort
+          in: query
+          type: array
+          description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+      - name: createuser
+        method: POST
+        description: Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user
+          in: body
+          type: string
+          description: The details of the user.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-3-users-id
+      path: /api/3/users/{id}
+      operations:
+      - name: getuser
+        method: GET
+        description: User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+      - name: updateuser
+        method: PUT
+        description: User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: user
+          in: body
+          type: string
+          description: The details of the user.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteuser
+        method: DELETE
+        description: User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+    - name: api-3-users-id-2fa
+      path: /api/3/users/{id}/2FA
+      operations:
+      - name: gettwofactorauthenticationkey
+        method: GET
+        description: Two-Factor Authentication
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+      - name: regeneratetwofactorauthentication
+        method: POST
+        description: Two-Factor Authentication
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: settwofactorauthentication
+        method: PUT
+        description: Two-Factor Authentication
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: token
+          in: body
+          type: string
+          description: The authentication token seed (key) to use for the user.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-3-users-id-asset-groups
+      path: /api/3/users/{id}/asset_groups
+      operations:
+      - name: getuserassetgroups
+        method: GET
+        description: Asset Groups Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+      - name: setuserassetgroups
+        method: PUT
+        description: Asset Groups Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: assetGroupIds
+          in: body
+          type: array
+          description: The identifiers of the asset groups to grant the user access to. Ignored if user has access to `allAssetGroups`.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removealluserassetgroups
+        method: DELETE
+        description: Asset Groups Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+    - name: api-3-users-id-asset-groups-assetgroupid
+      path: /api/3/users/{id}/asset_groups/{assetGroupId}
+      operations:
+      - name: adduserassetgroup
+        method: PUT
+        description: Asset Group Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: assetGroupId
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeuserassetgroup
+        method: DELETE
+        description: Asset Group Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: assetGroupId
+          in: path
+          type: integer
+          description: The identifier of the asset group.
+          required: true
+    - name: api-3-users-id-lock
+      path: /api/3/users/{id}/lock
+      operations:
+      - name: unlockuser
+        method: DELETE
+        description: Unlock Account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+    - name: api-3-users-id-password
+      path: /api/3/users/{id}/password
+      operations:
+      - name: resetpassword
+        method: PUT
+        description: Password Reset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: password
+          in: body
+          type: string
+          description: The new password to set.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-3-users-id-privileges
+      path: /api/3/users/{id}/privileges
+      operations:
+      - name: getuserprivileges
+        method: GET
+        description: User Privileges
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+    - name: api-3-users-id-sites
+      path: /api/3/users/{id}/sites
+      operations:
+      - name: getusersites
+        method: GET
+        description: Sites Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+      - name: setusersites
+        method: PUT
+        description: Sites Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: siteIds
+          in: body
+          type: array
+          description: The identifiers of the sites to grant the user access to. Ignored if the user has access to `allSites`.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeallusersites
+        method: DELETE
+        description: Sites Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+    - name: api-3-users-id-sites-siteid
+      path: /api/3/users/{id}/sites/{siteId}
+      operations:
+      - name: addusersite
+        method: PUT
+        description: Site Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: siteId
+          in: path
+          type: integer
+          description: The identifier of the site.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: removeusersite
+        method: DELETE
+        description: Site Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: The identifier of the user.
+          required: true
+        - name: siteId
+          in: path
+          type: integer
+          description: The identifier of the site.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightvm-console-swagger-user-rest
+    port: 8080
+    description: REST adapter for InsightVM API — User. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/3/authentication_sources
+      name: api-3-authentication-sources
+      description: REST surface for api-3-authentication-sources.
+      operations:
+      - method: GET
+        name: getauthenticationsources
+        description: Authentication Sources
+        call: insightvm-console-swagger-user.getauthenticationsources
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/authentication_sources/{id}
+      name: api-3-authentication-sources-id
+      description: REST surface for api-3-authentication-sources-id.
+      operations:
+      - method: GET
+        name: getauthenticationsource
+        description: Authentication Source
+        call: insightvm-console-swagger-user.getauthenticationsource
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/authentication_sources/{id}/users
+      name: api-3-authentication-sources-id-users
+      description: REST surface for api-3-authentication-sources-id-users.
+      operations:
+      - method: GET
+        name: getauthenticationsourceusers
+        description: Authentication Source Users
+        call: insightvm-console-swagger-user.getauthenticationsourceusers
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/privileges
+      name: api-3-privileges
+      description: REST surface for api-3-privileges.
+      operations:
+      - method: GET
+        name: getprivileges
+        description: Privileges
+        call: insightvm-console-swagger-user.getprivileges
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/privileges/{id}
+      name: api-3-privileges-id
+      description: REST surface for api-3-privileges-id.
+      operations:
+      - method: GET
+        name: getprivilege
+        description: Privilege
+        call: insightvm-console-swagger-user.getprivilege
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/privileges/{id}/users
+      name: api-3-privileges-id-users
+      description: REST surface for api-3-privileges-id-users.
+      operations:
+      - method: GET
+        name: getuserswithprivilege
+        description: Users With Privilege
+        call: insightvm-console-swagger-user.getuserswithprivilege
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/roles
+      name: api-3-roles
+      description: REST surface for api-3-roles.
+      operations:
+      - method: GET
+        name: getroles
+        description: Roles
+        call: insightvm-console-swagger-user.getroles
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/roles/{id}
+      name: api-3-roles-id
+      description: REST surface for api-3-roles-id.
+      operations:
+      - method: GET
+        name: getrole
+        description: Role
+        call: insightvm-console-swagger-user.getrole
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updaterole
+        description: Role
+        call: insightvm-console-swagger-user.updaterole
+        with:
+          role: rest.role
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterole
+        description: Role
+        call: insightvm-console-swagger-user.deleterole
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/roles/{id}/users
+      name: api-3-roles-id-users
+      description: REST surface for api-3-roles-id-users.
+      operations:
+      - method: GET
+        name: getroleusers
+        description: Users With Role
+        call: insightvm-console-swagger-user.getroleusers
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users
+      name: api-3-users
+      description: REST surface for api-3-users.
+      operations:
+      - method: GET
+        name: getusers
+        description: Users
+        call: insightvm-console-swagger-user.getusers
+        with:
+          page: rest.page
+          size: rest.size
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createuser
+        description: Users
+        call: insightvm-console-swagger-user.createuser
+        with:
+          user: rest.user
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}
+      name: api-3-users-id
+      description: REST surface for api-3-users-id.
+      operations:
+      - method: GET
+        name: getuser
+        description: User
+        call: insightvm-console-swagger-user.getuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateuser
+        description: User
+        call: insightvm-console-swagger-user.updateuser
+        with:
+          id: rest.id
+          user: rest.user
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteuser
+        description: User
+        call: insightvm-console-swagger-user.deleteuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/2FA
+      name: api-3-users-id-2fa
+      description: REST surface for api-3-users-id-2fa.
+      operations:
+      - method: GET
+        name: gettwofactorauthenticationkey
+        description: Two-Factor Authentication
+        call: insightvm-console-swagger-user.gettwofactorauthenticationkey
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: regeneratetwofactorauthentication
+        description: Two-Factor Authentication
+        call: insightvm-console-swagger-user.regeneratetwofactorauthentication
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: settwofactorauthentication
+        description: Two-Factor Authentication
+        call: insightvm-console-swagger-user.settwofactorauthentication
+        with:
+          id: rest.id
+          token: rest.token
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/asset_groups
+      name: api-3-users-id-asset-groups
+      description: REST surface for api-3-users-id-asset-groups.
+      operations:
+      - method: GET
+        name: getuserassetgroups
+        description: Asset Groups Access
+        call: insightvm-console-swagger-user.getuserassetgroups
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setuserassetgroups
+        description: Asset Groups Access
+        call: insightvm-console-swagger-user.setuserassetgroups
+        with:
+          id: rest.id
+          assetGroupIds: rest.assetGroupIds
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removealluserassetgroups
+        description: Asset Groups Access
+        call: insightvm-console-swagger-user.removealluserassetgroups
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/asset_groups/{assetGroupId}
+      name: api-3-users-id-asset-groups-assetgroupid
+      description: REST surface for api-3-users-id-asset-groups-assetgroupid.
+      operations:
+      - method: PUT
+        name: adduserassetgroup
+        description: Asset Group Access
+        call: insightvm-console-swagger-user.adduserassetgroup
+        with:
+          id: rest.id
+          assetGroupId: rest.assetGroupId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeuserassetgroup
+        description: Asset Group Access
+        call: insightvm-console-swagger-user.removeuserassetgroup
+        with:
+          id: rest.id
+          assetGroupId: rest.assetGroupId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/lock
+      name: api-3-users-id-lock
+      description: REST surface for api-3-users-id-lock.
+      operations:
+      - method: DELETE
+        name: unlockuser
+        description: Unlock Account
+        call: insightvm-console-swagger-user.unlockuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/password
+      name: api-3-users-id-password
+      description: REST surface for api-3-users-id-password.
+      operations:
+      - method: PUT
+        name: resetpassword
+        description: Password Reset
+        call: insightvm-console-swagger-user.resetpassword
+        with:
+          id: rest.id
+          password: rest.password
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/privileges
+      name: api-3-users-id-privileges
+      description: REST surface for api-3-users-id-privileges.
+      operations:
+      - method: GET
+        name: getuserprivileges
+        description: User Privileges
+        call: insightvm-console-swagger-user.getuserprivileges
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/sites
+      name: api-3-users-id-sites
+      description: REST surface for api-3-users-id-sites.
+      operations:
+      - method: GET
+        name: getusersites
+        description: Sites Access
+        call: insightvm-console-swagger-user.getusersites
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setusersites
+        description: Sites Access
+        call: insightvm-console-swagger-user.setusersites
+        with:
+          id: rest.id
+          siteIds: rest.siteIds
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeallusersites
+        description: Sites Access
+        call: insightvm-console-swagger-user.removeallusersites
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/3/users/{id}/sites/{siteId}
+      name: api-3-users-id-sites-siteid
+      description: REST surface for api-3-users-id-sites-siteid.
+      operations:
+      - method: PUT
+        name: addusersite
+        description: Site Access
+        call: insightvm-console-swagger-user.addusersite
+        with:
+          id: rest.id
+          siteId: rest.siteId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: removeusersite
+        description: Site Access
+        call: insightvm-console-swagger-user.removeusersite
+        with:
+          id: rest.id
+          siteId: rest.siteId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightvm-console-swagger-user-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightVM API — User. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-getauthenticationsources
+      description: Authentication Sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getauthenticationsources
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getauthenticationsource
+      description: Authentication Source
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getauthenticationsource
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getauthenticationsourceusers
+      description: Authentication Source Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getauthenticationsourceusers
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getprivileges
+      description: Privileges
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getprivileges
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getprivilege
+      description: Privilege
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getprivilege
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getuserswithprivilege
+      description: Users With Privilege
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getuserswithprivilege
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getroles
+      description: Roles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getroles
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getrole
+      description: Role
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getrole
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updaterole
+      description: Role
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.updaterole
+      with:
+        role: tools.role
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleterole
+      description: Role
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.deleterole
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getroleusers
+      description: Users With Role
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getroleusers
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getusers
+      description: Users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getusers
+      with:
+        page: tools.page
+        size: tools.size
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createuser
+      description: Users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-user.createuser
+      with:
+        user: tools.user
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getuser
+      description: User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updateuser
+      description: User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.updateuser
+      with:
+        id: tools.id
+        user: tools.user
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deleteuser
+      description: User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.deleteuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettwofactorauthenticationkey
+      description: Two-Factor Authentication
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.gettwofactorauthenticationkey
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-regeneratetwofactorauthentication
+      description: Two-Factor Authentication
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightvm-console-swagger-user.regeneratetwofactorauthentication
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-settwofactorauthentication
+      description: Two-Factor Authentication
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.settwofactorauthentication
+      with:
+        id: tools.id
+        token: tools.token
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getuserassetgroups
+      description: Asset Groups Access
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getuserassetgroups
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-setuserassetgroups
+      description: Asset Groups Access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.setuserassetgroups
+      with:
+        id: tools.id
+        assetGroupIds: tools.assetGroupIds
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removealluserassetgroups
+      description: Asset Groups Access
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.removealluserassetgroups
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-adduserassetgroup
+      description: Asset Group Access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.adduserassetgroup
+      with:
+        id: tools.id
+        assetGroupId: tools.assetGroupId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeuserassetgroup
+      description: Asset Group Access
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.removeuserassetgroup
+      with:
+        id: tools.id
+        assetGroupId: tools.assetGroupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-unlockuser
+      description: Unlock Account
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.unlockuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-resetpassword
+      description: Password Reset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.resetpassword
+      with:
+        id: tools.id
+        password: tools.password
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getuserprivileges
+      description: User Privileges
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getuserprivileges
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-getusersites
+      description: Sites Access
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.getusersites
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-setusersites
+      description: Sites Access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.setusersites
+      with:
+        id: tools.id
+        siteIds: tools.siteIds
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeallusersites
+      description: Sites Access
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.removeallusersites
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-addusersite
+      description: Site Access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightvm-console-swagger-user.addusersite
+      with:
+        id: tools.id
+        siteId: tools.siteId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-removeusersite
+      description: Site Access
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightvm-console-swagger-user.removeusersite
+      with:
+        id: tools.id
+        siteId: tools.siteId
+      outputParameters:
+      - type: object
+        mapping: $.

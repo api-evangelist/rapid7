@@ -1,0 +1,245 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: InsightAppSec API — Targets
+  description: 'InsightAppSec API — Targets. 5 operations. Lead operation: Get Targets. Self-contained Naftiko capability covering one business surface.'
+  tags:
+  - Rapid7
+  - Targets
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    RAPID7_API_KEY: RAPID7_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: insightappsec-targets
+    baseUri: https://[region].api.insight.rapid7.com/ias/v1
+    description: InsightAppSec API — Targets business capability. Self-contained, no shared references.
+    resources:
+    - name: targets
+      path: /targets
+      operations:
+      - name: gettargets
+        method: GET
+        description: Get Targets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: index
+          in: query
+          type: integer
+          description: query parameter index.
+        - name: size
+          in: query
+          type: integer
+          description: query parameter size.
+        - name: sort
+          in: query
+          type: string
+          description: query parameter sort.
+        - name: page-token
+          in: query
+          type: string
+          description: query parameter page-token.
+      - name: createtarget
+        method: POST
+        description: Create Target
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: targets-target-id
+      path: /targets/{target-id}
+      operations:
+      - name: gettarget
+        method: GET
+        description: Get Target
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: target-id
+          in: path
+          type: string
+          description: path parameter target-id.
+          required: true
+      - name: updatetarget
+        method: PUT
+        description: Update Target
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: target-id
+          in: path
+          type: string
+          description: path parameter target-id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletetarget
+        method: DELETE
+        description: Delete Target
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: target-id
+          in: path
+          type: string
+          description: path parameter target-id.
+          required: true
+  exposes:
+  - type: rest
+    namespace: insightappsec-targets-rest
+    port: 8080
+    description: REST adapter for InsightAppSec API — Targets. One resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/targets
+      name: targets
+      description: REST surface for targets.
+      operations:
+      - method: GET
+        name: gettargets
+        description: Get Targets
+        call: insightappsec-targets.gettargets
+        with:
+          index: rest.index
+          size: rest.size
+          sort: rest.sort
+          page-token: rest.page-token
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtarget
+        description: Create Target
+        call: insightappsec-targets.createtarget
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/targets/{target-id}
+      name: targets-target-id
+      description: REST surface for targets-target-id.
+      operations:
+      - method: GET
+        name: gettarget
+        description: Get Target
+        call: insightappsec-targets.gettarget
+        with:
+          target-id: rest.target-id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatetarget
+        description: Update Target
+        call: insightappsec-targets.updatetarget
+        with:
+          target-id: rest.target-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetarget
+        description: Delete Target
+        call: insightappsec-targets.deletetarget
+        with:
+          target-id: rest.target-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: insightappsec-targets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for InsightAppSec API — Targets. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: rapid7-gettargets
+      description: Get Targets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-targets.gettargets
+      with:
+        index: tools.index
+        size: tools.size
+        sort: tools.sort
+        page-token: tools.page-token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-createtarget
+      description: Create Target
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: insightappsec-targets.createtarget
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-gettarget
+      description: Get Target
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: insightappsec-targets.gettarget
+      with:
+        target-id: tools.target-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-updatetarget
+      description: Update Target
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: insightappsec-targets.updatetarget
+      with:
+        target-id: tools.target-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rapid7-deletetarget
+      description: Delete Target
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: insightappsec-targets.deletetarget
+      with:
+        target-id: tools.target-id
+      outputParameters:
+      - type: object
+        mapping: $.
