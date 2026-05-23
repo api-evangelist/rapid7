@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Schedule",
+  "title": "Schedule",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Schedule",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Schedule",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "The enabled property of the Schedule"
+    },
+    "scan_config": {
+      "$ref": "#/components/schemas/RequiredIdResource"
+    },
+    "first_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The first start date and time of the Schedule"
+    },
+    "last_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last start date and time of the Schedule"
+    },
+    "frequency": {
+      "$ref": "#/components/schemas/frequency"
+    },
+    "rrule": {
+      "type": "string",
+      "description": "The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided."
+    }
+  },
+  "required": [
+    "enabled",
+    "first_start",
+    "name",
+    "scan_config"
+  ]
+}

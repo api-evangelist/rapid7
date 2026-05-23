@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ThreatUpdateResult",
+  "title": "ThreatUpdateResult",
+  "required": [
+    "threat"
+  ],
+  "type": "object",
+  "properties": {
+    "threat": {
+      "$ref": "#/components/schemas/Threat"
+    },
+    "rejected_indicators": {
+      "type": "array",
+      "description": "The list of indicators that have been rejected during the update.",
+      "example": [
+        "blacklisted",
+        "invalid"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CustomParameterFile",
+  "title": "CustomParameterFile",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Tag",
+  "title": "Tag",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Tag",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Tag",
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "creator": {
+      "$ref": "#/components/schemas/ReadOnlyIdResource"
+    },
+    "create_time": {
+      "type": "string",
+      "description": "The time the Tag was created",
+      "example": "2021-08-03T14:07:37",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SequenceRequest",
+  "title": "SequenceRequest",
+  "properties": {
+    "sequence_request_type": {
+      "type": "string",
+      "enum": [
+        "READ_FROM_CACHE",
+        "SEND",
+        "ATTACK"
+      ]
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

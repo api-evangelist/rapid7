@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FrameworkConfig",
+  "title": "FrameworkConfig",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "default_config_version": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "head": {
+      "type": "boolean"
+    },
+    "detection_regex": {
+      "type": "string"
+    },
+    "healthcheck_string": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "get_all_events_script": {
+      "type": "string"
+    },
+    "get_all_events_delay": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "get_version_string_script": {
+      "type": "string"
+    }
+  }
+}

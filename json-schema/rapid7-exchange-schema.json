@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Exchange",
+  "title": "Exchange",
+  "description": "The HTTP exchange executed as part of the attack",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Exchange",
+      "readOnly": true
+    },
+    "request": {
+      "type": "string",
+      "description": "The critical section of the request payload",
+      "readOnly": true
+    },
+    "response": {
+      "type": "string",
+      "description": "The critical section of the response payload",
+      "readOnly": true
+    }
+  },
+  "readOnly": true
+}

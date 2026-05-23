@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrawlerInitializationConfig",
+  "title": "CrawlerInitializationConfig",
+  "properties": {
+    "secure": {
+      "type": "boolean"
+    },
+    "host": {
+      "type": "string"
+    },
+    "port": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "version": {
+      "type": "string"
+    },
+    "browser_pool_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "track_progress": {
+      "type": "boolean"
+    },
+    "return_request": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "RAW_REQUEST_DATA",
+        "PROCESSED_REQUEST_DATA"
+      ]
+    },
+    "track_request": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "ENDPOINT_CALL",
+        "ENDPOINT_CALL_AND_RAW_REQUEST",
+        "ENDPOINT_CALL_AND_PROCESSED_REQUEST"
+      ]
+    },
+    "node_js_max_old_space_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "browser_idle_timeout_seconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "browser_close_after_request_count": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "browser_acquisition_timeout_minutes": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserSummaryV21",
+  "title": "UserSummaryV21",
+  "required": [
+    "name",
+    "rrn"
+  ],
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "type": "string",
+      "description": "The unique identifier for this user.",
+      "example": "rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for this user.",
+      "example": "John Doe"
+    }
+  },
+  "description": "The user this local account is associated with."
+}

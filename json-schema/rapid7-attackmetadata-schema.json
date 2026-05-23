@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttackMetadata",
+  "title": "AttackMetadata",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the attack",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the attack",
+      "readOnly": true
+    },
+    "class": {
+      "type": "string",
+      "description": "The class of the attack",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the attack",
+      "readOnly": true
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BrowserFormLoginConfig",
+  "title": "BrowserFormLoginConfig",
+  "properties": {
+    "use_alf": {
+      "type": "boolean"
+    },
+    "enable_alf_debug": {
+      "type": "boolean"
+    },
+    "enable_fallback": {
+      "type": "boolean"
+    },
+    "delay_before_alf_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "delay_after_alf_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "initial_navigate_event_duration": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "final_delay_event_duration": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "alf_data_file_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AlfDataFile"
+      }
+    }
+  }
+}

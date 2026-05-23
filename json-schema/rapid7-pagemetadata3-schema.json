@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PageMetadata3",
+  "title": "PageMetadata3",
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The 0 based index of the page retrieved. ",
+      "example": 0
+    },
+    "size": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The size of the page requested. ",
+      "example": 20
+    },
+    "total_pages": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of pages available with the given filter parameters. ",
+      "example": 1
+    },
+    "total_data": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The total number of results available with the given filter parameters. ",
+      "example": 15
+    }
+  },
+  "required": [
+    "index",
+    "size",
+    "total_data",
+    "total_pages"
+  ]
+}

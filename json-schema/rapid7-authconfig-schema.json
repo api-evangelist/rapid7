@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AuthConfig",
+  "title": "AuthConfig",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "FORM",
+        "MACRO",
+        "SESSION_TAKEOVER",
+        "SELENIUM",
+        "TRAFFIC",
+        "REMOTE_BOOTSTRAP"
+      ]
+    },
+    "http_auth": {
+      "type": "boolean"
+    },
+    "relogin_after_session_loss": {
+      "type": "boolean"
+    },
+    "logout_detection": {
+      "type": "boolean"
+    },
+    "assume_successful_login": {
+      "type": "boolean"
+    },
+    "verify_not_loggedin": {
+      "type": "boolean"
+    },
+    "postpone_login_action": {
+      "type": "boolean"
+    },
+    "warning_only_on_login_fail": {
+      "type": "boolean"
+    },
+    "create_non_authenticated_session": {
+      "type": "boolean"
+    },
+    "treat_failed_relogin_as_error": {
+      "type": "boolean"
+    },
+    "restart_proxy_before_relogin": {
+      "type": "boolean"
+    },
+    "template_login_macro": {
+      "type": "boolean"
+    },
+    "denylist_single_password_forms": {
+      "type": "boolean"
+    },
+    "denylist_multi_password_forms": {
+      "type": "boolean"
+    },
+    "reset_cookies": {
+      "type": "boolean"
+    },
+    "do_not_update_cookies_from_requests": {
+      "type": "boolean"
+    },
+    "username_form": {
+      "type": "string"
+    },
+    "password_form": {
+      "type": "string"
+    },
+    "username_http": {
+      "type": "string"
+    },
+    "password_http": {
+      "type": "string"
+    },
+    "auto_logon_security": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "login_link_regex": {
+      "type": "string"
+    },
+    "logged_in_regex": {
+      "type": "string"
+    },
+    "logged_in_header_regex": {
+      "type": "string"
+    },
+    "session_loss_regex": {
+      "type": "string"
+    },
+    "session_loss_header_regex": {
+      "type": "string"
+    },
+    "logout_link_regex": {
+      "type": "string"
+    },
+    "logout_post_body_regex": {
+      "type": "string"
+    },
+    "canary_page": {
+      "type": "string"
+    },
+    "session_loss_on_canary_page_regex": {
+      "type": "string"
+    },
+    "session_loss_on_canary_page_header_regex": {
+      "type": "string"
+    },
+    "session_cookie_regex": {
+      "type": "string"
+    },
+    "session_cookie_lifespan": {
+      "type": "number",
+      "format": "double"
+    },
+    "url_session_token_regex": {
+      "type": "string"
+    },
+    "post_session_token_regex": {
+      "type": "string"
+    },
+    "response_body_token_regex": {
+      "type": "string"
+    },
+    "second_response_body_token_regex": {
+      "type": "string"
+    },
+    "http_header_with_token_replacement": {
+      "type": "string"
+    },
+    "second_http_header_with_token_replacement": {
+      "type": "string"
+    },
+    "logout_detection_frequency": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "discovery_max_links": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "login_max_links": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "discovery_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "login_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_macro_relogin_attempts": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "discovery_prioritization": {
+      "type": "string",
+      "enum": [
+        "FIRST_IN_FIRST_OUT",
+        "SMART",
+        "DIRECTORY_BREADTH_FIRST",
+        "FOUND_BREADTH_FIRST",
+        "FOUND_DEPTH_FIRST",
+        "JUICY",
+        "LOGIN_FORM_DISCOVERY",
+        "LOGIN"
+      ]
+    },
+    "login_prioritization": {
+      "type": "string",
+      "enum": [
+        "FIRST_IN_FIRST_OUT",
+        "SMART",
+        "DIRECTORY_BREADTH_FIRST",
+        "FOUND_BREADTH_FIRST",
+        "FOUND_DEPTH_FIRST",
+        "JUICY",
+        "LOGIN_FORM_DISCOVERY",
+        "LOGIN"
+      ]
+    },
+    "remote_bootstrap_timeout_minutes": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "seed_link": {
+      "type": "string"
+    },
+    "discover_login_form": {
+      "type": "boolean"
+    },
+    "use_browser_form_login": {
+      "type": "boolean"
+    },
+    "use_single_browser": {
+      "type": "boolean"
+    },
+    "ping_frequency": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "ping_url": {
+      "type": "string"
+    },
+    "redact_log_files": {
+      "type": "boolean"
+    },
+    "scope_constraint_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeConstraint"
+      }
+    },
+    "http_auth_ext_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/HttpAuthExt"
+      }
+    },
+    "token_replacement_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenReplacement"
+      }
+    },
+    "hmac_config": {
+      "$ref": "#/components/schemas/HmacConfig"
+    },
+    "oauth_config": {
+      "$ref": "#/components/schemas/OauthConfig"
+    },
+    "msal_config": {
+      "$ref": "#/components/schemas/MsalConfig"
+    },
+    "macro_file": {
+      "$ref": "#/components/schemas/MacroFile"
+    },
+    "web_service_auth_config": {
+      "$ref": "#/components/schemas/WebServiceAuthConfig"
+    },
+    "selenium_file": {
+      "$ref": "#/components/schemas/SeleniumFile"
+    },
+    "traffic_file": {
+      "$ref": "#/components/schemas/TrafficFile"
+    },
+    "browser_form_login_config": {
+      "$ref": "#/components/schemas/BrowserFormLoginConfig"
+    },
+    "one_time_password_config": {
+      "$ref": "#/components/schemas/OneTimePasswordConfig"
+    },
+    "oauth": {
+      "type": "boolean"
+    }
+  }
+}

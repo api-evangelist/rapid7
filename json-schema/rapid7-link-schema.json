@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Link",
+  "title": "Link",
+  "properties": {
+    "rel": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "readOnly": true
+}

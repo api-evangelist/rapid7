@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RootCause",
+  "title": "RootCause",
+  "description": "A descriptor for the location of the Vulnerability",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The URL",
+      "readOnly": true
+    },
+    "parameter": {
+      "type": "string",
+      "description": "The parameter from the URL",
+      "readOnly": true
+    },
+    "method": {
+      "type": "string",
+      "description": "The HTTP method",
+      "readOnly": true
+    }
+  },
+  "readOnly": true
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UploadAttachmentRequest",
+  "title": "UploadAttachmentRequest",
+  "type": "object",
+  "properties": {
+    "filedata": {
+      "type": "array",
+      "description": "The list of files to upload as attachments.",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    }
+  }
+}

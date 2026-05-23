@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VarianceDocumentation",
+  "title": "VarianceDocumentation",
+  "properties": {
+    "references": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "description": "${public-api.docs.models.vulnerability.properties.variance-documentation.references}",
+        "readOnly": true
+      },
+      "description": "Reference to CWE (Common Weakness Enumeration)/CVE (Common Vulnerability Enumeration) documentation",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "The vulnerability description",
+      "readOnly": true
+    },
+    "recommendation": {
+      "type": "string",
+      "description": "How to fix or prevent the vulnerability",
+      "readOnly": true
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

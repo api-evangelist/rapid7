@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanSubmitter",
+  "title": "ScanSubmitter",
+  "description": "The submitter of the Scan",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of submitter",
+      "enum": [
+        "USER",
+        "SCHEDULE",
+        "ORGANIZATION"
+      ],
+      "readOnly": true
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the submitter",
+      "readOnly": true
+    }
+  },
+  "readOnly": true
+}

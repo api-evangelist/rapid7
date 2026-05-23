@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanConfig",
+  "title": "ScanConfig",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Scan Config",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Scan Config",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the Scan Config",
+      "maxLength": 2000,
+      "minLength": 0
+    },
+    "app": {
+      "$ref": "#/components/schemas/app"
+    },
+    "attack_template": {
+      "$ref": "#/components/schemas/attack_template"
+    },
+    "incremental": {
+      "type": "boolean",
+      "description": "A flag to enable incremental scanning"
+    },
+    "assignment": {
+      "$ref": "#/components/schemas/EngineAssignment"
+    },
+    "errors": {
+      "type": "array",
+      "description": "A list of errors that detail any current validation failures",
+      "items": {
+        "type": "string",
+        "description": "A list of errors that detail any current validation failures",
+        "readOnly": true
+      },
+      "readOnly": true,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "app",
+    "attack_template",
+    "name"
+  ]
+}

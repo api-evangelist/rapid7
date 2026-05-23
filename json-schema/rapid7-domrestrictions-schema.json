@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DomRestrictions",
+  "title": "DomRestrictions",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "initial_state": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "dom_element_restriction_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DomElementRestriction"
+      }
+    },
+    "scope_constraint_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeConstraint"
+      }
+    }
+  }
+}

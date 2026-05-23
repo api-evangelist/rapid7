@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Sort",
+  "title": "Sort",
+  "properties": {
+    "empty": {
+      "type": "boolean"
+    },
+    "unsorted": {
+      "type": "boolean"
+    },
+    "sorted": {
+      "type": "boolean"
+    }
+  }
+}

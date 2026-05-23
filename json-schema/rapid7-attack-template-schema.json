@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/attack_template",
+  "title": "attack_template",
+  "description": "The attack template that the Scan Config should use",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

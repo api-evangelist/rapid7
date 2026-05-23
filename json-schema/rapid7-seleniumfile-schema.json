@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SeleniumFile",
+  "title": "SeleniumFile",
+  "properties": {
+    "selenium_file_name": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/engine_group",
+  "title": "Engine",
+  "description": "The Engine Group the Engine is assigned to",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Engine",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Engine",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the Engine",
+      "enum": [
+        "INITIALIZING",
+        "LICENSING",
+        "TERMINATING",
+        "IDLE",
+        "OFFLINE",
+        "SCANNING",
+        "UPGRADING",
+        "PARKED",
+        "FAILED"
+      ],
+      "readOnly": true
+    },
+    "failure_reason": {
+      "type": "string",
+      "description": "The reason the Engine may have failed",
+      "enum": [
+        "TERMINATION_FAILED",
+        "INITIALIZATION_FAILED",
+        "UPGRADE_FAILED",
+        "GENERAL_FAILURE"
+      ],
+      "readOnly": true
+    },
+    "latest_version": {
+      "type": "boolean",
+      "description": "A read only flag which indicates if the Engine is latest version",
+      "readOnly": true
+    },
+    "upgradeable": {
+      "type": "boolean",
+      "description": "A read only flag which indicates if the Engine is capable of upgrading",
+      "readOnly": true
+    },
+    "auto_upgrade": {
+      "type": "boolean",
+      "description": "A flag which can be set to mark the Engine for auto upgrade "
+    }
+  },
+  "required": [
+    "auto_upgrade",
+    "name"
+  ]
+}

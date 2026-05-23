@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SequenceConfig",
+  "title": "SequenceConfig",
+  "properties": {
+    "reset_session": {
+      "type": "boolean"
+    },
+    "auto_sequence_config": {
+      "type": "boolean"
+    },
+    "manual_sequence_config": {
+      "$ref": "#/components/schemas/ManualSequenceConfig"
+    }
+  }
+}

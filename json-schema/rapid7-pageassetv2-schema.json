@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PageAssetV2",
+  "title": "PageAssetV2",
+  "required": [
+    "data",
+    "metadata"
+  ],
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "The list of data that matches the pagination parameters. If no results match this will be an empty list.",
+      "items": {
+        "$ref": "#/components/schemas/AssetV2"
+      }
+    },
+    "metadata": {
+      "$ref": "#/components/schemas/PageMetadata"
+    }
+  }
+}

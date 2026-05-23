@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanModuleParameterFiles",
+  "title": "ScanModuleParameterFiles",
+  "properties": {
+    "module_id": {
+      "type": "number",
+      "format": "double"
+    },
+    "custom_parameter_file_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CustomParameterFile"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReferenceResource",
+  "title": "ReferenceResource",
+  "description": "The last editor of the comment",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "readOnly": true,
+  "required": [
+    "id"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Threat",
+  "title": "Threat",
+  "required": [
+    "indicator_count",
+    "name",
+    "published"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the threat.",
+      "example": "Threat"
+    },
+    "note": {
+      "type": "string",
+      "description": "Notes about this threat.",
+      "example": "Notes"
+    },
+    "published": {
+      "type": "boolean",
+      "description": "Indicates whether this threat has been published.",
+      "example": true
+    },
+    "indicator_count": {
+      "minimum": 0,
+      "type": "integer",
+      "description": "The number of indicators in this threat.",
+      "format": "int64",
+      "example": 1
+    }
+  },
+  "description": "The information about the threat."
+}

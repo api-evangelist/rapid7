@@ -1,0 +1,423 @@
+{
+  "operationId": "getMetrics",
+  "method": "GET",
+  "path": "/idr/v1/health-metrics",
+  "summary": "Retrieve health metrics by org",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Agent",
+      "example": {
+        "data": [
+          {
+            "type": "agent",
+            "rrn": "rrn:rapid7:us:customer:12345:agent:678",
+            "offline": 5,
+            "online": 25,
+            "stale": 3,
+            "total": 33
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Collectors",
+      "example": {
+        "data": [
+          {
+            "type": "collectors",
+            "rrn": "rrn:rapid7:us:customer:12345:collector:abc123",
+            "id": "collector-001",
+            "name": "Main Collector",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z",
+            "event_sources_used": 15,
+            "max_event_sources": 100,
+            "memory_used": 2048,
+            "max_memory": 4096,
+            "percent_cpu_used": 25.5
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Data Exporters",
+      "example": {
+        "data": [
+          {
+            "type": "data_exporters",
+            "rrn": "rrn:rapid7:us:customer:12345:data_exporter:exporter001",
+            "name": "Main Data Exporter",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z"
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Event Sources",
+      "example": {
+        "data": [
+          {
+            "type": "event_sources",
+            "rrn": "rrn:rapid7:us:customer:12345:event_source:source001",
+            "name": "Main Event Source",
+            "state": "ACTIVE",
+            "last_active": "2025-09-18T10:30:00Z"
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Honeypots",
+      "example": {
+        "data": [
+          {
+            "type": "honeypots",
+            "rrn": "rrn:rapid7:us:customer:12345:honeypot:honeypot001",
+            "id": "honeypot-001",
+            "name": "Main Honeypot",
+            "state": "ACTIVE",
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 512,
+            "max_memory": 1024,
+            "percent_cpu_used": 10.5
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Orchestrator",
+      "example": {
+        "data": [
+          {
+            "type": "orchestrator",
+            "rrn": "rrn:rapid7:us:customer:12345:orchestrator:orch001",
+            "name": "Main Orchestrator",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z",
+            "cpu_used": 35.8,
+            "memory_used": 3072,
+            "max_memory": 6144,
+            "storage_used": 20971520,
+            "max_storage": 52428800
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Scan Engines",
+      "example": {
+        "data": [
+          {
+            "type": "scan_engines",
+            "rrn": "rrn:rapid7:us:customer:12345:scan_engine:engine001",
+            "name": "Main Scan Engine",
+            "state": "RUNNING",
+            "storage_used": 52428800,
+            "max_storage": 104857600,
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 4096,
+            "max_memory": 8192,
+            "percent_cpu_used": 45.2
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Sensors",
+      "example": {
+        "data": [
+          {
+            "type": "sensors",
+            "rrn": "rrn:rapid7:us:customer:12345:sensor:sensor001",
+            "name": "Main Sensor",
+            "state": "ACTIVE",
+            "health_status": [
+              "OK",
+              "MONITORING"
+            ],
+            "storage_used": 15728640,
+            "max_storage": 104857600,
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 1024,
+            "max_memory": 2048,
+            "percent_cpu_used": 15.2,
+            "drop_rate": 0.01
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Agent",
+      "example": {
+        "data": [
+          {
+            "type": "agent",
+            "rrn": "rrn:rapid7:us:customer:12345:agent:678",
+            "offline": 5,
+            "online": 25,
+            "stale": 3,
+            "total": 33
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Collectors",
+      "example": {
+        "data": [
+          {
+            "type": "collectors",
+            "rrn": "rrn:rapid7:us:customer:12345:collector:abc123",
+            "id": "collector-001",
+            "name": "Main Collector",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z",
+            "event_sources_used": 15,
+            "max_event_sources": 100,
+            "memory_used": 2048,
+            "max_memory": 4096,
+            "percent_cpu_used": 25.5
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Data Exporters",
+      "example": {
+        "data": [
+          {
+            "type": "data_exporters",
+            "rrn": "rrn:rapid7:us:customer:12345:data_exporter:exporter001",
+            "name": "Main Data Exporter",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z"
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Event Sources",
+      "example": {
+        "data": [
+          {
+            "type": "event_sources",
+            "rrn": "rrn:rapid7:us:customer:12345:event_source:source001",
+            "name": "Main Event Source",
+            "state": "ACTIVE",
+            "last_active": "2025-09-18T10:30:00Z"
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Honeypots",
+      "example": {
+        "data": [
+          {
+            "type": "honeypots",
+            "rrn": "rrn:rapid7:us:customer:12345:honeypot:honeypot001",
+            "id": "honeypot-001",
+            "name": "Main Honeypot",
+            "state": "ACTIVE",
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 512,
+            "max_memory": 1024,
+            "percent_cpu_used": 10.5
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Orchestrator",
+      "example": {
+        "data": [
+          {
+            "type": "orchestrator",
+            "rrn": "rrn:rapid7:us:customer:12345:orchestrator:orch001",
+            "name": "Main Orchestrator",
+            "state": "RUNNING",
+            "last_active": "2025-09-18T10:30:00Z",
+            "cpu_used": 35.8,
+            "memory_used": 3072,
+            "max_memory": 6144,
+            "storage_used": 20971520,
+            "max_storage": 52428800
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Scan Engines",
+      "example": {
+        "data": [
+          {
+            "type": "scan_engines",
+            "rrn": "rrn:rapid7:us:customer:12345:scan_engine:engine001",
+            "name": "Main Scan Engine",
+            "state": "RUNNING",
+            "storage_used": 52428800,
+            "max_storage": 104857600,
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 4096,
+            "max_memory": 8192,
+            "percent_cpu_used": 45.2
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    },
+    {
+      "status": "207",
+      "contentType": "application/json",
+      "name": "Sensors",
+      "example": {
+        "data": [
+          {
+            "type": "sensors",
+            "rrn": "rrn:rapid7:us:customer:12345:sensor:sensor001",
+            "name": "Main Sensor",
+            "state": "ACTIVE",
+            "health_status": [
+              "OK",
+              "MONITORING"
+            ],
+            "storage_used": 15728640,
+            "max_storage": 104857600,
+            "last_active": "2025-09-18T10:30:00Z",
+            "memory_used": 1024,
+            "max_memory": 2048,
+            "percent_cpu_used": 15.2,
+            "drop_rate": 0.01
+          }
+        ],
+        "metadata": {
+          "index": 0,
+          "size": 0,
+          "total_pages": 20,
+          "total_data": 0
+        }
+      }
+    }
+  ]
+}

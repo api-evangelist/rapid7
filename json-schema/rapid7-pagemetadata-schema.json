@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PageMetadata",
+  "title": "PageMetadata",
+  "properties": {
+    "index": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "sort": {
+      "type": "string"
+    },
+    "total_data": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "total_pages": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "page_token": {
+      "type": "string"
+    }
+  }
+}

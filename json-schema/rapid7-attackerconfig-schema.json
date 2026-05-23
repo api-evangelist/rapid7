@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttackerConfig",
+  "title": "AttackerConfig",
+  "properties": {
+    "parameters_to_attack_before_limiting_attacks": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "links_to_attack_before_limiting_attacks": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_same_name_parameter_attack_points": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_same_cookie_parameter_attack_points": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_same_name_parameter_attack_points_per_link": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_parameter_attack_points_per_link": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_normalized_same_name_parameter_attack_points_per_link": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "apply_crawler_constraints": {
+      "type": "boolean"
+    },
+    "max_number_of_scheduled_passive_attacks": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "min_cookie_lifetime_for_attacks": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max404_findings_per_module": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "exclude_low_confidence_findings": {
+      "type": "boolean"
+    },
+    "out_of_band_host": {
+      "type": "string"
+    },
+    "max_severity_for_traffic_reduction": {
+      "type": "string",
+      "enum": [
+        "SAFE",
+        "INFORMATIONAL",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "min_response_size_for_traffic_reduction": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "scope_constraint_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeConstraint"
+      }
+    },
+    "default_do_not_attack_param_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DefaultDoNotAttackParam"
+      }
+    },
+    "user_do_not_attack_param_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/UserDoNotAttackParam"
+      }
+    }
+  }
+}

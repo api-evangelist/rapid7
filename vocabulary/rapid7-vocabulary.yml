@@ -1,0 +1,50 @@
+name: Rapid7 Domain Vocabulary
+provider: Rapid7
+providerId: rapid7
+description: Tag-derived vocabulary for the Rapid7 API surface; sourced from openapi/ tags.
+terms:
+- term: Root
+  description: Provides access to primary entry point for discovering the available resources in this API.
+- term: Asset
+  description: Resources and operations for managing assets. Assets can be created under the <a href="#operation/createAssetUsingPOST">Site
+    Assets</a> resource.
+- term: Asset Discovery
+  description: Resources for managing and viewing the mechanisms used to automatically discover assets.
+- term: Asset Group
+  description: Resources and operations for managing asset groups.
+- term: Credential
+  description: Resources and operations for managing shared credentials.
+- term: Policy
+  description: Resources and operations for managing policies.
+- term: Policy Override
+  description: Policy Override Resource Controller
+- term: Remediation
+  description: Resources for determining the details required to remediate vulnerabilities.
+- term: Report
+  description: Resources and operations for managing and generating reports. Reports are broadly categorized into `document`,
+    `export`, and `file` types. `document` reports use section-based report templates to control the output and can be generated
+    in several formats. `export` reports are designed to output their contents into a specific file format. `file` reports
+    are templatized reports that output based on the format of a template file. Reports can be configured to generate on a
+    schedule and be distributed via email to specific recipients.
+- term: Scan
+  description: Resources and operations for managing scans.
+- term: Scan Engine
+  description: Resources and operations for managing scan engines.
+- term: Scan Template
+  description: Scan Template Resource Controller
+- term: Site
+  description: Resources and operations for managing sites.
+- term: Tag
+  description: Resources and operations for managing tags.
+- term: User
+  description: Resources and operations for managing users, permissions, and privileges.
+- term: Vulnerability
+  description: Resources and operations for viewing vulnerability content and managing exceptions.
+- term: Vulnerability Check
+  description: Resources and operations for view vulnerability checks that can be run as a part of vulnerability content.
+- term: Vulnerability Exception
+  description: Vulnerability Exception Resource Controller
+- term: Vulnerability Result
+  description: Resources and operations for retrieving vulnerability results on assessed assets.
+- term: Administration
+  description: Provides access administrative operations and procedures.

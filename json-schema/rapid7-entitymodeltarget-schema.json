@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityModelTarget",
+  "title": "EntityModelTarget",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Target",
+      "readOnly": true
+    },
+    "domain": {
+      "type": "string",
+      "description": "The fully qualified domain name of the Target"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "The enabled property of the Target"
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "The archived property of the Target"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "domain"
+  ]
+}

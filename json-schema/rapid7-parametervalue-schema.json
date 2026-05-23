@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ParameterValue",
+  "title": "ParameterValue",
+  "properties": {
+    "parameter": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "match_criteria": {
+      "type": "string",
+      "enum": [
+        "LITERAL",
+        "WILDCARD",
+        "REGEX"
+      ]
+    }
+  }
+}

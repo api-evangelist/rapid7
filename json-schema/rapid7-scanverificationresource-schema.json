@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanVerificationResource",
+  "title": "ScanVerificationResource",
+  "description": "The Validation resource. Should not be included if a Specialized Scan Parameters Resource has been provided.",
+  "example": {
+    "parent_scan_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  "properties": {
+    "parent_scan_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

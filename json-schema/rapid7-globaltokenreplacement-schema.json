@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GlobalTokenReplacement",
+  "title": "GlobalTokenReplacement",
+  "properties": {
+    "extraction_parameter_location": {
+      "type": "string",
+      "enum": [
+        "REQUEST_URL",
+        "REQUEST_HEADER",
+        "REQUEST_BODY",
+        "RESPONSE_HEADER",
+        "RESPONSE_BODY",
+        "REQUEST_COOKIE"
+      ]
+    },
+    "extraction_parameter": {
+      "type": "string"
+    },
+    "extraction_parameter_match_criteria": {
+      "type": "string",
+      "enum": [
+        "LITERAL",
+        "WILDCARD",
+        "REGEX"
+      ]
+    },
+    "injection_parameter_location": {
+      "type": "string",
+      "enum": [
+        "REQUEST_URL",
+        "REQUEST_HEADER",
+        "REQUEST_BODY",
+        "RESPONSE_HEADER",
+        "RESPONSE_BODY",
+        "REQUEST_COOKIE"
+      ]
+    },
+    "injection_parameter": {
+      "type": "string"
+    },
+    "injection_parameter_match_criteria": {
+      "type": "string",
+      "enum": [
+        "LITERAL",
+        "WILDCARD",
+        "REGEX"
+      ]
+    }
+  }
+}

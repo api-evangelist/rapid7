@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DeleteThreatEvent",
+  "title": "DeleteThreatEvent",
+  "type": "object",
+  "properties": {
+    "reason": {
+      "type": "string"
+    }
+  }
+}

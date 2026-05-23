@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MacroFile__1",
+  "title": "MacroFile__1",
+  "properties": {
+    "macro_file_name": {
+      "type": "string"
+    },
+    "java_script_engine": {
+      "type": "string",
+      "enum": [
+        "DEFAULT",
+        "INTERNET_EXPLORER",
+        "CHROME",
+        "CHROMIUM"
+      ]
+    },
+    "show_in_browser": {
+      "type": "boolean"
+    },
+    "replay_speed": {
+      "type": "number",
+      "format": "double"
+    },
+    "asap_mode": {
+      "type": "boolean"
+    },
+    "asap_mode_min_delay": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "extra_delay_after_macro": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "attack_as_sequence": {
+      "type": "boolean"
+    },
+    "sequence_config": {
+      "$ref": "#/components/schemas/SequenceConfig"
+    },
+    "web_driver_config": {
+      "$ref": "#/components/schemas/WebDriverConfig"
+    }
+  }
+}

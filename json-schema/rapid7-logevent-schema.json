@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LogEvent",
+  "title": "LogEvent",
+  "properties": {
+    "time": {
+      "type": "string",
+      "description": "The time at which the log event occurred",
+      "example": "2021-08-03T14:07:37",
+      "readOnly": true
+    },
+    "event": {
+      "type": "string",
+      "description": "The log event",
+      "readOnly": true
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityModelScan",
+  "title": "EntityModelScan",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Scan",
+      "readOnly": true
+    },
+    "app": {
+      "$ref": "#/components/schemas/ReadOnlyIdResource"
+    },
+    "scan_config": {
+      "$ref": "#/components/schemas/scan_config"
+    },
+    "submitter": {
+      "$ref": "#/components/schemas/ScanSubmitter"
+    },
+    "submit_time": {
+      "type": "string",
+      "description": "The time the Scan was submitted",
+      "example": "2021-08-03T14:07:37",
+      "readOnly": true
+    },
+    "completion_time": {
+      "type": "string",
+      "description": "The time the Scan was completed",
+      "example": "2021-08-03T14:07:37",
+      "readOnly": true
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the Scan",
+      "enum": [
+        "PENDING",
+        "QUEUED",
+        "PROVISIONING",
+        "RUNNING",
+        "SCANNED",
+        "PROCESSED",
+        "COMPLETE",
+        "PAUSED",
+        "BLACKED_OUT",
+        "AWAITING_AUTHENTICATION",
+        "AUTHENTICATED",
+        "PAUSING",
+        "RESUMING",
+        "STOPPING",
+        "CANCELING",
+        "AUTHENTICATING",
+        "FAILED"
+      ],
+      "readOnly": true
+    },
+    "failure_reason": {
+      "type": "string",
+      "description": "The reason the Scan may have failed",
+      "enum": [
+        "CANCELED",
+        "NETWORK_UNAVAILABLE",
+        "SYSTEM_ERROR",
+        "CONFIGURATION_INVALID",
+        "BAD_AUTH",
+        "LICENSE_INVALID",
+        "TARGETS_INVALID",
+        "ENGINE_UNAVAILABLE",
+        "INITIALIZATION_FAILURE",
+        "SWAGGER_PARSING_ERROR",
+        "DATABASE_TOO_LARGE",
+        "INSUFFICIENT_DISK_SPACE",
+        "INSUFFICIENT_MEMORY",
+        "TOO_MANY_THREADS",
+        "RASP_FAILURE",
+        "BOOTSTRAP_AUTHENTICATION_FAILURE",
+        "REPORT_GENERATION_FAILURE"
+      ],
+      "readOnly": true
+    },
+    "validation": {
+      "$ref": "#/components/schemas/ScanVerificationResource"
+    },
+    "scan_type": {
+      "type": "string",
+      "description": "The type of Scan",
+      "enum": [
+        "REGULAR",
+        "VERIFICATION",
+        "INCREMENTAL"
+      ],
+      "example": "VERIFICATION"
+    },
+    "specialized_scan_parameters": {
+      "$ref": "#/components/schemas/SpecializedScanParamsResource"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "scan_config"
+  ]
+}

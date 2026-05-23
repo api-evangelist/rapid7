@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MacroFile",
+  "title": "MacroFile",
+  "properties": {
+    "macro_file_name": {
+      "type": "string"
+    },
+    "java_script_engine": {
+      "type": "string",
+      "enum": [
+        "DEFAULT",
+        "INTERNET_EXPLORER",
+        "CHROME",
+        "CHROMIUM"
+      ]
+    },
+    "replay_speed": {
+      "type": "number",
+      "format": "double"
+    },
+    "extra_delay_after_macro": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "attack_as_sequence": {
+      "type": "boolean"
+    },
+    "sequence_config": {
+      "$ref": "#/components/schemas/SequenceConfig"
+    }
+  }
+}

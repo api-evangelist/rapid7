@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/HmacConfig",
+  "title": "HmacConfig",
+  "properties": {
+    "hmac_header_generator_dll_filename": {
+      "type": "string"
+    },
+    "hmac_username": {
+      "type": "string"
+    },
+    "hmac_api_key": {
+      "type": "string"
+    },
+    "hmac_hash_algorithm": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

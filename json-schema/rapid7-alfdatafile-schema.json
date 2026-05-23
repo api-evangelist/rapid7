@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AlfDataFile",
+  "title": "AlfDataFile",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "dataset": {
+      "type": "string"
+    },
+    "content_file": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    }
+  }
+}

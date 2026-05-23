@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SearchRequestSort",
+  "title": "SearchRequestSort",
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "The field to sort by.",
+      "example": "name"
+    },
+    "order": {
+      "type": "string",
+      "description": "The sorting direction. Sorting is case-insensitive when sorting strings.",
+      "enum": [
+        "ASC",
+        "DESC",
+        "ASC,DESC"
+      ]
+    }
+  },
+  "description": "The sorting information."
+}

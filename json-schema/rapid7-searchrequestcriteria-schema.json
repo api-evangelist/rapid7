@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SearchRequestCriteria",
+  "title": "SearchRequestCriteria",
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "The field to search within.",
+      "example": "name"
+    },
+    "operator": {
+      "type": "string",
+      "description": "The search operation to perform. All operators are case-insensitive when operating on strings.",
+      "enum": [
+        "EQUALS",
+        "CONTAINS",
+        "IN"
+      ]
+    },
+    "value": {
+      "type": "object",
+      "description": "The value to search for."
+    }
+  },
+  "description": "The criteria for which entities to return."
+}

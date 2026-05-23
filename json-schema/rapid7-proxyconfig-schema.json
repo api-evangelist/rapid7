@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProxyConfig",
+  "title": "ProxyConfig",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "NO_PROXY",
+        "INTERNET_EXPLORER_SETTINGS",
+        "MANUAL_CONFIG",
+        "PAC_FILE"
+      ]
+    },
+    "http_host": {
+      "type": "string"
+    },
+    "http_port": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "https_host": {
+      "type": "string"
+    },
+    "https_port": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "pac_file": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "proxy_exclusions_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ProxyExclusions"
+      }
+    }
+  }
+}

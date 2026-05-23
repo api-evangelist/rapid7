@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TrafficFile",
+  "title": "TrafficFile",
+  "properties": {
+    "traffic_file_name": {
+      "type": "string"
+    },
+    "traffic_file_password": {
+      "type": "string"
+    },
+    "attack_as_sequence": {
+      "type": "boolean"
+    },
+    "begin_attack_request": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "end_attack_request": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

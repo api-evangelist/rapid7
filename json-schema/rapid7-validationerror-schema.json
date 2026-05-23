@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ValidationError",
+  "title": "ValidationError",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of the validation error",
+      "enum": [
+        "OBJECT",
+        "PROPERTY"
+      ],
+      "readOnly": true
+    },
+    "context": {
+      "type": "string",
+      "description": "An optional contextual indicator of a part of the request which failed validation",
+      "readOnly": true
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Details of the validation error",
+      "readOnly": true
+    }
+  }
+}

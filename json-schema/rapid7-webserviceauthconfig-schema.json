@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WebServiceAuthConfig",
+  "title": "WebServiceAuthConfig",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "auth_wsdl": {
+      "type": "string"
+    },
+    "auth_web_method": {
+      "type": "string"
+    },
+    "get_auth_token_xpath": {
+      "type": "string"
+    },
+    "put_auth_token_xpath": {
+      "type": "string"
+    },
+    "extract_auth_token": {
+      "type": "boolean"
+    },
+    "web_service_parameter_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/WebServiceParameter"
+      }
+    }
+  }
+}

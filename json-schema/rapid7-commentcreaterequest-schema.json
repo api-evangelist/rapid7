@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CommentCreateRequest",
+  "title": "CommentCreateRequest",
+  "type": "object",
+  "description": "The information needed by the request body to create comments.",
+  "properties": {
+    "target": {
+      "type": "string",
+      "description": "The target of the comment, which determines where it will appear within InsightIDR.",
+      "example": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+    },
+    "body": {
+      "type": "string",
+      "description": "The body of the comment.",
+      "example": "Here is my comment."
+    },
+    "attachments": {
+      "type": "array",
+      "description": "An array of attachment RRNs to associate with the comment.",
+      "example": [
+        "rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "target"
+  ]
+}

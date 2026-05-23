@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PageAttachment",
+  "title": "PageAttachment",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "The list of data that matches the pagination parameters. If no results match this will be an empty list.",
+      "items": {
+        "$ref": "#/components/schemas/Attachment"
+      }
+    },
+    "metadata": {
+      "$ref": "#/components/schemas/PageMetadata1",
+      "description": "The pagination parameters used to generate this page result."
+    }
+  },
+  "required": [
+    "data",
+    "metadata"
+  ]
+}

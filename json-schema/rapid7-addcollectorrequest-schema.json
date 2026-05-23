@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AddCollectorRequest",
+  "title": "AddCollectorRequest",
+  "required": [
+    "key",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name for the new collector. Must be unique.",
+      "example": "My Collector"
+    },
+    "key": {
+      "type": "string",
+      "description": "The registration key for the collector. Must be unique, and a valid UUID.",
+      "example": "ae1d4845-8ce8-4072-b4d5-77171387fb6a"
+    },
+    "deployment_type": {
+      "type": "string",
+      "description": "Optional indication of how the collector is deployed.",
+      "example": "kubernetes"
+    }
+  },
+  "description": "Request body for creating a collector"
+}

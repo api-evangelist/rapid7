@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanExecutionDetails",
+  "title": "ScanExecutionDetails",
+  "properties": {
+    "logged_in": {
+      "type": "boolean",
+      "description": "A flag which indicates if the Scan is using authentication during the Scan",
+      "readOnly": true
+    },
+    "links_in_queue": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of links in the crawling queue",
+      "readOnly": true
+    },
+    "links_crawled": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of links already crawled",
+      "readOnly": true
+    },
+    "attacks_in_queue": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of links in the attacking queue",
+      "readOnly": true
+    },
+    "attacked": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of attacks already performed",
+      "readOnly": true
+    },
+    "vulnerable": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of potential findings",
+      "readOnly": true
+    },
+    "requests": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of HTTP requests which have been executed",
+      "readOnly": true
+    },
+    "failed_requests": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of failed HTTP requests",
+      "readOnly": true
+    },
+    "network_speed": {
+      "type": "integer",
+      "format": "int32",
+      "description": "A throughput indicator",
+      "readOnly": true
+    },
+    "drip_delay": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The current delay between HTTP requests",
+      "readOnly": true
+    }
+  }
+}

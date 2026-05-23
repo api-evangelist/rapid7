@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PageSchedule",
+  "title": "PageSchedule",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/EntityModelSchedule"
+      }
+    },
+    "metadata": {
+      "$ref": "#/components/schemas/PageMetadata"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  }
+}

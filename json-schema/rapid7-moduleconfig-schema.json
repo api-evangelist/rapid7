@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ModuleConfig",
+  "title": "ModuleConfig",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the default attack module",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the default attack module"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the default attack module"
+    },
+    "types": {
+      "type": "array",
+      "description": "The type of the default attack module",
+      "items": {
+        "type": "string",
+        "description": "The type of the default attack module",
+        "enum": [
+          "ACTIVE",
+          "PASSIVE"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "max_findings": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The maximum findings of the default attack module"
+    },
+    "severity": {
+      "type": "string",
+      "description": "The severity of the default attack module",
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFORMATIONAL",
+        "SAFE"
+      ]
+    },
+    "parameter_locations": {
+      "type": "array",
+      "description": "The list of parameters locations for default attack module",
+      "items": {
+        "type": "string",
+        "description": "The list of parameters locations for default attack module",
+        "enum": [
+          "DIRECTORY",
+          "FILE",
+          "PATH",
+          "QUERY",
+          "FRAGMENT",
+          "POST",
+          "HTTP_HEADER",
+          "COOKIE",
+          "REFERER"
+        ]
+      },
+      "uniqueItems": true
+    }
+  }
+}

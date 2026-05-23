@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RRN1",
+  "title": "RRN1",
+  "type": "object",
+  "properties": {
+    "partition": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "regionCode": {
+      "type": "string"
+    },
+    "organizationId": {
+      "type": "string"
+    },
+    "resourceTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resource": {
+      "type": "string"
+    }
+  },
+  "description": "The unique identifier for this collector.",
+  "example": "rrn:collection:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:collector:ae1d4845-8ce8-4072-b4d5-77171387fb6a"
+}

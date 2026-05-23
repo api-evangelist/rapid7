@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Blackout",
+  "title": "Blackout",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Blackout",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Blackout",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string",
+      "description": "The scope of the Blackout",
+      "enum": [
+        "APP",
+        "GLOBAL"
+      ],
+      "readOnly": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "The enabled property of the Blackout"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "The current active status of the Blackout",
+      "readOnly": true
+    },
+    "app": {
+      "$ref": "#/components/schemas/ReferenceResource"
+    },
+    "first_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The first start date and time of the Blackout"
+    },
+    "first_end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The first end date and time of the Blackout"
+    },
+    "last_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last start date and time of the Blackout"
+    },
+    "frequency": {
+      "$ref": "#/components/schemas/Frequency"
+    },
+    "rrule": {
+      "type": "string",
+      "description": "The rrule describes how (and if) the blackout should repeat. Should not be included if a frequency has been provided."
+    }
+  },
+  "required": [
+    "enabled",
+    "first_end",
+    "first_start",
+    "name"
+  ]
+}

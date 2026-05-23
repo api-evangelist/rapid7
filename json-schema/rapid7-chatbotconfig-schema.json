@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ChatbotConfig",
+  "title": "ChatbotConfig",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "open_ui_selector": {
+      "type": "string"
+    },
+    "open_ui_text": {
+      "type": "string"
+    },
+    "open_ui_max_wait_ms": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "prompt_value": {
+      "type": "string"
+    },
+    "prompt_selector": {
+      "type": "string"
+    },
+    "prompt_text": {
+      "type": "string"
+    },
+    "submit_selector": {
+      "type": "string"
+    },
+    "submit_text": {
+      "type": "string"
+    },
+    "response_selector": {
+      "type": "string"
+    },
+    "response_min_wait_ms": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "response_max_wait_ms": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "response_inactivity_ms": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "response_ignore_regex": {
+      "type": "string"
+    },
+    "response_min_length": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "show_in_browser": {
+      "type": "boolean"
+    },
+    "macro_file": {
+      "$ref": "#/components/schemas/MacroFile__1"
+    }
+  }
+}

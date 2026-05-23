@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ParameterTrainingConfig",
+  "title": "ParameterTrainingConfig",
+  "properties": {
+    "form_population": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "RANDOM",
+        "SMART"
+      ]
+    },
+    "training_parameter_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TrainingParameter"
+      }
+    }
+  }
+}

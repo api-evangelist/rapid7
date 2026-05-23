@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GraphQlConfigObject",
+  "title": "GraphQlConfigObject",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "introspection_schema_file_path": {
+      "type": "string"
+    },
+    "graph_ql_endpoint_url": {
+      "type": "string"
+    },
+    "verb": {
+      "type": "string",
+      "enum": [
+        "POST",
+        "GET"
+      ]
+    },
+    "max_requests": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "query_type": {
+      "type": "string",
+      "enum": [
+        "QUERY",
+        "MUTATION",
+        "QUERY_AND_MUTATION"
+      ]
+    },
+    "host_name": {
+      "type": "string"
+    },
+    "introspection_query_url": {
+      "type": "string"
+    }
+  }
+}

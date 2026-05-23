@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReportGeneration",
+  "title": "Report Generation",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the Report",
+      "example": "Weekly Report"
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.",
+      "enum": [
+        "VULN_SUMMARY",
+        "VULN_REMEDIATION",
+        "PCI_COMPLIANCE",
+        "PCI4_COMPLIANCE",
+        "OWASP_2013_COMPLIANCE",
+        "OWASP_2017_COMPLIANCE",
+        "OWASP_2021_COMPLIANCE",
+        "OWASP_2023API_COMPLIANCE",
+        "OWASP_2025_COMPLIANCE",
+        "GDPR_2016_COMPLIANCE",
+        "SOX_COMPLIANCE",
+        "HIPAA_COMPLIANCE",
+        "EXEC_SINGLE_APP",
+        "EXEC_ALL_APPS",
+        "EXEC_SINGLE_APP_NEW_VULNS",
+        "EXEC_ALL_APPS_NEW_VULNS",
+        "EXEC_SINGLE_APP_ALL_VULNS",
+        "EXEC_ALL_APPS_ALL_VULNS"
+      ],
+      "example": "VULN_SUMMARY"
+    },
+    "format": {
+      "type": "string",
+      "description": "The format of the Report",
+      "enum": [
+        "HTML",
+        "CSV",
+        "PDF"
+      ],
+      "example": "PDF"
+    },
+    "scan": {
+      "$ref": "#/components/schemas/scan"
+    },
+    "app": {
+      "$ref": "#/components/schemas/app"
+    },
+    "start": {
+      "type": "string",
+      "description": "The start date range scope for the Report yyyy-mm-dd"
+    },
+    "end": {
+      "type": "string",
+      "description": "The end date range scope for the Report yyyy-mm-dd"
+    },
+    "month": {
+      "type": "string",
+      "description": "The month date range scope for the Report yyyy-mm",
+      "example": "2023-12"
+    },
+    "filter": {
+      "type": "string",
+      "description": "Search-format filter relevant to the Report Type that narrows its scope",
+      "example": "vulnerability.app.name CONTAINS 'Weekly'"
+    }
+  },
+  "required": [
+    "format",
+    "name",
+    "type"
+  ]
+}

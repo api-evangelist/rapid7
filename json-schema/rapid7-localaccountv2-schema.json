@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LocalAccountV2",
+  "title": "LocalAccountV2",
+  "required": [
+    "asset",
+    "name",
+    "rrn"
+  ],
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "type": "string",
+      "description": "The unique identifier for this local account.",
+      "example": "rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:account:83002c85d7c6"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for this local account. ",
+      "example": "jdoe"
+    },
+    "user": {
+      "$ref": "#/components/schemas/UserSummaryV21"
+    },
+    "asset": {
+      "$ref": "#/components/schemas/AssetV2"
+    }
+  },
+  "description": "The list of data that matches the pagination parameters. If no results match this will be an empty list."
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AddCollectorResponse",
+  "title": "AddCollectorResponse",
+  "required": [
+    "id",
+    "name",
+    "rrn"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The identifier for this collector.",
+      "example": "ae1d4845-8ce8-4072-b4d5-77171387fb6a"
+    },
+    "rrn": {
+      "$ref": "#/components/schemas/RRN1"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of this collector.",
+      "example": "My Collector"
+    }
+  },
+  "description": "Response from creating a collector"
+}

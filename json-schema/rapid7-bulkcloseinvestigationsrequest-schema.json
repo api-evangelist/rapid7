@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BulkCloseInvestigationsRequest",
+  "title": "BulkCloseInvestigationsRequest",
+  "type": "object",
+  "description": "The criteria for what investigations to close.",
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "The name of an investigation source. Only investigations from this source will be closed. If the source is ALERT, an alert type must be specified as well.",
+      "enum": [
+        "ALERT,MANUAL,HUNT"
+      ],
+      "example": "ALERT"
+    },
+    "alert_type": {
+      "type": "string",
+      "description": "The category of alerts that should be closed. This parameter is required if the source is ALERT and ignored for other sources. This value must exactly match the alert type returned by the List Investigations response.",
+      "example": "Attacker Behavior Detected"
+    },
+    "detection_rule_rrn": {
+      "type": "string",
+      "description": "The RRN of the detection rule. Investigations will only be closed that are associated with this detection rule. If a detection rule RRN is given, the alert_type is required to be 'Attacker Behavior Detected'.",
+      "example": "rrn:cba:us1:a2c78570-5346-4d76-b57a-230da72c5e58:detection-rule:ABSJB123U3O9"
+    },
+    "from": {
+      "type": "string",
+      "description": "An ISO formatted timestamp. Only investigations whose createTime is after this date will be closed.",
+      "example": "2018-07-01T00:00:00Z"
+    },
+    "to": {
+      "type": "string",
+      "description": "An ISO formatted timestamp. Only investigations whose createTime is before this date will be closed.",
+      "example": "2018-07-08T00:00:00Z"
+    },
+    "max_investigations_to_close": {
+      "type": "integer",
+      "format": "int32",
+      "description": "An optional, maximum number of alerts to close with this request. If this parameter is not specified, then there is no maximum. If this limit is exceeded, then a 400 error response is returned. The minimum value is 0.",
+      "example": 10
+    }
+  },
+  "required": [
+    "from",
+    "source",
+    "to"
+  ]
+}

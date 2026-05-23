@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TrainingParameter",
+  "title": "TrainingParameter",
+  "properties": {
+    "pattern_name": {
+      "type": "string"
+    },
+    "types": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "match": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "value_match": {
+      "type": "string"
+    },
+    "match_criteria": {
+      "type": "string",
+      "enum": [
+        "LITERAL",
+        "WILDCARD",
+        "REGEX"
+      ]
+    }
+  }
+}

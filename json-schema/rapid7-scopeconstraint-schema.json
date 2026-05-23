@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScopeConstraint",
+  "title": "ScopeConstraint",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "ALL",
+        "GET",
+        "POST",
+        "HEAD",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "TRACE",
+        "CONNECT",
+        "OPTIONS"
+      ]
+    },
+    "match_criteria": {
+      "type": "string",
+      "enum": [
+        "LITERAL",
+        "WILDCARD",
+        "REGEX"
+      ]
+    },
+    "exclusion": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "http_parameter_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/HttpParameter"
+      }
+    }
+  }
+}

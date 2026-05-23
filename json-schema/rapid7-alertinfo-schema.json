@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AlertInfo",
+  "title": "AlertInfo",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The alert's type.",
+      "example": "Account Created"
+    },
+    "type_description": {
+      "type": "string",
+      "description": "An optional description of this type of alert.",
+      "example": "A new account has been created."
+    },
+    "first_event_time": {
+      "type": "string",
+      "description": "The time the first event involved in this alert occurred.",
+      "example": "2018-06-06T16:56:42Z"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

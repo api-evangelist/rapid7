@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityModelApp",
+  "title": "EntityModelApp",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the App",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the App",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the App",
+      "maxLength": 2000,
+      "minLength": 0
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

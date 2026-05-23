@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PerformanceConfig",
+  "title": "PerformanceConfig",
+  "properties": {
+    "max_concurrent_requests": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_bandwidth_kb": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_reuse_count": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "memory_ceiling64_bit": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "anti_dos": {
+      "type": "boolean"
+    },
+    "dump_user_process_memory_usage": {
+      "type": "boolean"
+    },
+    "max_browser_process_lifetime": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

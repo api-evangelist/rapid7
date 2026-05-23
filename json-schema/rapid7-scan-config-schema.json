@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/scan_config",
+  "title": "scan_config",
+  "description": "The Scan Config used when the Scan was submitted, must be associated with the App specified for this Scan",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

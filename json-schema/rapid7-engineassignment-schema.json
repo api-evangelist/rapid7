@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EngineAssignment",
+  "title": "EngineAssignment",
+  "description": "The engine assignment that the Scan should use",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of engine assignment",
+      "enum": [
+        "ENGINE_GROUP"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the assignment"
+    },
+    "environment": {
+      "type": "string",
+      "description": "The environment of the assignment",
+      "enum": [
+        "CLOUD",
+        "ON_PREMISE"
+      ]
+    }
+  },
+  "required": [
+    "environment"
+  ]
+}

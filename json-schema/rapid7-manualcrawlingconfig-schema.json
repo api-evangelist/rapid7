@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ManualCrawlingConfig",
+  "title": "ManualCrawlingConfig",
+  "properties": {
+    "traffic_file_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TrafficFile"
+      }
+    }
+  }
+}

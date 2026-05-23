@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SpecializedScanParamsResource",
+  "title": "SpecializedScanParamsResource",
+  "description": "The Specialized Scan Parameters Resource used to start a validation scan with a subset of vulnerability ids. Should not be included if a Scan Verification Resource has been provided.",
+  "example": {
+    "parent_scan_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "vulnerability_ids": [
+      "e2b44265-b637-4800-bfa4-a47a05ca4387",
+      "3d16132c-5e2a-4375-87e9-1f01fc6ed70a"
+    ]
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "scan_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "parent_scan_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "vulnerability_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    }
+  },
+  "required": [
+    "parent_scan_id"
+  ]
+}

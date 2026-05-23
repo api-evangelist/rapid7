@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttackModule",
+  "title": "AttackModule",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the attack module",
+      "readOnly": true
+    },
+    "module_config_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the configuration for the attack module"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "A flag to indicate if this module should be enabled"
+    },
+    "parameter_locations": {
+      "type": "array",
+      "description": "The list of parameter locations for this attack module",
+      "items": {
+        "type": "string",
+        "description": "The list of parameter locations for this attack module",
+        "enum": [
+          "DIRECTORY",
+          "FILE",
+          "PATH",
+          "QUERY",
+          "FRAGMENT",
+          "POST",
+          "HTTP_HEADER",
+          "COOKIE",
+          "REFERER"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "severity": {
+      "type": "string",
+      "description": "The severity that should be used for this attack module",
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFORMATIONAL",
+        "SAFE"
+      ]
+    },
+    "max_findings": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The maximum findings per attack module"
+    }
+  },
+  "required": [
+    "max_findings",
+    "module_config_id",
+    "severity"
+  ]
+}

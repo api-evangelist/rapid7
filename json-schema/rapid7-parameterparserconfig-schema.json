@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ParameterParserConfig",
+  "title": "ParameterParserConfig",
+  "properties": {
+    "enable_base64_parameter_values": {
+      "type": "boolean"
+    },
+    "multi_regex_url_parser_config_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MultiRegexUrlParserConfig"
+      }
+    },
+    "standard_url_parser_config": {
+      "$ref": "#/components/schemas/StandardUrlParserConfig"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Comment",
+  "title": "Comment",
+  "type": "object",
+  "properties": {
+    "created_time": {
+      "type": "string",
+      "description": "The time the comment was created as an ISO formatted timestamp.",
+      "example": "2018-06-06T16:56:42Z"
+    },
+    "rrn": {
+      "type": "string",
+      "description": "The RRN of the comment.",
+      "example": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD"
+    },
+    "target": {
+      "type": "string",
+      "description": "The target where the comment belongs to.",
+      "example": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+    },
+    "creator": {
+      "$ref": "#/components/schemas/Creator",
+      "description": "Who or what created the resource."
+    },
+    "body": {
+      "type": "string",
+      "description": "The body of the comment.",
+      "example": "Here is my comment."
+    },
+    "visibility": {
+      "type": "string",
+      "description": "Who can view the comment.",
+      "example": "PUBLIC"
+    },
+    "attachments": {
+      "type": "array",
+      "description": "List of attachments associated with this comment.",
+      "items": {
+        "$ref": "#/components/schemas/Attachment"
+      }
+    }
+  },
+  "required": [
+    "body",
+    "creator",
+    "rrn",
+    "target"
+  ]
+}

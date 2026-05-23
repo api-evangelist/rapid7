@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DomElementRestriction",
+  "title": "DomElementRestriction",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "dom_element_path_type": {
+      "type": "string",
+      "enum": [
+        "XPATH",
+        "CSS_SELECTOR"
+      ]
+    },
+    "dom_element_path": {
+      "type": "string"
+    },
+    "cardinality_min": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "cardinality_max": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "exclusion": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "recursive": {
+      "type": "boolean"
+    }
+  }
+}

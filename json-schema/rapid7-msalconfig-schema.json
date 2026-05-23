@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MsalConfig",
+  "title": "MsalConfig",
+  "properties": {
+    "x509_cert_filename": {
+      "type": "string"
+    },
+    "x509_cert_password": {
+      "type": "string"
+    },
+    "x509_cert_store_key": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "token_refresh_period": {
+      "type": "object",
+      "properties": {
+        "seconds": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "zero": {
+          "type": "boolean"
+        },
+        "nano": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "negative": {
+          "type": "boolean"
+        },
+        "positive": {
+          "type": "boolean"
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "duration_estimated": {
+                "type": "boolean"
+              },
+              "time_based": {
+                "type": "boolean"
+              },
+              "date_based": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "authority_url": {
+      "type": "string"
+    }
+  }
+}

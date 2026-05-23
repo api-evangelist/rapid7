@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AssetV2",
+  "title": "AssetV2",
+  "required": [
+    "name",
+    "rrn"
+  ],
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "type": "string",
+      "description": "The unique identifier for this asset.",
+      "example": "rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:83002c85d7c6"
+    },
+    "name": {
+      "type": "string",
+      "description": "The user-friendly name for this asset.",
+      "example": "morbo.tor.acme.com"
+    }
+  },
+  "description": "The asset this local account is associated with."
+}

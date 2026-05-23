@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TokenReplacementConfig",
+  "title": "TokenReplacementConfig",
+  "properties": {
+    "global_token_replacement_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GlobalTokenReplacement"
+      }
+    }
+  }
+}

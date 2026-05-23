@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ClosedInvestigations",
+  "title": "ClosedInvestigations",
+  "type": "object",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "description": "The IDs of the investigations that were closed by the request.",
+      "example": [
+        "581134c9-2510-4010-865c-7ae81761315b",
+        "114c706d-e64a-4731-997b-9115beef3026"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "num_closed": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of investigations closed by the request.",
+      "example": 2
+    }
+  },
+  "required": [
+    "ids",
+    "num_closed"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NetworkSettingsConfig",
+  "title": "NetworkSettingsConfig",
+  "properties": {
+    "close_connection": {
+      "type": "boolean"
+    },
+    "send_keep_alive_header": {
+      "type": "boolean"
+    },
+    "pre_authenticate_basic_auth": {
+      "type": "boolean"
+    },
+    "max_retries": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_response_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_url_length": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_javascipt_response_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_binary_response_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "resolve_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "connect_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "write_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "read_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "assume_disconnected_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "drip_delay_milli_seconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_consecutive_failures": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_unsuccessful_responses": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_wait_time": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "network_preferred_auth_scheme": {
+      "type": "string",
+      "enum": [
+        "NPAS_DEFAULT",
+        "NPAS_NEGOTIATE",
+        "NPAS_NTLM",
+        "NPAS_PASSPORT",
+        "NPAS_BASIC"
+      ]
+    },
+    "use_secure_protocols": {
+      "type": "boolean"
+    },
+    "secure_protocols": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SSL_2",
+          "SSL_3",
+          "TLS_1",
+          "TLS_11",
+          "TLS_12",
+          "TLS_13"
+        ]
+      },
+      "uniqueItems": true
+    }
+  }
+}

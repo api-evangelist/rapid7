@@ -1,0 +1,2972 @@
+{
+  "provider": "Rapid7",
+  "providerId": "rapid7",
+  "kind": "json-structure",
+  "description": "Structural overview of the Rapid7 API surface; extracted from openapi/.",
+  "schemaCount": 0,
+  "operationCount": 329,
+  "schemas": [],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/3",
+      "operationId": "resources",
+      "summary": "Resources",
+      "tags": [
+        "Root"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/administration/commands",
+      "operationId": "executeCommand",
+      "summary": "Console Commands",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/administration/info",
+      "operationId": "getInfo",
+      "summary": "Information",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/administration/license",
+      "operationId": "getLicense",
+      "summary": "License",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/administration/license",
+      "operationId": "activateLicense",
+      "summary": "License",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/administration/properties",
+      "operationId": "getProperties",
+      "summary": "Properties",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/administration/settings",
+      "operationId": "getSettings",
+      "summary": "Settings",
+      "tags": [
+        "Administration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/agents",
+      "operationId": "getAgents",
+      "summary": "Agents",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups",
+      "operationId": "getAssetGroups",
+      "summary": "Asset Groups",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/asset_groups",
+      "operationId": "createAssetGroup",
+      "summary": "Asset Groups",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups/{id}",
+      "operationId": "getAssetGroup",
+      "summary": "Asset Group",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}",
+      "operationId": "updateAssetGroup",
+      "summary": "Asset Group",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}",
+      "operationId": "deleteAssetGroup",
+      "summary": "Asset Group",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups/{id}/assets",
+      "operationId": "getAssetGroupAssets",
+      "summary": "Asset Group Assets",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/assets",
+      "operationId": "updateAssetGroupAssets",
+      "summary": "Asset Group Assets",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}/assets",
+      "operationId": "removeAllAssetsFromAssetGroup",
+      "summary": "Asset Group Assets",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/assets/{assetId}",
+      "operationId": "addAssetToAssetGroup",
+      "summary": "Asset Group Asset",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}/assets/{assetId}",
+      "operationId": "removeAssetFromAssetGroup",
+      "summary": "Asset Group Asset",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups/{id}/search_criteria",
+      "operationId": "getAssetGroupSearchCriteria",
+      "summary": "Asset Group Search Criteria",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/search_criteria",
+      "operationId": "setAssetGroupSearchCriteria",
+      "summary": "Asset Group Search Criteria",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups/{id}/tags",
+      "operationId": "getAssetGroupTags",
+      "summary": "Asset Group Tags",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/tags",
+      "operationId": "setAssetGroupTags",
+      "summary": "Asset Group Tags",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}/tags",
+      "operationId": "removeAllAssetGroupTags",
+      "summary": "Asset Group Tags",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/tags/{tagId}",
+      "operationId": "addAssetGroupTag",
+      "summary": "Resources and operations for managing asset groups.",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}/tags/{tagId}",
+      "operationId": "removeAssetGroupTag",
+      "summary": "Resources and operations for managing asset groups.",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/asset_groups/{id}/users",
+      "operationId": "getAssetGroupUsers",
+      "summary": "Asset Group Users",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/users",
+      "operationId": "setAssetGroupUsers",
+      "summary": "Asset Group Users",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/asset_groups/{id}/users/{userId}",
+      "operationId": "addAssetGroupUser",
+      "summary": "Asset Group User",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/asset_groups/{id}/users/{userId}",
+      "operationId": "removeAssetGroupUser",
+      "summary": "Asset Group User",
+      "tags": [
+        "Asset Group"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets",
+      "operationId": "getAssets",
+      "summary": "Assets",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/assets",
+      "operationId": "getSiteAssets",
+      "summary": "Site Assets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/assets",
+      "operationId": "createAsset",
+      "summary": "Assets",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/assets",
+      "operationId": "removeSiteAssets",
+      "summary": "Site Assets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/assets/search",
+      "operationId": "findAssets",
+      "summary": "Asset Search",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{assetId}/policies",
+      "operationId": "getPoliciesForAsset",
+      "summary": "Policies For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{assetId}/policies/{policyId}/children",
+      "operationId": "getAssetPolicyChildren",
+      "summary": "Policy Rules or Groups Directly Under Policy For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/children",
+      "operationId": "getAssetPolicyGroupChildren",
+      "summary": "Policy Rules or Groups Directly Under Policy Group For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/rules",
+      "operationId": "getPolicyGroupRulesWithAssetAssessment",
+      "summary": "Policy Rules Under Policy Group For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{assetId}/policies/{policyId}/rules",
+      "operationId": "getAssetPolicyRulesSummary",
+      "summary": "Policy Rules For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}",
+      "operationId": "getAsset",
+      "summary": "Asset",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/assets/{id}",
+      "operationId": "deleteAsset",
+      "summary": "Asset",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/databases",
+      "operationId": "getAssetDatabases",
+      "summary": "Asset Databases",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/files",
+      "operationId": "getAssetFiles",
+      "summary": "Asset Files",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/policy_overrides",
+      "operationId": "getAssetPolicyOverrides",
+      "summary": "Asset Policy Overrides",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services",
+      "operationId": "getAssetServices",
+      "summary": "Asset Services",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}",
+      "operationId": "getAssetService",
+      "summary": "Asset Service",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/configurations",
+      "operationId": "getAssetServiceConfigurations",
+      "summary": "Asset Service Configurations",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/databases",
+      "operationId": "getAssetServiceDatabases",
+      "summary": "Asset Service Databases",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/user_groups",
+      "operationId": "getAssetServiceUserGroups",
+      "summary": "Asset Service User Groups",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/users",
+      "operationId": "getAssetServiceUsers",
+      "summary": "Asset Service Users",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/vulnerabilities",
+      "operationId": "getAssetServiceVulnerabilities",
+      "summary": "Asset Service Vulnerabilities",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/web_applications",
+      "operationId": "getAssetServiceWebApplications",
+      "summary": "Asset Service Web Applications",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/services/{protocol}/{port}/web_applications/{webApplicationId}",
+      "operationId": "getAssetServiceWebApplication",
+      "summary": "Asset Service Web Application",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/software",
+      "operationId": "getAssetSoftware",
+      "summary": "Asset Software",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/tags",
+      "operationId": "getAssetTags",
+      "summary": "Asset Tags",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/assets/{id}/tags/{tagId}",
+      "operationId": "addAssetTag",
+      "summary": "Asset Tag",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/assets/{id}/tags/{tagId}",
+      "operationId": "removeAssetTag",
+      "summary": "Asset Tag",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/user_groups",
+      "operationId": "getAssetUserGroups",
+      "summary": "Asset User Groups",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/users",
+      "operationId": "getAssetUsers",
+      "summary": "Asset Users",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/vulnerabilities",
+      "operationId": "getAssetVulnerabilities",
+      "summary": "Asset Vulnerabilities",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}",
+      "operationId": "getAssetVulnerability",
+      "summary": "Asset Vulnerability",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/solution",
+      "operationId": "getAssetVulnerabilitySolutions",
+      "summary": "Asset Vulnerability Solution",
+      "tags": [
+        "Remediation"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/validations",
+      "operationId": "getVulnerabilityValidations",
+      "summary": "Asset Vulnerability Validations",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/validations",
+      "operationId": "createVulnerabilityValidation",
+      "summary": "Asset Vulnerability Validations",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/validations/{validationId}",
+      "operationId": "getVulnerabilityValidation",
+      "summary": "Asset Vulnerability Validation",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/validations/{validationId}",
+      "operationId": "deleteVulnerabilityValidation",
+      "summary": "Asset Vulnerability Validation",
+      "tags": [
+        "Vulnerability Result"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/authentication_sources",
+      "operationId": "getAuthenticationSources",
+      "summary": "Authentication Sources",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/authentication_sources/{id}",
+      "operationId": "getAuthenticationSource",
+      "summary": "Authentication Source",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/authentication_sources/{id}/users",
+      "operationId": "getAuthenticationSourceUsers",
+      "summary": "Authentication Source Users",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/discovery_connections",
+      "operationId": "getDiscoveryConnections",
+      "summary": "Discovery Connections",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/discovery_connections/{id}",
+      "operationId": "getDiscoveryConnection",
+      "summary": "Discovery Connection",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/discovery_connections/{id}/connect",
+      "operationId": "reconnectDiscoveryConnection",
+      "summary": "Discovery Connection Reconnect",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/exploits",
+      "operationId": "getExploits",
+      "summary": "Exploits",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/exploits/{id}",
+      "operationId": "getExploit",
+      "summary": "Exploit",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/exploits/{id}/vulnerabilities",
+      "operationId": "getExploitVulnerabilities",
+      "summary": "Exploitable Vulnerabilities",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/malware_kits",
+      "operationId": "getMalwareKits",
+      "summary": "Malware Kits",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/malware_kits/{id}",
+      "operationId": "getMalwareKit",
+      "summary": "Malware Kit",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/malware_kits/{id}/vulnerabilities",
+      "operationId": "getMalwareKitVulnerabilities",
+      "summary": "Malware Kit Vulnerabilities",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/operating_systems",
+      "operationId": "getOperatingSystems",
+      "summary": "Operating Systems",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/operating_systems/{id}",
+      "operationId": "getOperatingSystem",
+      "summary": "Operating System",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies",
+      "operationId": "getPolicies",
+      "summary": "Policies",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{id}/children",
+      "operationId": "getPolicyChildren",
+      "summary": "Policy Rules or Groups Directly Under Policy",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}",
+      "operationId": "getPolicy",
+      "summary": "Policy",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/assets",
+      "operationId": "getPolicyAssetResults",
+      "summary": "Policy Asset Results",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/assets/{assetId}",
+      "operationId": "getPolicyAssetResult",
+      "summary": "Policy Asset Result",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups",
+      "operationId": "getPolicyGroups",
+      "summary": "Policy Groups",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups/{groupId}",
+      "operationId": "getPolicyGroup",
+      "summary": "Policy Group",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups/{groupId}/assets",
+      "operationId": "getPolicyGroupAssetResults",
+      "summary": "Assets Compliance For Policy Rules Under Policy Group",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups/{groupId}/assets/{assetId}",
+      "operationId": "getPolicyGroupAssetResult",
+      "summary": "Asset Compliance For Policy Rules Under Policy Group",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups/{groupId}/children",
+      "operationId": "getPolicyGroupChildren",
+      "summary": "Policy Rules or Groups Directly Under Policy Group",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/groups/{groupId}/rules",
+      "operationId": "getDescendantPolicyRules",
+      "summary": "Policy Rules Under Policy Group",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules",
+      "operationId": "getPolicyRules",
+      "summary": "Policy Rules",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/disabled",
+      "operationId": "getDisabledPolicyRules",
+      "summary": "Disabled Policy Rules",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}",
+      "operationId": "getPolicyRule",
+      "summary": "Policy Rule",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/assets",
+      "operationId": "getPolicyRuleAssetResults",
+      "summary": "Assets Compliance For Policy Rule",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/assets/{assetId}",
+      "operationId": "getPolicyRuleAssetResult",
+      "summary": "Asset Compliance For Policy Rule",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/assets/{assetId}/proof",
+      "operationId": "getPolicyRuleAssetResultProof",
+      "summary": "Policy Rule Proof For Asset",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/controls",
+      "operationId": "getPolicyRuleControls",
+      "summary": "Policy Rule Controls",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/rationale",
+      "operationId": "getPolicyRuleRationale",
+      "summary": "Policy Rule Rationale",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policies/{policyId}/rules/{ruleId}/remediation",
+      "operationId": "getPolicyRuleRemediation",
+      "summary": "Policy Rule Remediation",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policy/summary",
+      "operationId": "getPolicySummary",
+      "summary": "Policy Compliance Summaries",
+      "tags": [
+        "Policy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policy_overrides",
+      "operationId": "getPolicyOverrides",
+      "summary": "Policy Overrides",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/policy_overrides",
+      "operationId": "createPolicyOverride",
+      "summary": "Policy Overrides",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policy_overrides/{id}",
+      "operationId": "getPolicyOverride",
+      "summary": "Policy Override",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/policy_overrides/{id}",
+      "operationId": "deletePolicyOverride",
+      "summary": "Policy Override",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/policy_overrides/{id}/expires",
+      "operationId": "getPolicyOverrideExpiration",
+      "summary": "Policy Override Expiration",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/policy_overrides/{id}/expires",
+      "operationId": "setPolicyOverrideExpiration",
+      "summary": "Policy Override Expiration",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/policy_overrides/{id}/{status}",
+      "operationId": "setPolicyOverrideStatus",
+      "summary": "Policy Override Status",
+      "tags": [
+        "Policy Override"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/privileges",
+      "operationId": "getPrivileges",
+      "summary": "Privileges",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/privileges/{id}",
+      "operationId": "getPrivilege",
+      "summary": "Privilege",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/privileges/{id}/users",
+      "operationId": "getUsersWithPrivilege",
+      "summary": "Users With Privilege",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/report_formats",
+      "operationId": "getReportFormats",
+      "summary": "Report Formats",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/report_templates",
+      "operationId": "getReportTemplates",
+      "summary": "Report Templates",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/report_templates/{id}",
+      "operationId": "getReportTemplate",
+      "summary": "Report Template",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/reports",
+      "operationId": "getReports",
+      "summary": "Reports",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/reports",
+      "operationId": "createReport",
+      "summary": "Reports",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/reports/{id}",
+      "operationId": "getReport",
+      "summary": "Report",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/reports/{id}",
+      "operationId": "updateReport",
+      "summary": "Report",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/reports/{id}",
+      "operationId": "deleteReport",
+      "summary": "Report",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/reports/{id}/generate",
+      "operationId": "generateReport",
+      "summary": "Report Generation",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/reports/{id}/history",
+      "operationId": "getReportInstances",
+      "summary": "Report Histories",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/reports/{id}/history/{instance}",
+      "operationId": "getReportInstance",
+      "summary": "Report History",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/reports/{id}/history/{instance}",
+      "operationId": "deleteReportInstance",
+      "summary": "Report History",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/reports/{id}/history/{instance}/output",
+      "operationId": "downloadReport",
+      "summary": "Report Download",
+      "tags": [
+        "Report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/roles",
+      "operationId": "getRoles",
+      "summary": "Roles",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/roles/{id}",
+      "operationId": "getRole",
+      "summary": "Role",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/roles/{id}",
+      "operationId": "updateRole",
+      "summary": "Role",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/roles/{id}",
+      "operationId": "deleteRole",
+      "summary": "Role",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/roles/{id}/users",
+      "operationId": "getRoleUsers",
+      "summary": "Users With Role",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engine_pools",
+      "operationId": "getScanEnginePools",
+      "summary": "Engine Pools",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/scan_engine_pools",
+      "operationId": "createScanEnginePool",
+      "summary": "Engine Pools",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engine_pools/{id}",
+      "operationId": "getEnginePool",
+      "summary": "Engine Pool",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/scan_engine_pools/{id}",
+      "operationId": "updateScanEnginePool",
+      "summary": "Engine Pool",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/scan_engine_pools/{id}",
+      "operationId": "removeScanEnginePool",
+      "summary": "Engine Pool",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engine_pools/{id}/engines",
+      "operationId": "getScanEnginePoolScanEngines",
+      "summary": "Engine Pool Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/scan_engine_pools/{id}/engines",
+      "operationId": "setScanEnginePoolScanEngines",
+      "summary": "Engine Pool Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/scan_engine_pools/{id}/engines/{engineId}",
+      "operationId": "addScanEnginePoolScanEngine",
+      "summary": "Engine Pool Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/scan_engine_pools/{id}/engines/{engineId}",
+      "operationId": "removeScanEnginePoolScanEngine",
+      "summary": "Engine Pool Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engine_pools/{id}/sites",
+      "operationId": "getScanEnginePoolSites",
+      "summary": "Engine Pool Sites",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines",
+      "operationId": "getScanEngines",
+      "summary": "Scan Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/scan_engines",
+      "operationId": "createScanEngine",
+      "summary": "Scan Engines",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/shared_secret",
+      "operationId": "getCurrentSharedSecret",
+      "summary": "Scan Engine Shared Secret",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/scan_engines/shared_secret",
+      "operationId": "createSharedSecret",
+      "summary": "Scan Engine Shared Secret",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/scan_engines/shared_secret",
+      "operationId": "deleteSharedSecret",
+      "summary": "Scan Engine Shared Secret",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/shared_secret/time_to_live",
+      "operationId": "getCurrentSharedSecretTimeToLive",
+      "summary": "Scan Engine Shared Secret Time to live",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/{id}",
+      "operationId": "getScanEngine",
+      "summary": "Scan Engine",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/scan_engines/{id}",
+      "operationId": "updateScanEngine",
+      "summary": "Scan Engine",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/scan_engines/{id}",
+      "operationId": "deleteScanEngine",
+      "summary": "Scan Engine",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/{id}/scan_engine_pools",
+      "operationId": "getAssignedEnginePools",
+      "summary": "Assigned Engine Pools",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/{id}/scans",
+      "operationId": "getScanEngineScans",
+      "summary": "Scan Engine Scans",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_engines/{id}/sites",
+      "operationId": "getScanEngineSites",
+      "summary": "Scan Engine Sites",
+      "tags": [
+        "Scan Engine"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_templates",
+      "operationId": "getScanTemplates",
+      "summary": "Scan Templates",
+      "tags": [
+        "Scan Template"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/scan_templates",
+      "operationId": "createScanTemplate",
+      "summary": "Scan Templates",
+      "tags": [
+        "Scan Template"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scan_templates/{id}",
+      "operationId": "getScanTemplate",
+      "summary": "Scan Template",
+      "tags": [
+        "Scan Template"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/scan_templates/{id}",
+      "operationId": "updateScanTemplate",
+      "summary": "Scan Template",
+      "tags": [
+        "Scan Template"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/scan_templates/{id}",
+      "operationId": "deleteScanTemplate",
+      "summary": "Scan Template",
+      "tags": [
+        "Scan Template"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scans",
+      "operationId": "getScans",
+      "summary": "Scans",
+      "tags": [
+        "Scan"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/scans/{id}",
+      "operationId": "getScan",
+      "summary": "Scan",
+      "tags": [
+        "Scan"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/scans/{id}/{status}",
+      "operationId": "setScanStatus",
+      "summary": "Scan Status",
+      "tags": [
+        "Scan"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/shared_credentials",
+      "operationId": "getSharedCredentials",
+      "summary": "Shared Credentials",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/shared_credentials",
+      "operationId": "createSharedCredential",
+      "summary": "Shared Credentials",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/shared_credentials",
+      "operationId": "deleteAllSharedCredentials",
+      "summary": "Shared Credentials",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/shared_credentials/{id}",
+      "operationId": "getSharedCredential",
+      "summary": "Shared Credential",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/shared_credentials/{id}",
+      "operationId": "updateSharedCredential",
+      "summary": "Shared Credential",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/shared_credentials/{id}",
+      "operationId": "deleteSharedCredential",
+      "summary": "Shared Credential",
+      "tags": [
+        "Credential"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites",
+      "operationId": "getSites",
+      "summary": "Sites",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites",
+      "operationId": "createSite",
+      "summary": "Sites",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}",
+      "operationId": "getSite",
+      "summary": "Site",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}",
+      "operationId": "updateSite",
+      "summary": "Site",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}",
+      "operationId": "deleteSite",
+      "summary": "Site",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts",
+      "operationId": "getSiteAlerts",
+      "summary": "Site Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts",
+      "operationId": "deleteAllSiteAlerts",
+      "summary": "Site Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/smtp",
+      "operationId": "getSiteSmtpAlerts",
+      "summary": "Site SMTP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/alerts/smtp",
+      "operationId": "createSiteSmtpAlert",
+      "summary": "Site SMTP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/smtp",
+      "operationId": "setSiteSmtpAlerts",
+      "summary": "Site SMTP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/smtp",
+      "operationId": "deleteAllSiteSmtpAlerts",
+      "summary": "Site SMTP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/smtp/{alertId}",
+      "operationId": "getSiteSmtpAlert",
+      "summary": "Site SMTP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/smtp/{alertId}",
+      "operationId": "updateSiteSmtpAlert",
+      "summary": "Site SMTP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/smtp/{alertId}",
+      "operationId": "deleteSiteSmtpAlert",
+      "summary": "Site SMTP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/snmp",
+      "operationId": "getSiteSnmpAlerts",
+      "summary": "Site SNMP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/alerts/snmp",
+      "operationId": "createSiteSnmpAlert",
+      "summary": "Site SNMP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/snmp",
+      "operationId": "setSiteSnmpAlerts",
+      "summary": "Site SNMP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/snmp",
+      "operationId": "deleteAllSiteSnmpAlerts",
+      "summary": "Site SNMP Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/snmp/{alertId}",
+      "operationId": "getSiteSnmpAlert",
+      "summary": "Site SNMP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/snmp/{alertId}",
+      "operationId": "updateSiteSnmpAlert",
+      "summary": "Site SNMP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/snmp/{alertId}",
+      "operationId": "deleteSiteSnmpAlert",
+      "summary": "Site SNMP Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/syslog",
+      "operationId": "getSiteSyslogAlerts",
+      "summary": "Site Syslog Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/alerts/syslog",
+      "operationId": "createSiteSyslogAlert",
+      "summary": "Site Syslog Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/syslog",
+      "operationId": "setSiteSyslogAlerts",
+      "summary": "Site Syslog Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/syslog",
+      "operationId": "deleteAllSiteSyslogAlerts",
+      "summary": "Site Syslog Alerts",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/alerts/syslog/{alertId}",
+      "operationId": "getSiteSyslogAlert",
+      "summary": "Site Syslog Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/alerts/syslog/{alertId}",
+      "operationId": "updateSiteSyslogAlert",
+      "summary": "Site Syslog Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/alerts/syslog/{alertId}",
+      "operationId": "deleteSiteSyslogAlert",
+      "summary": "Site Syslog Alert",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/assets/{assetId}",
+      "operationId": "removeAssetFromSite",
+      "summary": "Site Asset",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/discovery_connection",
+      "operationId": "getSiteDiscoveryConnection",
+      "summary": "Site Discovery Connection",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/discovery_connection",
+      "operationId": "setSiteDiscoveryConnection",
+      "summary": "Site Discovery Connection",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/discovery_search_criteria",
+      "operationId": "getSiteDiscoverySearchCriteria",
+      "summary": "Site Discovery Search Criteria",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/discovery_search_criteria",
+      "operationId": "setSiteDiscoverySearchCriteria",
+      "summary": "Site Discovery Search Criteria",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/excluded_asset_groups",
+      "operationId": "getExcludedAssetGroups",
+      "summary": "Site Excluded Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/excluded_asset_groups",
+      "operationId": "updateExcludedAssetGroups",
+      "summary": "Site Excluded Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/excluded_asset_groups",
+      "operationId": "removeAllExcludedAssetGroups",
+      "summary": "Site Excluded Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/excluded_asset_groups/{assetGroupId}",
+      "operationId": "removeExcludedAssetGroup",
+      "summary": "Site Excluded Asset Group",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/excluded_targets",
+      "operationId": "getExcludedTargets",
+      "summary": "Site Excluded Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/excluded_targets",
+      "operationId": "addExcludedTargets",
+      "summary": "Site Excluded Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/excluded_targets",
+      "operationId": "updateExcludedTargets",
+      "summary": "Site Excluded Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/excluded_targets",
+      "operationId": "removeExcludedTargets",
+      "summary": "Site Excluded Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/included_asset_groups",
+      "operationId": "getIncludedAssetGroups",
+      "summary": "Site Included Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/included_asset_groups",
+      "operationId": "updateIncludedAssetGroups",
+      "summary": "Site Included Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/included_asset_groups",
+      "operationId": "removeAllIncludedAssetGroups",
+      "summary": "Site Included Asset Groups",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/included_asset_groups/{assetGroupId}",
+      "operationId": "removeIncludedAssetGroup",
+      "summary": "Site Included Asset Group",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/included_targets",
+      "operationId": "getIncludedTargets",
+      "summary": "Site Included Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/included_targets",
+      "operationId": "addIncludedTargets",
+      "summary": "Site Included Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/included_targets",
+      "operationId": "updateIncludedTargets",
+      "summary": "Site Included Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/included_targets",
+      "operationId": "removeIncludedTargets",
+      "summary": "Site Included Targets",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/organization",
+      "operationId": "getSiteOrganization",
+      "summary": "Site Organization Information",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/organization",
+      "operationId": "updateSiteOrganization",
+      "summary": "Site Organization Information",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/scan_engine",
+      "operationId": "getSiteScanEngine",
+      "summary": "Site Scan Engine",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/scan_engine",
+      "operationId": "setSiteScanEngine",
+      "summary": "Site Scan Engine",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/scan_schedules",
+      "operationId": "getSiteScanSchedules",
+      "summary": "Site Scan Schedules",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/scan_schedules",
+      "operationId": "createSiteScanSchedule",
+      "summary": "Site Scan Schedules",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/scan_schedules",
+      "operationId": "setSiteScanSchedules",
+      "summary": "Site Scan Schedules",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/scan_schedules",
+      "operationId": "deleteAllSiteScanSchedules",
+      "summary": "Site Scan Schedules",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/scan_schedules/{scheduleId}",
+      "operationId": "getSiteScanSchedule",
+      "summary": "Site Scan Schedule",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/scan_schedules/{scheduleId}",
+      "operationId": "updateSiteScanSchedule",
+      "summary": "Site Scan Schedule",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/scan_schedules/{scheduleId}",
+      "operationId": "deleteSiteScanSchedule",
+      "summary": "Site Scan Schedule",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/scan_template",
+      "operationId": "getSiteScanTemplate",
+      "summary": "Site Scan Template",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/scan_template",
+      "operationId": "setSiteScanTemplate",
+      "summary": "Site Scan Template",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/scans",
+      "operationId": "getSiteScans",
+      "summary": "Site Scans",
+      "tags": [
+        "Scan"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/scans",
+      "operationId": "startScan",
+      "summary": "Site Scans",
+      "tags": [
+        "Scan"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/shared_credentials",
+      "operationId": "getSiteSharedCredentials",
+      "summary": "Assigned Shared Credentials",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/shared_credentials/{credentialId}/enabled",
+      "operationId": "enableSharedCredentialOnSite",
+      "summary": "Assigned Shared Credential Enablement",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/site_credentials",
+      "operationId": "getSiteCredentials",
+      "summary": "Site Scan Credentials",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/site_credentials",
+      "operationId": "createSiteCredential",
+      "summary": "Site Scan Credentials",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/site_credentials",
+      "operationId": "setSiteCredentials",
+      "summary": "Site Scan Credentials",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/site_credentials",
+      "operationId": "deleteAllSiteCredentials",
+      "summary": "Site Scan Credentials",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/site_credentials/{credentialId}",
+      "operationId": "getSiteCredential",
+      "summary": "Site Scan Credential",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/site_credentials/{credentialId}",
+      "operationId": "updateSiteCredential",
+      "summary": "Site Scan Credential",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/site_credentials/{credentialId}",
+      "operationId": "deleteSiteCredential",
+      "summary": "Site Scan Credential",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/site_credentials/{credentialId}/enabled",
+      "operationId": "enableSiteCredential",
+      "summary": "Site Credential Enablement",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/tags",
+      "operationId": "getSiteTags",
+      "summary": "Site Tags",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/tags",
+      "operationId": "setSiteTags",
+      "summary": "Site Tags",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/tags/{tagId}",
+      "operationId": "addSiteTag",
+      "summary": "Site Tag",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/tags/{tagId}",
+      "operationId": "removeSiteTag",
+      "summary": "Site Tag",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/users",
+      "operationId": "getSiteUsers",
+      "summary": "Site Users Access",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sites/{id}/users",
+      "operationId": "addSiteUser",
+      "summary": "Site Users Access",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sites/{id}/users",
+      "operationId": "setSiteUsers",
+      "summary": "Site Users Access",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sites/{id}/users/{userId}",
+      "operationId": "removeSiteUser",
+      "summary": "Site User Access",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/web_authentication/html_forms",
+      "operationId": "getWebAuthHtmlForms",
+      "summary": "Web Authentication HTML Forms",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sites/{id}/web_authentication/http_headers",
+      "operationId": "getWebAuthHTTPHeaders",
+      "summary": "Web Authentication HTTP Headers",
+      "tags": [
+        "Site"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/software",
+      "operationId": "getSoftwares",
+      "summary": "Software",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/software/{id}",
+      "operationId": "getSoftware",
+      "summary": "Software",
+      "tags": [
+        "Asset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/solutions",
+      "operationId": "getSolutions",
+      "summary": "Solutions",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/solutions/{id}",
+      "operationId": "getSolution",
+      "summary": "Solution",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/solutions/{id}/prerequisites",
+      "operationId": "getPrerequisiteSolutions",
+      "summary": "Solution Prerequisites",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/solutions/{id}/supersedes",
+      "operationId": "getSupersededSolutions",
+      "summary": "Superseded Solutions",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/solutions/{id}/superseding",
+      "operationId": "getSupersedingSolutions",
+      "summary": "Superseding Solutions",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sonar_queries",
+      "operationId": "getSonarQueries",
+      "summary": "Sonar Queries",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sonar_queries",
+      "operationId": "createSonarQuery",
+      "summary": "Sonar Queries",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/sonar_queries/search",
+      "operationId": "sonarQuerySearch",
+      "summary": "Sonar Query Search",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sonar_queries/{id}",
+      "operationId": "getSonarQuery",
+      "summary": "Sonar Query",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/sonar_queries/{id}",
+      "operationId": "updateSonarQuery",
+      "summary": "Sonar Query",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/sonar_queries/{id}",
+      "operationId": "deleteSonarQuery",
+      "summary": "Sonar Query",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/sonar_queries/{id}/assets",
+      "operationId": "getSonarQueryAssets",
+      "summary": "Sonar Query Assets",
+      "tags": [
+        "Asset Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags",
+      "operationId": "getTags",
+      "summary": "Tags",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/tags",
+      "operationId": "createTag",
+      "summary": "Tags",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags/{id}",
+      "operationId": "getTag",
+      "summary": "Tag",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}",
+      "operationId": "updateTag",
+      "summary": "Tag",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}",
+      "operationId": "deleteTag",
+      "summary": "Tag",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags/{id}/asset_groups",
+      "operationId": "getTagAssetGroups",
+      "summary": "Tag Asset Groups",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/asset_groups",
+      "operationId": "setTaggedAssetGroups",
+      "summary": "Tag Asset Groups",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/asset_groups",
+      "operationId": "untagAllAssetGroups",
+      "summary": "Tag Asset Groups",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/asset_groups/{assetGroupId}",
+      "operationId": "tagAssetGroup",
+      "summary": "Tag Asset Group",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/asset_groups/{assetGroupId}",
+      "operationId": "untagAssetGroup",
+      "summary": "Tag Asset Group",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags/{id}/assets",
+      "operationId": "getTaggedAssets",
+      "summary": "Tag Assets",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/assets/{assetId}",
+      "operationId": "tagAsset",
+      "summary": "Tag Asset",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/assets/{assetId}",
+      "operationId": "untagAsset",
+      "summary": "Tag Asset",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags/{id}/search_criteria",
+      "operationId": "getTagSearchCriteria",
+      "summary": "Tag Search Criteria",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/search_criteria",
+      "operationId": "updateTagSearchCriteria",
+      "summary": "Tag Search Criteria",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/search_criteria",
+      "operationId": "removeTagSearchCriteria",
+      "summary": "Tag Search Criteria",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/tags/{id}/sites",
+      "operationId": "getTaggedSites",
+      "summary": "Tag Sites",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/sites",
+      "operationId": "setTaggedSites",
+      "summary": "Tag Sites",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/sites",
+      "operationId": "removeTaggedSites",
+      "summary": "Tag Sites",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/tags/{id}/sites/{siteId}",
+      "operationId": "tagSite",
+      "summary": "Tag Site",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/tags/{id}/sites/{siteId}",
+      "operationId": "untagSite",
+      "summary": "Tag Site",
+      "tags": [
+        "Tag"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users",
+      "operationId": "getUsers",
+      "summary": "Users",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/users",
+      "operationId": "createUser",
+      "summary": "Users",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users/{id}",
+      "operationId": "getUser",
+      "summary": "User",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}",
+      "operationId": "updateUser",
+      "summary": "User",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}",
+      "operationId": "deleteUser",
+      "summary": "User",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users/{id}/2FA",
+      "operationId": "getTwoFactorAuthenticationKey",
+      "summary": "Two-Factor Authentication",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/users/{id}/2FA",
+      "operationId": "regenerateTwoFactorAuthentication",
+      "summary": "Two-Factor Authentication",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/2FA",
+      "operationId": "setTwoFactorAuthentication",
+      "summary": "Two-Factor Authentication",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users/{id}/asset_groups",
+      "operationId": "getUserAssetGroups",
+      "summary": "Asset Groups Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/asset_groups",
+      "operationId": "setUserAssetGroups",
+      "summary": "Asset Groups Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}/asset_groups",
+      "operationId": "removeAllUserAssetGroups",
+      "summary": "Asset Groups Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/asset_groups/{assetGroupId}",
+      "operationId": "addUserAssetGroup",
+      "summary": "Asset Group Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}/asset_groups/{assetGroupId}",
+      "operationId": "removeUserAssetGroup",
+      "summary": "Asset Group Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}/lock",
+      "operationId": "unlockUser",
+      "summary": "Unlock Account",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/password",
+      "operationId": "resetPassword",
+      "summary": "Password Reset",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users/{id}/privileges",
+      "operationId": "getUserPrivileges",
+      "summary": "User Privileges",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/users/{id}/sites",
+      "operationId": "getUserSites",
+      "summary": "Sites Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/sites",
+      "operationId": "setUserSites",
+      "summary": "Sites Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}/sites",
+      "operationId": "removeAllUserSites",
+      "summary": "Sites Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/users/{id}/sites/{siteId}",
+      "operationId": "addUserSite",
+      "summary": "Site Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/users/{id}/sites/{siteId}",
+      "operationId": "removeUserSite",
+      "summary": "Site Access",
+      "tags": [
+        "User"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities",
+      "operationId": "getVulnerabilities",
+      "summary": "Vulnerabilities",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}",
+      "operationId": "getVulnerability",
+      "summary": "Vulnerability",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/assets",
+      "operationId": "getAffectedAssets",
+      "summary": "Vulnerability Affected Assets",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/checks",
+      "operationId": "getVulnerabilityChecksForVulnerability",
+      "summary": "Vulnerability Checks",
+      "tags": [
+        "Vulnerability Check"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/exploits",
+      "operationId": "getVulnerabilityExploits",
+      "summary": "Vulnerability Exploits",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/malware_kits",
+      "operationId": "getVulnerabilityMalwareKits",
+      "summary": "Vulnerability Malware Kits",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/references",
+      "operationId": "getVulnerabilityReferences_1",
+      "summary": "Vulnerability References",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerabilities/{id}/solutions",
+      "operationId": "getVulnerabilitySolutions",
+      "summary": "Vulnerability Solutions",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_categories",
+      "operationId": "getVulnerabilityCategories",
+      "summary": "Categories",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_categories/{id}",
+      "operationId": "getVulnerabilityCategory",
+      "summary": "Category",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_categories/{id}/vulnerabilities",
+      "operationId": "getVulnerabilityCategoryVulnerabilities",
+      "summary": "Category Vulnerabilities",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_checks",
+      "operationId": "getVulnerabilityChecks",
+      "summary": "Checks",
+      "tags": [
+        "Vulnerability Check"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_checks/{id}",
+      "operationId": "vulnerabilityCheck",
+      "summary": "Check",
+      "tags": [
+        "Vulnerability Check"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_checks_types",
+      "operationId": "getVulnerabilityCheckTypes",
+      "summary": "Check Types",
+      "tags": [
+        "Vulnerability Check"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_exceptions",
+      "operationId": "getVulnerabilityExceptions",
+      "summary": "Exceptions",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/vulnerability_exceptions",
+      "operationId": "createVulnerabilityException",
+      "summary": "Exceptions",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_exceptions/{id}",
+      "operationId": "getVulnerabilityException",
+      "summary": "Exception",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/3/vulnerability_exceptions/{id}",
+      "operationId": "removeVulnerabilityException",
+      "summary": "Exception",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_exceptions/{id}/expires",
+      "operationId": "getVulnerabilityExceptionExpiration",
+      "summary": "Exception Expiration",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/3/vulnerability_exceptions/{id}/expires",
+      "operationId": "updateVulnerabilityExceptionExpiration",
+      "summary": "Exception Expiration",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/3/vulnerability_exceptions/{id}/{status}",
+      "operationId": "updateVulnerabilityExceptionStatus",
+      "summary": "Exception Status",
+      "tags": [
+        "Vulnerability Exception"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_references",
+      "operationId": "getVulnerabilityReferences",
+      "summary": "References",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_references/{id}",
+      "operationId": "getVulnerabilityReference",
+      "summary": "Reference",
+      "tags": [
+        "Vulnerability"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/3/vulnerability_references/{id}/vulnerabilities",
+      "operationId": "getVulnerabilityReferenceVulnerabilities",
+      "summary": "Reference Vulnerabilities",
+      "tags": [
+        "Vulnerability"
+      ]
+    }
+  ]
+}

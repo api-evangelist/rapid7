@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityModelAttackTemplate",
+  "title": "EntityModelAttackTemplate",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the attack template",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the attack template"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the attack template"
+    },
+    "system_defined": {
+      "type": "boolean",
+      "description": "A read-only flag that indicates if the Attack Template is system-defined (immutable) ",
+      "readOnly": true
+    },
+    "browser_encoding_enabled": {
+      "type": "boolean",
+      "description": "A flag that is used to enforce browser encoding on all attacks"
+    },
+    "attack_prioritization": {
+      "type": "string",
+      "description": "The Attack Prioritization type",
+      "enum": [
+        "SEQUENTIAL",
+        "SMART",
+        "RANDOMIZED"
+      ]
+    },
+    "advanced_attacks_enabled": {
+      "type": "boolean",
+      "description": "A flag to enable advanced Attacks"
+    },
+    "false_positive_regex": {
+      "type": "string",
+      "description": "Regex used to indicate a false positive",
+      "maxLength": 200,
+      "minLength": 0
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

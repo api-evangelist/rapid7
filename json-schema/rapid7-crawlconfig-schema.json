@@ -1,0 +1,438 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrawlConfig",
+  "title": "CrawlConfig",
+  "properties": {
+    "max_scan_time_in_minutes": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_domain": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_web_site_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_dir_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_link_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_normalized_link_crawl_result": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_dir_child_nodes": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_deny_list_ext_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_attack_feedback_links_count": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_file_name_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_per_query_crawl_results": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "recursion_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_dir_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "discovery_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "url_repetition_tolerance": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "sequence_repetition_tolerance": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_images": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_links": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_comments": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_scripts": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_emails": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_reported_forms": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "extract_crawl_browser_storage": {
+      "type": "boolean"
+    },
+    "max_browser_page_wait_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_wait_till_request_timeout": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_dom_depth": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_events_per_link": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_events_per_crawl_result": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_events_per_dom": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_events_per_browse_dom": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_browser_no_new_resource_dom_count": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "not_inserted_link_count_threshold": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_cookies_from_javascript": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_cookies_same_name_from_javascript": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "max_days_threshold_good_traffic": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "crawl_prioritization": {
+      "type": "string",
+      "enum": [
+        "FIRST_IN_FIRST_OUT",
+        "SMART",
+        "DIRECTORY_BREADTH_FIRST",
+        "FOUND_BREADTH_FIRST",
+        "FOUND_DEPTH_FIRST",
+        "JUICY",
+        "LOGIN_FORM_DISCOVERY",
+        "LOGIN"
+      ]
+    },
+    "file_not_found_regex": {
+      "type": "string"
+    },
+    "server_error_regex": {
+      "type": "string"
+    },
+    "invalid_url_regex_attack": {
+      "type": "string"
+    },
+    "invalid_url_regex_crawl": {
+      "type": "string"
+    },
+    "nonce_regex": {
+      "type": "string"
+    },
+    "priority_links_regex": {
+      "type": "string"
+    },
+    "lock_cookies": {
+      "type": "boolean"
+    },
+    "max_cookie_header_size": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "case_sensitivity": {
+      "type": "string",
+      "enum": [
+        "AUTO_DETECT",
+        "CASE_SENSITIVE",
+        "CASE_INSENSITIVE"
+      ]
+    },
+    "stay_on_port": {
+      "type": "boolean"
+    },
+    "restrict_to_macro": {
+      "type": "boolean"
+    },
+    "restrict_to_manual_crawling": {
+      "type": "boolean"
+    },
+    "restrict_to_seed_list": {
+      "type": "boolean"
+    },
+    "restrict_to_web_service": {
+      "type": "boolean"
+    },
+    "restrict_to_selenium": {
+      "type": "boolean"
+    },
+    "restrict_to_swagger": {
+      "type": "boolean"
+    },
+    "restrict_to_agent_routes": {
+      "type": "boolean"
+    },
+    "import_cookies_from_traffic": {
+      "type": "boolean"
+    },
+    "page_equal_threshhold": {
+      "type": "number",
+      "format": "double"
+    },
+    "page_similar_threshhold": {
+      "type": "number",
+      "format": "double"
+    },
+    "experimental_crawling": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED",
+        "FRAMEWORK_MATCH"
+      ]
+    },
+    "flash": {
+      "type": "boolean"
+    },
+    "enable_advanced_parsers": {
+      "type": "boolean"
+    },
+    "search_for_urls": {
+      "type": "boolean"
+    },
+    "cookie_comma_separator": {
+      "type": "boolean"
+    },
+    "denylist_contact_forms": {
+      "type": "boolean"
+    },
+    "denylist_all_forms": {
+      "type": "boolean"
+    },
+    "enable_robotstxt_sitemap_crawling": {
+      "type": "boolean"
+    },
+    "log_dom_contents": {
+      "type": "boolean"
+    },
+    "use_browser_response_caching": {
+      "type": "boolean"
+    },
+    "use_browser_response_reference_caching": {
+      "type": "boolean"
+    },
+    "remove_content_security_policy": {
+      "type": "boolean"
+    },
+    "page_loaded": {
+      "type": "string",
+      "enum": [
+        "NO_NETWORK_CONNECTION_FOR_OVER_500_MS",
+        "DOM_CONTENT_LOADED_EVENT_FIRED",
+        "LOAD_EVENT_FIRED",
+        "DOCUMENT_STARTS_LOADING"
+      ]
+    },
+    "page_delay_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "page_timeout_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "mock_images": {
+      "type": "boolean"
+    },
+    "mock_videos": {
+      "type": "boolean"
+    },
+    "screen_width": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "screen_height": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "screen_responsive": {
+      "type": "boolean"
+    },
+    "inject_initial_delay_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "inject_combo_delay_milliseconds": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "error_limit_percentage": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "error_limit_lower_absolute": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "events_full_selectors_only": {
+      "type": "boolean"
+    },
+    "events_add_iframe_events": {
+      "type": "boolean"
+    },
+    "dom_element_selector_type": {
+      "type": "string",
+      "enum": [
+        "X_PATH",
+        "CSS",
+        "TEXT"
+      ]
+    },
+    "disable_before_unload": {
+      "type": "boolean"
+    },
+    "seed_url_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SeedUrl"
+      }
+    },
+    "scope_constraint_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeConstraint"
+      }
+    },
+    "deny_list_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DenyListExtension"
+      }
+    },
+    "gray_list_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GrayListExtension"
+      }
+    },
+    "binary_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BinaryExtension"
+      }
+    },
+    "text_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TextExtension"
+      }
+    },
+    "binary_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BinaryContentType"
+      }
+    },
+    "html_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/HtmlContentType"
+      }
+    },
+    "text_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TextContentType"
+      }
+    },
+    "xml_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/XmlContentType"
+      }
+    },
+    "dom_restrictions_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DomRestrictions"
+      }
+    },
+    "browser_download_allowlist_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BrowserDownloadAllowlist"
+      }
+    },
+    "browser_do_not_download_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BrowserDoNotDownloadExtension"
+      }
+    },
+    "browser_do_not_download_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BrowserDoNotDownloadContentType"
+      }
+    },
+    "locked_cookie_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LockedCookie"
+      }
+    },
+    "frameworks_crawl_config": {
+      "$ref": "#/components/schemas/FrameworksCrawlConfig"
+    },
+    "crawler_initialization_config": {
+      "$ref": "#/components/schemas/CrawlerInitializationConfig"
+    },
+    "crawler_monitoring_config": {
+      "$ref": "#/components/schemas/CrawlerMonitoringConfig"
+    }
+  }
+}

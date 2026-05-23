@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WebServiceConfig",
+  "title": "WebServiceConfig",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "wsdl_regex": {
+      "type": "string"
+    },
+    "auto_discover_wsdl": {
+      "type": "boolean"
+    },
+    "web_services_enhancements": {
+      "type": "boolean"
+    },
+    "password_option": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "HASHED",
+        "PLAIN_TEXT"
+      ]
+    },
+    "swagger_host_name": {
+      "type": "string"
+    },
+    "swagger_parse_fail": {
+      "type": "boolean"
+    },
+    "use_swagger_v1": {
+      "type": "boolean"
+    },
+    "save_swagger_files": {
+      "type": "boolean"
+    },
+    "swagger_warning_level": {
+      "type": "string",
+      "enum": [
+        "STRICT",
+        "MAXIMIZE_ASSESSMENT",
+        "LOOSE"
+      ]
+    },
+    "wsdl_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Wsdl"
+      }
+    },
+    "swagger_file_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SwaggerFile"
+      }
+    },
+    "graph_ql_config_object_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GraphQlConfigObject"
+      }
+    }
+  }
+}

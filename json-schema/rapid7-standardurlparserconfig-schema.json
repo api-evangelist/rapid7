@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/StandardUrlParserConfig",
+  "title": "StandardUrlParserConfig",
+  "properties": {
+    "path_name_value_delimiters": {
+      "type": "string"
+    },
+    "path_parameter_delimiters": {
+      "type": "string"
+    },
+    "query_name_value_delimiters": {
+      "type": "string"
+    },
+    "query_parameter_delimiters": {
+      "type": "string"
+    },
+    "path_params_value_regex": {
+      "type": "string"
+    },
+    "start_path_params_position": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

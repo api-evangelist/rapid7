@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ManualSequenceConfig",
+  "title": "ManualSequenceConfig",
+  "properties": {
+    "sequence_request_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SequenceRequest"
+      }
+    }
+  }
+}

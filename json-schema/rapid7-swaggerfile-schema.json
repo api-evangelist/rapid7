@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SwaggerFile",
+  "title": "SwaggerFile",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "preferred_content_type": {
+      "type": "string"
+    },
+    "json_file_url": {
+      "type": "string"
+    },
+    "host_name": {
+      "type": "string"
+    }
+  }
+}

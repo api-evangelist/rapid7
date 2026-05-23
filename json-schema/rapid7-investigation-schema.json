@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Investigation",
+  "title": "Investigation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the investigation.",
+      "example": "174e4f99-2ac7-4481-9301-4d24c34baf06"
+    },
+    "rrn": {
+      "type": "string",
+      "description": "The RRN of the investigation.",
+      "example": "rrn:investigation:us1:174e4f99-2ac7-4481-9301-4d24c34baf06:investigation:6A74T2A4"
+    },
+    "title": {
+      "type": "string",
+      "description": "The investigation's title.",
+      "example": "Joe enabled account Joebob"
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the investigations.",
+      "enum": [
+        "OPEN,INVESTIGATING,CLOSED"
+      ],
+      "example": "OPEN"
+    },
+    "source": {
+      "type": "string",
+      "description": "The source of this investigation.",
+      "example": "ALERT"
+    },
+    "disposition": {
+      "type": "string",
+      "description": "This disposition of this investigation.",
+      "enum": [
+        "BENIGN,MALICIOUS,NOT_APPLICABLE,UNSPECIFIED"
+      ],
+      "example": "BENIGN"
+    },
+    "assignee": {
+      "$ref": "#/components/schemas/Assignee",
+      "description": "The user assigned to this investigation, if any."
+    },
+    "alerts": {
+      "type": "array",
+      "description": "The alerts involved in this investigation, if any.",
+      "items": {
+        "$ref": "#/components/schemas/AlertInfo"
+      }
+    },
+    "created_time": {
+      "type": "string",
+      "description": "The time the investigation was created, as an ISO formatted timestamp.",
+      "example": "2018-06-06T16:56:42Z"
+    }
+  },
+  "required": [
+    "created_time",
+    "id",
+    "rrn",
+    "source",
+    "status",
+    "title"
+  ]
+}

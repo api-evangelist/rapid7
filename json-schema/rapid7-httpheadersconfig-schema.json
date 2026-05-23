@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/HttpHeadersConfig",
+  "title": "HttpHeadersConfig",
+  "properties": {
+    "http_protocol": {
+      "type": "string"
+    },
+    "accept": {
+      "type": "string"
+    },
+    "accept_charset": {
+      "type": "string"
+    },
+    "accept_encoding": {
+      "type": "string"
+    },
+    "accept_language": {
+      "type": "string"
+    },
+    "cookie": {
+      "type": "string"
+    },
+    "user_agent": {
+      "type": "string"
+    },
+    "overwrite_with_default_headers": {
+      "type": "boolean"
+    },
+    "do_not_attack_user_agent": {
+      "type": "boolean"
+    },
+    "custom_headers_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CustomHeaders"
+      }
+    },
+    "traffic_header_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TrafficHeader"
+      }
+    }
+  }
+}

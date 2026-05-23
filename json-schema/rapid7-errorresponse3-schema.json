@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ErrorResponse3",
+  "title": "ErrorResponse3",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "A human-readable message describing the error that occurred.",
+      "example": "A human-readable message describing the error that occurred."
+    },
+    "correlation_id": {
+      "type": "string",
+      "description": "An identifier that uniquely identifies the failed request.",
+      "example": "An identifier that uniquely identifies the failed request."
+    }
+  },
+  "required": [
+    "message"
+  ]
+}

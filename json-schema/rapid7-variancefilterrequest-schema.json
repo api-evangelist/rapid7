@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VarianceFilterRequest",
+  "title": "VarianceFilterRequest",
+  "properties": {
+    "variance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "uniqueItems": true
+    },
+    "scan_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "vuln_uuids": {
+      "type": "array",
+      "deprecated": true,
+      "items": {
+        "type": "string",
+        "format": "uuid",
+        "deprecated": true
+      },
+      "uniqueItems": true
+    },
+    "vuln_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "uniqueItems": true
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReadOnlyIdResource",
+  "title": "ReadOnlyIdResource",
+  "description": "The ID of the module",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true
+    }
+  },
+  "readOnly": true
+}

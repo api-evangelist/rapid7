@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MultiRegexUrlParserConfig",
+  "title": "MultiRegexUrlParserConfig",
+  "properties": {
+    "parser_name": {
+      "type": "string"
+    },
+    "rule_regex": {
+      "type": "string"
+    },
+    "path_regex": {
+      "type": "string"
+    },
+    "path_parameter_groups": {
+      "type": "string"
+    },
+    "query_regex": {
+      "type": "string"
+    },
+    "query_parameter_groups": {
+      "type": "string"
+    }
+  }
+}

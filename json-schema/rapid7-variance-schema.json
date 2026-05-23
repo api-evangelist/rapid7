@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Variance",
+  "title": "Variance",
+  "description": "Evidence found that indicates the presence of a Vulnerability",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the Variance",
+      "readOnly": true
+    },
+    "original_value": {
+      "type": "string",
+      "description": "The value of a variable prior to being attacked",
+      "readOnly": true
+    },
+    "original_exchange": {
+      "$ref": "#/components/schemas/Exchange"
+    },
+    "module": {
+      "$ref": "#/components/schemas/ReadOnlyIdResource"
+    },
+    "attack": {
+      "$ref": "#/components/schemas/StringReferenceResource"
+    },
+    "attack_value": {
+      "type": "string",
+      "description": "The value of a variable used to attack",
+      "readOnly": true
+    },
+    "message": {
+      "type": "string",
+      "description": "A message that may highlight the result of the attack",
+      "readOnly": true
+    },
+    "proof": {
+      "type": "string",
+      "description": "A proof that may highlight the result of the attack",
+      "readOnly": true
+    },
+    "references": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "description": "${public-api.docs.models.vulnerability.properties.variance.references}",
+        "readOnly": true
+      },
+      "description": "${public-api.docs.models.vulnerability.properties.variance.references}",
+      "readOnly": true
+    },
+    "attack_exchanges": {
+      "type": "array",
+      "description": "The HTTP exchange executed as part of the attack",
+      "items": {
+        "$ref": "#/components/schemas/Exchange"
+      },
+      "readOnly": true
+    },
+    "proof_description": {
+      "type": "string",
+      "description": "A description of the proof that may highlight the result of the attack",
+      "readOnly": true
+    }
+  },
+  "readOnly": true
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttackDocumentation",
+  "title": "AttackDocumentation",
+  "properties": {
+    "references": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "description": "${public-api.docs.models.vulnerability.properties.attack-documentation.references}",
+        "readOnly": true
+      },
+      "description": "A collection of references and links to external resources that provide more details about the attack",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "A detailed description of the attack",
+      "readOnly": true
+    },
+    "recommendation": {
+      "type": "string",
+      "description": "A description of steps which may be taken in order to remediate Vulnerabilities discovered by the attack",
+      "readOnly": true
+    }
+  }
+}

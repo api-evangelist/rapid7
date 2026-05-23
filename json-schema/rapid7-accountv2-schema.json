@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AccountV2",
+  "title": "AccountV2",
+  "required": [
+    "authentication_service",
+    "disabled",
+    "name",
+    "rrn",
+    "user"
+  ],
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "type": "string",
+      "description": "The unique identifier for this account.",
+      "example": "rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:account:83002c85d7c6"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for this account.",
+      "example": "jdoe@acme.com"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain that this account is associated with.",
+      "example": "tor.acme.com"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "True if the account is disabled."
+    },
+    "user": {
+      "$ref": "#/components/schemas/UserSummaryV2"
+    },
+    "authentication_service": {
+      "type": "string",
+      "description": "The service to which this account is tied, which is responsible for authenticating this account.",
+      "example": "ACTIVE_DIRECTORY"
+    }
+  },
+  "description": "Information about an account"
+}

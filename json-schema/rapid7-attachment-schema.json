@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Attachment",
+  "title": "Attachment",
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "$ref": "#/components/schemas/RRN",
+      "description": "The RRN of the attachment.",
+      "example": "rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f"
+    },
+    "creator": {
+      "$ref": "#/components/schemas/Creator",
+      "description": "Who or what created the resource."
+    },
+    "created_time": {
+      "type": "string",
+      "description": "The time the attachment was created as an ISO formatted timestamp.",
+      "example": "2018-06-06T16:56:42Z"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "The original filename of the uploaded attachment.",
+      "example": "screenshot.png"
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "The mime type of the attachment.",
+      "example": "image/png"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The size in bytes of the attachment.",
+      "example": 12345
+    },
+    "scan_status": {
+      "type": "string",
+      "description": "The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.",
+      "example": "CLEAN"
+    }
+  },
+  "required": [
+    "created_time",
+    "creator",
+    "file_name",
+    "mime_type",
+    "rrn",
+    "scan_status",
+    "size"
+  ]
+}

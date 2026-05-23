@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/app",
+  "title": "app",
+  "description": "The App that the Scan is associated with",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

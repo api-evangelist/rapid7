@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AutoSequenceConfig",
+  "title": "AutoSequenceConfig",
+  "properties": {
+    "sequence_ignore_extension_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SequenceIgnoreExtension"
+      }
+    },
+    "sequence_ignore_content_type_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SequenceIgnoreContentType"
+      }
+    }
+  }
+}

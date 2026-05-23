@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SearchRequest",
+  "title": "SearchRequest",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of resource to Search",
+      "enum": [
+        "APP",
+        "SCAN",
+        "SCAN_CONFIG",
+        "VULNERABILITY",
+        "VULNERABILITY_DISCOVERY",
+        "ATTACK_TEMPLATE",
+        "TARGET",
+        "ENGINE",
+        "ENGINE_GROUP",
+        "SCHEDULE",
+        "BLACKOUT",
+        "FILE",
+        "TAG",
+        "REPORT"
+      ]
+    },
+    "query": {
+      "type": "string",
+      "description": "The query for the Search"
+    }
+  },
+  "required": [
+    "query",
+    "type"
+  ]
+}

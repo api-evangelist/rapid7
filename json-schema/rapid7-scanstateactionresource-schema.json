@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanStateActionResource",
+  "title": "ScanStateActionResource",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "PAUSE",
+        "RESUME",
+        "STOP",
+        "AUTHENTICATE",
+        "CANCEL"
+      ]
+    }
+  },
+  "required": [
+    "action"
+  ]
+}

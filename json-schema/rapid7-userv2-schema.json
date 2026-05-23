@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserV2",
+  "title": "UserV2",
+  "required": [
+    "domain",
+    "name",
+    "rrn"
+  ],
+  "type": "object",
+  "properties": {
+    "rrn": {
+      "type": "string",
+      "description": "The unique identifier for this user.",
+      "example": "rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "The first name of this user, if known.",
+      "example": "John"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "The last name of this user, if known.",
+      "example": "Doe"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of this user.",
+      "example": "John Doe"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain this user is associated with.",
+      "example": "tor.acme.com"
+    }
+  },
+  "description": "The list of data that matches the pagination parameters. If no results match this will be an empty list."
+}

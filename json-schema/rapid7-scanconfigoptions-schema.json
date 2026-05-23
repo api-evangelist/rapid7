@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScanConfigOptions",
+  "title": "ScanConfigOptions",
+  "properties": {
+    "detailed_logging": {
+      "type": "boolean"
+    },
+    "display_imminent_license_expiry_message": {
+      "type": "boolean"
+    },
+    "java_script_engine": {
+      "type": "string",
+      "enum": [
+        "DEFAULT",
+        "INTERNET_EXPLORER",
+        "CHROME",
+        "CHROMIUM"
+      ]
+    },
+    "scan_module_parameter_files_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScanModuleParameterFiles"
+      }
+    },
+    "crawl_config": {
+      "$ref": "#/components/schemas/CrawlConfig"
+    },
+    "attacker_config": {
+      "$ref": "#/components/schemas/AttackerConfig"
+    },
+    "auth_config": {
+      "$ref": "#/components/schemas/AuthConfig"
+    },
+    "proxy_config": {
+      "$ref": "#/components/schemas/ProxyConfig"
+    },
+    "ssl_cert_config": {
+      "$ref": "#/components/schemas/SslCertConfig"
+    },
+    "network_settings_config": {
+      "$ref": "#/components/schemas/NetworkSettingsConfig"
+    },
+    "performance_config": {
+      "$ref": "#/components/schemas/PerformanceConfig"
+    },
+    "http_headers_config": {
+      "$ref": "#/components/schemas/HttpHeadersConfig"
+    },
+    "manual_crawling_config": {
+      "$ref": "#/components/schemas/ManualCrawlingConfig"
+    },
+    "parameter_training_config": {
+      "$ref": "#/components/schemas/ParameterTrainingConfig"
+    },
+    "auto_sequence_config": {
+      "$ref": "#/components/schemas/AutoSequenceConfig"
+    },
+    "macro_config": {
+      "$ref": "#/components/schemas/MacroConfig"
+    },
+    "selenium_config": {
+      "$ref": "#/components/schemas/SeleniumConfig"
+    },
+    "web_service_config": {
+      "$ref": "#/components/schemas/WebServiceConfig"
+    },
+    "one_time_token_config": {
+      "$ref": "#/components/schemas/OneTimeTokenConfig"
+    },
+    "parameter_parser_config": {
+      "$ref": "#/components/schemas/ParameterParserConfig"
+    },
+    "parameter_value_config": {
+      "$ref": "#/components/schemas/ParameterValueConfig"
+    },
+    "chrome_host_config": {
+      "$ref": "#/components/schemas/ChromeHostConfig"
+    },
+    "token_replacement_config": {
+      "$ref": "#/components/schemas/TokenReplacementConfig"
+    },
+    "chatbot_config": {
+      "$ref": "#/components/schemas/ChatbotConfig"
+    }
+  }
+}

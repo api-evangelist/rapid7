@@ -1,0 +1,32 @@
+{
+  "operationId": "createCommunityThreat",
+  "method": "POST",
+  "path": "/idr/v1/customthreats",
+  "summary": "Create a Community Threat",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "threat": "threatName",
+        "note": "notetext",
+        "indicators": {
+          "ips": [
+            "192.168.0.1"
+          ],
+          "hashes": [
+            "b95663ec7339033cf1fde459a34b6606"
+          ],
+          "domain_names": [
+            "rapid7.com",
+            "mailxpy.com"
+          ],
+          "urls": [
+            "http://example.com/index",
+            " http://www.mailxpy.com/login/index.php"
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MacroConfig",
+  "title": "MacroConfig",
+  "properties": {
+    "sequential_macro_playback": {
+      "type": "boolean"
+    },
+    "macro_file_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MacroFile"
+      }
+    }
+  }
+}

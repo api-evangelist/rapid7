@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityModelReport",
+  "title": "EntityModelReport",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Report",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.",
+      "enum": [
+        "VULN_SUMMARY",
+        "VULN_REMEDIATION",
+        "PCI_COMPLIANCE",
+        "PCI4_COMPLIANCE",
+        "OWASP_2013_COMPLIANCE",
+        "OWASP_2017_COMPLIANCE",
+        "OWASP_2021_COMPLIANCE",
+        "OWASP_2023API_COMPLIANCE",
+        "OWASP_2025_COMPLIANCE",
+        "GDPR_2016_COMPLIANCE",
+        "SOX_COMPLIANCE",
+        "HIPAA_COMPLIANCE",
+        "EXEC_SINGLE_APP",
+        "EXEC_ALL_APPS",
+        "EXEC_SINGLE_APP_NEW_VULNS",
+        "EXEC_ALL_APPS_NEW_VULNS",
+        "EXEC_SINGLE_APP_ALL_VULNS",
+        "EXEC_ALL_APPS_ALL_VULNS",
+        "EXEC_IAS_IVM_COMPOSITE",
+        "TARGET_DISCOVERY"
+      ],
+      "readOnly": true
+    },
+    "format": {
+      "type": "string",
+      "description": "The format of the Report",
+      "enum": [
+        "HTML",
+        "CSV",
+        "PDF"
+      ],
+      "readOnly": true
+    },
+    "owner": {
+      "$ref": "#/components/schemas/ReadOnlyIdResource"
+    },
+    "generated_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time the Report was generated",
+      "readOnly": true
+    },
+    "app": {
+      "$ref": "#/components/schemas/ReferenceResource"
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the Report",
+      "enum": [
+        "PROCESSING",
+        "FAILED",
+        "COMPLETE"
+      ],
+      "readOnly": true
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      },
+      "readOnly": true
+    }
+  }
+}

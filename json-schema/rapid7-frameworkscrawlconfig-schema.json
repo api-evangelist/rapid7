@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FrameworksCrawlConfig",
+  "title": "FrameworksCrawlConfig",
+  "properties": {
+    "enable_frameworks_crawling": {
+      "type": "boolean"
+    },
+    "react_js_detection_regex": {
+      "type": "string"
+    },
+    "framework_config_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/FrameworkConfig"
+      }
+    }
+  }
+}

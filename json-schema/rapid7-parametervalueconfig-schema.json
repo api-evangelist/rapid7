@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ParameterValueConfig",
+  "title": "ParameterValueConfig",
+  "properties": {
+    "parameter_value_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ParameterValue"
+      }
+    }
+  }
+}
