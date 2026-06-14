@@ -1,0 +1,1501 @@
+"""
+Rapid7 Insight Platform Conceptual GraphQL Schema
+Covers InsightVM, InsightIDR, InsightConnect (SOAR), and platform-level APIs.
+Source: https://docs.rapid7.com/insight/api-documentation/
+"""
+
+# ─────────────────────────────────────────────
+# SCALARS
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar URL
+
+# ─────────────────────────────────────────────
+# ENUMS
+# ─────────────────────────────────────────────
+
+enum ScanStatus {
+  PENDING
+  RUNNING
+  PAUSED
+  STOPPED
+  FINISHED
+  ERROR
+  ABORTED
+}
+
+enum Severity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+  INFORMATIONAL
+  NONE
+}
+
+enum InvestigationStatus {
+  OPEN
+  INVESTIGATING
+  CLOSED
+  WAITING
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+  REOPENED
+}
+
+enum PolicyStatus {
+  PASS
+  FAIL
+  NOT_APPLICABLE
+  UNKNOWN
+}
+
+enum ExceptionScope {
+  GLOBAL
+  SITE
+  ASSET
+  ASSET_GROUP
+}
+
+enum ExceptionReason {
+  FALSE_POSITIVE
+  COMPENSATING_CONTROL
+  ACCEPTABLE_RISK
+  OTHER
+}
+
+enum ReportFormat {
+  PDF
+  HTML
+  XML
+  CSV
+  RTF
+  TEXT
+}
+
+enum CredentialType {
+  SSH
+  TELNET
+  FTP
+  HTTP
+  SNMP
+  WINDOWS
+  ORACLE
+  MYSQL
+  POSTGRESQL
+  DB2
+  AS400
+  CIFS_HASH
+  KERBEROS
+  CERTIFICATE
+}
+
+# ─────────────────────────────────────────────
+# ASSET MANAGEMENT
+# ─────────────────────────────────────────────
+
+"""A fully-detailed network asset managed by InsightVM."""
+type Asset {
+  id: ID!
+  hostName: String
+  ipAddresses: [IPAddress!]
+  hostNames: [HostName!]
+  macAddresses: [String!]
+  operatingSystem: OperatingSystem
+  os: String
+  services: [Service!]
+  software: [Software!]
+  vulnerabilities: AssetVulnerabilitySummary
+  tags: [AssetTag!]
+  riskScore: Float
+  assessedForVulnerabilities: Boolean
+  assessedForPolicies: Boolean
+  lastScanTime: DateTime
+  lastAssessedForVulnerabilities: DateTime
+  history: [AssetScanHistory!]
+  userGroups: [String!]
+  users: [String!]
+  type: String
+  ids: JSON
+}
+
+"""Lightweight asset reference used in list responses."""
+type AssetSummary {
+  id: ID!
+  hostName: String
+  ip: String
+  os: String
+  riskScore: Float
+  lastScanTime: DateTime
+  criticalVulnerabilities: Int
+  highVulnerabilities: Int
+  mediumVulnerabilities: Int
+  lowVulnerabilities: Int
+}
+
+"""A key-value tag applied to an asset."""
+type AssetTag {
+  key: String!
+  value: String
+  color: String
+  type: String
+  source: String
+  links: [Link!]
+}
+
+"""A logical group of assets used for scoping and reporting."""
+type AssetGroup {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  filter: String
+  assets: [AssetSummary!]
+  vulnerabilities: Int
+  riskScore: Float
+  searchCriteria: JSON
+  links: [Link!]
+}
+
+"""An IPv4 or IPv6 address associated with an asset."""
+type IPAddress {
+  ip: String!
+  version: String
+}
+
+"""A DNS hostname associated with an asset."""
+type HostName {
+  name: String!
+  source: String
+}
+
+"""Operating system fingerprint on an asset."""
+type OperatingSystem {
+  id: ID
+  family: String
+  name: String
+  vendor: String
+  version: String
+  architecture: String
+  description: String
+  cpe: String
+}
+
+"""A network service discovered on an asset."""
+type Service {
+  port: Int!
+  protocol: String!
+  name: String
+  product: String
+  version: String
+  configuration: JSON
+  databases: [String!]
+  userGroups: [String!]
+  users: [String!]
+  webApplications: [String!]
+  links: [Link!]
+}
+
+"""A TCP/UDP port state observed on an asset."""
+type Port {
+  port: Int!
+  protocol: String!
+  state: String
+}
+
+"""Software package discovered on an asset."""
+type Software {
+  name: String!
+  vendor: String
+  version: String
+  cpe: String
+  description: String
+  family: String
+  type: String
+}
+
+"""Version details for a software package."""
+type SoftwareVersion {
+  version: String!
+  releaseDate: DateTime
+  endOfLifeDate: DateTime
+  patches: [String!]
+}
+
+"""Aggregated vulnerability counts on an asset."""
+type AssetVulnerabilitySummary {
+  total: Int
+  critical: Int
+  high: Int
+  medium: Int
+  low: Int
+  informational: Int
+  exploits: Int
+  malwareKits: Int
+}
+
+"""Historical record of a scan event on an asset."""
+type AssetScanHistory {
+  scanId: ID
+  date: DateTime
+  siteId: ID
+  siteName: String
+}
+
+# ─────────────────────────────────────────────
+# VULNERABILITY MANAGEMENT
+# ─────────────────────────────────────────────
+
+"""A vulnerability known to InsightVM's vulnerability database."""
+type Vulnerability {
+  id: ID!
+  title: String!
+  description: String
+  severity: Severity
+  severityScore: Float
+  risk: Risk
+  cvss: CVSS
+  cves: [CVE!]
+  exploits: Int
+  exploitAvailability: ExploitAvailability
+  malwareKits: Int
+  pciSeverity: String
+  published: DateTime
+  modified: DateTime
+  added: DateTime
+  categories: [String!]
+  tags: [String!]
+  denialOfService: Boolean
+  affectedSoftware: [Software!]
+  solutions: [SolutionDetails!]
+  checks: [PolicyCheck!]
+  links: [Link!]
+}
+
+"""Detailed view of a vulnerability including full description and proof."""
+type VulnDetails {
+  id: ID!
+  title: String!
+  description: String
+  proof: String
+  solution: String
+  references: [VulnReference!]
+  severity: Severity
+  cvss: CVSS
+  cves: [CVE!]
+  exploitAvailability: ExploitAvailability
+  links: [Link!]
+}
+
+"""Common Vulnerabilities and Exposures identifier."""
+type CVE {
+  id: String!
+  url: URL
+  nvdUrl: URL
+  cvss2: CVSS
+  cvss3: CVSS
+}
+
+"""Common Vulnerability Scoring System score details."""
+type CVSS {
+  version: String
+  score: Float
+  vector: String
+  accessVector: String
+  accessComplexity: String
+  authentication: String
+  confidentialityImpact: String
+  integrityImpact: String
+  availabilityImpact: String
+}
+
+"""Exploit availability information for a vulnerability."""
+type ExploitAvailability {
+  available: Boolean!
+  skillLevel: String
+  sources: [String!]
+}
+
+"""Risk metrics for an asset or vulnerability."""
+type Risk {
+  score: Float
+  modified: Float
+  factors: [RiskFactor!]
+}
+
+"""A single factor contributing to a risk score."""
+type RiskScore {
+  value: Float!
+  weights: JSON
+}
+
+"""A factor that modifies the computed risk score."""
+type RiskFactor {
+  name: String!
+  weight: Float
+  description: String
+}
+
+"""Vulnerability reference (CVE, BID, URL, etc.)."""
+type VulnReference {
+  source: String!
+  id: String
+  url: URL
+}
+
+# ─────────────────────────────────────────────
+# ASSESSMENT
+# ─────────────────────────────────────────────
+
+"""Result of a vulnerability assessment on an asset."""
+type Assessment {
+  id: ID!
+  assetId: ID!
+  scanId: ID
+  vulnerabilities: [VulnFinding!]
+  date: DateTime
+  status: String
+}
+
+"""Summary counts from an asset assessment."""
+type AssessmentSummary {
+  assetId: ID!
+  total: Int
+  critical: Int
+  high: Int
+  medium: Int
+  low: Int
+  exploitable: Int
+}
+
+"""A single vulnerability finding from a scan."""
+type VulnFinding {
+  vulnerabilityId: ID!
+  title: String
+  severity: Severity
+  proof: String
+  port: Int
+  protocol: String
+  status: String
+}
+
+# ─────────────────────────────────────────────
+# SCANNING
+# ─────────────────────────────────────────────
+
+"""A vulnerability scan job."""
+type Scan {
+  id: ID!
+  siteId: ID
+  siteName: String
+  engineId: ID
+  engineName: String
+  startTime: DateTime
+  endTime: DateTime
+  status: ScanStatus!
+  type: String
+  vulnerabilities: ScanVulnerabilitySummary
+  assets: ScanAssetSummary
+  duration: String
+  message: String
+  links: [Link!]
+}
+
+"""Detailed scan result including asset and vulnerability breakdown."""
+type ScanDetails {
+  id: ID!
+  siteId: ID
+  siteName: String
+  engineId: ID
+  engineName: String
+  startTime: DateTime
+  endTime: DateTime
+  status: ScanStatus!
+  type: String
+  scanName: String
+  vulnerabilities: ScanVulnerabilitySummary
+  assets: ScanAssetSummary
+  tasks: ScanTasks
+  links: [Link!]
+}
+
+"""Vulnerability counts from a scan."""
+type ScanVulnerabilitySummary {
+  total: Int
+  critical: Int
+  high: Int
+  medium: Int
+  low: Int
+  informational: Int
+}
+
+"""Asset counts from a scan."""
+type ScanAssetSummary {
+  total: Int
+  discovered: Int
+  alive: Int
+  scanned: Int
+  filtered: Int
+}
+
+"""Internal task counters for a running scan."""
+type ScanTasks {
+  pending: Int
+  active: Int
+  completed: Int
+  errored: Int
+  failed: Int
+}
+
+"""A scan engine instance."""
+type ScanEngine {
+  id: ID!
+  name: String!
+  address: String
+  port: Int
+  sites: [ID!]
+  latestVersion: String
+  version: String
+  enginePools: [ScanEnginePool!]
+  links: [Link!]
+}
+
+"""A pool of scan engines for distributed scanning."""
+type ScanEnginePool {
+  id: ID!
+  name: String!
+  engines: [ScanEngine!]
+}
+
+"""The scan policy applied to a site or scan."""
+type ScanPolicy {
+  id: ID!
+  name: String!
+  policyId: ID
+  enabled: Boolean
+  scanTemplateId: String
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# SITES
+# ─────────────────────────────────────────────
+
+"""A site is the primary container for organizing assets in InsightVM."""
+type Site {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  importance: String
+  riskScore: Float
+  assets: Int
+  vulnerabilities: Int
+  lastScanTime: DateTime
+  scanEngine: ScanEngine
+  scanTemplate: String
+  links: [Link!]
+}
+
+"""Extended site configuration including targets and schedules."""
+type SiteDetails {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  importance: String
+  riskScore: Float
+  assets: Int
+  vulnerabilities: Int
+  lastScanTime: DateTime
+  scanEngine: ScanEngine
+  scanTemplate: String
+  includedTargets: SiteTargets
+  excludedTargets: SiteTargets
+  includedAssetGroups: [AssetGroup!]
+  excludedAssetGroups: [AssetGroup!]
+  schedules: [ScanSchedule!]
+  credentials: [SiteCredential!]
+  organization: JSON
+  links: [Link!]
+}
+
+"""Asset list and counts for a site."""
+type SiteAssets {
+  siteId: ID!
+  total: Int
+  resources: [AssetSummary!]
+  links: [Link!]
+}
+
+"""Target address ranges or host lists for a site."""
+type SiteTargets {
+  addresses: [String!]
+}
+
+"""A scheduled scan for a site."""
+type ScanSchedule {
+  id: ID!
+  enabled: Boolean
+  start: DateTime
+  nextRuntimes: [DateTime!]
+  repeat: JSON
+  scanEngineId: ID
+  scanTemplateId: String
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# DISCOVERY & CONNECTIONS
+# ─────────────────────────────────────────────
+
+"""Asset discovery connection (e.g. AWS, Azure, vSphere)."""
+type Discovery {
+  id: ID!
+  name: String!
+  type: String
+  status: String
+  lastDiscoveryDate: DateTime
+  links: [Link!]
+}
+
+"""An integration connection to an external system."""
+type Connection {
+  id: ID!
+  name: String!
+  type: String
+  status: String
+  configuration: JSON
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# CREDENTIALS
+# ─────────────────────────────────────────────
+
+"""Authentication credential used during scanning."""
+type Credential {
+  id: ID!
+  name: String!
+  description: String
+  type: CredentialType
+  domain: String
+  username: String
+  service: String
+  hostRestriction: String
+  portRestriction: Int
+  links: [Link!]
+}
+
+"""Full credential detail (password/key never returned)."""
+type CredentialDetails {
+  id: ID!
+  name: String!
+  description: String
+  type: CredentialType
+  domain: String
+  username: String
+  service: String
+  hostRestriction: String
+  portRestriction: Int
+  enabled: Boolean
+  links: [Link!]
+}
+
+"""Shared credential usable across multiple sites."""
+type SharedCredential {
+  id: ID!
+  name: String!
+  description: String
+  type: CredentialType
+  siteAssignment: String
+  sites: [ID!]
+  links: [Link!]
+}
+
+"""Credential assigned to a specific site."""
+type SiteCredential {
+  id: ID!
+  name: String!
+  type: CredentialType
+  enabled: Boolean
+  service: String
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# EXPLOIT INTELLIGENCE
+# ─────────────────────────────────────────────
+
+"""An exploit targeting a known vulnerability."""
+type Exploit {
+  id: ID!
+  title: String!
+  description: String
+  skillLevel: String
+  source: String
+  sourceKey: String
+  vulnerabilityId: ID
+  rank: String
+  links: [Link!]
+}
+
+"""Full exploit details including references and module info."""
+type ExploitDetails {
+  id: ID!
+  title: String!
+  description: String
+  skillLevel: String
+  source: String
+  sourceKey: String
+  vulnerabilityId: ID
+  rank: String
+  module: ExploitModule
+  links: [Link!]
+}
+
+"""A generic exploit module reference."""
+type ExploitModule {
+  name: String!
+  source: String
+  key: String
+  rank: String
+}
+
+"""A Metasploit Framework module."""
+type MetasploitModule {
+  id: ID!
+  name: String!
+  title: String
+  description: String
+  authors: [String!]
+  rank: String
+  references: [String!]
+  type: String
+}
+
+# ─────────────────────────────────────────────
+# REPORTING
+# ─────────────────────────────────────────────
+
+"""A generated report artifact."""
+type Report {
+  id: ID!
+  name: String!
+  format: ReportFormat
+  templateId: ID
+  status: String
+  generated: DateTime
+  size: String
+  links: [Link!]
+}
+
+"""A report template defining structure and content."""
+type ReportTemplate {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  sections: [String!]
+  builtin: Boolean
+  links: [Link!]
+}
+
+"""A scheduled report generation job."""
+type ReportSchedule {
+  id: ID!
+  reportId: ID!
+  repeat: JSON
+  start: DateTime
+  nextRuntimes: [DateTime!]
+  links: [Link!]
+}
+
+"""Full report configuration including scope and filters."""
+type ReportConfig {
+  id: ID!
+  name: String!
+  format: ReportFormat
+  templateId: ID
+  scope: JSON
+  filters: JSON
+  email: JSON
+  storage: JSON
+  timezone: String
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# POLICY & COMPLIANCE
+# ─────────────────────────────────────────────
+
+"""A compliance policy (CIS, DISA STIG, PCI, etc.)."""
+type Policy {
+  id: ID!
+  name: String!
+  description: String
+  benchmarkName: String
+  version: String
+  status: PolicyStatus
+  compliantAssets: Int
+  totalAssets: Int
+  ruleCompliance: Float
+  links: [Link!]
+}
+
+"""A single control within a policy."""
+type PolicyControl {
+  id: ID!
+  policyId: ID!
+  title: String!
+  description: String
+  rationale: String
+  remediation: String
+  status: PolicyStatus
+  scope: String
+  links: [Link!]
+}
+
+"""An operator-approved override for a policy finding."""
+type PolicyOverride {
+  id: ID!
+  policyId: ID!
+  controlId: ID!
+  assetId: ID
+  scope: String
+  reason: String
+  status: String
+  expires: DateTime
+  submitter: String
+  reviewer: String
+  links: [Link!]
+}
+
+"""Result of a single policy check against an asset."""
+type PolicyCheck {
+  id: ID!
+  assetId: ID!
+  controlId: ID!
+  status: PolicyStatus
+  evidence: String
+  date: DateTime
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# REMEDIATION
+# ─────────────────────────────────────────────
+
+"""A remediation project tracking fixes for vulnerabilities."""
+type Remediation {
+  id: ID!
+  name: String!
+  description: String
+  status: String
+  priority: String
+  assignedTo: String
+  dueDate: DateTime
+  assets: [AssetSummary!]
+  vulnerabilities: [VulnDetails!]
+  progress: RemediationProgress
+  links: [Link!]
+}
+
+"""Progress tracking for a remediation project."""
+type RemediationProgress {
+  assetsRemediated: Int
+  assetsTotal: Int
+  vulnerabilitiesRemediated: Int
+  vulnerabilitiesTotal: Int
+}
+
+"""Solution details for remediating a vulnerability."""
+type SolutionDetails {
+  id: ID!
+  summary: String
+  type: String
+  estimate: String
+  additionalInformation: String
+  steps: JSON
+  links: [Link!]
+}
+
+"""A vulnerability exception exempting an asset from a finding."""
+type Exception {
+  id: ID!
+  scope: ExceptionScope!
+  reason: ExceptionReason!
+  comment: String
+  vulnerability: VulnDetails
+  assetId: ID
+  assetGroupId: ID
+  siteId: ID
+  port: Int
+  key: String
+  expiration: DateTime
+  status: String
+  links: [Link!]
+}
+
+"""Full exception record with submitter and reviewer details."""
+type ExceptionDetails {
+  id: ID!
+  scope: ExceptionScope!
+  reason: ExceptionReason!
+  comment: String
+  vulnerability: VulnDetails
+  assetId: ID
+  assetGroupId: ID
+  siteId: ID
+  port: Int
+  key: String
+  expiration: DateTime
+  status: String
+  submitter: String
+  reviewer: String
+  reviewDate: DateTime
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# TICKETING
+# ─────────────────────────────────────────────
+
+"""A remediation ticket linked to vulnerabilities and assets."""
+type Ticket {
+  id: ID!
+  name: String!
+  state: TicketStatus!
+  assignedTo: String
+  priority: String
+  openedTime: DateTime
+  openedBy: String
+  vulnerabilities: [VulnDetails!]
+  assets: [AssetSummary!]
+  links: [Link!]
+}
+
+"""Aggregate ticket status counts."""
+type TicketStatus {
+  open: Int
+  inProgress: Int
+  closed: Int
+}
+
+# ─────────────────────────────────────────────
+# INSIGHTIDR (SIEM/XDR)
+# ─────────────────────────────────────────────
+
+"""An InsightIDR alert generated from a detection rule."""
+type Alert {
+  id: ID!
+  title: String!
+  description: String
+  severity: Severity
+  status: String
+  created: DateTime
+  updated: DateTime
+  ruleId: ID
+  investigationId: ID
+  actors: [AlertActor!]
+  assets: [String!]
+  links: [Link!]
+}
+
+"""An actor (user or host) involved in an alert."""
+type AlertActor {
+  type: String
+  name: String
+  domain: String
+}
+
+"""A detection rule in InsightIDR that generates alerts."""
+type AlertRule {
+  id: ID!
+  name: String!
+  description: String
+  severity: Severity
+  enabled: Boolean
+  logic: JSON
+  created: DateTime
+  updated: DateTime
+  links: [Link!]
+}
+
+"""Top-level InsightIDR product configuration."""
+type InsightIDR {
+  organizationId: ID!
+  region: String
+  logSets: [LogSet!]
+  alertRules: [AlertRule!]
+}
+
+"""A group of related log sources in InsightIDR."""
+type LogSet {
+  id: ID!
+  name: String!
+  description: String
+  logCount: Int
+}
+
+"""An InsightIDR investigation (incident response case)."""
+type Investigation {
+  id: ID!
+  title: String!
+  status: InvestigationStatus!
+  priority: String
+  disposition: String
+  assignee: InvestigationAssignee
+  alerts: [Alert!]
+  created: DateTime
+  lastUpdated: DateTime
+  source: String
+  links: [Link!]
+}
+
+"""Assignment details for an investigation."""
+type InvestigationAssignee {
+  email: String
+  name: String
+}
+
+"""A log entry ingested by InsightIDR."""
+type Log {
+  id: ID!
+  logSetId: ID
+  name: String
+  sourceType: String
+  token: String
+  userLogs: Boolean
+  links: [Link!]
+}
+
+"""Log ingestion configuration."""
+type Ingestion {
+  id: ID!
+  name: String!
+  type: String
+  enabled: Boolean
+  configuration: JSON
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# SOAR / INSIGHTCONNECT
+# ─────────────────────────────────────────────
+
+"""Top-level InsightConnect SOAR product reference."""
+type SOAR {
+  organizationId: ID!
+  workflows: [SOARWorkflow!]
+}
+
+"""An automation workflow in InsightConnect."""
+type SOARWorkflow {
+  id: ID!
+  name: String!
+  description: String
+  enabled: Boolean
+  trigger: SOARTrigger
+  steps: [SOARStep!]
+  created: DateTime
+  updated: DateTime
+  lastRun: DateTime
+  links: [Link!]
+}
+
+"""Trigger configuration for a SOAR workflow."""
+type SOARTrigger {
+  type: String!
+  configuration: JSON
+}
+
+"""A single step within a SOAR workflow."""
+type SOARStep {
+  id: ID!
+  name: String!
+  type: String
+  plugin: String
+  action: String
+  configuration: JSON
+}
+
+# ─────────────────────────────────────────────
+# PLATFORM
+# ─────────────────────────────────────────────
+
+"""An Insight Platform API key."""
+type APIKey {
+  id: ID!
+  name: String
+  organizationId: ID
+  created: DateTime
+  lastUsed: DateTime
+  createdBy: String
+}
+
+"""An authentication token."""
+type Token {
+  id: ID!
+  value: String
+  expires: DateTime
+  scopes: [String!]
+}
+
+"""A webhook endpoint registered on the Insight Platform."""
+type Webhook {
+  id: ID!
+  name: String!
+  url: URL!
+  secret: String
+  enabled: Boolean
+  events: [String!]
+  created: DateTime
+  updated: DateTime
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# PAGINATION & SHARED
+# ─────────────────────────────────────────────
+
+"""HAL-style link for REST navigation."""
+type Link {
+  href: URL
+  rel: String
+}
+
+"""Standard paginated response wrapper."""
+type PageInfo {
+  number: Int
+  size: Int
+  totalPages: Int
+  totalResources: Int
+}
+
+"""Paginated list of assets."""
+type AssetPage {
+  resources: [AssetSummary!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+"""Paginated list of vulnerabilities."""
+type VulnerabilityPage {
+  resources: [Vulnerability!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+"""Paginated list of scans."""
+type ScanPage {
+  resources: [Scan!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+"""Paginated list of sites."""
+type SitePage {
+  resources: [Site!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+"""Paginated list of investigations."""
+type InvestigationPage {
+  resources: [Investigation!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+"""Paginated list of alerts."""
+type AlertPage {
+  resources: [Alert!]!
+  page: PageInfo
+  links: [Link!]
+}
+
+# ─────────────────────────────────────────────
+# FILTERS
+# ─────────────────────────────────────────────
+
+input AssetFilter {
+  ip: String
+  hostName: String
+  riskScoreMin: Float
+  riskScoreMax: Float
+  os: String
+  tagKey: String
+  tagValue: String
+  siteId: ID
+  assetGroupId: ID
+  lastAssessedAfter: DateTime
+}
+
+input VulnFilter {
+  severity: Severity
+  cvssScoreMin: Float
+  cvssScoreMax: Float
+  exploitAvailable: Boolean
+  publishedAfter: DateTime
+  category: String
+}
+
+input AssetTagInput {
+  key: String!
+  value: String
+  color: String
+}
+
+# ─────────────────────────────────────────────
+# INPUT TYPES
+# ─────────────────────────────────────────────
+
+input CreateScanInput {
+  siteId: ID!
+  engineId: ID
+  templateId: String
+  name: String
+  hosts: [String!]
+}
+
+input CreateSiteInput {
+  name: String!
+  description: String
+  importance: String
+  scanEngine: ID
+  scanTemplate: String
+  includedTargets: [String!]
+  excludedTargets: [String!]
+}
+
+input UpdateSiteInput {
+  name: String
+  description: String
+  importance: String
+  scanEngine: ID
+  scanTemplate: String
+  includedTargets: [String!]
+  excludedTargets: [String!]
+}
+
+input CreateAssetGroupInput {
+  name: String!
+  description: String
+  type: String
+  searchCriteria: JSON
+}
+
+input UpdateAssetGroupInput {
+  name: String
+  description: String
+  searchCriteria: JSON
+}
+
+input CreateExceptionInput {
+  vulnerabilityId: ID!
+  scope: ExceptionScope!
+  reason: ExceptionReason!
+  comment: String
+  assetId: ID
+  siteId: ID
+  assetGroupId: ID
+  port: Int
+  expiration: DateTime
+}
+
+input UpdateExceptionInput {
+  reason: ExceptionReason
+  comment: String
+  expiration: DateTime
+}
+
+input CreateReportInput {
+  name: String!
+  format: ReportFormat!
+  templateId: ID!
+  scope: JSON
+  filters: JSON
+  email: JSON
+  timezone: String
+}
+
+input CreateCredentialInput {
+  name: String!
+  description: String
+  type: CredentialType!
+  domain: String
+  username: String!
+  password: String
+  service: String
+  hostRestriction: String
+  portRestriction: Int
+}
+
+input UpdateCredentialInput {
+  name: String
+  description: String
+  username: String
+  password: String
+  hostRestriction: String
+  portRestriction: Int
+}
+
+input UpdateInvestigationInput {
+  status: InvestigationStatus
+  disposition: String
+  assigneeEmail: String
+}
+
+input CreateAlertRuleInput {
+  name: String!
+  description: String
+  severity: Severity!
+  enabled: Boolean
+  logic: JSON!
+}
+
+input UpdateAlertRuleInput {
+  name: String
+  description: String
+  severity: Severity
+  enabled: Boolean
+  logic: JSON
+}
+
+input CreateWebhookInput {
+  name: String!
+  url: URL!
+  secret: String
+  enabled: Boolean
+  events: [String!]!
+}
+
+input UpdateWebhookInput {
+  name: String
+  url: URL
+  secret: String
+  enabled: Boolean
+  events: [String!]
+}
+
+input SOARTriggerInput {
+  parameters: JSON
+}
+
+input CreateAPIKeyInput {
+  name: String!
+  organizationId: ID
+}
+
+# ─────────────────────────────────────────────
+# ROOT TYPES
+# ─────────────────────────────────────────────
+
+type Query {
+  """Fetch a single asset by ID."""
+  asset(id: ID!): Asset
+
+  """List assets with optional filtering and pagination."""
+  assets(filter: AssetFilter, page: Int, size: Int): AssetPage
+
+  """Fetch an asset group by ID."""
+  assetGroup(id: ID!): AssetGroup
+
+  """List asset groups."""
+  assetGroups(page: Int, size: Int): [AssetGroup!]
+
+  """Fetch a vulnerability by its ID."""
+  vulnerability(id: ID!): Vulnerability
+
+  """List vulnerabilities with optional filtering."""
+  vulnerabilities(filter: VulnFilter, page: Int, size: Int): VulnerabilityPage
+
+  """Fetch scan details by ID."""
+  scan(id: ID!): ScanDetails
+
+  """List scans, optionally filtered by site or status."""
+  scans(siteId: ID, status: ScanStatus, page: Int, size: Int): ScanPage
+
+  """Fetch site details by ID."""
+  site(id: ID!): SiteDetails
+
+  """List all sites."""
+  sites(page: Int, size: Int): SitePage
+
+  """Fetch a report by ID."""
+  report(id: ID!): Report
+
+  """List generated reports."""
+  reports(page: Int, size: Int): [Report!]
+
+  """Fetch an InsightIDR investigation by ID."""
+  investigation(id: ID!): Investigation
+
+  """List InsightIDR investigations."""
+  investigations(status: InvestigationStatus, page: Int, size: Int): InvestigationPage
+
+  """Fetch an alert by ID."""
+  alert(id: ID!): Alert
+
+  """List alerts."""
+  alerts(ruleId: ID, page: Int, size: Int): AlertPage
+
+  """Fetch a policy by ID."""
+  policy(id: ID!): Policy
+
+  """List compliance policies."""
+  policies(page: Int, size: Int): [Policy!]
+
+  """Fetch an exploit by ID."""
+  exploit(id: ID!): ExploitDetails
+
+  """List known exploits."""
+  exploits(page: Int, size: Int): [Exploit!]
+
+  """Fetch a credential by ID."""
+  credential(id: ID!): CredentialDetails
+
+  """List credentials."""
+  credentials(page: Int, size: Int): [Credential!]
+
+  """Fetch a ticket by ID."""
+  ticket(id: ID!): Ticket
+
+  """List tickets."""
+  tickets(status: TicketStatus, page: Int, size: Int): [Ticket!]
+
+  """Fetch a SOAR workflow by ID."""
+  soarWorkflow(id: ID!): SOARWorkflow
+
+  """List SOAR workflows."""
+  soarWorkflows(page: Int, size: Int): [SOARWorkflow!]
+
+  """List API keys for the current organization."""
+  apiKeys: [APIKey!]
+
+  """List registered webhooks."""
+  webhooks(page: Int, size: Int): [Webhook!]
+
+  """Fetch a scan engine by ID."""
+  scanEngine(id: ID!): ScanEngine
+
+  """List scan engines."""
+  scanEngines(page: Int, size: Int): [ScanEngine!]
+
+  """List vulnerability exceptions."""
+  exceptions(scope: ExceptionScope, page: Int, size: Int): [Exception!]
+
+  """Fetch an exception by ID."""
+  exception(id: ID!): ExceptionDetails
+
+  """List asset discovery connections."""
+  discoveries(page: Int, size: Int): [Discovery!]
+
+  """Fetch a single discovery connection."""
+  discovery(id: ID!): Discovery
+
+  """List shared credentials."""
+  sharedCredentials(page: Int, size: Int): [SharedCredential!]
+
+  """Fetch a Metasploit module by ID."""
+  metasploitModule(id: ID!): MetasploitModule
+
+  """List remediation projects."""
+  remediations(page: Int, size: Int): [Remediation!]
+
+  """Fetch a remediation project by ID."""
+  remediation(id: ID!): Remediation
+}
+
+type Mutation {
+  """Launch a new vulnerability scan."""
+  createScan(input: CreateScanInput!): Scan
+
+  """Stop an active scan."""
+  stopScan(id: ID!): Scan
+
+  """Create a new site."""
+  createSite(input: CreateSiteInput!): SiteDetails
+
+  """Update an existing site."""
+  updateSite(id: ID!, input: UpdateSiteInput!): SiteDetails
+
+  """Delete a site."""
+  deleteSite(id: ID!): Boolean
+
+  """Create an asset group."""
+  createAssetGroup(input: CreateAssetGroupInput!): AssetGroup
+
+  """Update an asset group."""
+  updateAssetGroup(id: ID!, input: UpdateAssetGroupInput!): AssetGroup
+
+  """Delete an asset group."""
+  deleteAssetGroup(id: ID!): Boolean
+
+  """Apply a tag to an asset."""
+  tagAsset(assetId: ID!, tag: AssetTagInput!): Asset
+
+  """Remove a tag from an asset."""
+  untagAsset(assetId: ID!, tagKey: String!): Asset
+
+  """Create a vulnerability exception."""
+  createException(input: CreateExceptionInput!): Exception
+
+  """Update a vulnerability exception."""
+  updateException(id: ID!, input: UpdateExceptionInput!): Exception
+
+  """Delete a vulnerability exception."""
+  deleteException(id: ID!): Boolean
+
+  """Generate a new report."""
+  createReport(input: CreateReportInput!): Report
+
+  """Delete a report."""
+  deleteReport(id: ID!): Boolean
+
+  """Create a scan credential."""
+  createCredential(input: CreateCredentialInput!): Credential
+
+  """Update a scan credential."""
+  updateCredential(id: ID!, input: UpdateCredentialInput!): Credential
+
+  """Delete a scan credential."""
+  deleteCredential(id: ID!): Boolean
+
+  """Update an InsightIDR investigation."""
+  updateInvestigation(id: ID!, input: UpdateInvestigationInput!): Investigation
+
+  """Create an InsightIDR alert rule."""
+  createAlertRule(input: CreateAlertRuleInput!): AlertRule
+
+  """Update an InsightIDR alert rule."""
+  updateAlertRule(id: ID!, input: UpdateAlertRuleInput!): AlertRule
+
+  """Delete an InsightIDR alert rule."""
+  deleteAlertRule(id: ID!): Boolean
+
+  """Register a webhook endpoint."""
+  createWebhook(input: CreateWebhookInput!): Webhook
+
+  """Update a webhook registration."""
+  updateWebhook(id: ID!, input: UpdateWebhookInput!): Webhook
+
+  """Delete a webhook."""
+  deleteWebhook(id: ID!): Boolean
+
+  """Trigger a SOAR workflow manually."""
+  triggerSOARWorkflow(id: ID!, input: SOARTriggerInput!): SOARWorkflow
+
+  """Create a new Insight Platform API key."""
+  createAPIKey(input: CreateAPIKeyInput!): APIKey
+
+  """Delete an API key."""
+  deleteAPIKey(id: ID!): Boolean
+}
