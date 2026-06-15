@@ -1,0 +1,2348 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Apps, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Apps is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new App.<li>When using a user API key the associated user will be added to the App</li><li>When using an org API key no user will be added to the App</li>"
+        },
+        {
+          "info": {
+            "name": "Get App",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an App"
+        },
+        {
+          "info": {
+            "name": "Update App",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing App"
+        },
+        {
+          "info": {
+            "name": "Delete App",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing App"
+        },
+        {
+          "info": {
+            "name": "Get App Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all Tags applied to an App"
+        },
+        {
+          "info": {
+            "name": "Add App Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a Tag to an App"
+        },
+        {
+          "info": {
+            "name": "Remove App Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags/:tag-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a Tag from an App"
+        },
+        {
+          "info": {
+            "name": "Get App Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get users associated with an App"
+        },
+        {
+          "info": {
+            "name": "Add App User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Associate a user to an App"
+        },
+        {
+          "info": {
+            "name": "Remove App User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users/:user-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Dissociate a user from an App"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Files, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Files is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new File."
+        },
+        {
+          "info": {
+            "name": "Get File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a File <br/><b> NOTE: This API allows for the retrieval of both File Information and File Contents depending on which Mime-Type the client advertises acceptance of in the <code>Accept</code> header passed in the call.</b></br>When retrieving only the File Information the client should supply an <code>Accept</code> header value that indicates acceptance of the <code>application/json</code> mime type only.</br>To download the File Contents the client is required to supply <code>Accept</code> h"
+        },
+        {
+          "info": {
+            "name": "Upload File Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload a File's Content. <b> NOTE: this <i>requires</i> the use of the <code>Content-Type: application/octet-stream</code> header</b>."
+        },
+        {
+          "info": {
+            "name": "Update File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing File."
+        },
+        {
+          "info": {
+            "name": "Delete File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing File."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attack Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Attack Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of attack templates, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Attack Templates is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Attack Template"
+        },
+        {
+          "info": {
+            "name": "Get Attack Modules Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/module-configs"
+          },
+          "docs": "Get list of Attack Modules Default Configuration"
+        },
+        {
+          "info": {
+            "name": "Get Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an attack template"
+        },
+        {
+          "info": {
+            "name": "Update Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Delete Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Get Attack Modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Attack Modules associated with an Attack Template"
+        },
+        {
+          "info": {
+            "name": "Create Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Attack Module"
+        },
+        {
+          "info": {
+            "name": "Update Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules/:attack-module-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-module-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Attack Module associated with an Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Delete Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules/:attack-module-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-module-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Attack Module associated with an Attack Template if is not flagged as system-defined"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Blackouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Blackouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Blackouts, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Blackouts is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Blackout"
+        },
+        {
+          "info": {
+            "name": "Get Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Blackout"
+        },
+        {
+          "info": {
+            "name": "Update Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Blackout"
+        },
+        {
+          "info": {
+            "name": "Delete Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Blackout"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Engine Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Engine Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Engine Groups, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Engine Groups is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Engine Group."
+        },
+        {
+          "info": {
+            "name": "Get Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine Group"
+        },
+        {
+          "info": {
+            "name": "Update Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Engine Group"
+        },
+        {
+          "info": {
+            "name": "Delete Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Engine Group"
+        },
+        {
+          "info": {
+            "name": "Get Engine Group Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id/engines",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Engines associated with an Engine Group"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Engines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines",
+            "params": [
+              {
+                "name": "pageConfig",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Engines, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Engines is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Engine."
+        },
+        {
+          "info": {
+            "name": "Get Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine"
+        },
+        {
+          "info": {
+            "name": "Update Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Engine"
+        },
+        {
+          "info": {
+            "name": "Delete Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Engine"
+        },
+        {
+          "info": {
+            "name": "Get Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Regenerate Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Regenerate an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Delete Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Upgrade Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/upgrade",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upgrade an Engine. In order to upgrade the engine must be in IDLE state and not have latest version."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Vulnerabilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules"
+          },
+          "docs": "Get the metadata of all modules"
+        },
+        {
+          "info": {
+            "name": "Get Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metadata of a module"
+        },
+        {
+          "info": {
+            "name": "Get Attack",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id/attacks/:attack-id",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metadata of an attack"
+        },
+        {
+          "info": {
+            "name": "Get Attack Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id/attacks/:attack-id/documentation",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the documentation of an attack"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerabilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Vulnerabilities, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Vulnerabilities is \"severity\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Update Vulnerability",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Discoveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/discoveries",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Vulnerability Discoveries, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Vulnerability Discoveries is \"discovered\" (descending) </p>"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Discovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/discoveries/:vuln-discovery-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vuln-discovery-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Vulnerability Discovery"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Reports, based on the supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Reports is \"generatedDate\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Generate Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a new Report<br><br>The following table outlines per report type whether a field is required (<span>&#9989;</span>), optional (<span>&#10035;</span>) or not to be included (<span>&#10060;</span>) for report generation<table> <thead><tr> <th>Report Type</th> <th>name</th> <th>type</th> <th>format</th> <th>scanId</th> <th>filter</th> </tr> </thead> <tbody> <tr><td><code>VULN_SUMMARY</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span"
+        },
+        {
+          "info": {
+            "name": "Get Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Report <br/><b> NOTE: This API allows for the retrieval of both Report Information and Report Contents depending on which Mime-Type the client advertises acceptance of in the <code>Accept</code> header passed in the call.</b></br> When retrieving only the Report Information the client should supply an <code>Accept</code> header value that indicates acceptance of the <code>application/json</code> mime type only.</br></br> To download the Report Contents the client is required to supply <cod"
+        },
+        {
+          "info": {
+            "name": "Delete Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Report"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scan Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Scan Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs",
+            "params": [
+              {
+                "name": "include-errors",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Scan Configs, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Scan Configs is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p> <p>By default, the <code>errors</code> property is populated and requires validation of each scan config's options in order to do so; this can be expensive in a number of cases, such as options with a number of associated files or credentials, a"
+        },
+        {
+          "info": {
+            "name": "Create Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Scan Config"
+        },
+        {
+          "info": {
+            "name": "Get Scan Configs Options Default",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/options/default"
+          },
+          "docs": "Get the current default options"
+        },
+        {
+          "info": {
+            "name": "Get Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Update Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Scan Config"
+        },
+        {
+          "info": {
+            "name": "Delete Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Scan Config"
+        },
+        {
+          "info": {
+            "name": "Get Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the current options of a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Update Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the options of a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Patch Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patch the options of a Scan Config"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Scans, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Scans is \"submit_time\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Submit Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Scan"
+        },
+        {
+          "info": {
+            "name": "Delete Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/action",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get any current Scan action"
+        },
+        {
+          "info": {
+            "name": "Submit Scan Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/action",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new Scan action"
+        },
+        {
+          "info": {
+            "name": "Get Scan Engine Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/engine-events",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the engine events from a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Execution Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/execution-details",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get real-time details of the execution of a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Platform Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/platform-events",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the platform events from a Scan"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/schedules",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Schedules, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Schedules is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Schedule"
+        },
+        {
+          "info": {
+            "name": "Get Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/schedules/:schedule-id",
+            "params": [
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Schedule"
+        },
+        {
+          "info": {
+            "name": "Update Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/schedules/:schedule-id",
+            "params": [
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Schedule"
+        },
+        {
+          "info": {
+            "name": "Delete Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/schedules/:schedule-id",
+            "params": [
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Schedule"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Perform Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/search",
+            "params": [
+              {
+                "name": "limitData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Search for a set of resources, returning a page, based on supplied <a href=\"#pagination\">pagination parameters</a>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags",
+            "params": [
+              {
+                "name": "root",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Tags, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Tags is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Tag"
+        },
+        {
+          "info": {
+            "name": "Get Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Tag"
+        },
+        {
+          "info": {
+            "name": "Update Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Tag"
+        },
+        {
+          "info": {
+            "name": "Delete Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cascade",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete an existing Tag"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/targets",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Targets, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Targets is \"domain\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/targets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Target"
+        },
+        {
+          "info": {
+            "name": "Get Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/targets/:target-id",
+            "params": [
+              {
+                "name": "target-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Target"
+        },
+        {
+          "info": {
+            "name": "Update Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/targets/:target-id",
+            "params": [
+              {
+                "name": "target-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Target"
+        },
+        {
+          "info": {
+            "name": "Delete Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/targets/:target-id",
+            "params": [
+              {
+                "name": "target-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Target"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Variances Documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vulnerability Variances Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/variances/documentation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get full description  for all vulnerabilities according to CWE (Common Weakness Enumeration) / CVE (Common Vulnerability Enumeration) and provide recommendations to fix them."
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Variance Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/variances/:variance-id/documentation",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "variance-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get full description about a specific vulnerability according to CWE (Common Weakness Enumeration) / CVE (Common Vulnerability Enumeration) and provide recommendations to fix it."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Vulnerability Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vulnerability Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/comments",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the comments for a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Create Vulnerability Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/comments",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Vulnerability Comment"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/comments/:comment-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "comment-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Comment for a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Update Vulnerability Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/comments/:comment-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "comment-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Vulnerability Comment"
+        },
+        {
+          "info": {
+            "name": "Delete Vulnerability Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/comments/:comment-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "comment-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Vulnerability Comment"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Vulnerability History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vulnerability History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/history",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the history of changes for a Vulnerability"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

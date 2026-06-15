@@ -1,0 +1,747 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightIDR API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/accounts/_search",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A search API for accounts. You can search for accounts matching the given search criteria.<table style=\"width:max-content;border:1px solid rgba(38, 50, 56, 0.3)\" title=\"Searchable/Sortable Fields\"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>authentication_service</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>disabled</td><td>Yes</td><td>No</td><td>Boolean</td></tr><tr><td>domain</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>name</td><td>Y"
+        },
+        {
+          "info": {
+            "name": "Get account by RRN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/accounts/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "",
+                "type": "path",
+                "description": "The RRN of the account."
+              }
+            ]
+          },
+          "docs": "Retrieve an account with the given RRN (<a href=\"https://docs.rapid7.com/insightidr/rapid7-resource-names/\">Rapid7 Resource Name</a>)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Local Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search local accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/assets/local-accounts/_search",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A search API for local accounts. You can search for local accounts matching the given search criteria.<table style=\"width:max-content;border:1px solid rgba(38, 50, 56, 0.3)\" title=\"Searchable/Sortable Fields\"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>asset.rrn</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>asset.name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>user.rrn</td><t"
+        },
+        {
+          "info": {
+            "name": "Get local account by RRN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/assets/local-accounts/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "",
+                "type": "path",
+                "description": "The RRN of the local account."
+              }
+            ]
+          },
+          "docs": "Retrieve a local account with the given RRN (<a href=\"https://docs.rapid7.com/insightidr/rapid7-resource-names/\">Rapid7 Resource Name</a>)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/assets/_search",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A search API for assets. You can search for assets matching the given search criteria.<table style=\"width:max-content;border:1px solid rgba(38, 50, 56, 0.3)\" title=\"Searchable/Sortable Fields\"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>name</td><td>Yes</td><td>Yes</td><td>String</td></tr></table>"
+        },
+        {
+          "info": {
+            "name": "Get asset by RRN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/assets/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "",
+                "type": "path",
+                "description": "The RRN of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieve an asset with the given RRN (<a href=\"https://docs.rapid7.com/insightidr/rapid7-resource-names/\">Rapid7 Resource Name</a>)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/attachments",
+            "params": [
+              {
+                "name": "target",
+                "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210",
+                "type": "query",
+                "description": "Return attachments with this target."
+              },
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100."
+              }
+            ]
+          },
+          "docs": "Retrieves attachments matching the given request parameters. For example, this API allows you to list all attachments by investigation."
+        },
+        {
+          "info": {
+            "name": "Upload attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/attachments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API used to upload one or more attachments. By default, attachments are not associated with a comment. Use<a href=https://help.rapid7.com/insightidr/en-us/api/v1/docs.html#tag/Comments/operation/createComment> this API </a> to create comment."
+        },
+        {
+          "info": {
+            "name": "Download attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/attachments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to download an attachment by RRN. The RRN determines which attachment is downloaded."
+        },
+        {
+          "info": {
+            "name": "Delete an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/attachments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to delete an attachment with the given RRN."
+        },
+        {
+          "info": {
+            "name": "Get attachment information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/attachments/:rrn/metadata",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to get information from an attachment by RRN. The RRN identifies the attachment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update comment visibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/comments/:rrn/:visibility",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the comment."
+              },
+              {
+                "name": "visibility",
+                "value": "",
+                "type": "path",
+                "description": "The new visibility for the comment (case insensitive)."
+              }
+            ]
+          },
+          "docs": "An API to update visibility of a comment by using an RRN. This API returns the comment with the updated visibility ."
+        },
+        {
+          "info": {
+            "name": "List comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/comments",
+            "params": [
+              {
+                "name": "target",
+                "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210",
+                "type": "query",
+                "description": "Return comments with this target."
+              },
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional 0, based index of the page to retrieve. Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less  or equal to 100."
+              }
+            ]
+          },
+          "docs": "Retrieves a page of comments matching the given request parameters. For example, this API allows you to list all comments on an investigation by passing an investigation's RRN as the target value."
+        },
+        {
+          "info": {
+            "name": "Create comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/comments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API you can use to create comments for a particular target. The target determines where the comment will appear within InsightIDR. Only certain types of RRNs are permitted as targets, such as investigation RRNs."
+        },
+        {
+          "info": {
+            "name": "Get comment by rrn",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/comments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210",
+                "type": "path",
+                "description": "Return a comment with this rrn."
+              }
+            ]
+          },
+          "docs": "Retrieves a comment by its rrn."
+        },
+        {
+          "info": {
+            "name": "Delete a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/comments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the comment."
+              }
+            ]
+          },
+          "docs": "A delete API you can use to delete a comment by using an RRN. The RRN determines which comment will be deleted. Only the creator of a comment can delete it."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Community Threats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/customthreats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a private InsightIDR Community Threat and add indicators to this Community Threat. The following Community Threat indicators are supported in the request body, formatted as JSON:<ul><li>communityThreatName</li><li>notetext</li><li>indicators</li><ul><li>IP addresses (non-CIDR notation)</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul></ul>The request content type must be to in JSON (see request samples).<br/>The maximum file size is 50 MB."
+        },
+        {
+          "info": {
+            "name": "Replace indicators for a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/customthreats/key/:key/indicators/replace",
+            "params": [
+              {
+                "name": "key",
+                "value": "156c9e48-64da-4bba-939e-e1c329be591b",
+                "type": "path",
+                "description": "The key of a Community Threat for which the indicators are going to be added."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "The input format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace InsightIDR Community Threat indicators for a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samp"
+        },
+        {
+          "info": {
+            "name": "Add indicators to a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/customthreats/key/:key/indicators/add",
+            "params": [
+              {
+                "name": "key",
+                "value": "156c9e48-64da-4bba-939e-e1c329be591b",
+                "type": "path",
+                "description": "The key of a Community Threat for which the indicators are going to be added."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "The input format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add InsightIDR Community Threat indicators to a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samples o"
+        },
+        {
+          "info": {
+            "name": "Delete a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/customthreats/key/:key/delete",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete an owned InsightIDR Community Threat."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Investigations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set the status of an investigation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/investigations/:id/status/:status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or RRN of the investigation to change the status of."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "The new status for the investigation (case-insensitive)."
+              }
+            ]
+          },
+          "docs": "An API that sets the status of the investigation with the given ID or RRN. This API returns the investigation with its status updated to the new state. If the investigation already has the given status, no change is made, but the investigation will still be returned."
+        },
+        {
+          "info": {
+            "name": "Assign user to investigation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/investigations/:id/assignee",
+            "params": [
+              {
+                "name": "id",
+                "value": "174e4f99-2ac7-4481-9301-4d24c34baf06",
+                "type": "path",
+                "description": "The ID or RRN of the investigation to assign the user to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API that assigns a user to the specified investigation. The user must be a platform administrator, product administrator, or read/write user with access to either InsightIDR or InsightUBA."
+        },
+        {
+          "info": {
+            "name": "Close investigations in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/investigations/bulk_close",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API to close all investigations that match the parameters provided in the request body. This API returns the number of investigations that were closed and a list of their IDs."
+        },
+        {
+          "info": {
+            "name": "List investigations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/investigations",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less then or equal to 1000."
+              },
+              {
+                "name": "statuses",
+                "value": "OPEN, CLOSED, INVESTIGATING",
+                "type": "query",
+                "description": "An optional, comma-separated set of investigation statuses. Only investigations whose status matches one of the entries in the list will be returned.  If this parameter, is omitted investigations with any status may be returned."
+              },
+              {
+                "name": "start_time",
+                "value": "2018-07-01T00:00:00Z",
+                "type": "query",
+                "description": "An optional, ISO-formatted timestamp. Only investigations whose createTime is after this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be returned."
+              },
+              {
+                "name": "end_time",
+                "value": "2018-07-04T00:00:00Z",
+                "type": "query",
+                "description": "An optional, ISO-formatted timestamp. Only investigations whose createTime is before this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be returned."
+              }
+            ]
+          },
+          "docs": "An API to list all investigations. This API retrieves a page of investigations matching the given request parameters. The investigations will always be sorted by investigation created_time in descending order."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/users/_search",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve. Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A search API for users. You can search for users matching the given search criteria.<table style=\"width:max-content;border:1px solid rgba(38, 50, 56, 0.3)\" title=\"Searchable/Sortable Fields\"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>first_name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>last_name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>domain</td><td>Yes</td><td>No</td"
+        },
+        {
+          "info": {
+            "name": "Get user by RRN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/users/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "",
+                "type": "path",
+                "description": "The RRN of the user."
+              }
+            ]
+          },
+          "docs": "Retrieve a user with the given RRN (<a href=\"https://docs.rapid7.com/insightidr/rapid7-resource-names/\">Rapid7 Resource Name</a>)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve health metrics by org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/health-metrics",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100."
+              },
+              {
+                "name": "resourceTypes",
+                "value": "agent,collectors",
+                "type": "query",
+                "description": "An optional, comma-separated set of resource types. Only resources whose type matches one of the entries in the list are returned. If this parameter is omitted, health metrics with any resource type may be returned."
+              },
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query",
+                "description": "Optional organization ID to get metrics for. If not specified, metrics for the user's current organization will be returned. User must have access to the specified organization."
+              }
+            ]
+          },
+          "docs": "Retrieve paginated health metrics for the given org. In the event of a 207 response, there may be two additional metadata fields in the response. 'failed_to_load' contains the the resource types that did not successfully load. 'unlicensed_resource_types' contains resource types that were requested, but for which the org does not have access to. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Collectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}.api.insight.rapid7.com/idr/v1/collectors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new collector. The API key used must be associated with a user with the collection administration role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
