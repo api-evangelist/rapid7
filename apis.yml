@@ -88,7 +88,7 @@ common:
   url: https://docs.rapid7.com/insight/api-overview/
 - type: Pricing
   url: https://www.rapid7.com/contact/
-- type: SignUp
+- type: Signup
   url: https://insight.rapid7.com/
 - type: GitHubOrganization
   url: https://github.com/rapid7
