@@ -78,6 +78,12 @@ apis:
   - type: Documentation
     url: https://docs.rapid7.com/insightidr/api-overview/
 common:
+- type: VulnerabilityDisclosure
+  url: security/rapid7-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/rapid7-domain-security.yml
+- type: Authentication
+  url: authentication/rapid7-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/rapid7
 - type: Website
@@ -101,6 +107,8 @@ common:
 - name: MCP Server
   url: https://github.com/rapid7/rapid7-bulk-export-mcp
   type: MCPServer
+- url: https://www.rapid7.com/rss.xml
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

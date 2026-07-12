@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/insightvm-console-swagger.json
+summary:
+  types:
+  - http
+schemes:
+- name: Basic
+  type: http
+  scheme: basic
+  sources:
+  - openapi/insightvm-console-swagger.json
