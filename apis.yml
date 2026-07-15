@@ -78,6 +78,8 @@ apis:
   - type: Documentation
     url: https://docs.rapid7.com/insightidr/api-overview/
 common:
+- type: AgenticAccess
+  url: agentic-access/rapid7-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/rapid7-vulnerability-disclosure.yml
 - type: DomainSecurity
