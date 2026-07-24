@@ -1,0 +1,481 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Community Threats API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Community Threats
+  description: An API used to add and replace indicators for Community Threats. See https://insightidr.help.rapid7.com/docs/threats#section-threat-api for further information on how to generate threat keys.
+paths:
+  /idr/v1/customthreats:
+    post:
+      tags:
+      - Community Threats
+      summary: Create a Community Threat
+      description: Create a private InsightIDR Community Threat and add indicators to this Community Threat. The following Community Threat indicators are supported in the request body, formatted as JSON:<ul><li>communityThreatName</li><li>notetext</li><li>indicators</li><ul><li>IP addresses (non-CIDR notation)</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul></ul>The request content type must be to in JSON (see request samples).<br/>The maximum file size is 50 MB.
+      operationId: createCommunityThreat
+      requestBody:
+        description: "The request body format must be in JSON. \nThe maximum payload size is 50 MB."
+        content:
+          application/json:
+            schema:
+              type: string
+            example:
+              threat: threatName
+              note: notetext
+              indicators:
+                ips:
+                - 192.168.0.1
+                hashes:
+                - b95663ec7339033cf1fde459a34b6606
+                domain_names:
+                - rapid7.com
+                - mailxpy.com
+                urls:
+                - http://example.com/index
+                - ' http://www.mailxpy.com/login/index.php'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatUpdateResult'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: Payload Is Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /idr/v1/customthreats/key/{key}/indicators/replace:
+    post:
+      tags:
+      - Community Threats
+      summary: Replace indicators for a Community Threat
+      description: 'Replace InsightIDR Community Threat indicators for a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: "application/json" for "json" format, "text/xml" for "stix_xml" format and "text/csv" for "csv" format. See request samples on the right.<br/>The multipart file upload (with multipart/form-data content type) is also supported by the endpoint. The maximum file size is 50 MB.'
+      operationId: replaceIndicators
+      parameters:
+      - name: key
+        in: path
+        description: The key of a Community Threat for which the indicators are going to be added.
+        required: true
+        schema:
+          type: string
+        example: 156c9e48-64da-4bba-939e-e1c329be591b
+      - name: format
+        in: query
+        description: The input format.
+        required: true
+        schema:
+          type: string
+          enum:
+          - json
+          - csv
+          - stix_xml
+        example: json
+      requestBody:
+        description: "The request body format should be one of JSON, STIX XML, CSV, or multi-part file data. \nThe maximum payload size is 50 MB."
+        content:
+          application/json:
+            schema:
+              type: string
+            example:
+              ips:
+              - 192.168.0.1
+              hashes:
+              - b95663ec7339033cf1fde459a34b6606
+              domain_names:
+              - rapid7.com
+              urls:
+              - http://example.com
+          text/csv:
+            schema:
+              type: string
+            example: 192.168.0.1,b95663ec7339033cf1fde459a34b6606,rapid7.com,http://example.com
+          text/xml:
+            schema:
+              type: string
+            example: "\n<stix:STIX_Package xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                   xmlns:stix=\"http://stix.mitre.org/stix-1\"\n                   xmlns:indicator=\"http://stix.mitre.org/Indicator-2\"\n                   xmlns:cybox=\"http://cybox.mitre.org/cybox-2\"\n                   xmlns:DomainNameObj=\"http://cybox.mitre.org/objects#DomainNameObject-1\"\n                   xmlns:cyboxVocabs=\"http://cybox.mitre.org/default_vocabularies-2\"\n                   xmlns:stixVocabs=\"http://stix.mitre.org/default_vocabularies-1\"\n                   xmlns:example=\"http://example.com/\"\n                   xsi:schemaLocation=\n                           \"http://stix.mitre.org/stix-1 ../stix_core.xsd\n                            http://stix.mitre.org/Indicator-2 ../indicator.xsd\n                            http://cybox.mitre.org/default_vocabularies-2 ../cybox/cybox_default_vocabularies.xsd\n                            http://stix.mitre.org/default_vocabularies-1 ../stix_default_vocabularies.xsd\n                            http://cybox.mitre.org/objects#DomainNameObject-1 ../cybox/objects/Domain_Name_Object.xsd\"\n                   id=\"example:STIXPackage-f61cd874-494d-4194-a3e6-6b487dbb6d6e\"\n                   timestamp=\"2014-05-08T09:00:00.000000Z\"\n                   version=\"1.1.1\">\n    <stix:STIX_Header>\n        <stix:Title>Example watchlist that contains domain information.</stix:Title>\n        <stix:Package_Intent xsi:type=\"stixVocabs:PackageIntentVocab-1.0\">Indicators - Watchlist</stix:Package_Intent>\n    </stix:STIX_Header>\n    <stix:Indicators>\n        <stix:Indicator xsi:type=\"indicator:IndicatorType\" id=\"example:Indicator-2e20c5b2-56fa-46cd-9662-8f199c69d2c9\" timestamp=\"2014-05-08T09:00:00.000000Z\">\n            <indicator:Type xsi:type=\"stixVocabs:IndicatorTypeVocab-1.1\">Domain Watchlist</indicator:Type>\n            <indicator:Description>Sample domain Indicator for this watchlist</indicator:Description>\n            <indicator:Observable id=\"example:Observable-87c9a5bb-d005-4b3e-8081-99f720fad62b\">\n                <cybox:Object id=\"example:Object-12c760ba-cd2c-4f5d-a37d-18212eac7928\">\n                    <cybox:Properties xsi:type=\"DomainNameObj:DomainNameObjectType\" type=\"FQDN\">\n                        <DomainNameObj:Value condition=\"Equals\" apply_condition=\"ANY\">malicious1.example.com##comma##malicious2.example.com##comma##malicious3.example.com</DomainNameObj:Value>\n                    </cybox:Properties>\n                </cybox:Object>\n            </indicator:Observable>\n            <indicator:Observable id=\"NCCIC:Observable-fb5606ea-23f0-472d-babf-8b7e89571881\">\n                <cybox:Object id=\"NCCIC:Object-a105a51a-c324-11e7-b25d-64006a91c899\">\n                    <cybox:Properties xsi:type=\"AddressObj:AddressObjectType\" category=\"ipv4-addr\" is_spoofed=\"false\">\n                        <AddressObj:Address_Value condition=\"Equals\">185.134.98.141</AddressObj:Address_Value>\n                    </cybox:Properties>\n                </cybox:Object>\n            </indicator:Observable>\n        </stix:Indicator>\n    </stix:Indicators>\n</stix:STIX_Package>"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatUpdateResult'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: Payload Is Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /idr/v1/customthreats/key/{key}/indicators/add:
+    post:
+      tags:
+      - Community Threats
+      summary: Add indicators to a Community Threat
+      description: 'Add InsightIDR Community Threat indicators to a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: "application/json" for "json" format, "text/xml" for "stix_xml" format and "text/csv" for "csv" format. See request samples on the right.<br/>The multipart file upload (with multipart/form-data content type) is also supported by the endpoint. The maximum file size is 50 MB.'
+      operationId: addIndicators
+      parameters:
+      - name: key
+        in: path
+        description: The key of a Community Threat for which the indicators are going to be added.
+        required: true
+        schema:
+          type: string
+        example: 156c9e48-64da-4bba-939e-e1c329be591b
+      - name: format
+        in: query
+        description: The input format.
+        required: true
+        schema:
+          type: string
+          enum:
+          - json
+          - csv
+          - stix_xml
+        example: json
+      requestBody:
+        description: "The request body format should be one of JSON, STIX XML, CSV, or multi-part file data. \nThe maximum payload size is 50 MB."
+        content:
+          application/json:
+            schema:
+              type: string
+            example:
+              ips:
+              - 192.168.0.1
+              hashes:
+              - b95663ec7339033cf1fde459a34b6606
+              domain_names:
+              - rapid7.com
+              urls:
+              - http://example.com
+          text/csv:
+            schema:
+              type: string
+            example: 192.168.0.1,b95663ec7339033cf1fde459a34b6606,rapid7.com,http://example.com
+          text/xml:
+            schema:
+              type: string
+            example: "\n<stix:STIX_Package xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                   xmlns:stix=\"http://stix.mitre.org/stix-1\"\n                   xmlns:indicator=\"http://stix.mitre.org/Indicator-2\"\n                   xmlns:cybox=\"http://cybox.mitre.org/cybox-2\"\n                   xmlns:DomainNameObj=\"http://cybox.mitre.org/objects#DomainNameObject-1\"\n                   xmlns:cyboxVocabs=\"http://cybox.mitre.org/default_vocabularies-2\"\n                   xmlns:stixVocabs=\"http://stix.mitre.org/default_vocabularies-1\"\n                   xmlns:example=\"http://example.com/\"\n                   xsi:schemaLocation=\n                           \"http://stix.mitre.org/stix-1 ../stix_core.xsd\n                            http://stix.mitre.org/Indicator-2 ../indicator.xsd\n                            http://cybox.mitre.org/default_vocabularies-2 ../cybox/cybox_default_vocabularies.xsd\n                            http://stix.mitre.org/default_vocabularies-1 ../stix_default_vocabularies.xsd\n                            http://cybox.mitre.org/objects#DomainNameObject-1 ../cybox/objects/Domain_Name_Object.xsd\"\n                   id=\"example:STIXPackage-f61cd874-494d-4194-a3e6-6b487dbb6d6e\"\n                   timestamp=\"2014-05-08T09:00:00.000000Z\"\n                   version=\"1.1.1\">\n    <stix:STIX_Header>\n        <stix:Title>Example watchlist that contains domain information.</stix:Title>\n        <stix:Package_Intent xsi:type=\"stixVocabs:PackageIntentVocab-1.0\">Indicators - Watchlist</stix:Package_Intent>\n    </stix:STIX_Header>\n    <stix:Indicators>\n        <stix:Indicator xsi:type=\"indicator:IndicatorType\" id=\"example:Indicator-2e20c5b2-56fa-46cd-9662-8f199c69d2c9\" timestamp=\"2014-05-08T09:00:00.000000Z\">\n            <indicator:Type xsi:type=\"stixVocabs:IndicatorTypeVocab-1.1\">Domain Watchlist</indicator:Type>\n            <indicator:Description>Sample domain Indicator for this watchlist</indicator:Description>\n            <indicator:Observable id=\"example:Observable-87c9a5bb-d005-4b3e-8081-99f720fad62b\">\n                <cybox:Object id=\"example:Object-12c760ba-cd2c-4f5d-a37d-18212eac7928\">\n                    <cybox:Properties xsi:type=\"DomainNameObj:DomainNameObjectType\" type=\"FQDN\">\n                        <DomainNameObj:Value condition=\"Equals\" apply_condition=\"ANY\">malicious1.example.com##comma##malicious2.example.com##comma##malicious3.example.com</DomainNameObj:Value>\n                    </cybox:Properties>\n                </cybox:Object>\n            </indicator:Observable>\n            <indicator:Observable id=\"NCCIC:Observable-fb5606ea-23f0-472d-babf-8b7e89571881\">\n                <cybox:Object id=\"NCCIC:Object-a105a51a-c324-11e7-b25d-64006a91c899\">\n                    <cybox:Properties xsi:type=\"AddressObj:AddressObjectType\" category=\"ipv4-addr\" is_spoofed=\"false\">\n                        <AddressObj:Address_Value condition=\"Equals\">185.134.98.141</AddressObj:Address_Value>\n                    </cybox:Properties>\n                </cybox:Object>\n            </indicator:Observable>\n        </stix:Indicator>\n    </stix:Indicators>\n</stix:STIX_Package>"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatUpdateResult'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: Payload Is Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /idr/v1/customthreats/key/{key}/delete:
+    post:
+      tags:
+      - Community Threats
+      summary: Delete a Community Threat
+      description: Delete an owned InsightIDR Community Threat.
+      operationId: deleteCommunityThreat
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteThreatEvent'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Threat'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Threat with key threatKey was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    DeleteThreatEvent:
+      type: object
+      properties:
+        reason:
+          type: string
+    ThreatUpdateResult:
+      required:
+      - threat
+      type: object
+      properties:
+        threat:
+          $ref: '#/components/schemas/Threat'
+        rejected_indicators:
+          type: array
+          description: The list of indicators that have been rejected during the update.
+          example:
+          - blacklisted
+          - invalid
+          items:
+            type: string
+    Threat:
+      required:
+      - indicator_count
+      - name
+      - published
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the threat.
+          example: Threat
+        note:
+          type: string
+          description: Notes about this threat.
+          example: Notes
+        published:
+          type: boolean
+          description: Indicates whether this threat has been published.
+          example: true
+        indicator_count:
+          minimum: 0
+          type: integer
+          description: The number of indicators in this threat.
+          format: int64
+          example: 1
+      description: The information about the threat.
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd

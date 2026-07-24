@@ -1,0 +1,2697 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Scan Configs API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Scan Configs
+  description: A Scan Config defines all the necessary information required to perform a Scan of an App. An App <i>must</i> be created prior to creating a Scan Config. It is the main document that describes <i>what</i> and <i>how</i> web resources should be discovered and Scanned, and can be tailored from Scan to Scan in order to refine the results gathered. It must define which Attack Template to use during the attacking phase of the Scan. Currently, all Scan Configs created via the API will by default specify that Scans will be executed on Cloud engines; support for On-Premise engines is available by specifying appropriate assignment ID (a known engine group ID), type (<code>ENGINE_GROUP</code>) and environment (<code>ON_PREMISE</code>) values. A Scan Config <i>must</i> define a minimum set of Options that specify the following:<ul><li>At least one Seed URL</li><li>At least one Crawling Scope Constraint</li></ul>If any of the Options defined for a Scan Config are considered invalid, an explanatory message should be included in the "errors" property of the owning Scan Config response body. All Seed URLs and Scope Constraint URLs provided must have a valid Target.
+paths:
+  /scan-configs:
+    get:
+      tags:
+      - Scan Configs
+      summary: Get Scan Configs
+      description: Get a page of Scan Configs, based on supplied <a href="#pagination">pagination parameters</a>. <p>The default sort for Scan Configs is "name" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p> <p>By default, the <code>errors</code> property is populated and requires validation of each scan config's options in order to do so; this can be expensive in a number of cases, such as options with a number of associated files or credentials, and requests with a large page size may suffer as a result. Including the <code>include-errors=false</code> request parameter will dramatically reduce response times for calls to this endpoint.</p>
+      operationId: get-scan-configs
+      parameters:
+      - name: include-errors
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - name: index
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: page-token
+        in: query
+        schema:
+          type: string
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageScanConfig'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Scan Configs
+      summary: Create Scan Config
+      description: Create a new Scan Config
+      operationId: create-scan-config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanConfig'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Resource validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+  /scan-configs/options/default:
+    get:
+      tags:
+      - Scan Configs
+      summary: Get Scan Configs Options Default
+      description: Get the current default options
+      operationId: get-scan-configs-options-default
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanConfigOptions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /scan-configs/{scan-config-id}:
+    get:
+      tags:
+      - Scan Configs
+      summary: Get Scan Config
+      description: Get a Scan Config
+      operationId: get-scan-config
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityModelScanConfig'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Scan Configs
+      summary: Update Scan Config
+      description: Update an existing Scan Config
+      operationId: update-scan-config
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanConfig'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Resource validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+    delete:
+      tags:
+      - Scan Configs
+      summary: Delete Scan Config
+      description: Delete an existing Scan Config
+      operationId: delete-scan-config
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /scan-configs/{scan-config-id}/options:
+    get:
+      tags:
+      - Scan Configs
+      summary: Get Scan Config Options
+      description: Get the current options of a Scan Config
+      operationId: get-scan-config-options
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanConfigOptions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Scan Configs
+      summary: Update Scan Config Options
+      description: Update the options of a Scan Config
+      operationId: update-scan-config-options
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanConfigOptions'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Resource validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+    patch:
+      tags:
+      - Scan Configs
+      summary: Patch Scan Config Options
+      description: Patch the options of a Scan Config
+      operationId: patch-scan-config-options
+      parameters:
+      - name: scan-config-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanConfigOptions'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CrawlerInitializationConfig:
+      properties:
+        secure:
+          type: boolean
+        host:
+          type: string
+        port:
+          type: integer
+          format: int64
+        version:
+          type: string
+        browser_pool_size:
+          type: integer
+          format: int64
+        track_progress:
+          type: boolean
+        return_request:
+          type: string
+          enum:
+          - 'NO'
+          - RAW_REQUEST_DATA
+          - PROCESSED_REQUEST_DATA
+        track_request:
+          type: string
+          enum:
+          - NONE
+          - ENDPOINT_CALL
+          - ENDPOINT_CALL_AND_RAW_REQUEST
+          - ENDPOINT_CALL_AND_PROCESSED_REQUEST
+        node_js_max_old_space_size:
+          type: integer
+          format: int64
+        browser_idle_timeout_seconds:
+          type: integer
+          format: int64
+        browser_close_after_request_count:
+          type: integer
+          format: int64
+        browser_acquisition_timeout_minutes:
+          type: integer
+          format: int64
+    GrayListExtension:
+      properties:
+        value:
+          type: string
+    ScanConfigOptions:
+      properties:
+        detailed_logging:
+          type: boolean
+        display_imminent_license_expiry_message:
+          type: boolean
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        scan_module_parameter_files_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScanModuleParameterFiles'
+        crawl_config:
+          $ref: '#/components/schemas/CrawlConfig'
+        attacker_config:
+          $ref: '#/components/schemas/AttackerConfig'
+        auth_config:
+          $ref: '#/components/schemas/AuthConfig'
+        proxy_config:
+          $ref: '#/components/schemas/ProxyConfig'
+        ssl_cert_config:
+          $ref: '#/components/schemas/SslCertConfig'
+        network_settings_config:
+          $ref: '#/components/schemas/NetworkSettingsConfig'
+        performance_config:
+          $ref: '#/components/schemas/PerformanceConfig'
+        http_headers_config:
+          $ref: '#/components/schemas/HttpHeadersConfig'
+        manual_crawling_config:
+          $ref: '#/components/schemas/ManualCrawlingConfig'
+        parameter_training_config:
+          $ref: '#/components/schemas/ParameterTrainingConfig'
+        auto_sequence_config:
+          $ref: '#/components/schemas/AutoSequenceConfig'
+        macro_config:
+          $ref: '#/components/schemas/MacroConfig'
+        selenium_config:
+          $ref: '#/components/schemas/SeleniumConfig'
+        web_service_config:
+          $ref: '#/components/schemas/WebServiceConfig'
+        one_time_token_config:
+          $ref: '#/components/schemas/OneTimeTokenConfig'
+        parameter_parser_config:
+          $ref: '#/components/schemas/ParameterParserConfig'
+        parameter_value_config:
+          $ref: '#/components/schemas/ParameterValueConfig'
+        chrome_host_config:
+          $ref: '#/components/schemas/ChromeHostConfig'
+        token_replacement_config:
+          $ref: '#/components/schemas/TokenReplacementConfig'
+        chatbot_config:
+          $ref: '#/components/schemas/ChatbotConfig'
+    UserDoNotAttackParam:
+      properties:
+        parameter_name:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    MacroFile__1:
+      properties:
+        macro_file_name:
+          type: string
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        show_in_browser:
+          type: boolean
+        replay_speed:
+          type: number
+          format: double
+        asap_mode:
+          type: boolean
+        asap_mode_min_delay:
+          type: integer
+          format: int64
+        extra_delay_after_macro:
+          type: integer
+          format: int64
+        attack_as_sequence:
+          type: boolean
+        sequence_config:
+          $ref: '#/components/schemas/SequenceConfig'
+        web_driver_config:
+          $ref: '#/components/schemas/WebDriverConfig'
+    BinaryContentType:
+      properties:
+        value:
+          type: string
+    SeleniumFile:
+      properties:
+        selenium_file_name:
+          type: string
+    ParameterTrainingConfig:
+      properties:
+        form_population:
+          type: string
+          enum:
+          - NONE
+          - RANDOM
+          - SMART
+        training_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingParameter'
+    OneTimePasswordConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NONE
+          - HOTP
+          - TOTP
+        algorithm:
+          type: string
+          enum:
+          - SHA_1
+          - SHA_224
+          - SHA_256
+          - SHA_384
+          - SHA_512
+          - SHA_3_224
+          - SHA_3_256
+          - SHA_3_384
+          - SHA_3_512
+        counter:
+          type: integer
+          format: int64
+        period:
+          type: integer
+          format: int64
+        secret:
+          type: string
+    TrainingParameter:
+      properties:
+        pattern_name:
+          type: string
+        types:
+          type: string
+        language:
+          type: string
+        match:
+          type: string
+        value:
+          type: string
+        value_match:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    ChromeHostConfig:
+      properties:
+        disable_logging:
+          type: boolean
+    CustomParameterFile:
+      properties:
+        name:
+          type: string
+        file_name:
+          type: string
+    Wsdl:
+      properties:
+        value:
+          type: string
+    FrameworkConfig:
+      properties:
+        name:
+          type: string
+        default_config_version:
+          type: string
+        enabled:
+          type: boolean
+        head:
+          type: boolean
+        detection_regex:
+          type: string
+        healthcheck_string:
+          type: string
+        file_name:
+          type: string
+        get_all_events_script:
+          type: string
+        get_all_events_delay:
+          type: integer
+          format: int64
+        get_version_string_script:
+          type: string
+    ScanConfig:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan Config
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Scan Config
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the Scan Config
+          maxLength: 2000
+          minLength: 0
+        app:
+          $ref: '#/components/schemas/app'
+        attack_template:
+          $ref: '#/components/schemas/attack_template'
+        incremental:
+          type: boolean
+          description: A flag to enable incremental scanning
+        assignment:
+          $ref: '#/components/schemas/EngineAssignment'
+        errors:
+          type: array
+          description: A list of errors that detail any current validation failures
+          items:
+            type: string
+            description: A list of errors that detail any current validation failures
+            readOnly: true
+          readOnly: true
+          uniqueItems: true
+      required:
+      - app
+      - attack_template
+      - name
+      title: ScanConfig
+    BrowserDoNotDownloadContentType:
+      properties:
+        value:
+          type: string
+    AlfDataFile:
+      properties:
+        type:
+          type: string
+        dataset:
+          type: string
+        content_file:
+          type: string
+        content:
+          type: string
+    GlobalTokenReplacement:
+      properties:
+        extraction_parameter_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        extraction_parameter:
+          type: string
+        extraction_parameter_match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+        injection_parameter_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        injection_parameter:
+          type: string
+        injection_parameter_match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    ManualCrawlingConfig:
+      properties:
+        traffic_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrafficFile'
+    ValidationErrors:
+      properties:
+        status:
+          type: string
+          description: A description of the type of error based on HTTP status code
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          readOnly: true
+        message:
+          type: string
+          description: A description of the error
+          readOnly: true
+        errorCode:
+          type: string
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
+          readOnly: true
+        errors:
+          type: array
+          description: A list of validation errors, when the HTTP status code is 422
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          readOnly: true
+      title: ValidationErrors
+    ChatbotConfig:
+      properties:
+        url:
+          type: string
+        open_ui_selector:
+          type: string
+        open_ui_text:
+          type: string
+        open_ui_max_wait_ms:
+          type: integer
+          format: int64
+        prompt_value:
+          type: string
+        prompt_selector:
+          type: string
+        prompt_text:
+          type: string
+        submit_selector:
+          type: string
+        submit_text:
+          type: string
+        response_selector:
+          type: string
+        response_min_wait_ms:
+          type: integer
+          format: int64
+        response_max_wait_ms:
+          type: integer
+          format: int64
+        response_inactivity_ms:
+          type: integer
+          format: int64
+        response_ignore_regex:
+          type: string
+        response_min_length:
+          type: integer
+          format: int64
+        show_in_browser:
+          type: boolean
+        macro_file:
+          $ref: '#/components/schemas/MacroFile__1'
+    ScanModuleParameterFiles:
+      properties:
+        module_id:
+          type: number
+          format: double
+        custom_parameter_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomParameterFile'
+    WebServiceAuthConfig:
+      properties:
+        enabled:
+          type: boolean
+        auth_wsdl:
+          type: string
+        auth_web_method:
+          type: string
+        get_auth_token_xpath:
+          type: string
+        put_auth_token_xpath:
+          type: string
+        extract_auth_token:
+          type: boolean
+        web_service_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebServiceParameter'
+    TextExtension:
+      properties:
+        value:
+          type: string
+    ParameterParserConfig:
+      properties:
+        enable_base64_parameter_values:
+          type: boolean
+        multi_regex_url_parser_config_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultiRegexUrlParserConfig'
+        standard_url_parser_config:
+          $ref: '#/components/schemas/StandardUrlParserConfig'
+    CrawlConfig:
+      properties:
+        max_scan_time_in_minutes:
+          type: integer
+          format: int64
+        max_domain:
+          type: integer
+          format: int64
+        max_crawl_results:
+          type: integer
+          format: int64
+        max_per_web_site_crawl_results:
+          type: integer
+          format: int64
+        max_per_dir_crawl_results:
+          type: integer
+          format: int64
+        max_per_link_crawl_results:
+          type: integer
+          format: int64
+        max_per_normalized_link_crawl_result:
+          type: integer
+          format: int64
+        max_per_dir_child_nodes:
+          type: integer
+          format: int64
+        max_deny_list_ext_crawl_results:
+          type: integer
+          format: int64
+        max_attack_feedback_links_count:
+          type: integer
+          format: int64
+        max_per_file_name_crawl_results:
+          type: integer
+          format: int64
+        max_per_query_crawl_results:
+          type: integer
+          format: int64
+        recursion_depth:
+          type: integer
+          format: int64
+        max_dir_depth:
+          type: integer
+          format: int64
+        discovery_depth:
+          type: integer
+          format: int64
+        url_repetition_tolerance:
+          type: integer
+          format: int64
+        sequence_repetition_tolerance:
+          type: integer
+          format: int64
+        max_reported_images:
+          type: integer
+          format: int64
+        max_reported_links:
+          type: integer
+          format: int64
+        max_reported_comments:
+          type: integer
+          format: int64
+        max_reported_scripts:
+          type: integer
+          format: int64
+        max_reported_emails:
+          type: integer
+          format: int64
+        max_reported_forms:
+          type: integer
+          format: int64
+        extract_crawl_browser_storage:
+          type: boolean
+        max_browser_page_wait_timeout:
+          type: integer
+          format: int64
+        max_browser_wait_till_request_timeout:
+          type: integer
+          format: int64
+        max_browser_dom_depth:
+          type: integer
+          format: int64
+        max_browser_events_per_link:
+          type: integer
+          format: int64
+        max_browser_events_per_crawl_result:
+          type: integer
+          format: int64
+        max_browser_events_per_dom:
+          type: integer
+          format: int64
+        max_browser_events_per_browse_dom:
+          type: integer
+          format: int64
+        max_browser_no_new_resource_dom_count:
+          type: integer
+          format: int64
+        not_inserted_link_count_threshold:
+          type: integer
+          format: int64
+        max_cookies_from_javascript:
+          type: integer
+          format: int64
+        max_cookies_same_name_from_javascript:
+          type: integer
+          format: int64
+        max_days_threshold_good_traffic:
+          type: integer
+          format: int64
+        crawl_prioritization:
+          type: string
+          enum:
+          - FIRST_IN_FIRST_OUT
+          - SMART
+          - DIRECTORY_BREADTH_FIRST
+          - FOUND_BREADTH_FIRST
+          - FOUND_DEPTH_FIRST
+          - JUICY
+          - LOGIN_FORM_DISCOVERY
+          - LOGIN
+        file_not_found_regex:
+          type: string
+        server_error_regex:
+          type: string
+        invalid_url_regex_attack:
+          type: string
+        invalid_url_regex_crawl:
+          type: string
+        nonce_regex:
+          type: string
+        priority_links_regex:
+          type: string
+        lock_cookies:
+          type: boolean
+        max_cookie_header_size:
+          type: integer
+          format: int64
+        case_sensitivity:
+          type: string
+          enum:
+          - AUTO_DETECT
+          - CASE_SENSITIVE
+          - CASE_INSENSITIVE
+        stay_on_port:
+          type: boolean
+        restrict_to_macro:
+          type: boolean
+        restrict_to_manual_crawling:
+          type: boolean
+        restrict_to_seed_list:
+          type: boolean
+        restrict_to_web_service:
+          type: boolean
+        restrict_to_selenium:
+          type: boolean
+        restrict_to_swagger:
+          type: boolean
+        restrict_to_agent_routes:
+          type: boolean
+        import_cookies_from_traffic:
+          type: boolean
+        page_equal_threshhold:
+          type: number
+          format: double
+        page_similar_threshhold:
+          type: number
+          format: double
+        experimental_crawling:
+          type: string
+          enum:
+          - DISABLED
+          - ENABLED
+          - FRAMEWORK_MATCH
+        flash:
+          type: boolean
+        enable_advanced_parsers:
+          type: boolean
+        search_for_urls:
+          type: boolean
+        cookie_comma_separator:
+          type: boolean
+        denylist_contact_forms:
+          type: boolean
+        denylist_all_forms:
+          type: boolean
+        enable_robotstxt_sitemap_crawling:
+          type: boolean
+        log_dom_contents:
+          type: boolean
+        use_browser_response_caching:
+          type: boolean
+        use_browser_response_reference_caching:
+          type: boolean
+        remove_content_security_policy:
+          type: boolean
+        page_loaded:
+          type: string
+          enum:
+          - NO_NETWORK_CONNECTION_FOR_OVER_500_MS
+          - DOM_CONTENT_LOADED_EVENT_FIRED
+          - LOAD_EVENT_FIRED
+          - DOCUMENT_STARTS_LOADING
+        page_delay_milliseconds:
+          type: integer
+          format: int64
+        page_timeout_milliseconds:
+          type: integer
+          format: int64
+        mock_images:
+          type: boolean
+        mock_videos:
+          type: boolean
+        screen_width:
+          type: integer
+          format: int64
+        screen_height:
+          type: integer
+          format: int64
+        screen_responsive:
+          type: boolean
+        inject_initial_delay_milliseconds:
+          type: integer
+          format: int64
+        inject_combo_delay_milliseconds:
+          type: integer
+          format: int64
+        error_limit_percentage:
+          type: integer
+          format: int64
+        error_limit_lower_absolute:
+          type: integer
+          format: int64
+        events_full_selectors_only:
+          type: boolean
+        events_add_iframe_events:
+          type: boolean
+        dom_element_selector_type:
+          type: string
+          enum:
+          - X_PATH
+          - CSS
+          - TEXT
+        disable_before_unload:
+          type: boolean
+        seed_url_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeedUrl'
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+        deny_list_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DenyListExtension'
+        gray_list_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrayListExtension'
+        binary_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BinaryExtension'
+        text_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextExtension'
+        binary_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BinaryContentType'
+        html_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/HtmlContentType'
+        text_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextContentType'
+        xml_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/XmlContentType'
+        dom_restrictions_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomRestrictions'
+        browser_download_allowlist_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserDownloadAllowlist'
+        browser_do_not_download_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserDoNotDownloadExtension'
+        browser_do_not_download_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserDoNotDownloadContentType'
+        locked_cookie_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/LockedCookie'
+        frameworks_crawl_config:
+          $ref: '#/components/schemas/FrameworksCrawlConfig'
+        crawler_initialization_config:
+          $ref: '#/components/schemas/CrawlerInitializationConfig'
+        crawler_monitoring_config:
+          $ref: '#/components/schemas/CrawlerMonitoringConfig'
+    MsalConfig:
+      properties:
+        x509_cert_filename:
+          type: string
+        x509_cert_password:
+          type: string
+        x509_cert_store_key:
+          type: string
+        tenant_id:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: string
+        token_refresh_period:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            zero:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            positive:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  duration_estimated:
+                    type: boolean
+                  time_based:
+                    type: boolean
+                  date_based:
+                    type: boolean
+        authority_url:
+          type: string
+    HmacConfig:
+      properties:
+        hmac_header_generator_dll_filename:
+          type: string
+        hmac_username:
+          type: string
+        hmac_api_key:
+          type: string
+        hmac_hash_algorithm:
+          type: integer
+          format: int64
+    BinaryExtension:
+      properties:
+        value:
+          type: string
+    SequenceConfig:
+      properties:
+        reset_session:
+          type: boolean
+        auto_sequence_config:
+          type: boolean
+        manual_sequence_config:
+          $ref: '#/components/schemas/ManualSequenceConfig'
+    DenyListExtension:
+      properties:
+        value:
+          type: string
+    SeleniumConfig:
+      properties:
+        listen_for_other_scripts:
+          type: boolean
+        sequential_selenium_script_playback:
+          type: boolean
+        selenium_port:
+          type: integer
+          format: int64
+        web_driver_for_html:
+          type: string
+          enum:
+          - FIREFOX
+          - HTML_UNIT
+          - CHROME
+        chrome_binary_file_path:
+          type: string
+        selenium_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeleniumFile'
+    CustomHeaders:
+      properties:
+        value:
+          type: string
+    TokenReplacement:
+      properties:
+        extraction_token_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        extraction_token_regex:
+          type: string
+        injection_token_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        injection_token_regex:
+          type: string
+    BrowserDownloadAllowlist:
+      properties:
+        value:
+          type: string
+    ScopeConstraint:
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum:
+          - ALL
+          - GET
+          - POST
+          - HEAD
+          - PUT
+          - PATCH
+          - DELETE
+          - TRACE
+          - CONNECT
+          - OPTIONS
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+        exclusion:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        http_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpParameter'
+    TokenReplacementConfig:
+      properties:
+        global_token_replacement_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalTokenReplacement'
+    WebDriverConfig:
+      properties:
+        chrome_driver_port:
+          type: integer
+          format: int64
+        chrome_debug_port:
+          type: integer
+          format: int64
+    StandardUrlParserConfig:
+      properties:
+        path_name_value_delimiters:
+          type: string
+        path_parameter_delimiters:
+          type: string
+        query_name_value_delimiters:
+          type: string
+        query_parameter_delimiters:
+          type: string
+        path_params_value_regex:
+          type: string
+        start_path_params_position:
+          type: integer
+          format: int64
+    ParameterValue:
+      properties:
+        parameter:
+          type: string
+        value:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    SslCertConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NO_CERT
+          - CERTIFICATE
+        file:
+          type: string
+        password:
+          type: string
+        serial_number:
+          type: string
+        issuer_name_base64:
+          type: string
+    WebServiceConfig:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        content_type:
+          type: string
+        wsdl_regex:
+          type: string
+        auto_discover_wsdl:
+          type: boolean
+        web_services_enhancements:
+          type: boolean
+        password_option:
+          type: string
+          enum:
+          - NONE
+          - HASHED
+          - PLAIN_TEXT
+        swagger_host_name:
+          type: string
+        swagger_parse_fail:
+          type: boolean
+        use_swagger_v1:
+          type: boolean
+        save_swagger_files:
+          type: boolean
+        swagger_warning_level:
+          type: string
+          enum:
+          - STRICT
+          - MAXIMIZE_ASSESSMENT
+          - LOOSE
+        wsdl_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wsdl'
+        swagger_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SwaggerFile'
+        graph_ql_config_object_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQlConfigObject'
+    DefaultDoNotAttackParam:
+      properties:
+        parameter_name:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    MacroConfig:
+      properties:
+        sequential_macro_playback:
+          type: boolean
+        macro_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/MacroFile'
+    BrowserFormLoginConfig:
+      properties:
+        use_alf:
+          type: boolean
+        enable_alf_debug:
+          type: boolean
+        enable_fallback:
+          type: boolean
+        delay_before_alf_milliseconds:
+          type: integer
+          format: int64
+        delay_after_alf_milliseconds:
+          type: integer
+          format: int64
+        initial_navigate_event_duration:
+          type: integer
+          format: int64
+        final_delay_event_duration:
+          type: integer
+          format: int64
+        alf_data_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlfDataFile'
+    WebServiceParameter:
+      properties:
+        value:
+          type: string
+        getxPath:
+          type: string
+    DomElementRestriction:
+      properties:
+        enabled:
+          type: boolean
+        name:
+          type: string
+        dom_element_path_type:
+          type: string
+          enum:
+          - XPATH
+          - CSS_SELECTOR
+        dom_element_path:
+          type: string
+        cardinality_min:
+          type: integer
+          format: int64
+        cardinality_max:
+          type: integer
+          format: int64
+        exclusion:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        recursive:
+          type: boolean
+    CrawlerMonitoringConfig:
+      properties:
+        client_poll_period_seconds:
+          type: integer
+          format: int64
+        client_inactivity_timeout_seconds:
+          type: integer
+          format: int64
+        service_poll_period_seconds:
+          type: integer
+          format: int64
+        service_termination_timeout_milliseconds:
+          type: integer
+          format: int64
+        service_consecutive_error_limit:
+          type: integer
+          format: int64
+        resources_poll_period_seconds:
+          type: integer
+          format: int64
+        service_recovery_attempt_limit:
+          type: integer
+          format: int64
+    OauthConfig:
+      properties:
+        resource_owner_url:
+          type: string
+        resource_server_url:
+          type: string
+        authorization_server_url:
+          type: string
+        client_id:
+          type: string
+        client_scope:
+          type: string
+        client_state:
+          type: string
+        client_secret:
+          type: string
+        redirect_uri:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        username_form:
+          type: string
+        password_form:
+          type: string
+        extension_grant:
+          type: string
+        authorization_grant_type:
+          type: string
+          enum:
+          - 'NULL'
+          - AUTHORIZATION_CODE
+          - IMPLICIT
+          - RESOURCE_OWNER_PASSWORD_CREDENTIALS
+          - CLIENT_CREDENTIALS
+        never_do_basic_auth:
+          type: boolean
+        json_post_bodies:
+          type: boolean
+        token_server_url:
+          type: string
+        oauth_custom_field_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthCustomField'
+    GraphQlConfigObject:
+      properties:
+        enabled:
+          type: boolean
+        introspection_schema_file_path:
+          type: string
+        graph_ql_endpoint_url:
+          type: string
+        verb:
+          type: string
+          enum:
+          - POST
+          - GET
+        max_requests:
+          type: integer
+          format: int64
+        query_type:
+          type: string
+          enum:
+          - QUERY
+          - MUTATION
+          - QUERY_AND_MUTATION
+        host_name:
+          type: string
+        introspection_query_url:
+          type: string
+    ParameterValueConfig:
+      properties:
+        parameter_value_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterValue'
+    Error:
+      properties:
+        status:
+          type: string
+          description: A description of the type of error based on HTTP status code
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          readOnly: true
+        message:
+          type: string
+          description: A description of the error
+          readOnly: true
+        errorCode:
+          type: string
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
+          readOnly: true
+      title: Error
+    SequenceRequest:
+      properties:
+        sequence_request_type:
+          type: string
+          enum:
+          - READ_FROM_CACHE
+          - SEND
+          - ATTACK
+        url:
+          type: string
+    HttpAuthExt:
+      properties:
+        host_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    LockedCookie:
+      properties:
+        value:
+          type: string
+    FrameworksCrawlConfig:
+      properties:
+        enable_frameworks_crawling:
+          type: boolean
+        react_js_detection_regex:
+          type: string
+        framework_config_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/FrameworkConfig'
+    SwaggerFile:
+      properties:
+        value:
+          type: string
+        preferred_content_type:
+          type: string
+        json_file_url:
+          type: string
+        host_name:
+          type: string
+    ManualSequenceConfig:
+      properties:
+        sequence_request_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceRequest'
+    app:
+      description: The App that the Scan is associated with
+      properties:
+        id:
+          type: string
+          format: uuid
+    AttackerConfig:
+      properties:
+        parameters_to_attack_before_limiting_attacks:
+          type: integer
+          format: int64
+        links_to_attack_before_limiting_attacks:
+          type: integer
+          format: int64
+        max_same_name_parameter_attack_points:
+          type: integer
+          format: int64
+        max_same_cookie_parameter_attack_points:
+          type: integer
+          format: int64
+        max_same_name_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        max_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        max_normalized_same_name_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        apply_crawler_constraints:
+          type: boolean
+        max_number_of_scheduled_passive_attacks:
+          type: integer
+          format: int64
+        min_cookie_lifetime_for_attacks:
+          type: integer
+          format: int64
+        max404_findings_per_module:
+          type: integer
+          format: int64
+        exclude_low_confidence_findings:
+          type: boolean
+        out_of_band_host:
+          type: string
+        max_severity_for_traffic_reduction:
+          type: string
+          enum:
+          - SAFE
+          - INFORMATIONAL
+          - LOW
+          - MEDIUM
+          - HIGH
+          - CRITICAL
+        min_response_size_for_traffic_reduction:
+          type: integer
+          format: int64
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+        default_do_not_attack_param_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultDoNotAttackParam'
+        user_do_not_attack_param_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDoNotAttackParam'
+    BrowserDoNotDownloadExtension:
+      properties:
+        value:
+          type: string
+    MultiRegexUrlParserConfig:
+      properties:
+        parser_name:
+          type: string
+        rule_regex:
+          type: string
+        path_regex:
+          type: string
+        path_parameter_groups:
+          type: string
+        query_regex:
+          type: string
+        query_parameter_groups:
+          type: string
+    PageScanConfig:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelScanConfig'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    OAuthCustomField:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    TrafficFile:
+      properties:
+        traffic_file_name:
+          type: string
+        traffic_file_password:
+          type: string
+        attack_as_sequence:
+          type: boolean
+        begin_attack_request:
+          type: integer
+          format: int64
+        end_attack_request:
+          type: integer
+          format: int64
+    HttpHeadersConfig:
+      properties:
+        http_protocol:
+          type: string
+        accept:
+          type: string
+        accept_charset:
+          type: string
+        accept_encoding:
+          type: string
+        accept_language:
+          type: string
+        cookie:
+          type: string
+        user_agent:
+          type: string
+        overwrite_with_default_headers:
+          type: boolean
+        do_not_attack_user_agent:
+          type: boolean
+        custom_headers_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomHeaders'
+        traffic_header_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrafficHeader'
+    SequenceIgnoreExtension:
+      properties:
+        value:
+          type: string
+    EntityModelScanConfig:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan Config
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Scan Config
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the Scan Config
+          maxLength: 2000
+          minLength: 0
+        app:
+          $ref: '#/components/schemas/app'
+        attack_template:
+          $ref: '#/components/schemas/attack_template'
+        incremental:
+          type: boolean
+          description: A flag to enable incremental scanning
+        assignment:
+          $ref: '#/components/schemas/EngineAssignment'
+        errors:
+          type: array
+          description: A list of errors that detail any current validation failures
+          items:
+            type: string
+            description: A list of errors that detail any current validation failures
+            readOnly: true
+          readOnly: true
+          uniqueItems: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - app
+      - attack_template
+      - name
+    SeedUrl:
+      properties:
+        value:
+          type: string
+    AutoSequenceConfig:
+      properties:
+        sequence_ignore_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceIgnoreExtension'
+        sequence_ignore_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceIgnoreContentType'
+    XmlContentType:
+      properties:
+        value:
+          type: string
+    DomRestrictions:
+      properties:
+        enabled:
+          type: boolean
+        name:
+          type: string
+        initial_state:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        dom_element_restriction_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomElementRestriction'
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+    EngineAssignment:
+      description: The engine assignment that the Scan should use
+      properties:
+        type:
+          type: string
+          description: The type of engine assignment
+          enum:
+          - ENGINE_GROUP
+        id:
+          type: string
+          format: uuid
+          description: The ID of the assignment
+        environment:
+          type: string
+          description: The environment of the assignment
+          enum:
+          - CLOUD
+          - ON_PREMISE
+      required:
+      - environment
+      title: EngineAssignment
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    NetworkSettingsConfig:
+      properties:
+        close_connection:
+          type: boolean
+        send_keep_alive_header:
+          type: boolean
+        pre_authenticate_basic_auth:
+          type: boolean
+        max_retries:
+          type: integer
+          format: int64
+        max_response_size:
+          type: integer
+          format: int64
+        max_url_length:
+          type: integer
+          format: int64
+        max_javascipt_response_size:
+          type: integer
+          format: int64
+        max_binary_response_size:
+          type: integer
+          format: int64
+        resolve_timeout:
+          type: integer
+          format: int64
+        connect_timeout:
+          type: integer
+          format: int64
+        write_timeout:
+          type: integer
+          format: int64
+        read_timeout:
+          type: integer
+          format: int64
+        assume_disconnected_timeout:
+          type: integer
+          format: int64
+        drip_delay_milli_seconds:
+          type: integer
+          format: int64
+        max_consecutive_failures:
+          type: integer
+          format: int64
+        max_unsuccessful_responses:
+          type: integer
+          format: int64
+        max_wait_time:
+          type: integer
+          format: int64
+        network_preferred_auth_scheme:
+          type: string
+          enum:
+          - NPAS_DEFAULT
+          - NPAS_NEGOTIATE
+          - NPAS_NTLM
+          - NPAS_PASSPORT
+          - NPAS_BASIC
+        use_secure_protocols:
+          type: boolean
+        secure_protocols:
+          type: array
+          items:
+            type: string
+            enum:
+            - SSL_2
+            - SSL_3
+            - TLS_1
+            - TLS_11
+            - TLS_12
+            - TLS_13
+          uniqueItems: true
+    ProxyConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NO_PROXY
+          - INTERNET_EXPLORER_SETTINGS
+          - MANUAL_CONFIG
+          - PAC_FILE
+        http_host:
+          type: string
+        http_port:
+          type: integer
+          format: int64
+        https_host:
+          type: string
+        https_port:
+          type: integer
+          format: int64
+        pac_file:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        proxy_exclusions_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProxyExclusions'
+    MacroFile:
+      properties:
+        macro_file_name:
+          type: string
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        replay_speed:
+          type: number
+          format: double
+        extra_delay_after_macro:
+          type: integer
+          format: int64
+        attack_as_sequence:
+          type: boolean
+        sequence_config:
+          $ref: '#/components/schemas/SequenceConfig'
+    SequenceIgnoreContentType:
+      properties:
+        value:
+          type: string
+    HtmlContentType:
+      properties:
+        value:
+          type: string
+    TextContentType:
+      properties:
+        value:
+          type: string
+    OneTimeTokenConfig:
+      properties:
+        auto_detect_csrf:
+          type: boolean
+        max_token_lifetime:
+          type: string
+          format: date-time
+        expiration_regex:
+          type: string
+        token_name_regex:
+          type: string
+        token_value_regex:
+          type: string
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    attack_template:
+      description: The attack template that the Scan Config should use
+      properties:
+        id:
+          type: string
+          format: uuid
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    ProxyExclusions:
+      properties:
+        value:
+          type: string
+    PerformanceConfig:
+      properties:
+        max_concurrent_requests:
+          type: integer
+          format: int64
+        max_bandwidth_kb:
+          type: integer
+          format: int64
+        max_browser_reuse_count:
+          type: integer
+          format: int64
+        memory_ceiling64_bit:
+          type: integer
+          format: int64
+        anti_dos:
+          type: boolean
+        dump_user_process_memory_usage:
+          type: boolean
+        max_browser_process_lifetime:
+          type: integer
+          format: int64
+    AuthConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NONE
+          - FORM
+          - MACRO
+          - SESSION_TAKEOVER
+          - SELENIUM
+          - TRAFFIC
+          - REMOTE_BOOTSTRAP
+        http_auth:
+          type: boolean
+        relogin_after_session_loss:
+          type: boolean
+        logout_detection:
+          type: boolean
+        assume_successful_login:
+          type: boolean
+        verify_not_loggedin:
+          type: boolean
+        postpone_login_action:
+          type: boolean
+        warning_only_on_login_fail:
+          type: boolean
+        create_non_authenticated_session:
+          type: boolean
+        treat_failed_relogin_as_error:
+          type: boolean
+        restart_proxy_before_relogin:
+          type: boolean
+        template_login_macro:
+          type: boolean
+        denylist_single_password_forms:
+          type: boolean
+        denylist_multi_password_forms:
+          type: boolean
+        reset_cookies:
+          type: boolean
+        do_not_update_cookies_from_requests:
+          type: boolean
+        username_form:
+          type: string
+        password_form:
+          type: string
+        username_http:
+          type: string
+        password_http:
+          type: string
+        auto_logon_security:
+          type: string
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+        login_link_regex:
+          type: string
+        logged_in_regex:
+          type: string
+        logged_in_header_regex:
+          type: string
+        session_loss_regex:
+          type: string
+        session_loss_header_regex:
+          type: string
+        logout_link_regex:
+          type: string
+        logout_post_body_regex:
+          type: string
+        canary_page:
+          type: string
+        session_loss_on_canary_page_regex:
+          type: string
+        session_loss_on_canary_page_header_regex:
+          type: string
+        session_cookie_regex:
+          type: string
+        session_cookie_lifespan:
+          type: number
+          format: double
+        url_session_token_regex:
+          type: string
+        post_session_token_regex:
+          type: string
+        response_body_token_regex:
+          type: string
+        second_response_body_token_regex:
+          type: string
+        http_header_with_token_replacement:
+          type: string
+        second_http_header_with_token_replacement:
+          type: string
+        logout_detection_frequency:
+          type: integer
+          format: int64
+        discovery_max_links:
+          type: integer
+          format: int64
+        login_max_links:
+          type: integer
+          format: int64
+        discovery_depth:
+          type: integer
+          format: int64
+        login_depth:
+          type: integer
+          format: int64
+        max_macro_relogin_attempts:
+          type: integer
+          format: int64
+        discovery_prioritization:
+          type: string
+          enum:
+          - FIRST_IN_FIRST_OUT
+          - SMART
+          - DIRECTORY_BREADTH_FIRST
+          - FOUND_BREADTH_FIRST
+          - FOUND_DEPTH_FIRST
+          - JUICY
+          - LOGIN_FORM_DISCOVERY
+          - LOGIN
+        login_prioritization:
+          type: string
+          enum:
+          - FIRST_IN_FIRST_OUT
+          - SMART
+          - DIRECTORY_BREADTH_FIRST
+          - FOUND_BREADTH_FIRST
+          - FOUND_DEPTH_FIRST
+          - JUICY
+          - LOGIN_FORM_DISCOVERY
+          - LOGIN
+        remote_bootstrap_timeout_minutes:
+          type: integer
+          format: int64
+        seed_link:
+          type: string
+        discover_login_form:
+          type: boolean
+        use_browser_form_login:
+          type: boolean
+        use_single_browser:
+          type: boolean
+        ping_frequency:
+          type: integer
+          format: int64
+        ping_url:
+          type: string
+        redact_log_files:
+          type: boolean
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+        http_auth_ext_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpAuthExt'
+        token_replacement_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenReplacement'
+        hmac_config:
+          $ref: '#/components/schemas/HmacConfig'
+        oauth_config:
+          $ref: '#/components/schemas/OauthConfig'
+        msal_config:
+          $ref: '#/components/schemas/MsalConfig'
+        macro_file:
+          $ref: '#/components/schemas/MacroFile'
+        web_service_auth_config:
+          $ref: '#/components/schemas/WebServiceAuthConfig'
+        selenium_file:
+          $ref: '#/components/schemas/SeleniumFile'
+        traffic_file:
+          $ref: '#/components/schemas/TrafficFile'
+        browser_form_login_config:
+          $ref: '#/components/schemas/BrowserFormLoginConfig'
+        one_time_password_config:
+          $ref: '#/components/schemas/OneTimePasswordConfig'
+        oauth:
+          type: boolean
+    TrafficHeader:
+      properties:
+        value:
+          type: string
+    HttpParameter:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX

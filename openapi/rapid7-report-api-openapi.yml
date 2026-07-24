@@ -1,0 +1,1580 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Report API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Report
+  description: Resources and operations for managing and generating reports. Reports are broadly categorized into `document`, `export`, and `file` types. `document` reports use section-based report templates to control the output and can be generated in several formats. `export` reports are designed to output their contents into a specific file format. `file` reports are templatized reports that output based on the format of a template file. Reports can be configured to generate on a schedule and be distributed via email to specific recipients.
+paths:
+  /api/3/report_formats:
+    get:
+      tags:
+      - Report
+      summary: Report Formats
+      description: Returns all available report formats. A report format indicates an output file format specification (e.g. PDF, XML, etc). Some printable formats may be templated, and others may not. The supported templates for each formated are provided.
+      operationId: getReportFormats
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«AvailableReportFormat»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/report_templates:
+    get:
+      tags:
+      - Report
+      summary: Report Templates
+      description: Returns all available report templates.
+      operationId: getReportTemplates
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«ReportTemplate»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/report_templates/{id}:
+    get:
+      tags:
+      - Report
+      summary: Report Template
+      description: 'Returns the details of a report template. Report templates govern the contents generated within a report. '
+      operationId: getReportTemplate
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report template;
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReportTemplate'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/reports:
+    get:
+      tags:
+      - Report
+      summary: Reports
+      description: Returns all defined report configurations.
+      operationId: getReports
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«Report»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    post:
+      tags:
+      - Report
+      summary: Reports
+      description: Configures a new report for generation. Report types are controlled through either or both a format and template. Non-templatized (`export`) report formats do not require a template and have their output format preset. Templatized (`document` and `file`) report formats support a report template that governs the content of the output and the output format can be chosen from a list of supported formats.
+      operationId: createReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: report
+        description: The specification of a report configuration.
+        required: false
+        schema:
+          $ref: '#/definitions/Report'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreatedReference«int,Link»'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+      x-code-samples:
+      - lang: Nexpose™ Simple XML
+        source: "{\n   \"format\": \"nexpose-simple-xml\",\n   \"name\": \"Scan Report for February scan\",\n   \"filters\": {\n      \"statuses\": [ \"vulnerable\", \"vulnerable-version\" ]\n   },\n   \"scope\": {\n      \"scan\": 2\n   }\n}"
+      - lang: Qualys XML
+        source: "{\n   \"format\": \"qualys-xml\",\n   \"name\": \"Qualys Export\",\n   \"filters\": {\n      \"severity\": \"critical-and-severe\",\n      \"categories\": {\n         \"included\": [ \"Adobe\" ]\n      }\n   },\n   \"scope\": {\n      \"sites\": [ 3 ]\n   }\n}"
+      - lang: OVAL XML
+        source: "{\n   \"format\": \"oval-xml\",\n   \"name\": \"OVAL XML\",\n   \"policy\": 32, \n   \"scope\": {\n      \"sites\": [ 17 ]\n   }\n}"
+      - lang: XCCDF CSV
+        source: "{\n   \"format\": \"xccdf-csv\",\n   \"name\": \"XCDDF CSV Report\",\n   \"policy\": 89,\n   \"scope\": {\n      \"assets\": [ 4, 7, 9, 22 ]\n   },\n   \"filters\": {\n      \"severity\": \"critical\"\n   },\n   \"frequency\": {\n      \"start\": \"2017-11-30\",\n      \"repeat\": {\n         \"every\": \"week\",\n         \"interval\": 2\n      }\n   }\n}"
+      - lang: XCCDF XML
+        source: "{\n   \"format\": \"xccdf-xml\",\n   \"name\": \"XCCDF XML\",\n   \"policy\": 12,\n   \"organization\": \"Acme Organization\",\n   \"scope\": {\n      \"tags\": [ 4 ]\n   },\n   \"filters\": {\n      \"severity\": \"critical\"\n   },\n   \"frequency\": {\n      \"start\": \"2018-11-30\",\n      \"repeat\": {\n         \"every\": \"date-of-month\",\n         \"interval\": 3,\n         \"dateOfMonth\": \"last\"\n      }\n   }\n}"
+  /api/3/reports/{id}:
+    get:
+      tags:
+      - Report
+      summary: Report
+      description: Returns the configuration details of a report.
+      operationId: getReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Report'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - Report
+      summary: Report
+      description: Updates the configuration details of a report.
+      operationId: updateReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: report
+        description: The specification of a report configuration.
+        required: false
+        schema:
+          $ref: '#/definitions/Report'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - Report
+      summary: Report
+      description: Deletes the configuration of a report.
+      operationId: deleteReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/reports/{id}/generate:
+    post:
+      tags:
+      - Report
+      summary: Report Generation
+      description: Generates a configured report and returns the instance identifier of the report.
+      operationId: generateReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferenceWithReportIDLink'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/reports/{id}/history:
+    get:
+      tags:
+      - Report
+      summary: Report Histories
+      description: Returns all historical details for generation of the report over time.
+      operationId: getReportInstances
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«ReportInstance»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/reports/{id}/history/{instance}:
+    get:
+      tags:
+      - Report
+      summary: Report History
+      description: Returns the details for a generation of the report.
+      operationId: getReportInstance
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      - name: instance
+        in: path
+        description: The identifier of the report instance.
+        required: true
+        type: string
+        enum:
+        - latest
+        - integer <<int32>>
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReportInstance'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - Report
+      summary: Report History
+      description: Deletes an instance of a generated report.
+      operationId: deleteReportInstance
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      - name: instance
+        in: path
+        description: The identifier of the report instance.
+        required: true
+        type: string
+        enum:
+        - latest
+        - integer <<int32>>
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/reports/{id}/history/{instance}/output:
+    get:
+      tags:
+      - Report
+      summary: Report Download
+      description: Returns the contents of a generated report. The report content is usually returned in a GZip compressed format.
+      operationId: downloadReport
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/octet-stream
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the report.
+        required: true
+        type: integer
+        format: int32
+      - name: instance
+        in: path
+        description: The identifier of the report instance.
+        required: true
+        type: string
+        enum:
+        - latest
+        - integer <<int32>>
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            format: byte
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+definitions:
+  ReportConfigCategoryFilters:
+    type: object
+    properties:
+      excluded:
+        type: array
+        description: The vulnerability categories to exclude. Defaults to no categories.
+        items:
+          type: string
+      included:
+        type: array
+        description: The vulnerability categories to include. Defaults to all categories.
+        items:
+          type: string
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  ReportConfigFiltersResource:
+    type: object
+    properties:
+      categories:
+        example: ''
+        description: Vulnerability categories to include or exclude. Only `included` or `excluded` may be specified, but not both.
+        $ref: '#/definitions/ReportConfigCategoryFilters'
+      severity:
+        type: string
+        example: ''
+        description: The vulnerability severities to include. Defaults to `all`.
+        enum:
+        - all
+        - critical
+        - critical-and-severe
+      statuses:
+        type: array
+        description: The vulnerability statuses to include. Defaults to [ `vulnerable`, `vulnerable-version`, `potentially-vulnerable` ].
+        items:
+          type: string
+          enum:
+          - vulnerable
+          - vulnerable-version
+          - potentially-vulnerable
+          - vulnerable-and-validated
+    description: ''
+  ReportEmail:
+    type: object
+    properties:
+      access:
+        type: string
+        example: zip
+        description: The format to distribute the report in when sending to users who have explicit access to the report.
+        enum:
+        - file
+        - zip
+        - url
+        - none
+      additional:
+        type: string
+        example: file
+        description: The format to distribute the report to additional recipients.
+        enum:
+        - file
+        - zip
+        - none
+      additionalRecipients:
+        type: array
+        description: The email address of additional recipients to distribute the report to.
+        items:
+          type: string
+      assetAccess:
+        type: boolean
+        example: true
+        description: Whether to distribute the report to all users to have access to assets in the report.
+      owner:
+        type: string
+        example: file
+        description: The format to distribute the report to the owner.
+        enum:
+        - file
+        - url
+        - zip
+        - none
+      smtp:
+        example: ''
+        description: SMTP delivery settings.
+        $ref: '#/definitions/ReportEmailSmtp'
+    description: ''
+  ReportTemplate:
+    type: object
+    properties:
+      builtin:
+        type: boolean
+        example: true
+        description: Whether the report template is builtin.
+      description:
+        type: string
+        example: Provides comprehensive details about discovered assets, vulnerabilities, and users.
+        description: The description of the report template.
+      id:
+        type: string
+        example: audit-report
+        description: The identifier of the report template;
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: Audit Report
+        description: The name of the report template.
+      sections:
+        type: array
+        description: The sections that comprise the `document` report template.
+        items:
+          type: string
+      type:
+        type: string
+        example: document
+        description: The type of the report template. `document` is a templatized, typically printable, report that has various sections of content. `export` is data-oriented output, typically CSV. `file` is a printable report template using a report template file.
+        enum:
+        - document
+        - export
+        - file
+    description: ''
+  ReportStorage:
+    type: object
+    properties:
+      location:
+        type: string
+        example: monthly_reports/site/corporate
+        description: 'The location to storage an additional copy of the report. This is a sub-path post-fixed to `$(install_dir)/nsc/reports/$(user)/`. Variables such as `$(report_name)`, `$(date)`, and `$(time)` may be used to generate the directory structure. '
+      path:
+        type: string
+        example: $(install_dir)/nsc/reports/$(user)/monthly_reports/site/corporate
+        description: The full path to the additional copy storage location.
+        readOnly: true
+    description: ''
+  NotFoundError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '404'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '404'
+    description: ''
+  ReportConfigDatabaseCredentialsResource:
+    type: object
+    properties:
+      password:
+        type: string
+        example: '******'
+        description: Database password. Only used when the format is `"database-export"`.
+        readOnly: true
+      username:
+        type: string
+        example: admin
+        description: Database user name. Only used when the format is `"database-export"`.
+    description: ''
+  ReportFrequency:
+    type: object
+    properties:
+      nextRuntimes:
+        type: array
+        description: The next scheduled run-times for generation of the report when type is `schedule`.
+        readOnly: true
+        items:
+          type: string
+      repeat:
+        example: ''
+        description: How often the report generates when type is `schedule`.
+        $ref: '#/definitions/ReportRepeat'
+      start:
+        type: string
+        example: '2018-03-01T04:31:56Z'
+        description: When the report starts generating when type is `schedule`.
+      type:
+        type: string
+        example: schedule
+        description: The frequency to generate the report. `schedule` generates the report every scheduled time interval, and requires the `repeat` and `start` properties to be specified. `scan` generates the report after any scan of any element in the scope of the report. `none` does not generate the report automatically. Defaults to `none`.
+        enum:
+        - schedule
+        - scan
+        - none
+    description: ''
+  PageOf«Report»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/Report'
+    description: ''
+  InternalServerError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '500'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '500'
+    description: ''
+  Resources«ReportInstance»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/ReportInstance'
+    description: ''
+  ReportRepeat:
+    type: object
+    required:
+    - every
+    - interval
+    properties:
+      dayOfWeek:
+        type: string
+        example: ''
+        description: The day of the week the scheduled task should repeat. This property only applies to schedules with a `every` value of `"day-of-month"`.
+      every:
+        type: string
+        example: date-of-month
+        description: "The frequency schedule repeats. Each value represents a different unit of time and is used in conjunction with the property `interval`. For example, a schedule can repeat hourly, daily, monthly, etc. The following table describes each supported value: \n| Value | Description | \n| ---------- | ---------------- | \n| hour | Specifies the schedule repeats in hourly increments. | \n| day | Specifies the schedule repeats in daily increments. | \n| week | Specifies the schedule repeats in weekly increments. | \n| date-of-month | Specifies the schedule repeats nth day of the `interval` month. Requires the property `dateOfMonth` to be specified. For example, if `dateOfMonth` is `17` and the `interval` is `2`, then the schedule will repeat every 2 months on the 17th day of the month. | \n| day-of-month | Specifies the schedule repeats on a monthly interval but instead of a specific date being specified, the day of the week and week of the month are specified. Requires the properties `dayOfWeek` and `weekOfMonth` to be specified. For example, if `dayOfWeek` is `\"friday\"`, `weekOfMonth` is `3`, and the `interval` is `4`, then the schedule will repeat every 4 months on the 3rd Friday of the month. | \n"
+      interval:
+        type: integer
+        format: int32
+        example: 1
+        description: The interval time the schedule should repeat. The is depends on the value set in `every`. For example, if the value in property `every` is set to `"day"` and `interval` is set to `2`, then the schedule will repeat every 2 days.
+        minimum: 1
+      weekOfMonth:
+        type: integer
+        format: int32
+        example: ''
+        description: The week of the month the scheduled task should repeat. For This property only applies to schedules with a `every` value of `"day-of-month"`. Each week of the month is counted in 7-day increments. For example, week 1 consists of days 1-7 of the month while week 2 consists of days 8-14 of the month and so forth.
+        minimum: 1
+        maximum: 6
+    description: ''
+  Links:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  RemediationResource:
+    type: object
+    properties:
+      solutions:
+        type: integer
+        format: int32
+        example: 25
+        description: The number of remediations to display.
+        minimum: 1
+      sort:
+        type: string
+        example: ''
+        description: The attribute to prioritize remediation impact. Only supported for the `prioritized-remediations` and `prioritized-remediations-with-details` templates.
+        enum:
+        - assets
+        - vulnerabilities
+        - malware_kits
+        - exploits
+        - riskscore
+    description: ''
+  CreatedReference«int,Link»:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 1
+        description: The identifier of the resource created.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  ReportSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 24789050
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 23.6 MB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  UnauthorizedError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '401'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '401'
+    description: ''
+  RiskTrendAllAssetsResource:
+    type: object
+    properties:
+      total:
+        type: boolean
+        example: true
+        description: Includes a trend for the total risk of all assets.
+      trend:
+        type: string
+        example: average-risk
+        description: Whether to include a trend for average risk of all assets or the total number of assets.
+        enum:
+        - average-risk
+        - number-of-assets
+        - none
+    description: ''
+  Resources«AvailableReportFormat»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/AvailableReportFormat'
+    description: ''
+  ServiceUnavailableError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '503'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '503'
+    description: ''
+  Report:
+    type: object
+    properties:
+      baseline:
+        type: object
+        example: ''
+        description: If the template is `baseline-comparison` or `executive-overview` the baseline scan to compare against. This can be the `first` scan, the `previous` scan, or a scan as of a specified date. Defaults to `previous`.
+      bureau:
+        type: string
+        example: Bureau
+        description: The name of the bureau for a CyberScope report. Only used when the format is `"cyberscope-xml"`.
+      component:
+        type: string
+        example: Component
+        description: The name of the component for a CyberScope report. Only used when the format is `"cyberscope-xml"`.
+      database:
+        example: ''
+        description: Configuration for database export. Only used when the format is `"database-export"`.
+        $ref: '#/definitions/ReportConfigDatabaseResource'
+      email:
+        example: ''
+        description: Email distribution settings for the report.
+        readOnly: true
+        $ref: '#/definitions/ReportEmail'
+      enclave:
+        type: string
+        example: Enclave
+        description: The name of the enclave for a CyberScope report. Only used when the format is `"cyberscope-xml"`.
+      filters:
+        example: ''
+        description: "Filters applied to the contents of the report. The supported filters for a report vary \nby format and template. \n<div class=\"properties\"> \n<div class=\"property-info\"> \n<span class=\"property-name\">categories</span> <span class=\"param-type complex\">Object</span> \n<div class=\"redoc-markdown-block\">The vulnerability categories to include or exclude in the report. Only included or excluded may be specified, not both.</div>\n</div> \n<div class=\"properties nested\"> \n<div class=\"property-info\"> \n<span class=\"property-name\">included</span> <span class=\"param-type param-array-format integer\">Array[string]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the vulnerability categories to included in the report.</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">excluded</span> <span class=\"param-type param-array-format integer\">Array[string]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the vulnerability categories to exclude in the report.</div> \n</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">severity</span> <span class=\"param-type\">string</span> \n<div class=\"param-enum\"> \n<span class=\"param-enum-value string\">\"all\"</span> \n<span class=\"param-enum-value string\">\"critical\"</span> \n<span class=\"param-enum-value string\">\"critical-and-severe\"</span> \n</div> \n<div class=\"redoc-markdown-block\">The vulnerability severities to include in the report.</div>\n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">statuses</span> <span class=\"param-type param-array-format integer\">Array[string]</span> \n<div class=\"param-enum\"> \n<span class=\"param-enum-value string\">\"vulnerable\"</span> \n<span class=\"param-enum-value string\">\"vulnerable-version\"</span> \n<span class=\"param-enum-value string\">\"potentially-vulnerable\"</span> \n<span class=\"param-enum-value string\">\"vulnerable-and-validated\"</span> \n</div> \n<div class=\"redoc-markdown-block\">The vulnerability statuses to include in the report. If <code>\"vulnerable-and-validated\"</code> is selected \nno other values can be specified.\n</div> \n</div> \n</div>\n\nThe following filter elements may be defined for non-templatized report formats: \n| Format                                | Categories     | Severity   | Statuses   | \n| ------------------------------------- |:--------------:|:----------:|:----------:| \n| `arf-xml`                             |                |            |            | \n| `csv-export`                          | &check;        | &check;    | &check;    | \n| `cyberscope-xml`                      |                |            |            | \n| `database-export`                     |                |            |            | \n| `nexpose-simple-xml`                  | &check;        | &check;    |            | \n| `oval-xml`                            |                |            |            | \n| `qualys-xml`                          | &check;        | &check;    |            | \n| `scap-xml`                            | &check;        | &check;    |            | \n| `sql-query`                           | &check;        | &check;    | &check;    | \n| `xccdf-csv`                           |                |            |            | \n| `xccdf-xml`                           | &check;        | &check;    |            | \n| `xml-export`                          | &check;        | &check;    | &check;    | \n| `xml-export-v2`                       | &check;        | &check;    | &check;    | \n\nThe following filter elements may be defined for templatized report formats: \n| Template                                | Categories     | Severity   | Statuses   | \n| --------------------------------------- |:--------------:|:----------:|:----------:| \n| `audit-report`                          | &check;        | &check;    |            | \n| `baseline-comparison`                   |                |            |            | \n| `basic-vulnerability-check-results`     | &check;        | &check;    | &check;    | \n| `executive-overview`                    |                |            |            | \n| `highest-risk-vulns`                    |                |            |            | \n| `pci-attestation-v12`                   |                |            |            | \n| `pci-executive-summary-v12`             |                |            |            | \n| `pci-vuln-details-v12`                  |                |            |            | \n| `policy-details`                        | &check;        | &check;    | &check;    | \n| `policy-eval`                           |                |            |            | \n| `policy-summary`                        | &check;        | &check;    | &check;    | \n| `prioritized-remediations`              | &check;        | &check;    | &check;    | \n| `prioritized-remediations-with-details` | &check;        | &check;    | &check;    | \n| `r7-discovered-assets`                  | &check;        | &check;    | &check;    | \n| `r7-vulnerability-exceptions`           | &check;        | &check;    | &check;    | \n| `remediation-plan`                      | &check;        | &check;    |            | \n| `report-card`                           | &check;        | &check;    |            | \n| `risk-scorecard`                        | &check;        | &check;    | &check;    | \n| `rule-breakdown-summary`                | &check;        | &check;    | &check;    | \n| `top-policy-remediations`               | &check;        | &check;    | &check;    | \n| `top-policy-remediations-with-details`  | &check;        | &check;    | &check;    | \n| `top-riskiest-assets`                   | &check;        | &check;    | &check;    | \n| `top-vulnerable-assets`                 | &check;        | &check;    | &check;    | \n| `vulnerability-trends`                  | &check;        | &check;    | &check;    | \n"
+        $ref: '#/definitions/ReportConfigFiltersResource'
+      format:
+        type: string
+        example: pdf
+        description: The output format of the report. The format will restrict the available templates and parameters that can be specified.
+      frequency:
+        example: ''
+        description: The recurring frequency with which to generate the report.
+        $ref: '#/definitions/ReportFrequency'
+      id:
+        type: integer
+        format: int32
+        example: 17
+        description: The identifier of the report.
+        readOnly: true
+      language:
+        type: string
+        example: en-US
+        description: The locale (language) in which the report is generated
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: Monthly Corporate Site Summary
+        description: The name of the report.
+      organization:
+        type: string
+        example: Acme, Inc.
+        description: The organization used for a XCCDF XML report. Only used when the format is `"xccdf-xml"`.
+      owner:
+        type: integer
+        format: int32
+        example: 1
+        description: The identifier of the report owner.
+      policies:
+        type: array
+        description: If the template is `rule-breakdown-summary`, `top-policy-remediations`, or `top-policy-remediations-with-details` the identifiers of the policies to report against.
+        items:
+          type: integer
+          format: int64
+      policy:
+        type: integer
+        format: int64
+        example: 789
+        description: The policy to report on. Only used when the format is `"oval-xml"`, `""xccdf-csv"`, or `"xccdf-xml"`.
+      query:
+        type: string
+        example: SELECT * FROM dim_asset ORDER BY ip_address ASC
+        description: SQL query to run against the Reporting Data Model. Only used when the format is `"sql-query"`.
+      range:
+        example: ''
+        description: If the template is `vulnerability-trends`, `r7-vulnerability-exceptions`, or `r7-discovered-assets` the date range to trend over.
+        $ref: '#/definitions/RangeResource'
+      remediation:
+        example: ''
+        description: If the template is `prioritized-remediations`, `prioritized-remediations-with-details`, `top-policy-remediations`, or `top-policy-remediations-with-details` the remediation display settings.
+        $ref: '#/definitions/RemediationResource'
+      riskTrend:
+        example: ''
+        description: Configuration details for risk trending output.
+        $ref: '#/definitions/RiskTrendResource'
+      scope:
+        example: ''
+        description: "The scope of the report. Scope is an object that has the following properties that vary by format and template: \n<div class=\"properties\"> \n<div class=\"property-info\"> \n<span class=\"property-name\">assets</span> <span class=\"param-type param-array-format integer\">Array[integer &lt;int32&gt;]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the assets to report on.</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">sites</span> <span class=\"param-type param-array-format integer\">Array[integer &lt;int32&gt;]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the sites to report on.</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">assetGroups</span> <span class=\"param-type param-array-format integer\">Array[integer &lt;int32&gt;]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the asset to report on.</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">tags</span> <span class=\"param-type param-array-format integer\">Array[integer &lt;int32&gt;]</span> \n<div class=\"redoc-markdown-block\">The identifiers of the tag to report on.</div> \n</div> \n<div class=\"property-info\"> \n<span class=\"property-name\">scan</span> <span class=\"param-type param-array-format integer\">integer &lt;int32&gt;</span> \n<div class=\"redoc-markdown-block\">The identifier of the scan to report on.</div> \n</div> \n</div>\n\nThe following scope elements may be defined for non-templatized report formats: \n| Format                                | Assets     | Sites   | Asset Groups | Tags    | Scan      | \n| ------------------------------------- |:----------:|:-------:|:------------:|:-------:|:---------:| \n| `arf-xml`                             | &check;    | &check; | &check;      | &check; |           | \n| `csv-export`                          | &check;    | &check; | &check;      | &check; | &check;   | \n| `cyberscope-xml`                      | &check;    | &check; | &check;      | &check; | &check;   | \n| `database-export`                     |            | &check; |              |         |           | \n| `nexpose-simple-xml`                  | &check;    | &check; | &check;      | &check; | &check;   | \n| `oval-xml`                            | &check;    | &check; | &check;      | &check; |           | \n| `qualys-xml`                          | &check;    | &check; | &check;      | &check; | &check;   | \n| `scap-xml`                            | &check;    | &check; | &check;      | &check; | &check;   | \n| `sql-query`                           | &check;    | &check; | &check;      | &check; | &check;   | \n| `xccdf-csv`                           | &check;    |         |              |         |           | \n| `xccdf-xml`                           | &check;    | &check; | &check;      | &check; | &check;   | \n| `xml-export`                          | &check;    | &check; | &check;      | &check; | &check;   | \n| `xml-export-v2`                       | &check;    | &check; | &check;      | &check; | &check;   | \n\nThe following scope elements may be defined for templatized report formats: \n| Template                                 | Assets     | Sites   | Asset Groups | Tags    | Scan    | \n| -----------------------------------------|:----------:|:-------:|:------------:|:-------:|:-------:| \n| `audit-report`                           | &check;    | &check; |  &check;     | &check; | &check; | \n| `baseline-comparison`                    | &check;    | &check; |  &check;     | &check; |         | \n| `basic-vulnerability-check-results`      | &check;    | &check; |  &check;     | &check; | &check; | \n| `executive-overview`                     | &check;    | &check; |  &check;     | &check; |         | \n| `highest-risk-vulns`                     | &check;    | &check; |  &check;     | &check; |         | \n| `pci-attestation-v12`                    | &check;    | &check; |  &check;     | &check; | &check; | \n| `pci-executive-summary-v12`              | &check;    | &check; |  &check;     | &check; | &check; | \n| `pci-vuln-details-v12`                   | &check;    | &check; |  &check;     | &check; | &check; | \n| `policy-details`                         | &check;    | &check; |  &check;     | &check; |         | \n| `policy-eval`                            | &check;    | &check; |  &check;     | &check; |         | \n| `policy-summary`                         | &check;    | &check; |  &check;     | &check; | &check; | \n| `prioritized-remediations`               | &check;    | &check; |  &check;     | &check; | &check; | \n| `prioritized-remediations-with-details`  | &check;    | &check; |  &check;     | &check; | &check; | \n| `r7-discovered-assets`                   | &check;    | &check; |  &check;     | &check; | &check; | \n| `r7-vulnerability-exceptions`            | &check;    | &check; |  &check;     | &check; | &check; | \n| `remediation-plan`                       | &check;    | &check; |  &check;     | &check; | &check; | \n| `report-card`                            | &check;    | &check; |  &check;     | &check; | &check; | \n| `risk-scorecard`                         | &check;    | &check; |  &check;     | &check; |         | \n| `rule-breakdown-summary`                 | &check;    | &check; |  &check;     | &check; |         | \n| `top-policy-remediations`                | &check;    | &check; |  &check;     | &check; |         | \n| `top-policy-remediations-with-details`   | &check;    | &check; |  &check;     | &check; |         | \n| `top-riskiest-assets`                    | &check;    | &check; |  &check;     | &check; | &check; | \n| `top-vulnerable-assets`                  | &check;    | &check; |  &check;     | &check; | &check; | \n| `vulnerability-trends`                   | &check;    | &check; |  &check;     | &check; |         | \nIf a report supports specifying a scan as the scope and a scan is specified, no other scope elements may be defined. \nIn all other cases as many different types of supported scope elements can be specified in any combination. All \nreports except the `sql-query` format require at least one element to be specified as the scope.\n"
+        $ref: '#/definitions/ReportConfigScopeResource'
+      storage:
+        example: ''
+        description: The additional storage location and path.
+        $ref: '#/definitions/ReportStorage'
+      template:
+        type: string
+        example: executive-overview
+        description: The template for the report (only required if the format is templatized).
+      timezone:
+        type: string
+        example: America/Los_Angeles
+        description: The timezone the report generates in, such as `"America/Los_Angeles"`.
+      users:
+        type: array
+        example: '7'
+        description: The identifiers of the users granted explicit access to the report.
+        items:
+          type: integer
+          format: int32
+      version:
+        type: string
+        example: 2.3.0
+        description: The version of the report Data Model to report against. Only used when the format is `"sql-query"`.
+    description: ''
+  RangeResource:
+    type: object
+    properties:
+      every:
+        type: string
+        example: day
+        description: If `from` is a custom date the interval amount between reporting periods.
+        enum:
+        - day
+        - month
+        - year
+      from:
+        type: string
+        example: ''
+        description: The start date of the trend, which can either be a duration or a specific date and time.
+        enum:
+        - P1Y
+        - P6M
+        - P3M
+        - P1M
+        - <date>
+      interval:
+        type: integer
+        format: int32
+        example: 7
+        description: 'If `from` is a custom date the interval between reporting periods. '
+      to:
+        type: string
+        example: ''
+        description: The end date of the trend (empty if `from` is a duration).
+    description: ''
+  ReportInstance:
+    type: object
+    properties:
+      generated:
+        type: string
+        example: '2018-06-01T18:56:03Z'
+        description: The date the report finished generation.
+      id:
+        type: integer
+        format: int32
+        example: 5
+        description: The identifier of the report instance.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      size:
+        example: ''
+        description: The size of the report, uncompressed.
+        $ref: '#/definitions/ReportSize'
+      status:
+        type: string
+        example: complete
+        description: The status of the report generation process.
+        enum:
+        - aborted
+        - failed
+        - complete
+        - running
+        - unknown
+      uri:
+        type: string
+        example: https://hostname:3780/reports/...
+        description: The URI of the report accessible through the web console. Refer to the `Download` relation hyperlink for a download URI.
+    description: ''
+  RiskTrendResource:
+    type: object
+    properties:
+      allAssets:
+        example: ''
+        description: Trend settings for a trend across all assets in the scope of the report.
+        $ref: '#/definitions/RiskTrendAllAssetsResource'
+      assetGroupMembership:
+        type: string
+        example: historical
+        description: Whether all asset groups in the history of deployment or those as of the report generation time are to be included.
+        enum:
+        - historical
+        - generation
+      assetGroups:
+        type: string
+        example: total
+        description: Whether to include a trend for the 5 highest-risk asset groups in the scope of the report (either the average or total risk). Only allowed if asset groups are specified in the report scope.
+        enum:
+        - average
+        - total
+      assets:
+        type: boolean
+        example: true
+        description: Whether to include a trend for the 5 highest-risk assets in the scope of the report.
+      from:
+        type: string
+        example: P3M
+        description: The start date of the risk trend, which can either be a duration or a specific date and time.
+        enum:
+        - P1Y
+        - P6M
+        - P3M
+        - P1M
+        - <date>
+      sites:
+        type: string
+        example: average
+        description: Whether to include a trend for the 5 highest-risk sites in the scope of the report (either the average or total risk). Only allowed if sites are specified in the report scope.
+        enum:
+        - average
+        - total
+      tagMembership:
+        type: string
+        example: historical
+        description: Whether all assets tagged in the history of deployment or those tagged as of the report generation time are to be included.
+        enum:
+        - historical
+        - generation
+      tags:
+        type: string
+        example: average
+        description: Whether to include a trend for the 5 highest-risk tags for assets in the scope of the report (either the average or total risk). Only allowed if tags are specified in the report scope.
+        enum:
+        - average
+        - total
+      to:
+        type: string
+        example: ''
+        description: The end date of the risk trend (empty if `from` is a duration).
+    description: ''
+  ReferenceWithReportIDLink:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 1
+        description: The identifier of the report instance.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  BadRequestError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '400'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '400'
+    description: ''
+  AvailableReportFormat:
+    type: object
+    properties:
+      format:
+        type: string
+        example: pdf
+        description: The output file-format of a report.
+        enum:
+        - arf-xml
+        - csv-export
+        - cyberscope-xml
+        - database-export
+        - pdf
+        - html
+        - nexpose-simple-xml
+        - oval-xml
+        - qualys-xml
+        - rtf
+        - scap-xml
+        - sql-query
+        - text
+        - xccdf-xml
+        - xccdf-csv
+        - xml
+        - xml-export
+        - xml-export-v2
+      templates:
+        type: array
+        description: The report template identifiers that can be used within a report format.
+        items:
+          type: string
+    description: ''
+  ReportConfigScopeResource:
+    type: object
+    properties:
+      assetGroups:
+        type: array
+        description: Identifiers of the asset groups in the scope of the report.
+        items:
+          type: integer
+          format: int32
+      assets:
+        type: array
+        description: Identifiers of the assets in the scope of the report.
+        items:
+          type: integer
+          format: int64
+      scan:
+        type: integer
+        format: int64
+        example: 68
+        description: Identifiers of the scans in the scope of the report.
+      sites:
+        type: array
+        description: Identifiers of the sites in the scope of the report.
+        items:
+          type: integer
+          format: int32
+      tags:
+        type: array
+        description: Identifiers of the tags in the scope of the report.
+        items:
+          type: integer
+          format: int32
+    description: ''
+  Resources«ReportTemplate»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/ReportTemplate'
+    description: ''
+  PageInfo:
+    type: object
+    properties:
+      number:
+        type: integer
+        format: int64
+        example: 6
+        description: The index (zero-based) of the current page returned.
+      size:
+        type: integer
+        format: int64
+        example: 10
+        description: The maximum size of the page returned.
+      totalPages:
+        type: integer
+        format: int64
+        example: 13
+        description: The total number of pages available.
+      totalResources:
+        type: integer
+        format: int64
+        example: 123
+        description: The total number of resources available across all pages.
+    description: ''
+  ReportEmailSmtp:
+    type: object
+    properties:
+      global:
+        type: boolean
+        example: true
+        description: Whether to use global SMTP settings. If enabled, `sender` and `relay` may not be specified.
+      relay:
+        type: string
+        example: mail.acme.com
+        description: SMTP relay host or IP address.
+      sender:
+        type: string
+        example: john_smith@acme.com
+        description: SMTP sender address.
+    description: ''
+  Link:
+    type: object
+    properties:
+      href:
+        type: string
+        example: https://hostname:3780/api/3/...
+        description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+      rel:
+        type: string
+        example: self
+        description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+    description: ''
+  ReportConfigDatabaseResource:
+    type: object
+    properties:
+      credentials:
+        example: ''
+        description: Credential information for the target database. Only used when the format is `"database-export"`.
+        readOnly: true
+        $ref: '#/definitions/ReportConfigDatabaseCredentialsResource'
+      host:
+        type: string
+        example: database.acme.com
+        description: The database server host to export to.
+      name:
+        type: string
+        example: database
+        description: The name of the database to export to.
+      port:
+        type: integer
+        format: int32
+        example: 3306
+        description: The database server port to export to.
+      vendor:
+        type: string
+        example: mysql
+        description: The type of the database server.
+        enum:
+        - oracle
+        - mssql
+        - mysql
+    description: ''

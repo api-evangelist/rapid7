@@ -1,0 +1,1245 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Administration API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Administration
+  description: Provides access administrative operations and procedures.
+paths:
+  /api/3/administration/commands:
+    post:
+      tags:
+      - Administration
+      summary: Console Commands
+      description: Executes a console command against the Security Console. <span class="authorization">Global Administrator</span>
+      operationId: executeCommand
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: command
+        description: The console command to execute.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ConsoleCommandOutput'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+      x-code-samples:
+      - lang: Show Host Info
+        source: show host info
+      - lang: Help
+        source: help
+  /api/3/administration/info:
+    get:
+      tags:
+      - Administration
+      summary: Information
+      description: Returns system details, including host and version information.
+      operationId: getInfo
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Info'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/administration/license:
+    get:
+      tags:
+      - Administration
+      summary: License
+      description: Returns the enabled features and limits of the current license. <span class="authorization">Global Administrator</span>
+      operationId: getLicense
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/License'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    post:
+      tags:
+      - Administration
+      summary: License
+      description: Licenses the product with an activation key or a provided license file. If both are provided, the license file is preferred. <span class="authorization">Global Administrator</span>
+      operationId: activateLicense
+      schemes: []
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: license
+        in: formData
+        description: The contents of a license (.lic) file.
+        required: false
+        type: file
+      - name: key
+        in: query
+        description: A license activation key.
+        required: false
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/administration/properties:
+    get:
+      tags:
+      - Administration
+      summary: Properties
+      description: Returns system details, including host and version information.
+      operationId: getProperties
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/EnvironmentProperties'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/administration/settings:
+    get:
+      tags:
+      - Administration
+      summary: Settings
+      description: Returns the current administration settings. <span class="authorization">Global Administrator</span>
+      operationId: getSettings
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Settings'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+definitions:
+  UpdateId:
+    type: object
+    properties:
+      productId:
+        type: string
+        example: '281474976711146'
+        description: Product update identifier.
+      versionId:
+        type: string
+        example: '490'
+        description: Version update identifier.
+    description: ''
+  DatabaseSettings:
+    type: object
+    properties:
+      connection:
+        example: ''
+        description: Details connection settings for the database.
+        $ref: '#/definitions/DatabaseConnectionSettings'
+      host:
+        type: string
+        example: 127.0.0.1
+        description: The database host.
+      maintenanceThreadPoolSize:
+        type: integer
+        format: int32
+        example: 20
+        description: The maximum number of parallel tasks when executing maintenance tasks.
+      port:
+        type: integer
+        format: int32
+        example: 5432
+        description: The database port.
+      url:
+        type: string
+        example: //127.0.0.1:5432/nexpose
+        description: The database connection URL.
+      user:
+        type: string
+        example: nxpgsql
+        description: The database user.
+      vendor:
+        type: string
+        example: postgresql
+        description: The database vendor.
+    description: ''
+  InstallationTotalSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 12125933077
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 11.3 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  LicensePolicyScanningBenchmarks:
+    type: object
+    properties:
+      cis:
+        type: boolean
+        example: true
+        description: Whether policy scanning for CIS benchmarks is allowed.
+      custom:
+        type: boolean
+        example: true
+        description: Whether custom benchmarks can be used during scanning.
+      disa:
+        type: boolean
+        example: true
+        description: Whether policy scanning for DISA benchmarks is allowed.
+      fdcc:
+        type: boolean
+        example: true
+        description: Whether policy scanning for FDCC benchmarks is allowed.
+      usgcb:
+        type: boolean
+        example: true
+        description: Whether policy scanning for USGCB benchmarks is allowed.
+    description: ''
+  AuthenticationSettings:
+    type: object
+    properties:
+      2fa:
+        type: boolean
+        example: false
+        description: Whether two-factor authentication is enabled.
+      loginLockThreshold:
+        type: integer
+        format: int32
+        example: 'true'
+        description: The maximum number of failed login attempts for an account becomes locked.
+    description: ''
+  UpdateInfo:
+    type: object
+    properties:
+      content:
+        type: string
+        example: '3192129162'
+        description: The most recent content update.
+      contentPartial:
+        type: string
+        example: '723680177'
+        description: The most recent, partially-applied (in-memory), content update.
+      id:
+        example: ''
+        description: Details of update identifiers.
+        $ref: '#/definitions/UpdateId'
+      product:
+        type: string
+        example: '2200922472'
+        description: The most recent product update.
+    description: ''
+  Info:
+    type: object
+    properties:
+      cpu:
+        example: ''
+        description: Details regarding the host CPU.
+        $ref: '#/definitions/CPUInfo'
+      disk:
+        example: ''
+        description: Details regarding host disk usage.
+        $ref: '#/definitions/DiskInfo'
+      distinguishedName:
+        type: string
+        example: CN=Rapid7 Security Console/ O=Rapid7
+        description: The distinguished name of the console.
+      fqdn:
+        type: string
+        example: server.acme.com
+        description: The fully-qualified domain name of the local host the service is running on.
+      host:
+        type: string
+        example: SERVER
+        description: The name of the local host the service is running on.
+      ip:
+        type: string
+        example: 192.168.1.99
+        description: The IP address of the local host the service is running on.
+      jvm:
+        example: ''
+        description: Details regarding the Java Virtual Machine.
+        $ref: '#/definitions/JVMInfo'
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      memory:
+        example: ''
+        description: Details regarding host memory usage.
+        $ref: '#/definitions/MemoryInfo'
+      operatingSystem:
+        type: string
+        example: Ubuntu Linux 16.04
+        description: The operating system of the host the service is running on.
+      serial:
+        type: string
+        example: 729F31B1C92F3C91DFA8A649F4D5C883C269BD45
+        description: The serial number of the console.
+      superuser:
+        type: boolean
+        example: true
+        description: Whether the service is running a super-user.
+      user:
+        type: string
+        example: root
+        description: The user running the service.
+      version:
+        example: ''
+        description: Details regarding the version of the installation.
+        $ref: '#/definitions/VersionInfo'
+    description: ''
+  NotFoundError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '404'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '404'
+    description: ''
+  VersionInfo:
+    type: object
+    properties:
+      build:
+        type: string
+        example: 2017-12-10-14-11
+        description: The build number.
+      changeset:
+        type: string
+        example: 7061fb4e7c355160df79a77d8983bed2af01f2bf
+        description: The changeset of the source build.
+      platform:
+        type: string
+        example: Linux64
+        description: The platform of the build.
+      semantic:
+        type: string
+        example: 6.4.65
+        description: The semantic version number of the installation.
+      update:
+        example: ''
+        description: Version update details.
+        $ref: '#/definitions/UpdateInfo'
+    description: ''
+  EnvironmentProperties:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      properties:
+        type: object
+        example: ''
+        description: Key-value pairs for system and environment properties that are currently defined.
+    description: ''
+  RiskModifierSettings:
+    type: object
+    properties:
+      high:
+        type: number
+        format: double
+        example: 1.5
+        description: High critical adjustment modifier.
+      low:
+        type: number
+        format: double
+        example: 0.75
+        description: Low critical adjustment modifier.
+      medium:
+        type: number
+        format: double
+        example: 1.0
+        description: Medium critical adjustment modifier.
+      veryHigh:
+        type: number
+        format: double
+        example: 2.0
+        description: Very high critical adjustment modifier.
+      veryLow:
+        type: number
+        format: double
+        example: 0.5
+        description: Very low critical adjustment modifier.
+    description: ''
+  InternalServerError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '500'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '500'
+    description: ''
+  Features:
+    type: object
+    properties:
+      adaptiveSecurity:
+        type: boolean
+        example: false
+        description: Whether Adaptive Security features are available.
+      agents:
+        type: boolean
+        example: true
+        description: Whether the use of agents is allowed.
+      dynamicDiscovery:
+        type: boolean
+        example: true
+        description: Whether dynamic discovery sources may be used.
+      earlyAccess:
+        type: boolean
+        example: false
+        description: Whether early-access features are available prior to general availability.
+      enginePool:
+        type: boolean
+        example: true
+        description: Whether scan engine pools may be used.
+      insightPlatform:
+        type: boolean
+        example: true
+        description: Whether the usage of the Insight platform is allowed.
+      mobile:
+        type: boolean
+        example: true
+        description: Whether mobile features are allowed.
+      multitenancy:
+        type: boolean
+        example: false
+        description: Whether multitenancy is allowed.
+      policyEditor:
+        type: boolean
+        example: true
+        description: Whether the editing of policies is allowed.
+      policyManager:
+        type: boolean
+        example: true
+        description: Whether the policy manager is allowed.
+      remediationAnalytics:
+        type: boolean
+        example: true
+        description: Whether Remediation Analytics features are available.
+      reporting:
+        example: ''
+        description: The reporting features available in the license.
+        $ref: '#/definitions/LicenseReporting'
+      scanning:
+        example: ''
+        description: The scanning features available in the license.
+        $ref: '#/definitions/LicenseScanning'
+    description: ''
+  Settings:
+    type: object
+    properties:
+      assetLinking:
+        type: boolean
+        example: true
+        description: Whether asset linking is enabled.
+      authentication:
+        example: ''
+        description: Details the authentication settings.
+        $ref: '#/definitions/AuthenticationSettings'
+      database:
+        example: ''
+        description: Details the database settings.
+        $ref: '#/definitions/DatabaseSettings'
+      directory:
+        type: string
+        example: /opt/rapid7/nexpose
+        description: The root directory of the console.
+      insightPlatform:
+        type: boolean
+        example: true
+        description: Whether the usage of the Insight platform is enabled.
+      insightPlatformRegion:
+        type: string
+        example: us-east-1
+        description: The region used for the Insight platform, if enabled.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      risk:
+        example: ''
+        description: Details risk configuration and settings.
+        $ref: '#/definitions/RiskSettings'
+      scan:
+        example: ''
+        description: Details the global settings for scanning.
+        $ref: '#/definitions/ScanSettings'
+      serialNumber:
+        type: string
+        example: 729F31B1C92F3C91DFA8A649F4D5C883C269BD45
+        description: The console serial number.
+      smtp:
+        example: ''
+        description: Global SMTP distribution settings.
+        $ref: '#/definitions/SmtpSettings'
+      updates:
+        example: ''
+        description: Details the update settings.
+        $ref: '#/definitions/UpdateSettings'
+      uuid:
+        type: string
+        example: 7231036a-e052-11e7-80c1-9a214cf093ae
+        description: The universally unique identifier (UUID) of the console.
+      web:
+        example: ''
+        description: Details the web server settings.
+        $ref: '#/definitions/WebSettings'
+    description: ''
+  LicenseLimits:
+    type: object
+    properties:
+      assets:
+        type: integer
+        format: int32
+        example: 100000
+        description: The maximum number of assets that can be assessed.
+      assetsWithHostedEngine:
+        type: integer
+        format: int32
+        example: 1000
+        description: The maximum number of assets that may be scanned with the hosted scan engine.
+      scanEngines:
+        type: integer
+        format: int32
+        example: 100
+        description: The maximum number of scan engines that may be used.
+      users:
+        type: integer
+        format: int32
+        example: 1000
+        description: The maximum number of users allowed.
+    description: ''
+  RiskSettings:
+    type: object
+    properties:
+      adjustWithCriticality:
+        type: boolean
+        example: true
+        description: Whether risk is adjusted using criticality tags.
+      criticalityModifiers:
+        example: ''
+        description: If `adjustWithCriticality` is enabled, details the risk modifiers by criticality tag.
+        $ref: '#/definitions/RiskModifierSettings'
+      model:
+        type: string
+        example: real_risk
+        description: The risk model used to compute risk.
+    description: ''
+  JVMInfo:
+    type: object
+    properties:
+      name:
+        type: string
+        example: OpenJDK 64-Bit Server VM
+        description: The name of the Java Virtual Machine.
+      startTime:
+        type: string
+        example: '2018-02-13T20:35:35.076Z'
+        description: The date and time the Java Virtual Machine last started.
+      uptime:
+        type: string
+        example: PT8H21M7.978S
+        description: 'Total up-time of the Java Virtual Machine, in ISO 8601 format. For example: `"PT1H4M24.214S"`.'
+      vendor:
+        type: string
+        example: Azul Systems, Inc.
+        description: The vendor of the Java Virtual Machine.
+      version:
+        type: string
+        example: 25.102-b14
+        description: The version of the Java Virtual Machine.
+    description: ''
+  Links:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  ScanSettings:
+    type: object
+    properties:
+      connectionTimeout:
+        type: string
+        example: PT15S
+        description: 'The connection timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15S"`.'
+      incremental:
+        type: boolean
+        example: true
+        description: Whether incremental scan results is enabled.
+      maximumThreads:
+        type: integer
+        format: int32
+        example: -1
+        description: The maximum number of scan threads to use in any scan. -1 means this is set by the scan template.
+      readTimeout:
+        type: string
+        example: PT15M
+        description: 'The read timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15M"`.'
+      statusIdleTimeout:
+        type: string
+        example: PT3M
+        description: 'The idle timeout when checking the status of running scans, in ISO 8601 format. For example: `"PT3M"`.'
+      statusThreads:
+        type: integer
+        format: int32
+        example: 3
+        description: The number of threads to use when checking the status of running scans.
+    description: ''
+  ScanSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 1370433223
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 1.3 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  DatabaseConnectionSettings:
+    type: object
+    properties:
+      maximumAdministrationPoolSize:
+        type: integer
+        format: int32
+        example: -1
+        description: The maximum number of administrative connections in the connection pool. -1 means unlimited.
+      maximumPoolSize:
+        type: integer
+        format: int32
+        example: -1
+        description: The maximum number of connections in the connection pool. -1 means unlimited.
+      maximumPreparedStatementPoolSize:
+        type: integer
+        format: int32
+        example: 256
+        description: The maximum number of prepared statements in the prepared statement pool. -1 means unlimited.
+    description: ''
+  DiskTotal:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 499004735488
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 464.7 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  ReportSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 24789050
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 23.6 MB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  UnauthorizedError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '401'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '401'
+    description: ''
+  DiskFree:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 166532222976
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 155.1 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  ServiceUnavailableError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '503'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '503'
+    description: ''
+  WebSettings:
+    type: object
+    properties:
+      maxThreads:
+        type: integer
+        format: int32
+        example: 100
+        description: The maximum number of request handling threads.
+      minThreads:
+        type: integer
+        format: int32
+        example: 10
+        description: The minimum number of request handling threads.
+      port:
+        type: integer
+        format: int32
+        example: 3780
+        description: The port the web server is accepting requests.
+      sessionTimeout:
+        type: string
+        example: PT10M
+        description: 'Session timeout duration, in ISO 8601 format. For example: `"PT10M"`.'
+    description: ''
+  License:
+    type: object
+    properties:
+      edition:
+        type: string
+        example: InsightVM
+        description: The edition of the product.
+      evaluation:
+        type: boolean
+        example: false
+        description: Whether the license is a time-restricted evaluation.
+      expires:
+        type: string
+        example: '2018-12-31T23:59:59.999Z'
+        description: The date and time the license expires.
+      features:
+        example: ''
+        description: The features available in the license.
+        $ref: '#/definitions/Features'
+      limits:
+        example: ''
+        description: The limits of the license.
+        $ref: '#/definitions/LicenseLimits'
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      perpetual:
+        type: boolean
+        example: false
+        description: Whether the license is perpetual.
+      status:
+        type: string
+        example: Activated
+        description: The status of the license.
+        enum:
+        - Activated
+        - Unlicensed
+        - Expired
+        - Evaluation Mode
+        - Revoked
+        - Unknown
+    description: ''
+  LicenseReporting:
+    type: object
+    properties:
+      advanced:
+        type: boolean
+        example: true
+        description: Whether advanced reporting is available.
+      customizableCSVExport:
+        type: boolean
+        example: true
+        description: Whether customizable CSV Export is available.
+      pci:
+        type: boolean
+        example: true
+        description: Whether PCI reporting is available.
+    description: ''
+  ConsoleCommandOutput:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      output:
+        type: string
+        example: ''
+        description: The output of the command that was executed.
+    description: ''
+  MemoryInfo:
+    type: object
+    properties:
+      free:
+        example: ''
+        description: Free memory.
+        $ref: '#/definitions/MemoryFree'
+      total:
+        example: ''
+        description: Total memory usage.
+        $ref: '#/definitions/MemoryTotal'
+    description: ''
+  LicenseScanning:
+    type: object
+    properties:
+      discovery:
+        type: boolean
+        example: true
+        description: Whether discovery scanning may be used.
+      policy:
+        example: 'true'
+        description: Details as to whether policy scanning and what benchmarks are available.
+        $ref: '#/definitions/LicensePolicyScanning'
+      scada:
+        type: boolean
+        example: true
+        description: Whether SCADA scanning may be used.
+      virtual:
+        type: boolean
+        example: true
+        description: Whether virtual scanning may be used.
+      webApplication:
+        type: boolean
+        example: true
+        description: Whether web scanning may be used.
+    description: ''
+  MemoryTotal:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 17179869184
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 16 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  DiskInfo:
+    type: object
+    properties:
+      free:
+        example: ''
+        description: Available disk space.
+        $ref: '#/definitions/DiskFree'
+      installation:
+        example: ''
+        description: Details regarding the size of disk used by the console installation.
+        $ref: '#/definitions/InstallSize'
+      total:
+        example: ''
+        description: Total disk space.
+        $ref: '#/definitions/DiskTotal'
+    description: ''
+  UpdateSettings:
+    type: object
+    properties:
+      contentAutoUpdate:
+        type: boolean
+        example: true
+        description: Whether automatic content updates are enabled.
+      enabled:
+        type: boolean
+        example: true
+        description: Whether updates are enabled.
+      productAutoUpdate:
+        type: boolean
+        example: true
+        description: Whether automatic product updates are enabled.
+    description: ''
+  BadRequestError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '400'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '400'
+    description: ''
+  CPUInfo:
+    type: object
+    properties:
+      clockSpeed:
+        type: integer
+        format: int32
+        example: 2600
+        description: The clock speed of the host, in MHz.
+      count:
+        type: integer
+        format: int32
+        example: 8
+        description: The number of CPUs.
+    description: ''
+  BackupsSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 0
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 0 bytes
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  MemoryFree:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 45006848
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 42.9 MB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  SmtpSettings:
+    type: object
+    properties:
+      host:
+        type: string
+        example: mail@acme.com
+        description: The host to send to.
+      port:
+        type: integer
+        format: int32
+        example: 25
+        description: The port to send to.
+      sender:
+        type: string
+        example: security@acme.com
+        description: The sender to send from.
+    description: ''
+  LicensePolicyScanning:
+    type: object
+    properties:
+      benchmarks:
+        example: ''
+        description: The benchmarks available to policy scan.
+        $ref: '#/definitions/LicensePolicyScanningBenchmarks'
+      scanning:
+        type: boolean
+        example: true
+        description: Whether policy scanning is allowed.
+    description: ''
+  InstallSize:
+    type: object
+    properties:
+      backups:
+        example: ''
+        description: The disk space used by backups.
+        $ref: '#/definitions/BackupsSize'
+      database:
+        example: ''
+        description: The disk space used by the database.
+        $ref: '#/definitions/DatabaseSize'
+      directory:
+        type: string
+        example: ''
+        description: The installation directory.
+      reports:
+        example: ''
+        description: The disk space used by reports.
+        $ref: '#/definitions/ReportSize'
+      scans:
+        example: ''
+        description: The disk space used by scans.
+        $ref: '#/definitions/ScanSize'
+      total:
+        example: ''
+        description: Total disk space used by the installation.
+        $ref: '#/definitions/InstallationTotalSize'
+    description: ''
+  DatabaseSize:
+    type: object
+    properties:
+      bytes:
+        type: integer
+        format: int64
+        example: 5364047843
+        description: The raw value in bytes.
+      formatted:
+        type: string
+        example: 5 GB
+        description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+    description: ''
+  Link:
+    type: object
+    properties:
+      href:
+        type: string
+        example: https://hostname:3780/api/3/...
+        description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+      rel:
+        type: string
+        example: self
+        description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+    description: ''

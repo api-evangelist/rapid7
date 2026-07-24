@@ -1,0 +1,334 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Local Accounts API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Local Accounts
+  description: An API used to find and search InsightIDR local accounts. See https://docs.rapid7.com/insightidr/users-and-accounts-on-your-domain for further information on local accounts.
+paths:
+  /idr/v1/assets/local-accounts/_search:
+    post:
+      tags:
+      - Local Accounts
+      summary: Search local accounts
+      description: A search API for local accounts. You can search for local accounts matching the given search criteria.<table style="width:max-content;border:1px solid rgba(38, 50, 56, 0.3)" title="Searchable/Sortable Fields"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>asset.rrn</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>asset.name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>user.rrn</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>user.name</td><td>Yes</td><td>Yes</td><td>String</td></tr></table>
+      operationId: searchLocalAccounts
+      parameters:
+      - name: index
+        in: query
+        description: The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0.
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          default: 0
+        example: 0
+      - name: size
+        in: query
+        description: The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000.
+        required: false
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 20
+        example: 20
+      requestBody:
+        description: The criteria and sorting information for searching.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLocalAccountV2'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /idr/v1/assets/local-accounts/{rrn}:
+    get:
+      tags:
+      - Local Accounts
+      summary: Get local account by RRN
+      description: Retrieve a local account with the given RRN (<a href="https://docs.rapid7.com/insightidr/rapid7-resource-names/">Rapid7 Resource Name</a>).
+      operationId: getLocalAccountByRrn
+      parameters:
+      - name: rrn
+        in: path
+        description: The RRN of the local account.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalAccountV2'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    UserSummaryV21:
+      required:
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this user.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6
+        name:
+          type: string
+          description: The name for this user.
+          example: John Doe
+      description: The user this local account is associated with.
+    PageMetadata:
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
+      type: object
+      properties:
+        index:
+          type: integer
+          description: 'The 0 based index of the page retrieved. '
+          format: int32
+          example: 0
+        size:
+          type: integer
+          description: 'The size of the page requested. '
+          format: int32
+          example: 20
+        total_pages:
+          type: integer
+          description: 'The total number of pages available with the given filter parameters. '
+          format: int32
+          example: 1
+        total_data:
+          type: integer
+          description: 'The total number of results available with the given filter parameters. '
+          format: int64
+          example: 15
+      description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
+    PageLocalAccountV2:
+      required:
+      - data
+      - metadata
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/LocalAccountV2'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+    LocalAccountV2:
+      required:
+      - asset
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this local account.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:account:83002c85d7c6
+        name:
+          type: string
+          description: 'The name for this local account. '
+          example: jdoe
+        user:
+          $ref: '#/components/schemas/UserSummaryV21'
+        asset:
+          $ref: '#/components/schemas/AssetV2'
+      description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+    SearchRequest:
+      type: object
+      properties:
+        search:
+          type: array
+          description: The criteria for which entities to return.
+          items:
+            $ref: '#/components/schemas/SearchRequestCriteria'
+        sort:
+          type: array
+          description: The sorting information.
+          items:
+            $ref: '#/components/schemas/SearchRequestSort'
+    SearchRequestSort:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to sort by.
+          example: name
+        order:
+          type: string
+          description: The sorting direction. Sorting is case-insensitive when sorting strings.
+          enum:
+          - ASC
+          - DESC
+          - ASC,DESC
+      description: The sorting information.
+    AssetV2:
+      required:
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this asset.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:83002c85d7c6
+        name:
+          type: string
+          description: The user-friendly name for this asset.
+          example: morbo.tor.acme.com
+      description: The asset this local account is associated with.
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
+    SearchRequestCriteria:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to search within.
+          example: name
+        operator:
+          type: string
+          description: The search operation to perform. All operators are case-insensitive when operating on strings.
+          enum:
+          - EQUALS
+          - CONTAINS
+          - IN
+        value:
+          type: object
+          description: The value to search for.
+      description: The criteria for which entities to return.

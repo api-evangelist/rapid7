@@ -1,0 +1,1163 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Scans API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Scans
+  description: A Scan encapsulates all the information for a single execution of the criteria defined in the provided Scan Config. An App and a Scan Config <i>must</i> be created prior to submitting a Scan. All Scans submitted via the API are currently treated as an 'on-demand' request to perform the Scan, and as such will be queued for immanent execution. A Scan, once submitted, cannot be modified per-se, as the life cycle of the Scan is managed by the product; though, it is possible to manipulate the life cycle of each Scan by submitting an Action (e.g. a request to pause/resume or stop/cancel). A Scan can only be deleted if it is in a Failed state. A Scan which <i>is not yet complete</i> can be forced into a Failed state by submitting a CANCEL Action. A Scan which is submitted using a Scan Config with validation errors or without a valid Target will result in a Failed Scan.
+paths:
+  /scans:
+    get:
+      tags:
+      - Scans
+      summary: Get Scans
+      description: Get a page of Scans, based on supplied <a href="#pagination">pagination parameters</a>. <p>The default sort for Scans is "submit_time" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>
+      operationId: get-scans
+      parameters:
+      - name: index
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: page-token
+        in: query
+        schema:
+          type: string
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageScan'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Scans
+      summary: Submit Scan
+      description: Submit a new Scan
+      operationId: submit-scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scan'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Resource validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+  /scans/{scan-id}:
+    get:
+      tags:
+      - Scans
+      summary: Get Scan
+      description: Get a Scan
+      operationId: get-scan
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityModelScan'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Scans
+      summary: Delete Scan
+      description: Delete a Scan
+      operationId: delete-scan
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /scans/{scan-id}/action:
+    get:
+      tags:
+      - Scans
+      summary: Get Scan Action
+      description: Get any current Scan action
+      operationId: get-scan-action
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanStateActionResource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Scans
+      summary: Submit Scan Action
+      description: Submit a new Scan action
+      operationId: submit-scan-action
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanStateActionResource'
+        required: true
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Action conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Resource validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+  /scans/{scan-id}/engine-events:
+    get:
+      tags:
+      - Scans
+      summary: Get Scan Engine Events
+      description: Get the engine events from a Scan
+      operationId: get-scan-engine-events
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogEvent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /scans/{scan-id}/execution-details:
+    get:
+      tags:
+      - Scans
+      summary: Get Scan Execution Details
+      description: Get real-time details of the execution of a Scan
+      operationId: get-scan-execution-details
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanExecutionDetails'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /scans/{scan-id}/platform-events:
+    get:
+      tags:
+      - Scans
+      summary: Get Scan Platform Events
+      description: Get the platform events from a Scan
+      operationId: get-scan-platform-events
+      parameters:
+      - name: scan-id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogEvent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ReadOnlyIdResource:
+      description: The ID of the module
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+      readOnly: true
+    ValidationErrors:
+      properties:
+        status:
+          type: string
+          description: A description of the type of error based on HTTP status code
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          readOnly: true
+        message:
+          type: string
+          description: A description of the error
+          readOnly: true
+        errorCode:
+          type: string
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
+          readOnly: true
+        errors:
+          type: array
+          description: A list of validation errors, when the HTTP status code is 422
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          readOnly: true
+      title: ValidationErrors
+    ScanStateActionResource:
+      properties:
+        action:
+          type: string
+          enum:
+          - PAUSE
+          - RESUME
+          - STOP
+          - AUTHENTICATE
+          - CANCEL
+      required:
+      - action
+    SpecializedScanParamsResource:
+      description: The Specialized Scan Parameters Resource used to start a validation scan with a subset of vulnerability ids. Should not be included if a Scan Verification Resource has been provided.
+      example:
+        parent_scan_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        vulnerability_ids:
+        - e2b44265-b637-4800-bfa4-a47a05ca4387
+        - 3d16132c-5e2a-4375-87e9-1f01fc6ed70a
+      properties:
+        id:
+          type: string
+          format: uuid
+        scan_id:
+          type: string
+          format: uuid
+        parent_scan_id:
+          type: string
+          format: uuid
+        vulnerability_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+      - parent_scan_id
+    PageScan:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelScan'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    LogEvent:
+      properties:
+        time:
+          type: string
+          description: The time at which the log event occurred
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        event:
+          type: string
+          description: The log event
+          readOnly: true
+      title: LogEvent
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    ScanVerificationResource:
+      description: The Validation resource. Should not be included if a Specialized Scan Parameters Resource has been provided.
+      example:
+        parent_scan_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      properties:
+        parent_scan_id:
+          type: string
+          format: uuid
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    ScanExecutionDetails:
+      properties:
+        logged_in:
+          type: boolean
+          description: A flag which indicates if the Scan is using authentication during the Scan
+          readOnly: true
+        links_in_queue:
+          type: integer
+          format: int32
+          description: The number of links in the crawling queue
+          readOnly: true
+        links_crawled:
+          type: integer
+          format: int32
+          description: The number of links already crawled
+          readOnly: true
+        attacks_in_queue:
+          type: integer
+          format: int32
+          description: The number of links in the attacking queue
+          readOnly: true
+        attacked:
+          type: integer
+          format: int32
+          description: The number of attacks already performed
+          readOnly: true
+        vulnerable:
+          type: integer
+          format: int32
+          description: The number of potential findings
+          readOnly: true
+        requests:
+          type: integer
+          format: int32
+          description: The number of HTTP requests which have been executed
+          readOnly: true
+        failed_requests:
+          type: integer
+          format: int32
+          description: The number of failed HTTP requests
+          readOnly: true
+        network_speed:
+          type: integer
+          format: int32
+          description: A throughput indicator
+          readOnly: true
+        drip_delay:
+          type: integer
+          format: int32
+          description: The current delay between HTTP requests
+          readOnly: true
+      title: ScanExecutionDetails
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    Scan:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        scan_config:
+          $ref: '#/components/schemas/scan_config'
+        submitter:
+          $ref: '#/components/schemas/ScanSubmitter'
+        submit_time:
+          type: string
+          description: The time the Scan was submitted
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        completion_time:
+          type: string
+          description: The time the Scan was completed
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        status:
+          type: string
+          description: The status of the Scan
+          enum:
+          - PENDING
+          - QUEUED
+          - PROVISIONING
+          - RUNNING
+          - SCANNED
+          - PROCESSED
+          - COMPLETE
+          - PAUSED
+          - BLACKED_OUT
+          - AWAITING_AUTHENTICATION
+          - AUTHENTICATED
+          - PAUSING
+          - RESUMING
+          - STOPPING
+          - CANCELING
+          - AUTHENTICATING
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Scan may have failed
+          enum:
+          - CANCELED
+          - NETWORK_UNAVAILABLE
+          - SYSTEM_ERROR
+          - CONFIGURATION_INVALID
+          - BAD_AUTH
+          - LICENSE_INVALID
+          - TARGETS_INVALID
+          - ENGINE_UNAVAILABLE
+          - INITIALIZATION_FAILURE
+          - SWAGGER_PARSING_ERROR
+          - DATABASE_TOO_LARGE
+          - INSUFFICIENT_DISK_SPACE
+          - INSUFFICIENT_MEMORY
+          - TOO_MANY_THREADS
+          - RASP_FAILURE
+          - BOOTSTRAP_AUTHENTICATION_FAILURE
+          - REPORT_GENERATION_FAILURE
+          readOnly: true
+        validation:
+          $ref: '#/components/schemas/ScanVerificationResource'
+        scan_type:
+          type: string
+          description: The type of Scan
+          enum:
+          - REGULAR
+          - VERIFICATION
+          - INCREMENTAL
+          example: VERIFICATION
+        specialized_scan_parameters:
+          $ref: '#/components/schemas/SpecializedScanParamsResource'
+      required:
+      - scan_config
+      title: Scan
+    scan_config:
+      description: The Scan Config used when the Scan was submitted, must be associated with the App specified for this Scan
+      properties:
+        id:
+          type: string
+          format: uuid
+    Error:
+      properties:
+        status:
+          type: string
+          description: A description of the type of error based on HTTP status code
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          readOnly: true
+        message:
+          type: string
+          description: A description of the error
+          readOnly: true
+        errorCode:
+          type: string
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
+          readOnly: true
+      title: Error
+    EntityModelScan:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        scan_config:
+          $ref: '#/components/schemas/scan_config'
+        submitter:
+          $ref: '#/components/schemas/ScanSubmitter'
+        submit_time:
+          type: string
+          description: The time the Scan was submitted
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        completion_time:
+          type: string
+          description: The time the Scan was completed
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        status:
+          type: string
+          description: The status of the Scan
+          enum:
+          - PENDING
+          - QUEUED
+          - PROVISIONING
+          - RUNNING
+          - SCANNED
+          - PROCESSED
+          - COMPLETE
+          - PAUSED
+          - BLACKED_OUT
+          - AWAITING_AUTHENTICATION
+          - AUTHENTICATED
+          - PAUSING
+          - RESUMING
+          - STOPPING
+          - CANCELING
+          - AUTHENTICATING
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Scan may have failed
+          enum:
+          - CANCELED
+          - NETWORK_UNAVAILABLE
+          - SYSTEM_ERROR
+          - CONFIGURATION_INVALID
+          - BAD_AUTH
+          - LICENSE_INVALID
+          - TARGETS_INVALID
+          - ENGINE_UNAVAILABLE
+          - INITIALIZATION_FAILURE
+          - SWAGGER_PARSING_ERROR
+          - DATABASE_TOO_LARGE
+          - INSUFFICIENT_DISK_SPACE
+          - INSUFFICIENT_MEMORY
+          - TOO_MANY_THREADS
+          - RASP_FAILURE
+          - BOOTSTRAP_AUTHENTICATION_FAILURE
+          - REPORT_GENERATION_FAILURE
+          readOnly: true
+        validation:
+          $ref: '#/components/schemas/ScanVerificationResource'
+        scan_type:
+          type: string
+          description: The type of Scan
+          enum:
+          - REGULAR
+          - VERIFICATION
+          - INCREMENTAL
+          example: VERIFICATION
+        specialized_scan_parameters:
+          $ref: '#/components/schemas/SpecializedScanParamsResource'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - scan_config
+    ScanSubmitter:
+      description: The submitter of the Scan
+      properties:
+        type:
+          type: string
+          description: The type of submitter
+          enum:
+          - USER
+          - SCHEDULE
+          - ORGANIZATION
+          readOnly: true
+        id:
+          type: string
+          format: uuid
+          description: The ID of the submitter
+          readOnly: true
+      readOnly: true
+      title: ScanSubmitter

@@ -1,0 +1,595 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Comments API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Comments
+  description: An API used to find, create, and delete comments. For example, these APIs can be used to create a comment for a particular investigation.
+paths:
+  /idr/v1/comments/{rrn}/{visibility}:
+    put:
+      tags:
+      - Comments
+      summary: Update comment visibility
+      description: An API to update visibility of a comment by using an RRN. This API returns the comment with the updated visibility .
+      operationId: updateComment
+      parameters:
+      - name: rrn
+        in: path
+        description: The RRN of the comment.
+        required: true
+        schema:
+          type: string
+        example: rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210
+      - name: visibility
+        in: path
+        description: The new visibility for the comment (case insensitive).
+        required: true
+        schema:
+          type: string
+          enum:
+          - INTERNAL
+          - PUBLIC
+          example: INTERNAL
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+  /idr/v1/comments:
+    get:
+      tags:
+      - Comments
+      summary: List comments
+      description: Retrieves a page of comments matching the given request parameters. For example, this API allows you to list all comments on an investigation by passing an investigation's RRN as the target value.
+      operationId: listComments
+      parameters:
+      - name: target
+        in: query
+        description: Return comments with this target.
+        required: true
+        schema:
+          type: string
+        example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210
+      - name: index
+        in: query
+        description: The optional 0, based index of the page to retrieve. Must be an integer greater than or equal to 0.
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: The optional size of the page to retrieve. Must be an integer greater than 0 or less  or equal to 100.
+        required: false
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+          minimum: 1
+        example: 20
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageComment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+    post:
+      tags:
+      - Comments
+      summary: Create comment
+      description: An API you can use to create comments for a particular target. The target determines where the comment will appear within InsightIDR. Only certain types of RRNs are permitted as targets, such as investigation RRNs.
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+  /idr/v1/comments/{rrn}:
+    get:
+      tags:
+      - Comments
+      summary: Get comment by rrn
+      description: Retrieves a comment by its rrn.
+      operationId: getComment
+      parameters:
+      - name: rrn
+        in: path
+        description: Return a comment with this rrn.
+        required: true
+        schema:
+          type: string
+        example: rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '403':
+          description: Insufficient Permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+    delete:
+      tags:
+      - Comments
+      summary: Delete a comment
+      description: A delete API you can use to delete a comment by using an RRN. The RRN determines which comment will be deleted. Only the creator of a comment can delete it.
+      operationId: deleteComment
+      parameters:
+      - name: rrn
+        in: path
+        description: The RRN of the comment.
+        required: true
+        schema:
+          type: string
+        example: rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:comment:ABCDEF543210
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '403':
+          description: Insufficient Permissions
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '404':
+          description: Entity Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '502':
+          description: Bad Gateway
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse2'
+components:
+  schemas:
+    PageMetadata2:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: The 0 based index of the page retrieved.
+          example: 0
+        size:
+          type: integer
+          format: int32
+          description: The size of the page requested.
+          example: 20
+        total_pages:
+          type: integer
+          format: int32
+          description: The total number of pages available with the given filter parameters.
+          example: 1
+        total_data:
+          type: integer
+          format: int64
+          description: The total number of results available with the given filter parameters.
+          example: 15
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
+    RRN:
+      type: object
+      properties:
+        partition:
+          type: string
+        service:
+          type: string
+        regionCode:
+          type: string
+        organizationId:
+          type: string
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        resource:
+          type: string
+    Attachment:
+      type: object
+      properties:
+        rrn:
+          $ref: '#/components/schemas/RRN'
+          description: The RRN of the attachment.
+          example: rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
+        creator:
+          $ref: '#/components/schemas/Creator'
+          description: Who or what created the resource.
+        created_time:
+          type: string
+          description: The time the attachment was created as an ISO formatted timestamp.
+          example: '2018-06-06T16:56:42Z'
+        file_name:
+          type: string
+          description: The original filename of the uploaded attachment.
+          example: screenshot.png
+        mime_type:
+          type: string
+          description: The mime type of the attachment.
+          example: image/png
+        size:
+          type: integer
+          format: int64
+          description: The size in bytes of the attachment.
+          example: 12345
+        scan_status:
+          type: string
+          description: The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.
+          example: CLEAN
+      required:
+      - created_time
+      - creator
+      - file_name
+      - mime_type
+      - rrn
+      - scan_status
+      - size
+    PageComment:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/Comment'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata2'
+          description: The pagination parameters used to generate this page result.
+      required:
+      - data
+      - metadata
+    Comment:
+      type: object
+      properties:
+        created_time:
+          type: string
+          description: The time the comment was created as an ISO formatted timestamp.
+          example: '2018-06-06T16:56:42Z'
+        rrn:
+          type: string
+          description: The RRN of the comment.
+          example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD
+        target:
+          type: string
+          description: The target where the comment belongs to.
+          example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210
+        creator:
+          $ref: '#/components/schemas/Creator'
+          description: Who or what created the resource.
+        body:
+          type: string
+          description: The body of the comment.
+          example: Here is my comment.
+        visibility:
+          type: string
+          description: Who can view the comment.
+          example: PUBLIC
+        attachments:
+          type: array
+          description: List of attachments associated with this comment.
+          items:
+            $ref: '#/components/schemas/Attachment'
+      required:
+      - body
+      - creator
+      - rrn
+      - target
+    ErrorResponse2:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: An identifier that uniquely identifies the failed request.
+      required:
+      - message
+    CommentCreateRequest:
+      type: object
+      description: The information needed by the request body to create comments.
+      properties:
+        target:
+          type: string
+          description: The target of the comment, which determines where it will appear within InsightIDR.
+          example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210
+        body:
+          type: string
+          description: The body of the comment.
+          example: Here is my comment.
+        attachments:
+          type: array
+          description: An array of attachment RRNs to associate with the comment.
+          example:
+          - rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - target
+    Creator:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A type that denotes who or what created a resource.
+          enum:
+          - USER
+          - ORG_API_KEY
+          - SYSTEM
+          example: USER
+        name:
+          type: string
+          description: The name of who or what created a resource.
+          example: John Doe
+      required:
+      - name
+      - type

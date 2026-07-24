@@ -1,0 +1,2459 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts User API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: User
+  description: Resources and operations for managing users, permissions, and privileges.
+paths:
+  /api/3/authentication_sources:
+    get:
+      tags:
+      - User
+      summary: Authentication Sources
+      description: Returns all available sources of authentication for users.
+      operationId: getAuthenticationSources
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«AuthenticationSource»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/authentication_sources/{id}:
+    get:
+      tags:
+      - User
+      summary: Authentication Source
+      description: Returns the details for an authentication source.
+      operationId: getAuthenticationSource
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the authentication source.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationSource'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/authentication_sources/{id}/users:
+    get:
+      tags:
+      - User
+      summary: Authentication Source Users
+      description: Returns hypermedia links for the user accounts that use the authentication source to authenticate.
+      operationId: getAuthenticationSourceUsers
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the authentication source.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferencesWith«UserID,Link»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/privileges:
+    get:
+      tags:
+      - User
+      summary: Privileges
+      description: Returns all privileges that may be granted to a role.
+      operationId: getPrivileges
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Privileges'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/privileges/{id}:
+    get:
+      tags:
+      - User
+      summary: Privilege
+      description: Returns the details for a privilege.
+      operationId: getPrivilege
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the privilege.
+        required: true
+        type: string
+        enum:
+        - all-permissions
+        - create-reports
+        - configure-global-settings
+        - manage-sites
+        - manage-tags
+        - manage-static-asset-groups
+        - manage-dynamic-asset-groups
+        - manage-scan-templates
+        - manage-report-templates
+        - manage-scan-engines
+        - submit-vulnerability-exceptions
+        - approve-vulnerability-exceptions
+        - delete-vulnerability-exceptions
+        - manage-vuln-investigations
+        - view-vuln-investigations
+        - create-tickets
+        - close-tickets
+        - assign-ticket-assignee
+        - manage-site-access
+        - manage-asset-group-access
+        - manage-report-access
+        - use-restricted-report-sections
+        - manage-policies
+        - view-asset-group-asset-data
+        - manage-asset-group-assets
+        - view-site-asset-data
+        - specify-site-metadata
+        - purge-site-asset-data
+        - specify-scan-targets
+        - assign-scan-engine
+        - assign-scan-template
+        - manage-site-credentials
+        - manage-scan-alerts
+        - schedule-automatic-scans
+        - start-unscheduled-scans
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/privileges/{id}/users:
+    get:
+      tags:
+      - User
+      summary: Users With Privilege
+      description: Returns hypermedia links for all users granted the specified privilege by their role.
+      operationId: getUsersWithPrivilege
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the privilege.
+        required: true
+        type: string
+        enum:
+        - all-permissions
+        - create-reports
+        - configure-global-settings
+        - manage-sites
+        - manage-tags
+        - manage-static-asset-groups
+        - manage-dynamic-asset-groups
+        - manage-scan-templates
+        - manage-report-templates
+        - manage-scan-engines
+        - submit-vulnerability-exceptions
+        - approve-vulnerability-exceptions
+        - delete-vulnerability-exceptions
+        - manage-vuln-investigations
+        - view-vuln-investigations
+        - create-tickets
+        - close-tickets
+        - assign-ticket-assignee
+        - manage-site-access
+        - manage-asset-group-access
+        - manage-report-access
+        - use-restricted-report-sections
+        - manage-policies
+        - view-asset-group-asset-data
+        - manage-asset-group-assets
+        - view-site-asset-data
+        - specify-site-metadata
+        - purge-site-asset-data
+        - specify-scan-targets
+        - assign-scan-engine
+        - assign-scan-template
+        - manage-site-credentials
+        - manage-scan-alerts
+        - schedule-automatic-scans
+        - start-unscheduled-scans
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferencesWith«UserID,Link»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/roles:
+    get:
+      tags:
+      - User
+      summary: Roles
+      description: Returns all roles for which users may be assigned.
+      operationId: getRoles
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«Role»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/roles/{id}:
+    get:
+      tags:
+      - User
+      summary: Role
+      description: Retrieves the details of a role.
+      operationId: getRole
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the role.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Role'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - User
+      summary: Role
+      description: Updates the details of a role.
+      operationId: updateRole
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: role
+        description: The details of the role.
+        required: false
+        schema:
+          $ref: '#/definitions/Role'
+      - name: id
+        in: path
+        description: The identifier of the role.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: Role
+      description: Removes a role with the specified identifier. The role must not be built-in and cannot be currently assigned to any users.
+      operationId: deleteRole
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the role.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/roles/{id}/users:
+    get:
+      tags:
+      - User
+      summary: Users With Role
+      description: Returns hypermedia links for the the users currently assigned a role.
+      operationId: getRoleUsers
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the role.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferencesWith«UserID,Link»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users:
+    get:
+      tags:
+      - User
+      summary: Users
+      description: Returns all defined users. <span class="authorization">Global Administrator</span>
+      operationId: getUsers
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«User»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    post:
+      tags:
+      - User
+      summary: Users
+      description: Creates a new user. <span class="authorization">Global Administrator</span>
+      operationId: createUser
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: user
+        description: The details of the user.
+        required: false
+        schema:
+          $ref: '#/definitions/UserEdit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreatedReference«UserID,Link»'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}:
+    get:
+      tags:
+      - User
+      summary: User
+      description: Returns the details for a user.<span class="authorization">Global Administrator, Current User</span>
+      operationId: getUser
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - User
+      summary: User
+      description: Updates the details of a user. <span class="authorization">Global Administrator</span>
+      operationId: updateUser
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: user
+        description: The details of the user.
+        required: false
+        schema:
+          $ref: '#/definitions/UserEdit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: User
+      description: Deletes a user account.<span class="authorization">Global Administrator</span>
+      operationId: deleteUser
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/2FA:
+    get:
+      tags:
+      - User
+      summary: Two-Factor Authentication
+      description: Retrieves the current authentication token seed (key) for the user, if configured.
+      operationId: getTwoFactorAuthenticationKey
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TokenResource'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    post:
+      tags:
+      - User
+      summary: Two-Factor Authentication
+      description: Regenerates a new authentication token seed (key) and updates it for the user. This key may be then be used in the appropriate 2FA authenticator.
+      operationId: regenerateTwoFactorAuthentication
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TokenResource'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - User
+      summary: Two-Factor Authentication
+      description: Sets the authentication token seed (key) for the user. This key may be then be used in the appropriate 2FA authenticator.
+      operationId: setTwoFactorAuthentication
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: token
+        description: The authentication token seed (key) to use for the user.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/asset_groups:
+    get:
+      tags:
+      - User
+      summary: Asset Groups Access
+      description: Returns the asset groups to which the user has access.
+      operationId: getUserAssetGroups
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferencesWith«AssetGroupID,Link»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - User
+      summary: Asset Groups Access
+      description: Updates the asset groups to which the user has access. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class="authorization">Global Administrator</span>
+      operationId: setUserAssetGroups
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: assetGroupIds
+        description: The identifiers of the asset groups to grant the user access to. Ignored if user has access to `allAssetGroups`.
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: Asset Groups Access
+      description: Revokes access to all asset groups from the user.
+      operationId: removeAllUserAssetGroups
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/asset_groups/{assetGroupId}:
+    put:
+      tags:
+      - User
+      summary: Asset Group Access
+      description: Grants the user access to the asset group. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class="authorization">Global Administrator</span>
+      operationId: addUserAssetGroup
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - name: assetGroupId
+        in: path
+        description: The identifier of the asset group.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: Asset Group Access
+      description: Grants the user access to the asset group. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class="authorization">Global Administrator</span>
+      operationId: removeUserAssetGroup
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - name: assetGroupId
+        in: path
+        description: The identifier of the asset group.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/lock:
+    delete:
+      tags:
+      - User
+      summary: Unlock Account
+      description: Unlocks a locked user account that has too many failed authentication attempts. Disabled accounts may not be unlocked.
+      operationId: unlockUser
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/password:
+    put:
+      tags:
+      - User
+      summary: Password Reset
+      description: Changes the password for the user. Users may only change their own password.
+      operationId: resetPassword
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: password
+        description: The new password to set.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/privileges:
+    get:
+      tags:
+      - User
+      summary: User Privileges
+      description: Returns the privileges granted to the user by their role. <span class="authorization">Global Administrator</span>
+      operationId: getUserPrivileges
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Privileges'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/sites:
+    get:
+      tags:
+      - User
+      summary: Sites Access
+      description: Returns the sites to which the user has access.
+      operationId: getUserSites
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReferencesWith«SiteID,Link»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - User
+      summary: Sites Access
+      description: Updates the sites to which the user has access. Individual site access cannot be granted to users with the `allSites` permission. <span class="authorization">Global Administrator</span>
+      operationId: setUserSites
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: siteIds
+        description: The identifiers of the sites to grant the user access to. Ignored if the user has access to `allSites`.
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: Sites Access
+      description: Revokes access to all sites from the user.
+      operationId: removeAllUserSites
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/users/{id}/sites/{siteId}:
+    put:
+      tags:
+      - User
+      summary: Site Access
+      description: Grants the user access to the site. Individual site access cannot be granted to users with the `allSites` permission. <span class="authorization">Global Administrator</span>
+      operationId: addUserSite
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - name: siteId
+        in: path
+        description: The identifier of the site.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    delete:
+      tags:
+      - User
+      summary: Site Access
+      description: Grants the user access to the site. Individual site access cannot be granted to users with the `allSites` permission. <span class="authorization">Global Administrator</span>
+      operationId: removeUserSite
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the user.
+        required: true
+        type: integer
+        format: int32
+      - name: siteId
+        in: path
+        description: The identifier of the site.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+definitions:
+  Privileges:
+    type: object
+    properties:
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        items:
+          type: string
+          enum:
+          - all-permissions
+          - create-reports
+          - configure-global-settings
+          - manage-sites
+          - manage-tags
+          - manage-static-asset-groups
+          - manage-dynamic-asset-groups
+          - manage-scan-templates
+          - manage-report-templates
+          - manage-scan-engines
+          - submit-vulnerability-exceptions
+          - approve-vulnerability-exceptions
+          - delete-vulnerability-exceptions
+          - manage-vuln-investigations
+          - view-vuln-investigations
+          - create-tickets
+          - close-tickets
+          - assign-ticket-assignee
+          - manage-site-access
+          - manage-asset-group-access
+          - manage-report-access
+          - use-restricted-report-sections
+          - manage-policies
+          - view-asset-group-asset-data
+          - manage-asset-group-assets
+          - view-site-asset-data
+          - specify-site-metadata
+          - purge-site-asset-data
+          - specify-scan-targets
+          - assign-scan-engine
+          - assign-scan-template
+          - manage-site-credentials
+          - manage-scan-alerts
+          - schedule-automatic-scans
+          - start-unscheduled-scans
+    description: ''
+  NotFoundError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '404'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '404'
+    description: ''
+  UserRole:
+    type: object
+    properties:
+      allAssetGroups:
+        type: boolean
+        example: false
+        description: Whether the user has access to all asset groups.
+      allSites:
+        type: boolean
+        example: false
+        description: Whether the user has access to all sites.
+      id:
+        type: string
+        example: ''
+        description: The identifier of the role the user is assigned to.
+      name:
+        type: string
+        example: ''
+        description: The name of the role the user is assigned to.
+      privileges:
+        type: array
+        description: The privileges granted to the user by their role.
+        items:
+          type: string
+          enum:
+          - all-permissions
+          - create-reports
+          - configure-global-settings
+          - manage-sites
+          - manage-tags
+          - manage-static-asset-groups
+          - manage-dynamic-asset-groups
+          - manage-scan-templates
+          - manage-report-templates
+          - manage-scan-engines
+          - submit-vulnerability-exceptions
+          - approve-vulnerability-exceptions
+          - delete-vulnerability-exceptions
+          - manage-vuln-investigations
+          - view-vuln-investigations
+          - create-tickets
+          - close-tickets
+          - assign-ticket-assignee
+          - manage-site-access
+          - manage-asset-group-access
+          - manage-report-access
+          - use-restricted-report-sections
+          - manage-policies
+          - view-asset-group-asset-data
+          - manage-asset-group-assets
+          - view-site-asset-data
+          - specify-site-metadata
+          - purge-site-asset-data
+          - specify-scan-targets
+          - assign-scan-engine
+          - assign-scan-template
+          - manage-site-credentials
+          - manage-scan-alerts
+          - schedule-automatic-scans
+          - start-unscheduled-scans
+      superuser:
+        type: boolean
+        example: false
+        description: Whether the user is a superuser.
+    description: ''
+  InternalServerError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '500'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '500'
+    description: ''
+  TokenResource:
+    type: object
+    properties:
+      key:
+        type: string
+        example: ''
+        description: The two-factor authentication token seed (key).
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  Links:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  ReferencesWith«UserID,Link»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The identifiers of the associated resources.
+        items:
+          type: integer
+          format: int32
+    description: ''
+  Resources«Role»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/Role'
+    description: ''
+  CreateAuthenticationSource:
+    type: object
+    required:
+    - type
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: ''
+        description: The identifier of the authentication source to use to authenticate the user. The source with the specified identifier must be of the type specified by `type`. If `id` is omitted, then one source of the specified `type` is selected.
+      type:
+        type: string
+        example: ''
+        description: The type of the authentication source to use to authenticate the user.
+    description: ''
+  UnauthorizedError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '401'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '401'
+    description: ''
+  UserEdit:
+    type: object
+    required:
+    - login
+    - name
+    - password
+    - role
+    properties:
+      authentication:
+        example: ''
+        description: The details of the authentication source used to authenticate the user.
+        $ref: '#/definitions/CreateAuthenticationSource'
+      email:
+        type: string
+        example: ''
+        description: The email address of the user.
+      enabled:
+        type: boolean
+        example: false
+        description: Whether the user account is enabled. Defaults to `true`.
+      id:
+        type: integer
+        format: int32
+        example: ''
+        description: The identifier of the user.
+        readOnly: true
+      locale:
+        example: ''
+        description: The locale and language preferences for the user.
+        $ref: '#/definitions/LocalePreferences'
+      locked:
+        type: boolean
+        example: false
+        description: Whether the user account is locked (exceeded maximum password retry attempts).
+        readOnly: true
+      login:
+        type: string
+        example: ''
+        description: The login name of the user.
+      name:
+        type: string
+        example: ''
+        description: The full name of the user.
+      password:
+        type: string
+        example: ''
+        description: The password to use for the user.
+      passwordResetOnLogin:
+        type: boolean
+        example: false
+        description: Whether to require a reset of the user's password upon first login. Defaults to `false`.
+      role:
+        example: ''
+        description: The privileges and role to assign the user.
+        $ref: '#/definitions/UserCreateRole'
+    description: ''
+  Resources«AuthenticationSource»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/AuthenticationSource'
+    description: ''
+  User:
+    type: object
+    required:
+    - login
+    - name
+    properties:
+      authentication:
+        example: ''
+        description: The authentication source used to authenticate the user.
+        readOnly: true
+        $ref: '#/definitions/AuthenticationSource'
+      email:
+        type: string
+        example: ''
+        description: The email address of the user.
+      enabled:
+        type: boolean
+        example: false
+        description: Whether the user account is enabled.
+      id:
+        type: integer
+        format: int32
+        example: ''
+        description: The identifier of the user.
+        readOnly: true
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      locale:
+        example: ''
+        description: The locale and language preferences for the user.
+        $ref: '#/definitions/LocalePreferences'
+      locked:
+        type: boolean
+        example: false
+        description: Whether the user account is locked (exceeded maximum password retry attempts).
+        readOnly: true
+      login:
+        type: string
+        example: ''
+        description: The login name of the user.
+      name:
+        type: string
+        example: ''
+        description: The full name of the user.
+      role:
+        example: ''
+        description: The privileges and role the user is assigned.
+        $ref: '#/definitions/UserRole'
+    description: ''
+  ReferencesWith«AssetGroupID,Link»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The identifiers of the associated resources.
+        items:
+          type: integer
+          format: int32
+    description: ''
+  ServiceUnavailableError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '503'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '503'
+    description: ''
+  PageOf«User»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/User'
+    description: ''
+  Role:
+    type: object
+    required:
+    - description
+    - id
+    - name
+    properties:
+      description:
+        type: string
+        example: ''
+        description: The description of the role.
+      id:
+        type: string
+        example: ''
+        description: The identifier of the role.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The human readable name of the role.
+      privileges:
+        type: array
+        description: The privileges granted to the role.
+        items:
+          type: string
+          enum:
+          - all-permissions
+          - create-reports
+          - configure-global-settings
+          - manage-sites
+          - manage-tags
+          - manage-static-asset-groups
+          - manage-dynamic-asset-groups
+          - manage-scan-templates
+          - manage-report-templates
+          - manage-scan-engines
+          - submit-vulnerability-exceptions
+          - approve-vulnerability-exceptions
+          - delete-vulnerability-exceptions
+          - manage-vuln-investigations
+          - view-vuln-investigations
+          - create-tickets
+          - close-tickets
+          - assign-ticket-assignee
+          - manage-site-access
+          - manage-asset-group-access
+          - manage-report-access
+          - use-restricted-report-sections
+          - manage-policies
+          - view-asset-group-asset-data
+          - manage-asset-group-assets
+          - view-site-asset-data
+          - specify-site-metadata
+          - purge-site-asset-data
+          - specify-scan-targets
+          - assign-scan-engine
+          - assign-scan-template
+          - manage-site-credentials
+          - manage-scan-alerts
+          - schedule-automatic-scans
+          - start-unscheduled-scans
+    description: ''
+  LocalePreferences:
+    type: object
+    properties:
+      default:
+        type: string
+        example: ''
+        description: The default language to use. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      reports:
+        type: string
+        example: ''
+        description: The language to use to generate reports. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
+    description: ''
+  CreatedReference«UserID,Link»:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 1
+        description: The identifier of the resource created.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  BadRequestError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '400'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '400'
+    description: ''
+  UserCreateRole:
+    type: object
+    required:
+    - id
+    properties:
+      allAssetGroups:
+        type: boolean
+        example: false
+        description: Whether to grant the user access to all asset groups. Defaults to `false`.
+      allSites:
+        type: boolean
+        example: false
+        description: Whether to grant the user access to all sites. Defaults to `false`.
+      id:
+        type: string
+        example: ''
+        description: The identifier of the role the user is assigned to.
+      superuser:
+        type: boolean
+        example: false
+        description: Whether the user is a superuser. Defaults to `false`.
+    description: ''
+  ReferencesWith«SiteID,Link»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The identifiers of the associated resources.
+        items:
+          type: integer
+          format: int32
+    description: ''
+  PageInfo:
+    type: object
+    properties:
+      number:
+        type: integer
+        format: int64
+        example: 6
+        description: The index (zero-based) of the current page returned.
+      size:
+        type: integer
+        format: int64
+        example: 10
+        description: The maximum size of the page returned.
+      totalPages:
+        type: integer
+        format: int64
+        example: 13
+        description: The total number of pages available.
+      totalResources:
+        type: integer
+        format: int64
+        example: 123
+        description: The total number of resources available across all pages.
+    description: ''
+  AuthenticationSource:
+    type: object
+    properties:
+      external:
+        type: boolean
+        example: false
+        description: Whether the authentication source is external (true) or internal (false).
+      id:
+        type: integer
+        format: int32
+        example: ''
+        description: The identifier of the authentication source.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the authentication source.
+      type:
+        type: string
+        example: ''
+        description: The type of the authentication source.
+        enum:
+        - normal
+        - kerberos
+        - ldap
+        - saml
+        - admin
+    description: ''
+  Link:
+    type: object
+    properties:
+      href:
+        type: string
+        example: https://hostname:3780/api/3/...
+        description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+      rel:
+        type: string
+        example: self
+        description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+    description: ''

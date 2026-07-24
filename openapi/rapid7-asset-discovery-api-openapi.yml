@@ -1,0 +1,943 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Asset Discovery API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Asset Discovery
+  description: Resources for managing and viewing the mechanisms used to automatically discover assets.
+paths:
+  /api/3/discovery_connections:
+    get:
+      tags:
+      - Asset Discovery
+      summary: Discovery Connections
+      description: Returns all discovery connections.
+      operationId: getDiscoveryConnections
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«DiscoveryConnection»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/discovery_connections/{id}:
+    get:
+      tags:
+      - Asset Discovery
+      summary: Discovery Connection
+      description: Returns a discovery connection.
+      operationId: getDiscoveryConnection
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the discovery connection.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DiscoveryConnection'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/discovery_connections/{id}/connect:
+    post:
+      tags:
+      - Asset Discovery
+      summary: Discovery Connection Reconnect
+      description: Attempts to reconnect the discovery connection.
+      operationId: reconnectDiscoveryConnection
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the discovery connection.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/sonar_queries:
+    get:
+      tags:
+      - Asset Discovery
+      summary: Sonar Queries
+      description: Returns all sonar queries.
+      operationId: getSonarQueries
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«SonarQuery»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    post:
+      tags:
+      - Asset Discovery
+      summary: Sonar Queries
+      description: Creates a sonar query.
+      operationId: createSonarQuery
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: query
+        description: The criteria for a Sonar query.
+        required: false
+        schema:
+          $ref: '#/definitions/SonarQuery'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreatedReference«DiscoveryQueryID,Link»'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+      x-code-samples:
+      - lang: Assets in IP Range
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" }\n        ]\n    },\n    \"name\": \"Assets In IP Range\"\n}"
+      - lang: Recently Scanned Rapid7 Assets
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"domain-contains\", \"domain\": \"acme.com\" },\n            { \"type\": \"scan-date-within-the-last\", \"days\": \"30\" }\n        ]\n    },\n    \"name\": \"Recently Scanned ACME Assets\"\n}"
+      - lang: Recently Scanned Assets in IP Range
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" },\n            { \"type\": \"scan-date-within-the-last\", \"days\": \"30\" }\n        ]\n    },\n    \"name\": \"Recently Scanned Assets in IP Range\"\n}"
+  /api/3/sonar_queries/search:
+    post:
+      tags:
+      - Asset Discovery
+      summary: Sonar Query Search
+      description: Executes a Sonar query to discover assets with the given search criteria.
+      operationId: sonarQuerySearch
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - in: body
+        name: query
+        description: The criteria for a Sonar query.
+        required: false
+        schema:
+          $ref: '#/definitions/SonarCriteria'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DiscoveryAsset'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+      x-code-samples:
+      - lang: Assets in IP Range
+        source: "{\n    \"filters\": [\n        { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" }\n    ]\n}"
+      - lang: Recently Scanned Rapid7 Assets
+        source: "{\n    \"filters\": [\n        { \"type\": \"domain-contains\", \"domain\": \"acme.com\"},\n        { \"type\": \"scan-date-within-the-last\", \"days\": \"30\"}\n    ]\n}"
+      - lang: Recently Scanned Assets in IP Range
+        source: "{\n    \"filters\": [\n        { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" },\n        { \"type\": \"scan-date-within-the-last\", \"days\": \"30\" }\n    ]\n}"
+  /api/3/sonar_queries/{id}:
+    get:
+      tags:
+      - Asset Discovery
+      summary: Sonar Query
+      description: Returns a sonar query.
+      operationId: getSonarQuery
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the Sonar query.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SonarQuery'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+    put:
+      tags:
+      - Asset Discovery
+      summary: Sonar Query
+      description: Updates a sonar query.
+      operationId: updateSonarQuery
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the Sonar query.
+        required: true
+        type: integer
+        format: int64
+      - in: body
+        name: query
+        description: The criteria for a Sonar query.
+        required: false
+        schema:
+          $ref: '#/definitions/SonarQuery'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+      x-code-samples:
+      - lang: Assets in IP Range
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" }\n        ]\n    },\n    \"name\": \"Assets In IP Range\"\n}"
+      - lang: Recently Scanned Rapid7 Assets
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"domain-contains\", \"domain\": \"acme.com\" },\n            { \"type\": \"scan-date-within-the-last\", \"days\": \"30\" }\n        ]\n    },\n    \"name\": \"Recently Scanned ACME Assets\"\n}"
+      - lang: Recently Scanned Assets in IP Range
+        source: "{\n    \"criteria\": {\n        \"filters\": [\n            { \"type\": \"ip-address-range\", \"lower\": \"192.168.1.1\", \"upper\": \"192.168.1.254\" },\n            { \"type\": \"scan-date-within-the-last\", \"days\": \"30\" }\n        ]\n    },\n    \"name\": \"Recently Scanned Assets in IP Range\"\n}"
+    delete:
+      tags:
+      - Asset Discovery
+      summary: Sonar Query
+      description: Removes a sonar query.
+      operationId: deleteSonarQuery
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the Sonar query.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Links'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/sonar_queries/{id}/assets:
+    get:
+      tags:
+      - Asset Discovery
+      summary: Sonar Query Assets
+      description: Returns the assets that are discovered by a Sonar query.
+      operationId: getSonarQueryAssets
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the Sonar query.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Resources«DiscoveryAsset»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+definitions:
+  Link:
+    type: object
+    properties:
+      href:
+        type: string
+        example: https://hostname:3780/api/3/...
+        description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+      rel:
+        type: string
+        example: self
+        description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+    description: ''
+  DiscoveryAsset:
+    type: object
+    properties:
+      address:
+        type: string
+        example: 12.83.99.203
+        description: The IP address of a discovered asset.
+        readOnly: true
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: desktop-27.acme.com
+        description: The host name of a discovered asset.
+        readOnly: true
+    description: ''
+  BadRequestError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '400'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '400'
+    description: ''
+  Resources«SonarQuery»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        description: The resources returned.
+        items:
+          $ref: '#/definitions/SonarQuery'
+    description: ''
+  UnauthorizedError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '401'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '401'
+    description: ''
+  SonarQuery:
+    type: object
+    properties:
+      criteria:
+        example: ''
+        description: The search criteria used to search for assets from the Sonar API.
+        $ref: '#/definitions/SonarCriteria'
+      id:
+        type: integer
+        format: int64
+        example: 14
+        description: The identifier of the Sonar query.
+        readOnly: true
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: Assets in Domain
+        description: The name of the Sonar query.
+    description: ''
+  DiscoveryConnection:
+    type: object
+    properties:
+      accessKeyId:
+        type: string
+        example: ''
+        description: The AWS credential access key identifier (only used for the AWS connection).
+      address:
+        type: string
+        example: ''
+        description: The address used to connect to the discovery connection source.
+      arn:
+        type: string
+        example: ''
+        description: The AWS credential ARN (only used for the AWS connection).
+      awsSessionName:
+        type: string
+        example: ''
+        description: The AWS credential session name (only used for the AWS connection).
+      connectionType:
+        type: string
+        example: ''
+        description: The type of the discovery connection.
+      eventSource:
+        type: string
+        example: ''
+        description: The event source type to use.
+      exchangeServerHostname:
+        type: string
+        example: ''
+        description: The hostname of the exchange server to connect to.
+      exchangeUser:
+        type: string
+        example: ''
+        description: The username used to connect to the exchange server.
+      folderPath:
+        type: string
+        example: ''
+        description: The folder path to pull logs from.
+      id:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the discovery connection.
+        readOnly: true
+      ldapServer:
+        type: string
+        example: ''
+        description: The LDAP server to connect to.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: Connection 1
+        description: The discovery connection name.
+      port:
+        type: integer
+        format: int32
+        example: ''
+        description: The port used to connect to the discovery connection source.
+      protocol:
+        type: string
+        example: ''
+        description: The protocol used to connect to the discovery connection source.
+      region:
+        type: string
+        example: ''
+        description: The AWS region (only used for the AWS connection).
+      scanEngineIsInsideAWS:
+        type: boolean
+        example: false
+        description: Flag denoting whether the scan engine is in AWS, this is used for AWS discovery connections for scanning purposes (only used for the AWS connection).
+      secretAccessKey:
+        type: string
+        example: ''
+        description: The AWS credential secret access key (only used for the AWS connection).
+      status:
+        type: string
+        example: ''
+        description: The status of the discovery connection.
+      username:
+        type: string
+        example: ''
+        description: The username used to authenticate to the discovery connection source.
+      winRMServer:
+        type: string
+        example: ''
+        description: 'The WinRM server to connect to. '
+    description: ''
+  Resources«DiscoveryAsset»:
+    type: object
+    properties:
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/DiscoveryAsset'
+    description: ''
+  SonarCriteria:
+    type: object
+    properties:
+      filters:
+        type: array
+        description: The filters in the Sonar query.
+        items:
+          $ref: '#/definitions/SonarCriterion'
+    description: ''
+  Links:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  ServiceUnavailableError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '503'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '503'
+    description: ''
+  PageInfo:
+    type: object
+    properties:
+      number:
+        type: integer
+        format: int64
+        example: 6
+        description: The index (zero-based) of the current page returned.
+      size:
+        type: integer
+        format: int64
+        example: 10
+        description: The maximum size of the page returned.
+      totalPages:
+        type: integer
+        format: int64
+        example: 13
+        description: The total number of pages available.
+      totalResources:
+        type: integer
+        format: int64
+        example: 123
+        description: The total number of resources available across all pages.
+    description: ''
+  NotFoundError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '404'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '404'
+    description: ''
+  CreatedReference«DiscoveryQueryID,Link»:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+        description: The identifier of the resource created.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+    description: ''
+  InternalServerError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '500'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '500'
+    description: ''
+  PageOf«DiscoveryConnection»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/DiscoveryConnection'
+    description: ''
+  SonarCriterion:
+    type: object
+    properties:
+      days:
+        type: integer
+        format: int32
+        example: ''
+        description: If the field is `scan-date-within-the-last`, the number of days to search against.
+      domain:
+        type: string
+        example: acme.com
+        description: If the field is `domain-contains`, the domain to search against.
+      lower:
+        type: string
+        example: ''
+        description: If the field is `ip-address-range`, the lower limit of the search.
+      type:
+        type: string
+        example: domain-contains
+        description: The type of query to perform.
+        enum:
+        - domain-contains
+        - scan-date-within-the-last
+        - ip-address-range
+      upper:
+        type: string
+        example: ''
+        description: If the field is `ip-address-range`, the upper limit of the search.
+    description: ''

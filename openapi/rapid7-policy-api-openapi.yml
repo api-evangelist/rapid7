@@ -1,0 +1,2728 @@
+openapi: 3.1.0
+info:
+  title: InsightAppSec Accounts Policy API
+  description: '<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href=''https://insight.help.rapid7.com/docs/api-overview''>Learn about basic concepts and capabilities</a></li><li><a href=''https://insight.help.rapid7.com/docs/managing-platform-api-keys''>Get an Insight platform API key to set up authentication</a></li><li><a href=''https://insight.help.rapid7.com/docs/product-apis''>See available Insight product APIs</a></li><li><a href=''https://insightappsec.help.rapid7.com/docs''>Learn more about InsightAppSec</a></li></ul><p>After you''ve got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user''s API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href="#pagination"><h2 id="pagination">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD''T''hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a "status" and a "message" property indicating the cause of the error, a "r7-correlation-id" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an "error_code" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response "r7-correlation-id" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional "errors" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>'
+  version: v1
+servers:
+- url: https://[region].api.insight.rapid7.com/ias/v1
+tags:
+- name: Policy
+  description: Resources and operations for managing policies.
+paths:
+  /api/3/assets/{assetId}/policies:
+    get:
+      tags:
+      - Policy
+      summary: Policies For Asset
+      description: Retrieves the list of policies with compliance results for the specified asset.
+      operationId: getPoliciesForAsset
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      - name: applicableOnly
+        in: query
+        description: An optional boolean parameter indicating the policies retrieved should only include those with a policy compliance status of either a PASS of FAIL result. Default value is `false`, which will also include policies with a compliance status of NOT_APPLICABLE.
+        required: false
+        type: boolean
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«AssetPolicy»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/assets/{assetId}/policies/{policyId}/children:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules or Groups Directly Under Policy For Asset
+      description: Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy with rule compliance results for the specified asset.
+      operationId: getAssetPolicyChildren
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«AssetPolicyItem»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/children:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules or Groups Directly Under Policy Group For Asset
+      description: Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy group with rule compliance results for the specified asset.
+      operationId: getAssetPolicyGroupChildren
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«AssetPolicyItem»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/rules:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules Under Policy Group For Asset
+      description: Retrieves the list of policy rules defined directly, or indirectly, underneath the specified policy group and the compliance results for the specified asset.
+      operationId: getPolicyGroupRulesWithAssetAssessment
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyRule»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/assets/{assetId}/policies/{policyId}/rules:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules For Asset
+      description: Retrieves the list of policy rules with compliance results for the specified asset and policy.
+      operationId: getAssetPolicyRulesSummary
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyRule»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies:
+    get:
+      tags:
+      - Policy
+      summary: Policies
+      description: Retrieves a paged resource of policies.
+      operationId: getPolicies
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: filter
+        in: query
+        description: Filters the retrieved policies with those whose titles that match the parameter.
+        required: false
+        type: string
+      - name: scannedOnly
+        in: query
+        description: Flag indicating the policies retrieved should only include those with Pass or Fail compliance results. The list of scanned policies is based on the user's list of accessible assets.
+        required: false
+        type: boolean
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«Policy»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{id}/children:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules or Groups Directly Under Policy
+      description: Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy.
+      operationId: getPolicyChildren
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: id
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyItem»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}:
+    get:
+      tags:
+      - Policy
+      summary: Policy
+      description: Retrieves the specified policy.
+      operationId: getPolicy
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Policy'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/assets:
+    get:
+      tags:
+      - Policy
+      summary: Policy Asset Results
+      description: Retrieves asset resources with rule compliance results for the specified policy.
+      operationId: getPolicyAssetResults
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: applicableOnly
+        in: query
+        description: An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE.
+        required: false
+        type: boolean
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyAsset»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/assets/{assetId}:
+    get:
+      tags:
+      - Policy
+      summary: Policy Asset Result
+      description: Retrieves an asset resource with rule compliance results for the specified asset and policy.
+      operationId: getPolicyAssetResult
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyAsset'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups:
+    get:
+      tags:
+      - Policy
+      summary: Policy Groups
+      description: Retrieves a paged resource of policy groups for the specified policy.
+      operationId: getPolicyGroups
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyGroup»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups/{groupId}:
+    get:
+      tags:
+      - Policy
+      summary: Policy Group
+      description: Retrieves the specified policy group.
+      operationId: getPolicyGroup
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyGroup'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups/{groupId}/assets:
+    get:
+      tags:
+      - Policy
+      summary: Assets Compliance For Policy Rules Under Policy Group
+      description: Retrieves asset resources with rule compliance status against all rules under the specified policy group.
+      operationId: getPolicyGroupAssetResults
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      - name: applicableOnly
+        in: query
+        description: An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE.
+        required: false
+        type: boolean
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyAsset»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups/{groupId}/assets/{assetId}:
+    get:
+      tags:
+      - Policy
+      summary: Asset Compliance For Policy Rules Under Policy Group
+      description: Retrieves an asset resource with rule compliance status against all rules under the specified policy group.
+      operationId: getPolicyGroupAssetResult
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyAsset'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups/{groupId}/children:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules or Groups Directly Under Policy Group
+      description: Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy group.
+      operationId: getPolicyGroupChildren
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyItem»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/groups/{groupId}/rules:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules Under Policy Group
+      description: Retrieves the list of policy rules defined directly, or indirectly, underneath the specified policy group.
+      operationId: getDescendantPolicyRules
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: groupId
+        in: path
+        description: The identifier of the policy group.
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyRule»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rules
+      description: Retrieves a paged resource of policy rules for the specified policy.
+      operationId: getPolicyRules
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyRule»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/disabled:
+    get:
+      tags:
+      - Policy
+      summary: Disabled Policy Rules
+      description: Retrieves a paged resource of disabled policy rules for the specified policy.
+      operationId: getDisabledPolicyRules
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyRule»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rule
+      description: Retrieves the specified policy rule.
+      operationId: getPolicyRule
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyRule'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/assets:
+    get:
+      tags:
+      - Policy
+      summary: Assets Compliance For Policy Rule
+      description: Retrieves asset resources with rule compliance results for the specified policy policy rule.
+      operationId: getPolicyRuleAssetResults
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      - name: applicableOnly
+        in: query
+        description: An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE.
+        required: false
+        type: boolean
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyAsset»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/assets/{assetId}:
+    get:
+      tags:
+      - Policy
+      summary: Asset Compliance For Policy Rule
+      description: Retrieves an asset resource with rule compliance results for the specified policy policy rule.
+      operationId: getPolicyRuleAssetResult
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyAsset'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/assets/{assetId}/proof:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rule Proof For Asset
+      description: Retrieves the policy rule proof captured during evaluation against the specified asset.
+      operationId: getPolicyRuleAssetResultProof
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - text/html
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      - name: assetId
+        in: path
+        description: The identifier of the asset.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/controls:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rule Controls
+      description: Retrieves all NIST SP 800-53 controls mappings for each CCE within the specified policy rule.
+      operationId: getPolicyRuleControls
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      - name: page
+        in: query
+        description: The index of the page (zero-based) to retrieve.
+        required: false
+        type: integer
+        default: 0
+        format: int32
+      - name: size
+        in: query
+        description: The number of records per page to retrieve.
+        required: false
+        type: integer
+        default: 10
+        format: int32
+      - name: sort
+        in: query
+        description: 'The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters.'
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageOf«PolicyControl»'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/rationale:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rule Rationale
+      description: Retrieves the policy rule rationale for the specified policy.
+      operationId: getPolicyRuleRationale
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - text/html
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policies/{policyId}/rules/{ruleId}/remediation:
+    get:
+      tags:
+      - Policy
+      summary: Policy Rule Remediation
+      description: Retrieves the policy rule remediation for the specified policy.
+      operationId: getPolicyRuleRemediation
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - text/html
+      parameters:
+      - name: policyId
+        in: path
+        description: The identifier of the policy
+        required: true
+        type: integer
+        format: int64
+      - name: ruleId
+        in: path
+        description: The identifier of the policy rule.
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+  /api/3/policy/summary:
+    get:
+      tags:
+      - Policy
+      summary: Policy Compliance Summaries
+      description: Retrieves a compliance summary of all policies.
+      operationId: getPolicySummary
+      schemes: []
+      consumes:
+      - application/json
+      produces:
+      - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicySummaryResource'
+          examples: {}
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+          examples: {}
+          headers: {}
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+          examples: {}
+          headers: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+          examples: {}
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ServiceUnavailableError'
+          examples: {}
+          headers: {}
+      security: []
+definitions:
+  Configuration:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        example: <name>
+        description: The name of the configuration value.
+      value:
+        type: string
+        example: <value>
+        description: The configuration value.
+    description: ''
+  PageOf«PolicyControl»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/PolicyControl'
+    description: ''
+  OperatingSystem:
+    type: object
+    properties:
+      architecture:
+        type: string
+        example: x86
+        description: The architecture of the operating system.
+      configurations:
+        type: array
+        description: Configuration key-values pairs enumerated on the operating system.
+        items:
+          $ref: '#/definitions/Configuration'
+      cpe:
+        example: ''
+        description: The Common Platform Enumeration (CPE) of the operating system.
+        $ref: '#/definitions/OperatingSystemCpe'
+      description:
+        type: string
+        example: Microsoft Windows Server 2008 Enterprise Edition SP1
+        description: The description of the operating system (containing vendor, family, product, version and architecture in a single string).
+      family:
+        type: string
+        example: Windows
+        description: The family of the operating system.
+      id:
+        type: integer
+        format: int64
+        example: 35
+        description: The identifier of the operating system.
+      product:
+        type: string
+        example: Windows Server 2008 Enterprise Edition
+        description: The name of the operating system.
+      systemName:
+        type: string
+        example: Microsoft Windows
+        description: A combination of vendor and family (with redundancies removed), suitable for grouping.
+      type:
+        type: string
+        example: Workstation
+        description: The type of operating system.
+      vendor:
+        type: string
+        example: Microsoft
+        description: The vendor of the operating system.
+      version:
+        type: string
+        example: SP1
+        description: The version of the operating system.
+    description: ''
+  NotFoundError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '404'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '404'
+    description: ''
+  InternalServerError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '500'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '500'
+    description: ''
+  PolicySummaryResource:
+    type: object
+    properties:
+      decreasedCompliance:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policies whose overall compliance has decreased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
+      increasedCompliance:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policies whose overall compliance has increased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      numberOfPolicies:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policies available in the Security Console.
+      overallCompliance:
+        type: number
+        format: float
+        example: ''
+        description: The ratio of compliant rules to the total number of rules across all policies.
+      scannedPolicies:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policies that were evaluated against assets and have applicable results. The assets considered in the calculation are based on the user's list of accessible assets.
+    description: ''
+  PolicyRule:
+    type: object
+    properties:
+      assets:
+        example: ''
+        description: A summary of asset compliance.
+        $ref: '#/definitions/AssetPolicyAssessment'
+      benchmark:
+        example: ''
+        description: Information about the policy benchmark.
+        $ref: '#/definitions/PolicyBenchmark'
+      description:
+        type: string
+        example: ''
+        description: A description of the rule.
+      id:
+        type: string
+        example: ''
+        description: The textual representation of the policy rule identifier.
+      isCustom:
+        type: boolean
+        example: false
+        description: A flag indicating whether the policy rule is custom.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the rule.
+      role:
+        type: string
+        example: ''
+        description: The role of the policy rule. It's value determines how it's results affect compliance.
+        enum:
+        - full
+        - unscored
+        - unchecked
+      scope:
+        type: string
+        example: ''
+        description: The textual representation of the policy rule scope. Policy rules that are automatically available have `"Built-in"` scope, whereas policy rules created by users have scope as `"Custom"`.
+      status:
+        type: string
+        example: ''
+        description: The overall compliance status of the policy rule.
+        enum:
+        - PASS
+        - FAIL
+        - NOT_APPLICABLE
+      surrogateId:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the policy rule.
+      title:
+        type: string
+        example: ''
+        description: The title of the policy rule as visible to the user.
+    description: ''
+  PageOf«PolicyItem»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/PolicyItem'
+    description: ''
+  PageOf«Policy»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/Policy'
+    description: ''
+  AssetPolicy:
+    type: object
+    properties:
+      benchmarkName:
+        type: string
+        example: ''
+        description: The name of the policy's benchmark.
+      benchmarkVersion:
+        type: string
+        example: ''
+        description: The version number of the benchmark that includes the policy.
+      category:
+        type: string
+        example: ''
+        description: A grouping of similar benchmarks based on their source, purpose, or other criteria. Examples include FDCC, USGCB, and CIS.
+      description:
+        type: string
+        example: ''
+        description: The description of the policy.
+      failedAssetsCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of assets that are not compliant with the policy. The assets considered in the calculation are based on the user's list of accessible assets.
+      failedRulesCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of rules in the policy that are not compliant with any scanned assets. The assets considered in the calculation are based on the user's list of accessible assets.
+      id:
+        type: string
+        example: ''
+        description: The textual representation of the policy identifier.
+      isCustom:
+        type: boolean
+        example: false
+        description: A flag indicating whether the policy is custom.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      notApplicableAssetsCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of assets that were attempted to be scanned, but are not applicable to the policy. The assets considered in the calculation are based on the user's list of accessible assets.
+      notApplicableRulesCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of rules in the policy that are not applicable with any scanned assets. The assets considered in the calculation are based on the user's list of accessible assets.
+      passedAssetsCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of assets that are compliant with the policy. The assets considered in the calculation are based on the user's list of accessible assets.
+      passedRulesCount:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of rules in the policy that are compliant with all scanned assets. The assets considered in the calculation are based on the user's list of accessible assets.
+      policyName:
+        type: string
+        example: ''
+        description: The name of the policy.
+      ruleCompliance:
+        type: number
+        format: double
+        example: ''
+        description: The ratio of PASS results for the rules to the total number of rules in each policy.
+      ruleComplianceDelta:
+        type: number
+        format: double
+        example: ''
+        description: The change in rule compliance between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
+      scope:
+        type: string
+        example: ''
+        description: The textual representation of the policy scope. Policies that are automatically available have `"Built-in"` scope, whereas policies created by users have scope as `"Custom"`.
+      status:
+        type: string
+        example: ''
+        description: The overall compliance status of the policy.
+        enum:
+        - PASS
+        - FAIL
+        - NOT_APPLICABLE
+      surrogateId:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the policy
+      title:
+        type: string
+        example: ''
+        description: The title of the policy as visible to the user.
+      unscoredRules:
+        type: integer
+        format: int32
+        example: ''
+        description: The number of rules defined in the policy with a role of "unscored". These rules will not affect rule compliance scoring for the policy.
+    description: ''
+  PageOf«AssetPolicyItem»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/AssetPolicyItem'
+    description: ''
+  UnauthorizedError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '401'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '401'
+    description: ''
+  PolicyRuleAssessmentResource:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      total:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policy rules.
+      totalFailed:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policy rules that are not compliant against all assets.
+      totalNotApplicable:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policy rules that are not applicable against all assets.
+      totalPassed:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policy rules that are compliant against all assets.
+      unscored:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of policy rules that have a role of `"unscored"`.
+    description: ''
+  PolicyAsset:
+    type: object
+    properties:
+      hostname:
+        type: string
+        example: ''
+        description: The primary host name (local or FQDN) of the asset.
+      id:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the asset.
+      ip:
+        type: string
+        example: ''
+        description: The primary IPv4 or IPv6 address of the asset.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      os:
+        example: ''
+        description: The full description of the operating system of the asset.
+        $ref: '#/definitions/OperatingSystem'
+      status:
+        type: string
+        example: ''
+        description: 'The overall compliance status of the asset. '
+        enum:
+        - passed
+        - failed
+        - notApplicable
+    description: ''
+  PolicyGroup:
+    type: object
+    properties:
+      assets:
+        example: ''
+        description: A summary of asset compliance.
+        $ref: '#/definitions/AssetPolicyAssessment'
+      benchmark:
+        example: ''
+        description: Information about the policy benchmark.
+        $ref: '#/definitions/PolicyBenchmark'
+      description:
+        type: string
+        example: ''
+        description: A description of the policy group.
+      id:
+        type: string
+        example: ''
+        description: The textual representation of the policy group identifier.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the policy group.
+      policy:
+        example: ''
+        description: Information about the policy.
+        $ref: '#/definitions/PolicyMetadataResource'
+      scope:
+        type: string
+        example: ''
+        description: The textual representation of the policy group scope. Policy groups that are automatically available have `"Built-in"` scope, whereas policy groups created by users have scope as `"Custom"`.
+      status:
+        type: string
+        example: ''
+        description: The overall compliance status of the policy group.
+        enum:
+        - PASS
+        - FAIL
+        - NOT_APPLICABLE
+      surrogateId:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the policy group.
+      title:
+        type: string
+        example: ''
+        description: The title of the policy group as visible to the user.
+    description: ''
+  ServiceUnavailableError:
+    type: object
+    required:
+    - status
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      message:
+        type: string
+        example: An error has occurred.
+        description: The messages indicating the cause or reason for failure.
+      status:
+        type: string
+        example: '503'
+        description: The HTTP status code for the error (same as in the HTTP response).
+        enum:
+        - '503'
+    description: ''
+  PageOf«PolicyRule»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/PolicyRule'
+    description: ''
+  PageOf«AssetPolicy»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/AssetPolicy'
+    description: ''
+  PageOf«PolicyAsset»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/PolicyAsset'
+    description: ''
+  PageOf«PolicyGroup»:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        items:
+          $ref: '#/definitions/Link'
+      page:
+        example: ''
+        description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+        $ref: '#/definitions/PageInfo'
+      resources:
+        type: array
+        description: The page of resources returned.
+        items:
+          $ref: '#/definitions/PolicyGroup'
+    description: ''
+  AssetPolicyItem:
+    type: object
+    properties:
+      assets:
+        example: ''
+        description: A summary of asset compliance.
+        $ref: '#/definitions/AssetPolicyAssessment'
+      description:
+        type: string
+        example: ''
+        description: A description of the policy rule or group.
+      hasOverride:
+        type: boolean
+        example: false
+        description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
+      id:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the policy rule or group.
+      isUnscored:
+        type: boolean
+        example: false
+        description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the policy rule or group.
+      policy:
+        example: ''
+        description: Information about the policy.
+        $ref: '#/definitions/PolicyMetadataResource'
+      rules:
+        example: ''
+        description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
+        $ref: '#/definitions/PolicyRuleAssessmentResource'
+      scope:
+        type: string
+        example: ''
+        description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
+      status:
+        type: string
+        example: ''
+        description: The asset's rule compliance status.
+        enum:
+        - PASS
+        - FAIL
+        - NOT_APPLICABLE
+      title:
+        type: string
+        example: ''
+        description: The title of the policy rule, or group, as visible to the user.
+      type:
+        type: string
+        example: ''
+        description: Indicates whether the resource represents either a policy rule or group.
+        enum:
+        - rule
+        - group
+    description: ''
+  Policy:
+    type: object
+    properties:
+      enabled:
+        type: array
+        description: The identifiers of the policies enabled to be checked during a scan. No policies are enabled by default.
+        items:
+          type: integer
+          format: int64
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      recursiveWindowsFSSearch:
+        type: boolean
+        example: false
+        description: Whether recursive windows file searches are enabled, if your internal security practices require this capability. Recursive file searches can increase scan times by several hours, depending on the number of files and other factors, so this setting is disabled for Windows systems by default. Defaults to `false`.
+      storeSCAP:
+        type: boolean
+        example: false
+        description: Whether Asset Reporting Format (ARF) results are stored. If you are required to submit reports of your policy scan results to the U.S. government in ARF for SCAP certification, you will need to store SCAP data so that it can be exported in this format. Note that stored SCAP data can accumulate rapidly, which can have a significant impact on file storage. Defaults to `false`.
+    description: ''
+  PolicyItem:
+    type: object
+    properties:
+      assets:
+        example: ''
+        description: A summary of asset compliance.
+        $ref: '#/definitions/AssetPolicyAssessment'
+      description:
+        type: string
+        example: ''
+        description: A description of the policy rule or group.
+      hasOverride:
+        type: boolean
+        example: false
+        description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
+      id:
+        type: integer
+        format: int64
+        example: ''
+        description: The identifier of the policy rule or group.
+      isUnscored:
+        type: boolean
+        example: false
+        description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the policy rule or group.
+      policy:
+        example: ''
+        description: Information about the policy.
+        $ref: '#/definitions/PolicyMetadataResource'
+      rules:
+        example: ''
+        description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
+        $ref: '#/definitions/PolicyRuleAssessmentResource'
+      scope:
+        type: string
+        example: ''
+        description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
+      status:
+        type: string
+        example: ''
+        description: The overall compliance status of the policy rule or group.
+        enum:
+        - PASS
+        - FAIL
+        - NOT_APPLICABLE
+      title:
+        type: string
+        example: ''
+        description: The title of the policy rule, or group, as visible to the user.
+      type:
+        type: string
+        example: ''
+        description: Indicates whether the resource represents either a policy rule or group.
+        enum:
+        - rule
+        - group
+    description: ''
+  PageInfo:
+    type: object
+    properties:
+      number:
+        type: integer
+        format: int64
+        example: 6
+        description: The index (zero-based) of the current page returned.
+      size:
+        type: integer
+        format: int64
+        example: 10
+        description: The maximum size of the page returned.
+      totalPages:
+        type: integer
+        format: int64
+        example: 13
+        description: The total number of pages available.
+      totalResources:
+        type: integer
+        format: int64
+        example: 123
+        description: The total number of resources available across all pages.
+    description: ''
+  AssetPolicyAssessment:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      total:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of assets.
+      totalFailed:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of assets that are not compliant.
+      totalNotApplicable:
+        type: integer
+        format: int32
+        example: ''
+        description: The total number of assets that are not applicable.
+      totalPassed:
+        type: integer
+        format: int32
+    description: ''
+  PolicyMetadataResource:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the policy.
+      title:
+        type: string
+        example: ''
+        description: The title of the policy as visible to the user.
+      version:
+        type: string
+        example: ''
+        description: The version of the policy.
+    description: ''
+  OperatingSystemCpe:
+    type: object
+    required:
+    - part
+    properties:
+      edition:
+        type: string
+        example: enterprise
+        description: 'Edition-related terms applied by the vendor to the product. '
+      language:
+        type: string
+        example: ''
+        description: Defines the language supported in the user interface of the product being described. The format is of the language tag adheres to <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5646">RFC5646</a>.
+      other:
+        type: string
+        example: ''
+        description: 'Captures any other general descriptive or identifying information which is vendor- or product-specific and which does not logically fit in any other attribute value. '
+      part:
+        type: string
+        example: o
+        description: A single letter code that designates the particular platform part that is being identified.
+        enum:
+        - o
+        - a
+        - h
+      product:
+        type: string
+        example: windows_server_2008
+        description: the most common and recognizable title or name of the product.
+      swEdition:
+        type: string
+        example: ''
+        description: 'Characterizes how the product is tailored to a particular market or class of end users. '
+      targetHW:
+        type: string
+        example: ''
+        description: 'Characterize the instruction set architecture on which the product operates. '
+      targetSW:
+        type: string
+        example: ''
+        description: Characterize the software computing environment within which the product operates.
+      update:
+        type: string
+        example: sp1
+        description: Vendor-specific alphanumeric strings characterizing the particular update, service pack, or point release of the product.
+      v2.2:
+        type: string
+        example: cpe:/o:microsoft:windows_server_2008:-:sp1:enterprise
+        description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="https://cpe.mitre.org/files/cpe-specification_2.2.pdf">CPE 2.2</a> format.
+      v2.3:
+        type: string
+        example: cpe:2.3:o:microsoft:windows_server_2008:-:sp1:enterprise:*:*:*:*:*
+        description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf">CPE 2.3</a> format.
+      vendor:
+        type: string
+        example: microsoft
+        description: The person or organization that manufactured or created the product.
+      version:
+        type: string
+        example: '-'
+        description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
+    description: ''
+  PolicyControl:
+    type: object
+    properties:
+      cceItemId:
+        type: string
+        example: ''
+        description: The identifier of the CCE item.
+      ccePlatform:
+        type: string
+        example: ''
+        description: The platform of the CCE.
+      controlName:
+        type: string
+        example: ''
+        description: The name of the control mapping.
+      id:
+        type: string
+        example: ''
+        description: The textual representation of the control identifier.
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      publishedDate:
+        type: integer
+        format: int64
+        example: ''
+        description: The published date of the control mapping.
+    description: ''
+  Link:
+    type: object
+    properties:
+      href:
+        type: string
+        example: https://hostname:3780/api/3/...
+        description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+      rel:
+        type: string
+        example: self
+        description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+    description: ''
+  PolicyBenchmark:
+    type: object
+    properties:
+      links:
+        type: array
+        description: Hypermedia links to corresponding or related resources.
+        readOnly: true
+        items:
+          $ref: '#/definitions/Link'
+      name:
+        type: string
+        example: ''
+        description: The name of the policy's benchmark.
+      title:
+        type: string
+        example: ''
+        description: The title of the policy benchmark.
+      version:
+        type: string
+        example: ''
+        description: The version number of the benchmark that includes the policy.
+    description: ''
