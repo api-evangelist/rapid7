@@ -8,7 +8,20 @@ description: Rapid7 is a cybersecurity company providing the Insight Platform wi
   and integrations. Authentication is performed with an organization or user API key
   passed in the `X-Api-Key` header.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rapid7.png
 tags:
 - Security
 - Vulnerability Management
@@ -24,10 +37,10 @@ specificationVersion: '0.19'
 apis:
 - aid: rapid7:insightvm-api
   name: Rapid7 InsightVM Cloud API
-  description: REST API for the InsightVM vulnerability management product, exposing
-    assets, scans, vulnerabilities, remediation projects, and reports. Authentication
-    uses an Insight Platform API key in the `X-Api-Key` header; the regional base
-    URL is selected per data residency.
+  description: >-
+    REST API for the InsightVM vulnerability management product, exposing assets, scans, vulnerabilities,
+    remediation projects, and reports. Authentication uses an Insight Platform API key in the `X-Api-Key`
+    header; the regional base URL is selected per data residency.
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
@@ -46,9 +59,10 @@ apis:
     type: GraphQL
 - aid: rapid7:insight-platform-api
   name: Rapid7 Insight Platform API
-  description: Cross-product REST API for the Insight Platform that covers user and
-    key management, organizations, audit logs, and platform-level integrations. Authentication
-    uses `X-Api-Key` against the regional endpoint (us, eu, ca, au, ap, jp).
+  description: >-
+    Cross-product REST API for the Insight Platform that covers user and key management, organizations,
+    audit logs, and platform-level integrations. Authentication uses `X-Api-Key` against the regional
+    endpoint (us, eu, ca, au, ap, jp).
   humanURL: https://docs.rapid7.com/insight/api-overview/
   baseURL: https://us.api.insight.rapid7.com
   tags:
@@ -63,9 +77,9 @@ apis:
     url: https://docs.rapid7.com/insight/managing-platform-api-keys/
 - aid: rapid7:insightidr-api
   name: Rapid7 InsightIDR API
-  description: REST API for the InsightIDR SIEM/XDR product covering investigations,
-    alerts, log search, threats, and SOC workflows. Authentication uses `X-Api-Key`
-    against the regional Insight Platform endpoint.
+  description: >-
+    REST API for the InsightIDR SIEM/XDR product covering investigations, alerts, log search, threats,
+    and SOC workflows. Authentication uses `X-Api-Key` against the regional Insight Platform endpoint.
   humanURL: https://docs.rapid7.com/insightidr/api-overview/
   baseURL: https://us.api.insight.rapid7.com/idr
   tags:
@@ -77,6 +91,702 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.rapid7.com/insightidr/api-overview/
+- aid: rapid7:rapid7-accounts-api
+  name: Rapid7 Accounts API
+  description: >-
+    An API used to find and search InsightIDR accounts. See https://docs.rapid7.com/insightidr/users-and-accounts-on-your-domain
+    for further information on accounts.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-accounts-api-openapi.yml
+- aid: rapid7:rapid7-administration-api
+  name: Rapid7 Administration API
+  description: Provides access administrative operations and procedures.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Administration
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-administration-api-openapi.yml
+- aid: rapid7:rapid7-apps-api
+  name: Rapid7 Apps API
+  description: >-
+    An App <i>owns</i> Scan Configs, Schedules, Scans and Vulnerabilities; you must create an App in order
+    to create any of these other resources. Consequently, if an App is deleted it will delete all of these
+    owned resources. App URLs cannot currently be configured via the API, and as such, it is recommended
+    not to use this feature for Apps which are to be primarily managed via the API.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-apps-api-openapi.yml
+- aid: rapid7:rapid7-asset-api
+  name: Rapid7 Asset API
+  description: >-
+    Resources and operations for managing assets. Assets can be created under the <a href="#operation/createAssetUsingPOST">Site
+    Assets</a> resource.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Asset
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-asset-api-openapi.yml
+- aid: rapid7:rapid7-asset-discovery-api
+  name: Rapid7 Asset Discovery API
+  description: Resources for managing and viewing the mechanisms used to automatically discover assets.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Asset Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-asset-discovery-api-openapi.yml
+- aid: rapid7:rapid7-asset-group-api
+  name: Rapid7 Asset Group API
+  description: Resources and operations for managing asset groups.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Asset Group
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-asset-group-api-openapi.yml
+- aid: rapid7:rapid7-assets-api
+  name: Rapid7 Assets API
+  description: >-
+    An API used to find and search InsightIDR assets. See https://docs.rapid7.com/insightidr/assets-on-your-domain
+    for further information on assets.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-assets-api-openapi.yml
+- aid: rapid7:rapid7-attachments-api
+  name: Rapid7 Attachments API
+  description: >-
+    An API used to upload, list, download and delete attachments. For example, the create API can be used
+    to upload an attachment.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-attachments-api-openapi.yml
+- aid: rapid7:rapid7-attack-templates-api
+  name: Rapid7 Attack Templates API
+  description: >-
+    An Attack Template describes <i>if</i> and <i>how</i> Attacks should be executed during the execution
+    of a Scan. There exist pre-defined, system-provided and immutable templates, as well as custom templates.
+    An Attack Template is a top-level resource within the product, and as such is not affected by the
+    deletion of any Apps.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Attack Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-attack-templates-api-openapi.yml
+- aid: rapid7:rapid7-blackouts-api
+  name: Rapid7 Blackouts API
+  description: >-
+    A blackout is a period of time when all scanning activities for the specified scope are blocked. A
+    blackout can be scoped globally or to a specific App, this is implied by the <code>scope</code> property;
+    scope value of <code>APP</code> requires that an appropriate <code>app.id</code> value is also provided.
+    There are two options available to specify how often a blackout will occur, <b>either a frequency
+    or a recurrence rule (rrule).</b>  Only frequency supports the use of ONCE only blackouts. If providing
+    a rrule, the following fields are permitted:<ul><li><code>FREQ</code> where FREQ is one of: <code>HOURLY,
+    DAILY, WEEKLY, MONTHLY</code> </li><li><code>INTERVAL</code></li><li><code>BYDAY</code> where value
+    is: a single day, <code>SA,SU</code> to represent weekend, or all weekdays. </li><li><code>BYMONTHDAY</code>
+    where value is a range between: <code>1 - 31.</code> </li><li><code>BYSETPOS</code> where value is
+    one of: <code>-1, 1, 2, 3, 4</code></li><li><code>COUNT</code></li></ul>If providing a rrule, the
+    <a href="https://datatracker.ietf.org/doc/html/rfc2445#section-4.8.5.4">RFC 2445 section-4.8.5.4 IETF
+    specification</a> can be used as a guide for how to create rrules. Example: <ul><li><code>rrule =
+    "FREQ=MONTHLY;INTERVAL=1;BYDAY=FR;BYSETPOS=-1"</code> represents 'Run every month on the last Friday'.</li></ul>If
+    providing a frequency, the frequency of a blackout is defined by both the type and interval; specifying
+    a type of <code>ONCE</code> does not require an interval. The permitted types are as follows:<ul><li><code>ONCE</code></li><li><code>HOURLY</code></li><li><code>DAILY</code></li><li><code>WEEKLY</code></li><li><code>MONTHLY</code></li></ul>Either
+    a frequency <b>or</b> a rrule must be provided for create/update operations.If a <code>frequency.type</code>
+    other than <code>ONCE</code> is provided, the date and time of the blackout recurrences will be calculated
+    based on the <code>frequency</code> or <code>rrule</code> defined, until the threshold of <code>last_start</code>
+    (if one is provided, otherwise until a date considerably far into the future). The value of <code>first_start</code>
+    and <code>first_end</code> define the initial period of the Blackout; duration of this period is adhered
+    to at every recurrence, hence why there is no need to model a <code>last_end</code>.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Blackouts
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-blackouts-api-openapi.yml
+- aid: rapid7:rapid7-collectors-api
+  name: Rapid7 Collectors API
+  description: An API used to manage collectors for an organization.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Collectors
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-collectors-api-openapi.yml
+- aid: rapid7:rapid7-comments-api
+  name: Rapid7 Comments API
+  description: >-
+    An API used to find, create, and delete comments. For example, these APIs can be used to create a
+    comment for a particular investigation.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-comments-api-openapi.yml
+- aid: rapid7:rapid7-community-threats-api
+  name: Rapid7 Community Threats API
+  description: >-
+    An API used to add and replace indicators for Community Threats. See https://insightidr.help.rapid7.com/docs/threats#section-threat-api
+    for further information on how to generate threat keys.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Community Threats
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-community-threats-api-openapi.yml
+- aid: rapid7:rapid7-credential-api
+  name: Rapid7 Credential API
+  description: Resources and operations for managing shared credentials.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Credential
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-credential-api-openapi.yml
+- aid: rapid7:rapid7-engine-groups-api
+  name: Rapid7 Engine Groups API
+  description: >-
+    An Engine Group is a resource which defines a container for a logical grouping of Engines and therefore
+    the purpose of assigning Scans to one of those Engines. Any created Engine Group can contain 0 or
+    more Engines that are strictly hosted within an On-Premise environment. Any Engine which isn't assigned
+    to an explicitly-defined Engine Group inherently belongs to the 'Default' Engine Group (the Default
+    Engine Group cannot be explicitly created, modified, deleted or referenced, it is purely conceptual).
+    Any Scans submitted which use a Scan Config with an explicit assignment to an Engine Group will follow
+    the following rules:<ul><li>If the Engine Group contains only <code>OFFLINE</code> Engines, the scan
+    will immediately fail</li><li>If the Engine Group contains at least 1 Engine which isn't <code>OFFLINE</code>,
+    the scan will wait to be acquired</li></ul>
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Engine Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-engine-groups-api-openapi.yml
+- aid: rapid7:rapid7-engines-api
+  name: Rapid7 Engines API
+  description: >-
+    An Engine encapsulates the state and high-level attributes of the components which may be installed
+    and running on a specific On-Premise host. The status of an Engine is not mutable via the API; it
+    reflects the platform state of the components installed on the host, and can change at any given time.
+    These states are: <ul><li>INITIALIZING : Engine is starting </li> <li>IDLE : Engine is waiting for
+    scans</li> <li>LICENSING : Engine is checking a License has been assigned</li> <li>SCANNING : Engine
+    is currently scanning</li> <li>UPGRADING : Engine is in the process of upgrading </li> <li>FAILED
+    : Engine has failed in a process, with the reason shown in failure reason</li> <li>OFFLINE :  Engine
+    is not available</li> <li>TERMINATING :  Engine is in the process of being deleted</li> </ul> It should
+    be noted that deleting an Engine resource is an asynchronous process, and actioning the request to
+    delete the Engine occurs at the earliest convenience and is state-dependant. Creating a new Engine
+    resource implicitly creates a Credential sub-resource, which is an alpha-numeric API key required
+    for the successful installation and operation of an Engine in an On-Premise environment. An Engine
+    API key can be retrieved by executing a <code>get-engine-credential</code> request, as documented
+    below.<p> <strong> CAUTION: regenerating an API key should only be performed when there is suspicion
+    that the security of the API key has been compromised; regenerating will prevent any communication
+    between any client using the revoked API key and the InsightAppSec Platform. Any manual Engine maintenance
+    exercise which involves running the InsightAppSec Engine installer, should result in the creation
+    of a NEW Engine; an API key should never be used across installations to prevent data loss/pollution
+    and runtime issues. </strong> </p> Please refer to <TODO insert link here> help documentation which
+    describes the process required to update the API for an existing installation.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Engines
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-engines-api-openapi.yml
+- aid: rapid7:rapid7-files-api
+  name: Rapid7 Files API
+  description: >-
+    Files are used primarily to manage content that can be required to successfully scan an App. For example,
+    many supported methods of configuring authentication in a Scan Config require a payload and similarly
+    Scan crawl configuration can be enhanced by supplying pre-populated crawl results. In order to create
+    a File you will need to perform 2 steps:<ol><li>Use the <a href="#operation/create-file">Create File</a>
+    API to provide the File's metadata and generate an <code>id</code> (can be derived from the <code>Location</code>
+    header as described in 'Creating resources').</li><li>Use the <a href="#operation/upload-file">Upload
+    File Content</a> API with the <code>id</code> returned from the previous step in order to add content
+    to this File.</li></ol>Once a File is created and both steps outlined above have been successfully
+    completed, then the File's <code>contentAvailable</code> property will be <code>true</code>, the File
+    will be considered 'usable', and it can be referenced in specific locations of a Scan Config using
+    its <code>id</code>. <br />A File's <code>type</code> can only be one of 6 options: <table> <thead><tr>
+    <th>File Type</th> <th>File Extensions</th> </tr> </thead> <tbody> <tr><td><code>MACRO</code></td>
+    <td><code>rec</code></td> </tr> <tr> <td><code>SWAGGER</code></td> <td><code>json</code><br/> <code>yaml</code><br/>
+    <code>yml</code></td> </tr> <tr><td><code>SELENIUM</code></td> <td><code>htm</code><br/> <code>html</code><br/>
+    <code>side</code></td> </tr> <tr><td><code>RECORDED_TRAFFIC</code></td> <td><code>trec</code><br/>
+    <code>xml</code><br/> <code>txt</code><br/> <code>har</code><br/> <code>saz</code></td> </tr> <tr><td><code>WSDL</code></td>
+    <td><code>wsdl</code></td> </tr> <tr><td><code>CERTIFICATE</code></td> <td><code>pfx</code></td> </tr>
+    <tr><td><code>GRAPHQL</code></td> <td><code>qls</code><code>graphqls</code></td> </tr> <tbody> </table>Heuristic
+    analysis is performed when file contents are uploaded to ensure that the content-type is appropriate
+    for the file type specified; this is done for security reasons, and under no circumstances is the
+    content sent to an external entity. <br />A note on security: a File can be <code>locked</code>, implying
+    that it can only be modified by its owner (the original API client that created the metadata) and
+    by extension only the File's owner is capable of uploading its content. If a File is <code>unlocked</code>
+    any other client that has access to the File's App can make modifications, including overwriting its
+    content.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-files-api-openapi.yml
+- aid: rapid7:rapid7-health-metrics-api
+  name: Rapid7 Health Metrics API
+  description: An API used to retrieve health metrics of an organization.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Health Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-health-metrics-api-openapi.yml
+- aid: rapid7:rapid7-investigations-api
+  name: Rapid7 Investigations API
+  description: The Investigations API from Rapid7 — 4 operation(s) for investigations.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Investigations
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-investigations-api-openapi.yml
+- aid: rapid7:rapid7-local-accounts-api
+  name: Rapid7 Local Accounts API
+  description: >-
+    An API used to find and search InsightIDR local accounts. See https://docs.rapid7.com/insightidr/users-and-accounts-on-your-domain
+    for further information on local accounts.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Local Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-local-accounts-api-openapi.yml
+- aid: rapid7:rapid7-policy-api
+  name: Rapid7 Policy API
+  description: Resources and operations for managing policies.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-policy-api-openapi.yml
+- aid: rapid7:rapid7-policy-override-api
+  name: Rapid7 Policy Override API
+  description: Policy Override Resource Controller
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Policy Override
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-policy-override-api-openapi.yml
+- aid: rapid7:rapid7-remediation-api
+  name: Rapid7 Remediation API
+  description: Resources for determining the details required to remediate vulnerabilities.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Remediation
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-remediation-api-openapi.yml
+- aid: rapid7:rapid7-report-api
+  name: Rapid7 Report API
+  description: >-
+    Resources and operations for managing and generating reports. Reports are broadly categorized into
+    `document`, `export`, and `file` types. `document` reports use section-based report templates to control
+    the output and can be generated in several formats. `export` reports are designed to output their
+    contents into a specific file format. `file` reports are templatized reports that output based on
+    the format of a template file. Reports can be configured to generate on a schedule and be distributed
+    via email to specific recipients.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Report
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-report-api-openapi.yml
+- aid: rapid7:rapid7-reports-api
+  name: Rapid7 Reports API
+  description: >-
+    Reports provide the ability to share information with stakeholders at both scan and app levels. The
+    following table lists the report templates and the various formats that are available:  <table> <thead><tr>
+    <th>Report Type</th> <th>Report Format</th> </tr> </thead> <tbody> <tr><td><code>VULN_SUMMARY</code></td>
+    <td><code>PDF</code> <code>HTML</code> <code>CSV</code></td> </tr> <tr> <td><code>VULN_REMEDIATION</code></td>
+    <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>PCI_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr>         <tr><td><code>PCI4_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr><tr><td><code>OWASP_2013_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2017_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2021_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2023API_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2025_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>GDPR_2016_COMPLIANCE</code></td> <td><code>PDF</code>
+    <code>HTML</code> </td> </tr> <tr><td><code>SOX_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code>
+    </td> </tr> <tr><td><code>HIPAA_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td>
+    </tr> <tr><td><code>EXEC_SINGLE_APP</code> (deprecated)</td> <td><code>PDF</code> <code>HTML</code>
+    </td> </tr> <tr><td><code>EXEC_ALL_APPS</code> (deprecated)</td> <td><code>PDF</code> </td> </tr>
+    <tr><td><code>EXEC_SINGLE_APP_NEW_VULNS</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr>
+    <tr><td><code>EXEC_ALL_APP_NEW_VULNS</code></td> <td><code>PDF</code> </td> </tr> <tr><td><code>EXEC_SINGLE_APP_ALL_VULNS</code></td>
+    <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>EXEC_ALL_APP_ALL_VULNS</code></td>
+    <td><code>PDF</code> </td> </tr> <tr><td><code>EXEC_IAS_IVM_COMPOSITE</code></td> <td><code>PDF</code>
+    </td> </tr> <tbody> </table>
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-reports-api-openapi.yml
+- aid: rapid7:rapid7-root-api
+  name: Rapid7 Root API
+  description: >-
+    Provides access to primary entry point for discovering the available resources in this API.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Root
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-root-api-openapi.yml
+- aid: rapid7:rapid7-scan-api
+  name: Rapid7 Scan API
+  description: Resources and operations for managing scans.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Scan
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-scan-api-openapi.yml
+- aid: rapid7:rapid7-scan-configs-api
+  name: Rapid7 Scan Configs API
+  description: >-
+    A Scan Config defines all the necessary information required to perform a Scan of an App. An App <i>must</i>
+    be created prior to creating a Scan Config. It is the main document that describes <i>what</i> and
+    <i>how</i> web resources should be discovered and Scanned, and can be tailored from Scan to Scan in
+    order to refine the results gathered. It must define which Attack Template to use during the attacking
+    phase of the Scan. Currently, all Scan Configs created via the API will by default specify that Scans
+    will be executed on Cloud engines; support for On-Premise engines is available by specifying appropriate
+    assignment ID (a known engine group ID), type (<code>ENGINE_GROUP</code>) and environment (<code>ON_PREMISE</code>)
+    values. A Scan Config <i>must</i> define a minimum set of Options that specify the following:<ul><li>At
+    least one Seed URL</li><li>At least one Crawling Scope Constraint</li></ul>If any of the Options defined
+    for a Scan Config are considered invalid, an explanatory message should be included in the "errors"
+    property of the owning Scan Config response body. All Seed URLs and Scope Constraint URLs provided
+    must have a valid Target.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Scan Configs
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-scan-configs-api-openapi.yml
+- aid: rapid7:rapid7-scan-engine-api
+  name: Rapid7 Scan Engine API
+  description: Resources and operations for managing scan engines.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Scan Engine
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-scan-engine-api-openapi.yml
+- aid: rapid7:rapid7-scan-template-api
+  name: Rapid7 Scan Template API
+  description: Scan Template Resource Controller
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Scan Template
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-scan-template-api-openapi.yml
+- aid: rapid7:rapid7-scans-api
+  name: Rapid7 Scans API
+  description: >-
+    A Scan encapsulates all the information for a single execution of the criteria defined in the provided
+    Scan Config. An App and a Scan Config <i>must</i> be created prior to submitting a Scan. All Scans
+    submitted via the API are currently treated as an 'on-demand' request to perform the Scan, and as
+    such will be queued for immanent execution. A Scan, once submitted, cannot be modified per-se, as
+    the life cycle of the Scan is managed by the product; though, it is possible to manipulate the life
+    cycle of each Scan by submitting an Action (e.g. a request to pause/resume or stop/cancel). A Scan
+    can only be deleted if it is in a Failed state. A Scan which <i>is not yet complete</i> can be forced
+    into a Failed state by submitting a CANCEL Action. A Scan which is submitted using a Scan Config with
+    validation errors or without a valid Target will result in a Failed Scan.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Scans
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-scans-api-openapi.yml
+- aid: rapid7:rapid7-schedules-api
+  name: Rapid7 Schedules API
+  description: >-
+    A Schedule defines the automated execution of a Scan, using a specified Scan Config. Both the App
+    and Scan Config must be created prior to creating a Schedule.  There are two options available to
+    specify how often a schedule can occur, <b>either a frequency or a recurrence rule (rrule).</b> Only
+    frequency supports the use of ONCE only schedules. If providing a rrule, the following fields are
+    permitted:<ul><li><code>FREQ</code> where FREQ is one of: <code>HOURLY, DAILY, WEEKLY, MONTHLY</code>
+    </li><li><code>INTERVAL</code></li><li><code>BYDAY</code> where BYDAY is: a single day, <code>SA,SU</code>
+    to represent weekend, or all weekdays. </li><li><code>BYMONTHDAY</code> where BYMONTHDAY is a range
+    between:<code> 1 - 31. </code></li><li><code>BYSETPOS</code> where BYSETPOS is one of: <code>-1, 1,
+    2, 3, 4</code></li><li><code>COUNT</code> where COUNT is the number of occurrences you want the blackout
+    to run for</li></ul>If providing a rrule, the <a href="https://datatracker.ietf.org/doc/html/rfc2445#section-4.8.5.4">RFC
+    2445 section-4.8.5.4 IETF specification</a> can be used as a guide for how to create rrules. Example:
+    <ul><li><code>rrule = "FREQ=MONTHLY;INTERVAL=1;BYDAY=FR;BYSETPOS=-1"</code> represents 'Run every
+    month on the last Friday'.</li></ul>If providing a frequency, a schedule's frequency is defined by
+    both the type and interval; specifying a type of <code>ONCE</code> does not require an interval. The
+    permitted types are as follows:<ul><li><code>ONCE</code></li><li><code>HOURLY</code></li><li><code>DAILY</code></li><li><code>WEEKLY</code></li><li><code>MONTHLY</code></li></ul>Either
+    a frequency <b>or</b> a rrule must be provided for create/update operations. If a <code>frequency.type</code>
+    other than <code>ONCE</code> is provided, the date and time of the Schedule recurrences will be calculated
+    based on the <code>frequency</code> or <code>rrule</code> defined, until the threshold of <code>last_start</code>
+    (if one is provided, otherwise until a date considerably far into the future).
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-schedules-api-openapi.yml
+- aid: rapid7:rapid7-search-api
+  name: Rapid7 Search API
+  description: >-
+    A global Search API is exposed to facilitate the execution of user-defined queries that can perform
+    a Search across the supported resource types exposed via the API. Each Search Request must specify
+    both the resource type and the query to be executed. Below details the specific catalog of properties
+    for each resource type that can be used as atoms of the Search query, and the operators that can be
+    used with them.<h3>Search Catalog</h3><table><thead><tr><th>Resource Type</th><th>Properties</th></tr></thead><tbody><tr><td><code>APP</code></td><td><ul><li>app.id</li><li>app.name</li><li>app.description</li></ul></td></tr><tr><td><code>SCAN_CONFIG</code></td><td><ul><li>scanconfig.id</li><li>scanconfig.name</li><li>scanconfig.description</li><li>scanconfig.app.id</li><li>scanconfig.attack_template.id</li></ul></td></tr><tr><td><code>SCAN</code></td><td><ul><li>scan.id</li><li>scan.status</li><li>scan.failure_reason</li><li>scan.submit_time</li><li>scan.completion_time</li><li>scan.app.id</li><li>scan.scan_config.id</li><li>scan.submitter.id</li><li>scan.submitter.type</li></ul></td></tr><tr><td><code>VULNERABILITY</code></td><td><ul><li>vulnerability.id</li><li>vulnerability.severity</li><li>vulnerability.status</li><li>vulnerability.scans.id</li><li>vulnerability.app.id</li><li>vulnerability.root_cause.url</li><li>vulnerability.root_cause.parameter</li><li>vulnerability.root_cause.method</li><li>vulnerability.discoveries.discovered</li><li>vulnerability.first_discovered</li><li>vulnerability.last_discovered</li><li>vulnerability.newly_discovered</li></ul></td></tr><tr><td><code>ATTACK_TEMPLATE</code></td><td><ul><li>attacktemplate.id</li><li>attacktemplate.name</li><li>attacktemplate.description</li><li>attacktemplate.system_defined</li></ul></td></tr><tr><td><code>TARGET</code></td><td><ul><li>target.id</li><li>target.domain</li><li>target.enabled</li></ul></td><tr><td><code>ENGINE</code></td><td><ul><li>engine.id</li><li>engine.name</li><li>engine.status</li><li>engine.engine_group.id</li><li>engine.engine_group.name</li></ul></td><tr><td><code>ENGINE_GROUP</code></td><td><ul><li>enginegroup.id</li><li>enginegroup.name</li><li>enginegroup.description</li></ul></td></tr><tr><td><code>SCHEDULE</code></td><td><ul><li>schedule.id</li><li>schedule.name</li><li>schedule.enabled</li><li>schedule.app.id</li><li>schedule.scan_config.id</li></ul></td></tr><tr><td><code>BLACKOUT</code></td><td><ul><li>blackout.id</li><li>blackout.name</li><li>blackout.enabled</li><li>blackout.app.id</li><li>blackout.scope</li></ul></td></tr><tr><td><code>FILE</code></td><td><ul><li>file.id</li><li>file.name</li><li>file.description</li><li>file.type</li><li>file.locked</li><li>file.apps.id</li><li>file.owner.id</li></ul></td></tr><tr><td><code>TAG</code></td><td><ul><li>tag.id</li><li>tag.name</li><li>tag.creator.id</li><li>tag.created</li></ul></td></tr><tr><td><code>REPORT</code></td><td><ul><li>report.id</li><li>report.name</li><li>report.type</li><li>report.format</li><li>report.owner.id</li><li>report.generatedDate</li><li>report.app.id</li></ul></td></tr></tbody></table><h3>Search
+    Operators</h3><table><thead><tr><th>Operator</th><th>Description</th></tr></thead><tbody><tr><td><p>=</p></td><td><p>Equal
+    To. Returns all records that equal the specified value.</p></td></tr><tr><td><p>!=</p></td><td><p>Not
+    Equal To. Returns all records that are not equal to the specified value.</p></td></tr><tr><td><p>&gt;</p></td><td><p>Greater
+    Than. Returns all records that are greater than the specified value.</p></td></tr><tr><td><p>&gt;=</p></td><td><p>Greater
+    Than or Equal To. Returns all records that are greater than or equal to the specified value.</p></td></tr><tr><td><p>&lt;</p></td><td><p>Less
+    Than. Returns all records that are less than the specified value.</p></td></tr><tr><td><p>&lt;=</p></td><td><p>Less
+    Than or Equal To. Returns all records that are less than or equal to the specified value.</p></td></tr><tr><td><p>CONTAINS</p></td><td><p>Returns
+    all records that contain the specified string.</p></td></tr><tr><td><p>STARTS WITH</p></td><td><p>Returns
+    all records that start with the specified string.</p></td></tr><tr><td><p>ENDS WITH</p></td><td><p>Returns
+    all records that end with the specified string.</p></td></tr><tr><td><p>LIKE</p></td><td><p>Works
+    as a normal regular expression as opposed to SQL regular expression.</p></td></tr><tr><td><p>IS NULL</p></td><td><p>Returns
+    all records whose specified value is NULL (contains the NULL value).</p></td></tr><tr><td><p>IS NOT
+    NULL</p></td><td><p>Returns all records whose specified value is not NULL (does not contain the NULL
+    value).</p></td></tr><tr><td><p>&&</p></td><td><p>The 'logical AND' operator returns values when both
+    conditions are true.</p></td></tr><tr><td><p>||</p></td><td><p>The 'logical OR' operator returns values
+    when one of the conditions is true.</p></td></tr><tr><td><p>BETWEEN</p></td><td><p>An operator to
+    allow range checking for date types.</p></td></tr></tbody></table><h3>Useful Examples</h3><table><thead><tr><th>Query</th><th>Description</th></tr></thead><tbody><tr><td><p>app.name
+    CONTAINS 'production' && app.description LIKE '.&ast;(South|North) America.&ast;'</p></td><td><p>Find
+    all Apps where the name contains the text 'production' and the description contains the text 'South
+    America' or 'North America'</p></td></tr><tr><td><p>scanconfig.name = 'Weekly Scan' && scanconfig.app.id
+    = '12345678-1234-1234-1234-123456789012'</p></td><td><p>Find all Scan Configs where the name is exactly
+    the text 'Weekly Scan' and the App that owns it has a ID of value '12345678-1234-1234-1234-123456789012'</p></td></tr><tr><td><p>scan.status
+    = 'COMPLETE' || scan.status = 'FAILED' && scan.completion_time BETWEEN '2018-11-01T00:00:00' AND '2018-12-1T00:00:00'</p></td><td><p>Find
+    all Scans that ran to a terminal state in November 2018</p></td></tr><tr><td><p>vulnerability.severity
+    = 'HIGH' && vulnerability.app.id = '12345678-1234-1234-1234-123456789012'</p></td><td><p>Find all
+    Vulnerabilities where the severity is HIGH and the App that owns it has a ID of value '12345678-1234-1234-1234-123456789012'</p></td></tr><tr><td><p>attacktemplate.system_defined
+    = 'true' && attacktemplate.name = 'Crawl Only'</p></td><td><p>Find the system-defined Crawl-Only Attack
+    Template</p></td></tr><tr><td><p>target.enabled = 'false'</p></td><td><p>Find all disabled Targets</p></td></tr></tbody></table><h3>Notes</h3><p>Please
+    note that the search DSL is <i>case-sensitive</i> and as such all resource properties and search operators
+    should be checked for correct casing in the result of a query validation error response. </p>
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-search-api-openapi.yml
+- aid: rapid7:rapid7-site-api
+  name: Rapid7 Site API
+  description: Resources and operations for managing sites.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Site
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-site-api-openapi.yml
+- aid: rapid7:rapid7-tag-api
+  name: Rapid7 Tag API
+  description: Resources and operations for managing tags.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Tag
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-tag-api-openapi.yml
+- aid: rapid7:rapid7-tags-api
+  name: Rapid7 Tags API
+  description: >-
+    Tags are customer-defined labels that can be used for a variety of purposes. The management of Tags
+    is performed by this API, and other APIs facilitate applying these Tags to other resources. These
+    applied Tags can then be used in Search queries submitted to the Search API to aid in data segregation
+    for customer-specific problems. Tags have a unique name constraint, and therefore duplicate names
+    will not be accepted.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-tags-api-openapi.yml
+- aid: rapid7:rapid7-targets-api
+  name: Rapid7 Targets API
+  description: >-
+    A Target essentially specifies an allowlisted Fully Qualified Domain Name (FQDN) which can be Scanned
+    by InsightAppSec. A Target can be created, edited and deleted by an API consumer provided the permissions
+    inherited by the authentication method allow it, though if a Target has been successfully Scanned
+    at least once it can no longer be deleted. If it is no longer desirable to allow Scans to be executed
+    against a given Target, it can be disabled. A Target is a top-level resource within the product, and
+    as such is not affected by the deletion of any Apps.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Targets
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-targets-api-openapi.yml
+- aid: rapid7:rapid7-user-api
+  name: Rapid7 User API
+  description: Resources and operations for managing users, permissions, and privileges.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-user-api-openapi.yml
+- aid: rapid7:rapid7-users-api
+  name: Rapid7 Users API
+  description: >-
+    An API used to find and search InsightIDR users. See https://docs.rapid7.com/insightidr/users-and-accounts-on-your-domain
+    for further information on users.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-users-api-openapi.yml
+- aid: rapid7:rapid7-variances-documentation-api
+  name: Rapid7 Variances Documentation API
+  description: >-
+    The Variances Documentation API from Rapid7 — 2 operation(s) for variances documentation.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Variances Documentation
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-variances-documentation-api-openapi.yml
+- aid: rapid7:rapid7-vulnerabilities-api
+  name: Rapid7 Vulnerabilities API
+  description: >-
+    A Vulnerability is a resource that encapsulates any information found by any Scan over the lifetime
+    of an App, that <i>may</i> identify where and how an App could be exploited. Each Vulnerability contains
+    information about the Root Cause (location) and Variances (attack types and natures) which contribute
+    to the evidence that the Vulnerability exists. A Vulnerability cannot be explicitly created or deleted
+    via the API, as its life cycle is managed by the product; but, it can be implicitly created by submitting
+    a Scan and can be implicitly deleted by deleting the App that owns it. There are a number of fields
+    which are mutable and can help to control the workflow of the management of an App's Vulnerabilities.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerabilities
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerabilities-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-api
+  name: Rapid7 Vulnerability API
+  description: Resources and operations for viewing vulnerability content and managing exceptions.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-check-api
+  name: Rapid7 Vulnerability Check API
+  description: >-
+    Resources and operations for view vulnerability checks that can be run as a part of vulnerability
+    content.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability Check
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-check-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-comments-api
+  name: Rapid7 Vulnerability Comments API
+  description: >-
+    A Vulnerability Comment is a resource that allows users to add context to the Vulnerability.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-comments-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-exception-api
+  name: Rapid7 Vulnerability Exception API
+  description: Vulnerability Exception Resource Controller
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability Exception
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-exception-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-history-api
+  name: Rapid7 Vulnerability History API
+  description: >-
+    A Vulnerability History resource represents the change applied to a specific Vulnerability at a point
+    of time in its existence.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability History
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-history-api-openapi.yml
+- aid: rapid7:rapid7-vulnerability-result-api
+  name: Rapid7 Vulnerability Result API
+  description: Resources and operations for retrieving vulnerability results on assessed assets.
+  humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
+  baseURL: https://us.api.insight.rapid7.com/vm/v4
+  tags:
+  - Vulnerability Result
+  properties:
+  - type: OpenAPI
+    url: openapi/rapid7-vulnerability-result-api-openapi.yml
 common:
 - type: AgenticAccess
   url: agentic-access/rapid7-agentic-access.yml
