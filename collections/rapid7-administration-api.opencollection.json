@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Administration API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Administration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Console Commands",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/commands"
+          },
+          "docs": "Executes a console command against the Security Console. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/info"
+          },
+          "docs": "Returns system details, including host and version information."
+        },
+        {
+          "info": {
+            "name": "License",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/license"
+          },
+          "docs": "Returns the enabled features and limits of the current license. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "License",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/license",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "A license activation key."
+              }
+            ]
+          },
+          "docs": "Licenses the product with an activation key or a provided license file. If both are provided, the license file is preferred. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/properties"
+          },
+          "docs": "Returns system details, including host and version information."
+        },
+        {
+          "info": {
+            "name": "Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/administration/settings"
+          },
+          "docs": "Returns the current administration settings. <span class=\"authorization\">Global Administrator</span>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

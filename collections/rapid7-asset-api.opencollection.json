@@ -1,0 +1,643 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Asset API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all assets for which you have access."
+        },
+        {
+          "info": {
+            "name": "Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates or updates an asset with the specified details."
+        },
+        {
+          "info": {
+            "name": "Asset Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/search",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all assets for which you have access that match the given search criteria."
+        },
+        {
+          "info": {
+            "name": "Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns the specified asset."
+        },
+        {
+          "info": {
+            "name": "Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Deletes the specified asset."
+        },
+        {
+          "info": {
+            "name": "Asset Databases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/databases",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns the databases enumerated on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns the files discovered on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns the services discovered on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the service running a port and protocol on the asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/configurations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the configuration (properties) of a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service Databases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/databases",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the databases running on a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service User Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/user_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the user groups enumerated on a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the users enumerated on a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service Web Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/web_applications",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              }
+            ]
+          },
+          "docs": "Returns the web applications running on a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Service Web Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/services/:protocol/:port/web_applications/:webApplicationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "protocol",
+                "value": "",
+                "type": "path",
+                "description": "The protocol of the service."
+              },
+              {
+                "name": "port",
+                "value": "",
+                "type": "path",
+                "description": "The port of the service."
+              },
+              {
+                "name": "webApplicationId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the web application."
+              }
+            ]
+          },
+          "docs": "Returns a web application running on a port and protocol on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Software",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/software",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns the software on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns tags assigned to an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Assigns the specified tag to the asset."
+        },
+        {
+          "info": {
+            "name": "Asset Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes the specified tag from the asset's tags."
+        },
+        {
+          "info": {
+            "name": "Asset User Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/user_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns user groups enumerated on an asset."
+        },
+        {
+          "info": {
+            "name": "Asset Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns users enumerated on an asset."
+        },
+        {
+          "info": {
+            "name": "Operating Systems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/operating_systems",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all operating systems discovered across all assets. "
+        },
+        {
+          "info": {
+            "name": "Operating System",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/operating_systems/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the operating system."
+              }
+            ]
+          },
+          "docs": "Returns the details for an operating system."
+        },
+        {
+          "info": {
+            "name": "Software",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/software",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all software enumerated on any asset."
+        },
+        {
+          "info": {
+            "name": "Software",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/software/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the software."
+              }
+            ]
+          },
+          "docs": "Returns the details for software."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

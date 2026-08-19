@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Attachments API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/attachments",
+            "params": [
+              {
+                "name": "target",
+                "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210",
+                "type": "query",
+                "description": "Return attachments with this target."
+              },
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100."
+              }
+            ]
+          },
+          "docs": "Retrieves attachments matching the given request parameters. For example, this API allows you to list all attachments by investigation."
+        },
+        {
+          "info": {
+            "name": "Upload attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/attachments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API used to upload one or more attachments. By default, attachments are not associated with a comment. Use<a href=https://help.rapid7.com/insightidr/en-us/api/v1/docs.html#tag/Comments/operation/createComment> this API </a> to create comment."
+        },
+        {
+          "info": {
+            "name": "Download attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/attachments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to download an attachment by RRN. The RRN determines which attachment is downloaded."
+        },
+        {
+          "info": {
+            "name": "Delete an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/attachments/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to delete an attachment with the given RRN."
+        },
+        {
+          "info": {
+            "name": "Get attachment information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/attachments/:rrn/metadata",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "rrn:collaboration:us:01234567-89ab-cdef-0000-123123123123:attachment:ABCDEF543210",
+                "type": "path",
+                "description": "The RRN of the attachment."
+              }
+            ]
+          },
+          "docs": "An API you can use to get information from an attachment by RRN. The RRN identifies the attachment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

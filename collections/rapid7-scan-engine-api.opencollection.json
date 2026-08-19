@@ -1,0 +1,420 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Scan Engine API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scan Engine",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Engine Pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools"
+          },
+          "docs": "Returns engine pools available to use for scanning."
+        },
+        {
+          "info": {
+            "name": "Engine Pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools"
+          },
+          "docs": "Creates a new engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Retrieves the details for an engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Updates the specified engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Deletes the specified engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id/engines",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Get the engines in the engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id/engines",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Set the engines in the engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id/engines/:engineId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              },
+              {
+                "name": "engineId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Add an engine to the engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id/engines/:engineId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              },
+              {
+                "name": "engineId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Remove the specified engine from the engine pool."
+        },
+        {
+          "info": {
+            "name": "Engine Pool Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engine_pools/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the engine pool."
+              }
+            ]
+          },
+          "docs": "Returns links to the sites associated with this engine pool."
+        },
+        {
+          "info": {
+            "name": "Scan Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines"
+          },
+          "docs": "Returns scan engines available to use for scanning."
+        },
+        {
+          "info": {
+            "name": "Scan Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines"
+          },
+          "docs": "Creates a new scan engine."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Shared Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/shared_secret"
+          },
+          "docs": "Returns the current valid shared secret, if one has been previously generated and it has not yet expired; otherwise the endpoint will respond with a 404 status code. Use this endpoint to detect whether a previously-generated shared secret is still valid."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Shared Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/shared_secret"
+          },
+          "docs": "Returns the current valid shared secret or generates a new shared secret. The endpoint returns an existing shared secret if one was previously generated and it has not yet expired. Conversely, the endpoint will generate and return a new shared secret for either of the following conditions: a shared secret was not previously generated or the previously-generated shared secret has expired. The shared secret is valid for 60 minutes from the moment it is generated."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Shared Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/shared_secret"
+          },
+          "docs": "Revokes the current valid shared secret, if one exists."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Shared Secret Time to live",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/shared_secret/time_to_live"
+          },
+          "docs": "Returns the number of seconds remaining for the current shared secret before it expires, if one has been previously generated and it has not yet expired; otherwise the endpoint will respond with a 404 status code."
+        },
+        {
+          "info": {
+            "name": "Scan Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Retrieves the details for a scan engine."
+        },
+        {
+          "info": {
+            "name": "Scan Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Updates the specified scan engine."
+        },
+        {
+          "info": {
+            "name": "Scan Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Deletes the specified scan engine."
+        },
+        {
+          "info": {
+            "name": "Assigned Engine Pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id/scan_engine_pools",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of engine pools the scan engine is currently assigned to."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id/scans",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns the scans that have been run on a scan engine."
+        },
+        {
+          "info": {
+            "name": "Scan Engine Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_engines/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan engine."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of sites the specified scan engine is assigned to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

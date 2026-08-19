@@ -1,0 +1,630 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts User API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authentication Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/authentication_sources"
+          },
+          "docs": "Returns all available sources of authentication for users."
+        },
+        {
+          "info": {
+            "name": "Authentication Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/authentication_sources/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the authentication source."
+              }
+            ]
+          },
+          "docs": "Returns the details for an authentication source."
+        },
+        {
+          "info": {
+            "name": "Authentication Source Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/authentication_sources/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the authentication source."
+              }
+            ]
+          },
+          "docs": "Returns hypermedia links for the user accounts that use the authentication source to authenticate."
+        },
+        {
+          "info": {
+            "name": "Privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/privileges"
+          },
+          "docs": "Returns all privileges that may be granted to a role."
+        },
+        {
+          "info": {
+            "name": "Privilege",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/privileges/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the privilege."
+              }
+            ]
+          },
+          "docs": "Returns the details for a privilege."
+        },
+        {
+          "info": {
+            "name": "Users With Privilege",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/privileges/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the privilege."
+              }
+            ]
+          },
+          "docs": "Returns hypermedia links for all users granted the specified privilege by their role."
+        },
+        {
+          "info": {
+            "name": "Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/roles"
+          },
+          "docs": "Returns all roles for which users may be assigned."
+        },
+        {
+          "info": {
+            "name": "Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the role."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a role."
+        },
+        {
+          "info": {
+            "name": "Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the role."
+              }
+            ]
+          },
+          "docs": "Updates the details of a role."
+        },
+        {
+          "info": {
+            "name": "Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the role."
+              }
+            ]
+          },
+          "docs": "Removes a role with the specified identifier. The role must not be built-in and cannot be currently assigned to any users."
+        },
+        {
+          "info": {
+            "name": "Users With Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/roles/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the role."
+              }
+            ]
+          },
+          "docs": "Returns hypermedia links for the the users currently assigned a role."
+        },
+        {
+          "info": {
+            "name": "Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all defined users. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users"
+          },
+          "docs": "Creates a new user. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns the details for a user.<span class=\"authorization\">Global Administrator, Current User</span>"
+        },
+        {
+          "info": {
+            "name": "User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Updates the details of a user. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Deletes a user account.<span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Two-Factor Authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/2FA",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Retrieves the current authentication token seed (key) for the user, if configured."
+        },
+        {
+          "info": {
+            "name": "Two-Factor Authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/2FA",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Regenerates a new authentication token seed (key) and updates it for the user. This key may be then be used in the appropriate 2FA authenticator."
+        },
+        {
+          "info": {
+            "name": "Two-Factor Authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/2FA",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Sets the authentication token seed (key) for the user. This key may be then be used in the appropriate 2FA authenticator."
+        },
+        {
+          "info": {
+            "name": "Asset Groups Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns the asset groups to which the user has access."
+        },
+        {
+          "info": {
+            "name": "Asset Groups Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Updates the asset groups to which the user has access. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Asset Groups Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Revokes access to all asset groups from the user."
+        },
+        {
+          "info": {
+            "name": "Asset Group Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Grants the user access to the asset group. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Asset Group Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Grants the user access to the asset group. Individual asset group access cannot be granted to users with the `allAssetGroups` permission. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Unlock Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/lock",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Unlocks a locked user account that has too many failed authentication attempts. Disabled accounts may not be unlocked."
+        },
+        {
+          "info": {
+            "name": "Password Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/password",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Changes the password for the user. Users may only change their own password."
+        },
+        {
+          "info": {
+            "name": "User Privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/privileges",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns the privileges granted to the user by their role. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Sites Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Returns the sites to which the user has access."
+        },
+        {
+          "info": {
+            "name": "Sites Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Updates the sites to which the user has access. Individual site access cannot be granted to users with the `allSites` permission. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Sites Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Revokes access to all sites from the user."
+        },
+        {
+          "info": {
+            "name": "Site Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/sites/:siteId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              },
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Grants the user access to the site. Individual site access cannot be granted to users with the `allSites` permission. <span class=\"authorization\">Global Administrator</span>"
+        },
+        {
+          "info": {
+            "name": "Site Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/users/:id/sites/:siteId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              },
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Grants the user access to the site. Individual site access cannot be granted to users with the `allSites` permission. <span class=\"authorization\">Global Administrator</span>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

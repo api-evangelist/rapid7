@@ -1,0 +1,1774 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Site API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Site",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Site Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of assets linked with the specified site."
+        },
+        {
+          "info": {
+            "name": "Site Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes all assets from the specified site. Assets will be deleted entirely from the Security Console if either Asset Linking is disabled or if Asset Linking is enabled and the asset only existed in this site."
+        },
+        {
+          "info": {
+            "name": "Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of accessible sites."
+        },
+        {
+          "info": {
+            "name": "Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites"
+          },
+          "docs": "Creates a new site with the specified configuration."
+        },
+        {
+          "info": {
+            "name": "Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the site with the specified identifier."
+        },
+        {
+          "info": {
+            "name": "Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the configuration of the site with the specified identifier."
+        },
+        {
+          "info": {
+            "name": "Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes the site with the specified identifier."
+        },
+        {
+          "info": {
+            "name": "Site Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieve all alerts defined in the site."
+        },
+        {
+          "info": {
+            "name": "Site Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all alerts from the site."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all SMTP alerts defined in the site."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates a new SMTP alert for the specified site."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates all SMTP alerts for the specified site in a single request using the array of resources defined in the request body."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all SMTP alerts from the site."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified SMTP alert."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Updates the specified SMTP alert."
+        },
+        {
+          "info": {
+            "name": "Site SMTP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/smtp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Deletes the specified SMTP alert from the site."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all SNMP alerts defined in the site."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates a new SNMP alert for the specified site."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates all SNMP alerts for the specified site in a single request using the array of resources defined in the request body."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all SNMP alerts from the site."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified SNMP alert."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Updates the specified SNMP alert."
+        },
+        {
+          "info": {
+            "name": "Site SNMP Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/snmp/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Deletes the specified SNMP alert from the site."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all Syslog alerts defined in the site."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates a new Syslog alert for the specified site."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates all Syslog alerts for the specified site in a single request using the array of resources defined in the request body."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all Syslog alerts from the site."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified Syslog alert."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Updates the specified Syslog alert."
+        },
+        {
+          "info": {
+            "name": "Site Syslog Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/alerts/syslog/:alertId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "alertId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the alert."
+              }
+            ]
+          },
+          "docs": "Deletes the specified Syslog alert from the site."
+        },
+        {
+          "info": {
+            "name": "Site Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/assets/:assetId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Removes an asset from a site. The asset will only be deleted if it belongs to no other sites."
+        },
+        {
+          "info": {
+            "name": "Site Discovery Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/discovery_connection",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the discovery connection assigned to the site."
+        },
+        {
+          "info": {
+            "name": "Site Discovery Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/discovery_connection",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the discovery connection assigned to the site."
+        },
+        {
+          "info": {
+            "name": "Site Discovery Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/discovery_search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieve the search criteria of the dynamic site."
+        },
+        {
+          "info": {
+            "name": "Site Discovery Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/discovery_search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Update the search criteria of the dynamic site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the excluded asset groups in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the excluded asset groups in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes all excluded asset groups from the specified static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Removes the specified asset group from the excluded asset groups configured in the static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the excluded targets in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Adds one or more addresses to the site's list of excluded scan targets."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the excluded targets in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Excluded Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/excluded_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes one or more addresses from the site's list of excluded scan targets."
+        },
+        {
+          "info": {
+            "name": "Site Included Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the included asset groups in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the included asset groups in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes all included asset groups from the specified static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Removes the specified asset group from the included asset groups configured in the static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the included targets in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Adds one or more addresses to the site's list of included scan targets."
+        },
+        {
+          "info": {
+            "name": "Site Included Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the included targets in a static site."
+        },
+        {
+          "info": {
+            "name": "Site Included Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/included_targets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes one or more addresses from the site's list of included scan targets."
+        },
+        {
+          "info": {
+            "name": "Site Organization Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/organization",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the site organization information."
+        },
+        {
+          "info": {
+            "name": "Site Organization Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/organization",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the site organization information."
+        },
+        {
+          "info": {
+            "name": "Site Scan Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_engine",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the resource of the scan engine assigned to the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_engine",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the assigned scan engine to the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Returns all scan schedules for the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates a new scan schedule for the specified site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates all scan schedules for the specified site in a single request using the array of resources defined in the request body."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all scan schedules from the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules/:scheduleId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan schedule."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified scan schedule."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules/:scheduleId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan schedule."
+              }
+            ]
+          },
+          "docs": "Updates the specified scan schedule."
+        },
+        {
+          "info": {
+            "name": "Site Scan Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_schedules/:scheduleId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan schedule."
+              }
+            ]
+          },
+          "docs": "Deletes the specified scan schedule from the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_template",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the resource of the scan template assigned to the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scan_template",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the assigned scan template to the site."
+        },
+        {
+          "info": {
+            "name": "Assigned Shared Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/shared_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieve all of the shared credentials assigned to the site. These shared credentials can be enabled/disabled for the site's scan."
+        },
+        {
+          "info": {
+            "name": "Assigned Shared Credential Enablement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/shared_credentials/:credentialId/enabled",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the shared credential."
+              }
+            ]
+          },
+          "docs": "Enable or disable the shared credential for the site's scans."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all defined site credential resources."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Creates a new site credential."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates multiple site credentials."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Deletes all site credentials from the site."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials/:credentialId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site credential."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified site credential."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials/:credentialId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site credential."
+              }
+            ]
+          },
+          "docs": "Updates the specified site credential."
+        },
+        {
+          "info": {
+            "name": "Site Scan Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials/:credentialId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site credential."
+              }
+            ]
+          },
+          "docs": "Deletes the specified site credential."
+        },
+        {
+          "info": {
+            "name": "Site Credential Enablement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/site_credentials/:credentialId/enabled",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site credential."
+              }
+            ]
+          },
+          "docs": "Enable or disable the site credential for scans."
+        },
+        {
+          "info": {
+            "name": "Site Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of tags added to the sites."
+        },
+        {
+          "info": {
+            "name": "Site Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the site's list of tags."
+        },
+        {
+          "info": {
+            "name": "Site Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Adds a tag to the site."
+        },
+        {
+          "info": {
+            "name": "Site Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes the specified tag from the site's tags."
+        },
+        {
+          "info": {
+            "name": "Site Users Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieve the list of non-administrator users that have access to the site."
+        },
+        {
+          "info": {
+            "name": "Site Users Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Grants a non-administrator user access to the specified site."
+        },
+        {
+          "info": {
+            "name": "Site Users Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Updates the site's access list."
+        },
+        {
+          "info": {
+            "name": "Site User Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/users/:userId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Removes the specified user from the site's access list."
+        },
+        {
+          "info": {
+            "name": "Web Authentication HTML Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/web_authentication/html_forms",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all HTML form authentications configured in the site."
+        },
+        {
+          "info": {
+            "name": "Web Authentication HTTP Headers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/web_authentication/http_headers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Retrieves all HTTP header authentications configured in the site."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

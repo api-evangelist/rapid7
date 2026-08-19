@@ -1,0 +1,2142 @@
+{
+  "item": [
+    {
+      "id": "4517ddf0-0903-449f-a878-63d34c678c7b",
+      "name": "Blackouts",
+      "description": {
+        "content": "A blackout is a period of time when all scanning activities for the specified scope are blocked. A blackout can be scoped globally or to a specific App, this is implied by the <code>scope</code> property; scope value of <code>APP</code> requires that an appropriate <code>app.id</code> value is also provided. There are two options available to specify how often a blackout will occur, <b>either a frequency or a recurrence rule (rrule).</b>  Only frequency supports the use of ONCE only blackouts. If providing a rrule, the following fields are permitted:<ul><li><code>FREQ</code> where FREQ is one of: <code>HOURLY, DAILY, WEEKLY, MONTHLY</code> </li><li><code>INTERVAL</code></li><li><code>BYDAY</code> where value is: a single day, <code>SA,SU</code> to represent weekend, or all weekdays. </li><li><code>BYMONTHDAY</code> where value is a range between: <code>1 - 31.</code> </li><li><code>BYSETPOS</code> where value is one of: <code>-1, 1, 2, 3, 4</code></li><li><code>COUNT</code></li></ul>If providing a rrule, the <a href=\"https://datatracker.ietf.org/doc/html/rfc2445#section-4.8.5.4\">RFC 2445 section-4.8.5.4 IETF specification</a> can be used as a guide for how to create rrules. Example: <ul><li><code>rrule = \"FREQ=MONTHLY;INTERVAL=1;BYDAY=FR;BYSETPOS=-1\"</code> represents 'Run every month on the last Friday'.</li></ul>If providing a frequency, the frequency of a blackout is defined by both the type and interval; specifying a type of <code>ONCE</code> does not require an interval. The permitted types are as follows:<ul><li><code>ONCE</code></li><li><code>HOURLY</code></li><li><code>DAILY</code></li><li><code>WEEKLY</code></li><li><code>MONTHLY</code></li></ul>Either a frequency <b>or</b> a rrule must be provided for create/update operations.If a <code>frequency.type</code> other than <code>ONCE</code> is provided, the date and time of the blackout recurrences will be calculated based on the <code>frequency</code> or <code>rrule</code> defined, until the threshold of <code>last_start</code> (if one is provided, otherwise until a date considerably far into the future). The value of <code>first_start</code> and <code>first_end</code> define the initial period of the Blackout; duration of this period is adhered to at every recurrence, hence why there is no need to model a <code>last_end</code>.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "48d42aa3-2407-4475-b46c-bb06f10d907f",
+          "name": "Get Blackouts",
+          "request": {
+            "name": "Get Blackouts",
+            "description": {
+              "content": "Get a page of Blackouts, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Blackouts is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "blackouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page-token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e984758-2b5a-46a7-8e72-bdce1b3c9789",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"enabled\": true,\n      \"first_end\": \"2016-06-14T06:47:34.143Z\",\n      \"first_start\": \"2010-04-18T18:04:13.846Z\",\n      \"name\": \"string\",\n      \"id\": \"184f020d-7d49-d867-cfdb-021db534987c\",\n      \"scope\": \"GLOBAL\",\n      \"active\": true,\n      \"app\": {\n        \"id\": \"3e62cd72-5c52-664a-672d-26452828cc06\"\n      },\n      \"last_start\": \"1961-02-17T05:16:05.101Z\",\n      \"frequency\": {\n        \"type\": \"WEEKLY\",\n        \"interval\": 6489\n      },\n      \"rrule\": \"string\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"enabled\": true,\n      \"first_end\": \"2007-01-18T04:30:43.082Z\",\n      \"first_start\": \"1950-07-27T18:23:58.371Z\",\n      \"name\": \"string\",\n      \"id\": \"ecd12fbc-77eb-ec7f-2f92-fe8000858e28\",\n      \"scope\": \"GLOBAL\",\n      \"active\": false,\n      \"app\": {\n        \"id\": \"dca1d39a-76ca-d3cc-ca8a-250e06583147\"\n      },\n      \"last_start\": \"1976-05-26T06:30:59.952Z\",\n      \"frequency\": {\n        \"type\": \"DAILY\",\n        \"interval\": 2317\n      },\n      \"rrule\": \"string\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"metadata\": {\n    \"index\": 9172,\n    \"size\": 1542,\n    \"sort\": \"string\",\n    \"total_data\": 3809,\n    \"total_pages\": 9958,\n    \"page_token\": \"string\"\n  },\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9e00406-781e-4620-9a96-ee0228a9d769",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b20da755-42d5-4fea-8bda-664a1f1bbc45",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ba5dd88-d457-488d-8955-fe7dbb8afc85",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f006c373-a3aa-4386-bed1-507ecc29b351",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5090d92e-78db-4dad-90b7-1268aec84c55",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "640ef53e-d917-4cba-b02e-3315b9b3d1ff",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af7386ec-535d-42c0-8e0b-a231ed21de41",
+          "name": "Create Blackout",
+          "request": {
+            "name": "Create Blackout",
+            "description": {
+              "content": "Create a new Blackout",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "blackouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"<uuid>\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"<string>\",\n    \"interval\": \"<integer>\"\n  },\n  \"rrule\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9c768cf-6438-4ed3-9edd-2375de73cd14",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c642c817-a062-418c-902c-e4a06d6eff51",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34db7666-ff41-4580-bb03-9e3498ec97bb",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c19f2886-206c-40eb-88ce-04ad8d1f16a6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1a70584-be0e-4b07-b060-5fd48a5834cb",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24b4d57a-e7f4-407a-932c-ee746c54b44f",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "072bcdee-1bbd-46e7-8c5f-db76c5b90249",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de87959b-6306-4aea-9bdd-283671ca3fdd",
+              "name": "Resource validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"408 REQUEST_TIMEOUT\",\n  \"message\": \"string\",\n  \"errorCode\": \"E5\",\n  \"errors\": [\n    {\n      \"type\": \"OBJECT\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    },\n    {\n      \"type\": \"PROPERTY\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5177998-a970-4069-82db-34e68777b8c0",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aa747d5-dba2-4f85-b5f1-9ed101e3d00e",
+          "name": "Get Blackout",
+          "request": {
+            "name": "Get Blackout",
+            "description": {
+              "content": "Get a Blackout",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "blackouts",
+                ":blackout-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "blackout-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e15cdc0b-16d9-46f1-8238-948ebc499f95",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"enabled\": false,\n  \"first_end\": \"1982-03-10T04:38:21.759Z\",\n  \"first_start\": \"1981-09-20T05:19:14.504Z\",\n  \"name\": \"string\",\n  \"id\": \"659e3997-f36e-112f-5b0d-df14e8897680\",\n  \"scope\": \"APP\",\n  \"active\": false,\n  \"app\": {\n    \"id\": \"87d47463-3fee-04b3-a7bf-870721e67048\"\n  },\n  \"last_start\": \"1992-07-16T20:34:56.966Z\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 5083\n  },\n  \"rrule\": \"string\",\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e4b98c0-afc9-4b36-9f07-d2db00c7e83c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c9927ef-5e03-4994-8626-49e5cdc21b82",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8f7cb1c-e684-4a01-91f4-199ab9a8b461",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f572569-0295-4fc6-8bf1-7263a7a3862d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27576363-1fe3-4a6d-9f66-41c0ebc52f94",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "328a028c-44a3-4666-ab1d-13f78893ce70",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc77fe3b-430b-457a-ae95-d280c1d31a51",
+          "name": "Update Blackout",
+          "request": {
+            "name": "Update Blackout",
+            "description": {
+              "content": "Update an existing Blackout",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "blackouts",
+                ":blackout-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "blackout-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"<uuid>\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"<string>\",\n    \"interval\": \"<integer>\"\n  },\n  \"rrule\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "84eef41c-f6fd-49a3-87fb-08d8a286ea48",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce599555-7d66-4fdb-914d-9ff62e622b0a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6673fd24-1f7a-40db-8d4e-b791c43e11f2",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e0d7184-cc85-41b3-8484-52af91f7c7dd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc7a1aa8-0e8b-4207-87af-43c8ca683965",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "013f6399-be5c-4a3a-9864-e72d232bdad1",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15ab2f03-31d0-4e45-9fa5-9eb5fff99ce5",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "576eb5aa-beba-4338-9f41-7627dcf90e4d",
+              "name": "Resource validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"408 REQUEST_TIMEOUT\",\n  \"message\": \"string\",\n  \"errorCode\": \"E5\",\n  \"errors\": [\n    {\n      \"type\": \"OBJECT\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    },\n    {\n      \"type\": \"PROPERTY\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12f55125-741b-4bd9-b1ad-64267c650106",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_end\": \"<dateTime>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"app\": {\n    \"id\": \"64d59881-832a-a5db-04a6-b248ed09ab70\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"type\": \"ONCE\",\n    \"interval\": 6956\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aee98d56-025d-4dbb-b68b-736117b1581b",
+          "name": "Delete Blackout",
+          "request": {
+            "name": "Delete Blackout",
+            "description": {
+              "content": "Delete an existing Blackout",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "blackouts",
+                ":blackout-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "blackout-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8fd702fe-1f7b-4f86-9a7c-371aa0a3d0ae",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdc0a2e6-35d3-4338-b82a-9e46e00fb69c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "061dbf71-8702-4229-90a6-14dec3cd9b67",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "795ff7ea-733a-4b24-a448-41d5ab1e698d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6e5aa28-eb41-4659-9525-082bc91ab237",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a54b20d-bf26-40fe-8cd4-9a2c2bb07f96",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd1534e7-0582-4f83-a326-4b3e8601b61e",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c5b73cd-b702-4def-9850-81a704884985",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "blackouts",
+                    ":blackout-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "blackout-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"207 MULTI_STATUS\",\n  \"message\": \"string\",\n  \"errorCode\": \"E23\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://[region].api.insight.rapid7.com/ias/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "977c6a15-7fb7-45c5-8556-44c72ab2ca66",
+    "name": "InsightAppSec Accounts Blackouts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href='https://insight.help.rapid7.com/docs/api-overview'>Learn about basic concepts and capabilities</a></li><li><a href='https://insight.help.rapid7.com/docs/managing-platform-api-keys'>Get an Insight platform API key to set up authentication</a></li><li><a href='https://insight.help.rapid7.com/docs/product-apis'>See available Insight product APIs</a></li><li><a href='https://insightappsec.help.rapid7.com/docs'>Learn more about InsightAppSec</a></li></ul><p>After you've got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user's API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href=\"#pagination\"><h2 id=\"pagination\">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a \"status\" and a \"message\" property indicating the cause of the error, a \"r7-correlation-id\" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an \"error_code\" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response \"r7-correlation-id\" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional \"errors\" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>",
+      "type": "text/plain"
+    }
+  }
+}

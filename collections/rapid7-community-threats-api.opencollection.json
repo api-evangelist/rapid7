@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Community Threats API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Community Threats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/customthreats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a private InsightIDR Community Threat and add indicators to this Community Threat. The following Community Threat indicators are supported in the request body, formatted as JSON:<ul><li>communityThreatName</li><li>notetext</li><li>indicators</li><ul><li>IP addresses (non-CIDR notation)</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul></ul>The request content type must be to in JSON (see request samples).<br/>The maximum file size is 50 MB."
+        },
+        {
+          "info": {
+            "name": "Replace indicators for a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/customthreats/key/:key/indicators/replace",
+            "params": [
+              {
+                "name": "key",
+                "value": "156c9e48-64da-4bba-939e-e1c329be591b",
+                "type": "path",
+                "description": "The key of a Community Threat for which the indicators are going to be added."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "The input format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace InsightIDR Community Threat indicators for a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samp"
+        },
+        {
+          "info": {
+            "name": "Add indicators to a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/customthreats/key/:key/indicators/add",
+            "params": [
+              {
+                "name": "key",
+                "value": "156c9e48-64da-4bba-939e-e1c329be591b",
+                "type": "path",
+                "description": "The key of a Community Threat for which the indicators are going to be added."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "The input format."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add InsightIDR Community Threat indicators to a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samples o"
+        },
+        {
+          "info": {
+            "name": "Delete a Community Threat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/customthreats/key/:key/delete",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete an owned InsightIDR Community Threat."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

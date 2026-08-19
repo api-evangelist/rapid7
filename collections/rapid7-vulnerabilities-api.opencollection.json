@@ -1,0 +1,227 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Vulnerabilities API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vulnerabilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules"
+          },
+          "docs": "Get the metadata of all modules"
+        },
+        {
+          "info": {
+            "name": "Get Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metadata of a module"
+        },
+        {
+          "info": {
+            "name": "Get Attack",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id/attacks/:attack-id",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metadata of an attack"
+        },
+        {
+          "info": {
+            "name": "Get Attack Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/modules/:module-id/attacks/:attack-id/documentation",
+            "params": [
+              {
+                "name": "module-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the documentation of an attack"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerabilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Vulnerabilities, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Vulnerabilities is \"severity\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Update Vulnerability",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Vulnerability"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Discoveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/discoveries",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Vulnerability Discoveries, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Vulnerability Discoveries is \"discovered\" (descending) </p>"
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Discovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/discoveries/:vuln-discovery-id",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vuln-discovery-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Vulnerability Discovery"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

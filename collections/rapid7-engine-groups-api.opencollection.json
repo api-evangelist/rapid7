@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Engine Groups API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Engine Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Engine Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Engine Groups, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Engine Groups is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Engine Group."
+        },
+        {
+          "info": {
+            "name": "Get Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine Group"
+        },
+        {
+          "info": {
+            "name": "Update Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Engine Group"
+        },
+        {
+          "info": {
+            "name": "Delete Engine Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Engine Group"
+        },
+        {
+          "info": {
+            "name": "Get Engine Group Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engine-groups/:engine-group-id/engines",
+            "params": [
+              {
+                "name": "engine-group-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Engines associated with an Engine Group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

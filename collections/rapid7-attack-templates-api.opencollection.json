@@ -1,0 +1,225 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Attack Templates API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attack Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Attack Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of attack templates, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Attack Templates is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Attack Template"
+        },
+        {
+          "info": {
+            "name": "Get Attack Modules Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/module-configs"
+          },
+          "docs": "Get list of Attack Modules Default Configuration"
+        },
+        {
+          "info": {
+            "name": "Get Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an attack template"
+        },
+        {
+          "info": {
+            "name": "Update Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Delete Attack Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Get Attack Modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Attack Modules associated with an Attack Template"
+        },
+        {
+          "info": {
+            "name": "Create Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Attack Module"
+        },
+        {
+          "info": {
+            "name": "Update Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules/:attack-module-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-module-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Attack Module associated with an Attack Template if is not flagged as system-defined"
+        },
+        {
+          "info": {
+            "name": "Delete Attack Module",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/attack-templates/:attack-template-id/modules/:attack-module-id",
+            "params": [
+              {
+                "name": "attack-template-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attack-module-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Attack Module associated with an Attack Template if is not flagged as system-defined"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

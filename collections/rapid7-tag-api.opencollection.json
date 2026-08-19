@@ -1,0 +1,469 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Tag API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tag",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "name"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "type"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all tags."
+        },
+        {
+          "info": {
+            "name": "Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags"
+          },
+          "docs": "Creates a new tag."
+        },
+        {
+          "info": {
+            "name": "Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Returns a tag."
+        },
+        {
+          "info": {
+            "name": "Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Updates the details of a tag. For more information about accepted fields for the tag search criteria see the PUT /search_criteria documentation."
+        },
+        {
+          "info": {
+            "name": "Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Deletes the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Returns the asset groups associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Sets the asset groups associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/asset_groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes the associations between the tag and all asset groups."
+        },
+        {
+          "info": {
+            "name": "Tag Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The asset group identifier."
+              }
+            ]
+          },
+          "docs": "Adds an asset group to this tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/asset_groups/:assetGroupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The asset group identifier."
+              }
+            ]
+          },
+          "docs": "Removes an asset group from this tag."
+        },
+        {
+          "info": {
+            "name": "Tag Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Returns the assets tagged with a tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/assets/:assetId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Adds an asset to the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/assets/:assetId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Removes an asset from the tag. Note: The asset must be added through the asset or tag, if the asset is added using a site, asset group, or search criteria this will not remove the asset."
+        },
+        {
+          "info": {
+            "name": "Tag Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Returns the search criteria associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Updates the search criteria associated with the tag. \n\nThe following table outlines the search criteria fields and the available operators: \n| Field | Operators | \n| ---------- | ---------------- | \n| ip-address | is, is-not, in-range, not-in-range, is-like, not-like | \n| ip-address-type | in, not-in | \n| alternate-address-type | in | \n| host-name | is, is-not, starts-with, ends-with, contains, does-not-contain, is-empty, is-not-empty, is-like, not-like | \n| host-type | in, not-in | \n| operating"
+        },
+        {
+          "info": {
+            "name": "Tag Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes the search criteria associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Returns the sites associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Sets the sites associated with the tag."
+        },
+        {
+          "info": {
+            "name": "Tag Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/sites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes the associations between the tag and the sites."
+        },
+        {
+          "info": {
+            "name": "Tag Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/sites/:siteId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Adds a site to this tag."
+        },
+        {
+          "info": {
+            "name": "Tag Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/tags/:id/sites/:siteId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              },
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              }
+            ]
+          },
+          "docs": "Removes a site from this tag."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

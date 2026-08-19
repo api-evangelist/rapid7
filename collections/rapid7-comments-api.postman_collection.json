@@ -1,0 +1,2634 @@
+{
+  "item": [
+    {
+      "id": "73519795-f993-4ada-acac-c530c0aa7bf7",
+      "name": "Comments",
+      "description": {
+        "content": "An API used to find, create, and delete comments. For example, these APIs can be used to create a comment for a particular investigation.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c00d62bc-09d6-45c1-81e7-628e167863b6",
+          "name": "Update comment visibility",
+          "request": {
+            "name": "Update comment visibility",
+            "description": {
+              "content": "An API to update visibility of a comment by using an RRN. This API returns the comment with the updated visibility .",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "comments",
+                ":rrn",
+                ":visibility"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rrn",
+                  "description": "(Required) The RRN of the comment."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visibility",
+                  "description": "(Required) The new visibility for the comment (case insensitive)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0df6b627-3885-456e-8ef6-9f756b06f0fa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a9ab4e6-f96f-464f-99e5-0f10fe2317a1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2222b71e-e6d5-40a7-9931-3dc91b3fb9b4",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf337b5-c32e-4414-a95c-3216847bfe16",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35c0f3e8-58c8-45ae-822d-b394da77ec4d",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d43f398c-c2d4-4d99-ab5f-d4bfda11d567",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28d22f16-54c0-4aa7-91e5-c0a31a54c065",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15ffbece-f878-42d8-9f50-99227b1467a6",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2647dd6d-ecf8-4a6b-862e-ef26087847ee",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn",
+                    ":visibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visibility",
+                      "description": "(Required) The new visibility for the comment (case insensitive)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0436287-67af-429d-8795-c9b4af070e29",
+          "name": "List comments",
+          "request": {
+            "name": "List comments",
+            "description": {
+              "content": "Retrieves a page of comments matching the given request parameters. For example, this API allows you to list all comments on an investigation by passing an investigation's RRN as the target value.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "target",
+                  "value": "<string>",
+                  "description": "(Required) Return comments with this target."
+                },
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "The optional 0, based index of the page to retrieve. Must be an integer greater than or equal to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "20",
+                  "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less  or equal to 100."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c814c6b4-fe9a-43fd-9f54-65acb07f72dc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"body\": \"Here is my comment.\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"rrn\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD\",\n      \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"visibility\": \"PUBLIC\",\n      \"attachments\": [\n        {\n          \"created_time\": \"2018-06-06T16:56:42Z\",\n          \"creator\": {\n            \"name\": \"John Doe\",\n            \"type\": \"USER\"\n          },\n          \"file_name\": \"screenshot.png\",\n          \"mime_type\": \"image/png\",\n          \"rrn\": {\n            \"partition\": \"string\",\n            \"service\": \"string\",\n            \"regionCode\": \"string\",\n            \"organizationId\": \"string\",\n            \"resourceTypes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resource\": \"string\"\n          },\n          \"scan_status\": \"CLEAN\",\n          \"size\": 12345\n        },\n        {\n          \"created_time\": \"2018-06-06T16:56:42Z\",\n          \"creator\": {\n            \"name\": \"John Doe\",\n            \"type\": \"USER\"\n          },\n          \"file_name\": \"screenshot.png\",\n          \"mime_type\": \"image/png\",\n          \"rrn\": {\n            \"partition\": \"string\",\n            \"service\": \"string\",\n            \"regionCode\": \"string\",\n            \"organizationId\": \"string\",\n            \"resourceTypes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resource\": \"string\"\n          },\n          \"scan_status\": \"CLEAN\",\n          \"size\": 12345\n        }\n      ]\n    },\n    {\n      \"body\": \"Here is my comment.\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"rrn\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD\",\n      \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"visibility\": \"PUBLIC\",\n      \"attachments\": [\n        {\n          \"created_time\": \"2018-06-06T16:56:42Z\",\n          \"creator\": {\n            \"name\": \"John Doe\",\n            \"type\": \"USER\"\n          },\n          \"file_name\": \"screenshot.png\",\n          \"mime_type\": \"image/png\",\n          \"rrn\": {\n            \"partition\": \"string\",\n            \"service\": \"string\",\n            \"regionCode\": \"string\",\n            \"organizationId\": \"string\",\n            \"resourceTypes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resource\": \"string\"\n          },\n          \"scan_status\": \"CLEAN\",\n          \"size\": 12345\n        },\n        {\n          \"created_time\": \"2018-06-06T16:56:42Z\",\n          \"creator\": {\n            \"name\": \"John Doe\",\n            \"type\": \"USER\"\n          },\n          \"file_name\": \"screenshot.png\",\n          \"mime_type\": \"image/png\",\n          \"rrn\": {\n            \"partition\": \"string\",\n            \"service\": \"string\",\n            \"regionCode\": \"string\",\n            \"organizationId\": \"string\",\n            \"resourceTypes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resource\": \"string\"\n          },\n          \"scan_status\": \"CLEAN\",\n          \"size\": 12345\n        }\n      ]\n    }\n  ],\n  \"metadata\": {\n    \"index\": 0,\n    \"size\": 20,\n    \"total_data\": 15,\n    \"total_pages\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1de91e36-65ce-4a0b-b4b7-6506f5f38bac",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df0e757b-103d-425a-82a0-7ec9aadb3ca0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a1bd9e1-a422-434a-a4d4-b48fe073499a",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17cec2a5-46aa-4b29-9ca9-fcd35e18e9b6",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "583a44b5-779c-4549-9e8a-f83cda18b180",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d14d0ffa-ea19-487d-9211-56c3517c5cf5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8a7daea-c6d3-4071-8796-9f3a968971fa",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04af3218-289f-4337-bff5-434b68f1715c",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9475207-74a9-4712-bcbd-ea987b4cdc63",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target",
+                      "value": "rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210"
+                    },
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5d38d9d-8b6e-4424-92bd-9d702713f94f",
+          "name": "Create comment",
+          "request": {
+            "name": "Create comment",
+            "description": {
+              "content": "An API you can use to create comments for a particular target. The target determines where the comment will appear within InsightIDR. Only certain types of RRNs are permitted as targets, such as investigation RRNs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target\": \"<string>\",\n  \"body\": \"<string>\",\n  \"attachments\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "141354e6-6c3e-4fd3-ae15-48a68575faca",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"body\": \"Here is my comment.\",\n  \"creator\": {\n    \"name\": \"John Doe\",\n    \"type\": \"USER\"\n  },\n  \"rrn\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD\",\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"created_time\": \"2018-06-06T16:56:42Z\",\n  \"visibility\": \"PUBLIC\",\n  \"attachments\": [\n    {\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"file_name\": \"screenshot.png\",\n      \"mime_type\": \"image/png\",\n      \"rrn\": {\n        \"partition\": \"string\",\n        \"service\": \"string\",\n        \"regionCode\": \"string\",\n        \"organizationId\": \"string\",\n        \"resourceTypes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"resource\": \"string\"\n      },\n      \"scan_status\": \"CLEAN\",\n      \"size\": 12345\n    },\n    {\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"file_name\": \"screenshot.png\",\n      \"mime_type\": \"image/png\",\n      \"rrn\": {\n        \"partition\": \"string\",\n        \"service\": \"string\",\n        \"regionCode\": \"string\",\n        \"organizationId\": \"string\",\n        \"resourceTypes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"resource\": \"string\"\n      },\n      \"scan_status\": \"CLEAN\",\n      \"size\": 12345\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9f6392-9d6c-4006-b30d-7850fd700152",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c6fc3cb-a41f-4cfd-9c6d-fefdd8d1a7c9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c2e2dd4-9e95-4c4a-a7c7-54b2c1fd654b",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0879ffff-da63-4abd-85e8-2db36609a43b",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea742ac3-f0ec-44cf-b18b-8b22a97756bb",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b0f78d7-c781-4b1d-8f15-7854f794318a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841ddd71-c13c-444e-81c7-b504bf1ddee1",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08ac21a8-8153-49fe-aecf-d65ef8d72be2",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62a4b816-f171-4aef-96de-f1370c0e7be9",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"body\": \"Here is my comment.\",\n  \"attachments\": [\n    \"rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0ad6fc0-3edf-42b3-86f8-378241919ea5",
+          "name": "Get comment by rrn",
+          "request": {
+            "name": "Get comment by rrn",
+            "description": {
+              "content": "Retrieves a comment by its rrn.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "comments",
+                ":rrn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rrn",
+                  "description": "(Required) Return a comment with this rrn."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4214815c-02d9-4be9-8e3f-1d8b64a63da8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"body\": \"Here is my comment.\",\n  \"creator\": {\n    \"name\": \"John Doe\",\n    \"type\": \"USER\"\n  },\n  \"rrn\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:comment:98765FEBCAD\",\n  \"target\": \"rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210\",\n  \"created_time\": \"2018-06-06T16:56:42Z\",\n  \"visibility\": \"PUBLIC\",\n  \"attachments\": [\n    {\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"file_name\": \"screenshot.png\",\n      \"mime_type\": \"image/png\",\n      \"rrn\": {\n        \"partition\": \"string\",\n        \"service\": \"string\",\n        \"regionCode\": \"string\",\n        \"organizationId\": \"string\",\n        \"resourceTypes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"resource\": \"string\"\n      },\n      \"scan_status\": \"CLEAN\",\n      \"size\": 12345\n    },\n    {\n      \"created_time\": \"2018-06-06T16:56:42Z\",\n      \"creator\": {\n        \"name\": \"John Doe\",\n        \"type\": \"USER\"\n      },\n      \"file_name\": \"screenshot.png\",\n      \"mime_type\": \"image/png\",\n      \"rrn\": {\n        \"partition\": \"string\",\n        \"service\": \"string\",\n        \"regionCode\": \"string\",\n        \"organizationId\": \"string\",\n        \"resourceTypes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"resource\": \"string\"\n      },\n      \"scan_status\": \"CLEAN\",\n      \"size\": 12345\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f205157a-3ca7-4948-bfa3-e59692803fe3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee5f16ba-9166-4ebc-b097-9538bedc0ce7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "caf1a051-890c-4482-b2ea-8ebbabd69cb4",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fa6844c-ad7f-4459-b09c-90d9263dd2b6",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d754fdab-1d20-4b1b-96b1-83bc6bf14015",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11009662-5451-4df7-978b-37709974b109",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fcbc0c7-683b-403d-8a23-03ed9d42161c",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e57b020-31c3-4c5e-a173-6c898559ffb7",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "853c0e7e-027d-4d69-a5a4-22796c3bca02",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) Return a comment with this rrn."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf31a61e-139d-42b8-8a36-29b1a6e27099",
+          "name": "Delete a comment",
+          "request": {
+            "name": "Delete a comment",
+            "description": {
+              "content": "A delete API you can use to delete a comment by using an RRN. The RRN determines which comment will be deleted. Only the creator of a comment can delete it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "comments",
+                ":rrn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rrn",
+                  "description": "(Required) The RRN of the comment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b64c4b48-0f6f-44b2-8202-d02e1adb91bf",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "66ffa153-5ee5-4cc7-a91c-d12994e1073d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47a4772c-a156-4395-8694-c197a79af62b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7b28948-57c5-48a6-84c6-1f9943e7d5ed",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5995c5b8-989b-4b0b-a8b9-562b87a9e18c",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "184a2cb4-46e9-4d6d-b43d-ab9837efaafc",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72cfd477-5a86-4fbd-afd7-058667237406",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e7cf793-2ade-4485-af6d-4a0575003c53",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7aaf12cc-93c3-41ff-83cb-71f9cbd9155b",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b052f5-eac2-496a-ada2-c4c8664424e4",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "comments",
+                    ":rrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rrn",
+                      "description": "(Required) The RRN of the comment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"An identifier that uniquely identifies the failed request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://[region].api.insight.rapid7.com/ias/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4a360c95-80e7-44f9-a3db-31c425e2825d",
+    "name": "InsightAppSec Accounts Comments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href='https://insight.help.rapid7.com/docs/api-overview'>Learn about basic concepts and capabilities</a></li><li><a href='https://insight.help.rapid7.com/docs/managing-platform-api-keys'>Get an Insight platform API key to set up authentication</a></li><li><a href='https://insight.help.rapid7.com/docs/product-apis'>See available Insight product APIs</a></li><li><a href='https://insightappsec.help.rapid7.com/docs'>Learn more about InsightAppSec</a></li></ul><p>After you've got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user's API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href=\"#pagination\"><h2 id=\"pagination\">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a \"status\" and a \"message\" property indicating the cause of the error, a \"r7-correlation-id\" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an \"error_code\" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response \"r7-correlation-id\" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional \"errors\" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>",
+      "type": "text/plain"
+    }
+  }
+}

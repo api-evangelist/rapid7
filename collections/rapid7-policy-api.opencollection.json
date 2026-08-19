@@ -1,0 +1,882 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Policy API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Policies For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:assetId/policies",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "applicableOnly",
+                "value": "",
+                "type": "query",
+                "description": "An optional boolean parameter indicating the policies retrieved should only include those with a policy compliance status of either a PASS of FAIL result. Default value is `false`, which will also include policies with a compliance status of NOT_APPLICABLE."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of policies with compliance results for the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Rules or Groups Directly Under Policy For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:assetId/policies/:policyId/children",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy with rule compliance results for the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Rules or Groups Directly Under Policy Group For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:assetId/policies/:policyId/groups/:groupId/children",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy group with rule compliance results for the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Rules Under Policy Group For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:assetId/policies/:policyId/groups/:groupId/rules",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of policy rules defined directly, or indirectly, underneath the specified policy group and the compliance results for the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Rules For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:assetId/policies/:policyId/rules",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of policy rules with compliance results for the specified asset and policy."
+        },
+        {
+          "info": {
+            "name": "Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the retrieved policies with those whose titles that match the parameter."
+              },
+              {
+                "name": "scannedOnly",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating the policies retrieved should only include those with Pass or Fail compliance results. The list of scanned policies is based on the user's list of accessible assets."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of policies."
+        },
+        {
+          "info": {
+            "name": "Policy Rules or Groups Directly Under Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:id/children",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              }
+            ]
+          },
+          "docs": "Retrieves the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Asset Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/assets",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "applicableOnly",
+                "value": "",
+                "type": "query",
+                "description": "An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves asset resources with rule compliance results for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Asset Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/assets/:assetId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves an asset resource with rule compliance results for the specified asset and policy."
+        },
+        {
+          "info": {
+            "name": "Policy Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of policy groups for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups/:groupId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified policy group."
+        },
+        {
+          "info": {
+            "name": "Assets Compliance For Policy Rules Under Policy Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups/:groupId/assets",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              },
+              {
+                "name": "applicableOnly",
+                "value": "",
+                "type": "query",
+                "description": "An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves asset resources with rule compliance status against all rules under the specified policy group."
+        },
+        {
+          "info": {
+            "name": "Asset Compliance For Policy Rules Under Policy Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups/:groupId/assets/:assetId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves an asset resource with rule compliance status against all rules under the specified policy group."
+        },
+        {
+          "info": {
+            "name": "Policy Rules or Groups Directly Under Policy Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups/:groupId/children",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of either policy rules, or groups, that are defined directly underneath the specified policy group."
+        },
+        {
+          "info": {
+            "name": "Policy Rules Under Policy Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/groups/:groupId/rules",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy group."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of policy rules defined directly, or indirectly, underneath the specified policy group."
+        },
+        {
+          "info": {
+            "name": "Policy Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of policy rules for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Disabled Policy Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/disabled",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves a paged resource of disabled policy rules for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              }
+            ]
+          },
+          "docs": "Retrieves the specified policy rule."
+        },
+        {
+          "info": {
+            "name": "Assets Compliance For Policy Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/assets",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              },
+              {
+                "name": "applicableOnly",
+                "value": "",
+                "type": "query",
+                "description": "An optional boolean parameter indicating the assets retrieved should only include those with rule results of either PASS or FAIL. Default value is `false`, which will also include assets with a compliance status of NOT_APPLICABLE."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves asset resources with rule compliance results for the specified policy policy rule."
+        },
+        {
+          "info": {
+            "name": "Asset Compliance For Policy Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/assets/:assetId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves an asset resource with rule compliance results for the specified policy policy rule."
+        },
+        {
+          "info": {
+            "name": "Policy Rule Proof For Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/assets/:assetId/proof",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves the policy rule proof captured during evaluation against the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Rule Controls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/controls",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves all NIST SP 800-53 controls mappings for each CCE within the specified policy rule."
+        },
+        {
+          "info": {
+            "name": "Policy Rule Rationale",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/rationale",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              }
+            ]
+          },
+          "docs": "Retrieves the policy rule rationale for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Rule Remediation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policies/:policyId/rules/:ruleId/remediation",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy rule."
+              }
+            ]
+          },
+          "docs": "Retrieves the policy rule remediation for the specified policy."
+        },
+        {
+          "info": {
+            "name": "Policy Compliance Summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy/summary"
+          },
+          "docs": "Retrieves a compliance summary of all policies."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Policy Override API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy Override",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Asset Policy Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/assets/:id/policy_overrides",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves policy overrides defined on policy rules for the specified asset."
+        },
+        {
+          "info": {
+            "name": "Policy Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Retrieves policy overrides defined on policy rules."
+        },
+        {
+          "info": {
+            "name": "Policy Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides"
+          },
+          "docs": "Submit a policy override. The policy override can be submitted or it can be submitted and approved in a single request."
+        },
+        {
+          "info": {
+            "name": "Policy Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy override."
+              }
+            ]
+          },
+          "docs": "Retrieve the specified policy override."
+        },
+        {
+          "info": {
+            "name": "Policy Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy override."
+              }
+            ]
+          },
+          "docs": "Removes a policy override created for a policy rule."
+        },
+        {
+          "info": {
+            "name": "Policy Override Expiration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides/:id/expires",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy override."
+              }
+            ]
+          },
+          "docs": "Get the expiration date for a policy override."
+        },
+        {
+          "info": {
+            "name": "Policy Override Expiration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides/:id/expires",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy override."
+              }
+            ]
+          },
+          "docs": "Set the expiration date for a policy override. This must be a valid date in the future."
+        },
+        {
+          "info": {
+            "name": "Policy Override Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/policy_overrides/:id/:status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the policy override."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "Policy Override Status"
+              }
+            ]
+          },
+          "docs": "Update the status of the specified policy override. The status can be one of the following: `\"recall\"`, `\"approve\"`, or `\"reject\"`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Collectors API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Collector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/collectors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new collector. The API key used must be associated with a user with the collection administration role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

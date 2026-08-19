@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Tags API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags",
+            "params": [
+              {
+                "name": "root",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Tags, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Tags is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Tag"
+        },
+        {
+          "info": {
+            "name": "Get Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Tag"
+        },
+        {
+          "info": {
+            "name": "Update Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Tag"
+        },
+        {
+          "info": {
+            "name": "Delete Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/tags/:tag-id",
+            "params": [
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cascade",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete an existing Tag"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

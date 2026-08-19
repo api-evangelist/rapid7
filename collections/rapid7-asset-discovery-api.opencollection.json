@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Asset Discovery API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Discovery Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/discovery_connections",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all discovery connections."
+        },
+        {
+          "info": {
+            "name": "Discovery Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/discovery_connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the discovery connection."
+              }
+            ]
+          },
+          "docs": "Returns a discovery connection."
+        },
+        {
+          "info": {
+            "name": "Discovery Connection Reconnect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/discovery_connections/:id/connect",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the discovery connection."
+              }
+            ]
+          },
+          "docs": "Attempts to reconnect the discovery connection."
+        },
+        {
+          "info": {
+            "name": "Sonar Queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries"
+          },
+          "docs": "Returns all sonar queries."
+        },
+        {
+          "info": {
+            "name": "Sonar Queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries"
+          },
+          "docs": "Creates a sonar query."
+        },
+        {
+          "info": {
+            "name": "Sonar Query Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries/search"
+          },
+          "docs": "Executes a Sonar query to discover assets with the given search criteria."
+        },
+        {
+          "info": {
+            "name": "Sonar Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Sonar query."
+              }
+            ]
+          },
+          "docs": "Returns a sonar query."
+        },
+        {
+          "info": {
+            "name": "Sonar Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Sonar query."
+              }
+            ]
+          },
+          "docs": "Updates a sonar query."
+        },
+        {
+          "info": {
+            "name": "Sonar Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Sonar query."
+              }
+            ]
+          },
+          "docs": "Removes a sonar query."
+        },
+        {
+          "info": {
+            "name": "Sonar Query Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sonar_queries/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Sonar query."
+              }
+            ]
+          },
+          "docs": "Returns the assets that are discovered by a Sonar query."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

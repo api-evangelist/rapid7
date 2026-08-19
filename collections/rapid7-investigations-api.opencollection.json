@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Investigations API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Investigations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set the status of an investigation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/investigations/:id/status/:status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or RRN of the investigation to change the status of."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "The new status for the investigation (case-insensitive)."
+              }
+            ]
+          },
+          "docs": "An API that sets the status of the investigation with the given ID or RRN. This API returns the investigation with its status updated to the new state. If the investigation already has the given status, no change is made, but the investigation will still be returned."
+        },
+        {
+          "info": {
+            "name": "Assign user to investigation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/investigations/:id/assignee",
+            "params": [
+              {
+                "name": "id",
+                "value": "174e4f99-2ac7-4481-9301-4d24c34baf06",
+                "type": "path",
+                "description": "The ID or RRN of the investigation to assign the user to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API that assigns a user to the specified investigation. The user must be a platform administrator, product administrator, or read/write user with access to either InsightIDR or InsightUBA."
+        },
+        {
+          "info": {
+            "name": "Close investigations in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/investigations/bulk_close",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An API to close all investigations that match the parameters provided in the request body. This API returns the number of investigations that were closed and a list of their IDs."
+        },
+        {
+          "info": {
+            "name": "List investigations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/investigations",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less then or equal to 1000."
+              },
+              {
+                "name": "statuses",
+                "value": "OPEN, CLOSED, INVESTIGATING",
+                "type": "query",
+                "description": "An optional, comma-separated set of investigation statuses. Only investigations whose status matches one of the entries in the list will be returned.  If this parameter, is omitted investigations with any status may be returned."
+              },
+              {
+                "name": "start_time",
+                "value": "2018-07-01T00:00:00Z",
+                "type": "query",
+                "description": "An optional, ISO-formatted timestamp. Only investigations whose createTime is after this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be returned."
+              },
+              {
+                "name": "end_time",
+                "value": "2018-07-04T00:00:00Z",
+                "type": "query",
+                "description": "An optional, ISO-formatted timestamp. Only investigations whose createTime is before this date will be returned by the API. If this parameter is omitted, investigations with any create_time may be returned."
+              }
+            ]
+          },
+          "docs": "An API to list all investigations. This API retrieves a page of investigations matching the given request parameters. The investigations will always be sorted by investigation created_time in descending order."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

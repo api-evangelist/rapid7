@@ -1,0 +1,2700 @@
+{
+  "item": [
+    {
+      "id": "dd4ba8ff-d366-4e6b-b980-ad318bf9cde6",
+      "name": "Community Threats",
+      "description": {
+        "content": "An API used to add and replace indicators for Community Threats. See https://insightidr.help.rapid7.com/docs/threats#section-threat-api for further information on how to generate threat keys.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "53727966-5c7d-4518-aa1d-a7bc76543e6f",
+          "name": "Create a Community Threat",
+          "request": {
+            "name": "Create a Community Threat",
+            "description": {
+              "content": "Create a private InsightIDR Community Threat and add indicators to this Community Threat. The following Community Threat indicators are supported in the request body, formatted as JSON:<ul><li>communityThreatName</li><li>notetext</li><li>indicators</li><ul><li>IP addresses (non-CIDR notation)</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul></ul>The request content type must be to in JSON (see request samples).<br/>The maximum file size is 50 MB.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "customthreats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00bb92c3-555a-4df4-a5d1-019737d56d5c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"threat\": {\n    \"indicator_count\": 1,\n    \"name\": \"Threat\",\n    \"published\": true,\n    \"note\": \"Notes\"\n  },\n  \"rejected_indicators\": [\n    \"blacklisted\",\n    \"invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b694620d-9d90-4578-9d2e-25ebe1c1f06c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c776e8c2-f9c8-480e-9cfc-6a4ae1326b40",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cebadff-15db-4b9e-aa30-e1861ff995d7",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "671cee32-e96c-49e9-9fa0-76db3dec5e24",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffab9b69-247d-417a-a71b-cb1554453a28",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "334f9815-5372-4ca3-96c4-239219633630",
+              "name": "Payload Is Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51f93f1f-10d7-47ab-a0de-50fecd19db1a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c31c26e8-9a0a-4fc3-99b6-c4c3ab7a6867",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c37abbb-657f-4823-8871-4fd995ce45e7",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e73fb923-4c60-4336-8f2b-cab532c32c16",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threat\": \"threatName\",\n  \"note\": \"notetext\",\n  \"indicators\": {\n    \"ips\": [\n      \"192.168.0.1\"\n    ],\n    \"hashes\": [\n      \"b95663ec7339033cf1fde459a34b6606\"\n    ],\n    \"domain_names\": [\n      \"rapid7.com\",\n      \"mailxpy.com\"\n    ],\n    \"urls\": [\n      \"http://example.com/index\",\n      \" http://www.mailxpy.com/login/index.php\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "590f0d0a-5dcf-4c41-af07-21aac5d451a4",
+          "name": "Replace indicators for a Community Threat",
+          "request": {
+            "name": "Replace indicators for a Community Threat",
+            "description": {
+              "content": "Replace InsightIDR Community Threat indicators for a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samples on the right.<br/>The multipart file upload (with multipart/form-data content type) is also supported by the endpoint. The maximum file size is 50 MB.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "customthreats",
+                "key",
+                ":key",
+                "indicators",
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "(Required) The input format."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "620d827f-872e-43af-a4e0-13c6237e2677",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"threat\": {\n    \"indicator_count\": 1,\n    \"name\": \"Threat\",\n    \"published\": true,\n    \"note\": \"Notes\"\n  },\n  \"rejected_indicators\": [\n    \"blacklisted\",\n    \"invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f23615f-cea5-42d0-b59d-3eca8cbe1d24",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b453e050-a913-4af6-b0b7-6d4ef1fde8bb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "def59fd7-723b-49c7-9f11-f3f367355144",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c791fea9-96ce-4e8f-9bfe-49a450cb4001",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82b4f4f3-c9c8-450b-9d2f-ffefeadc81a3",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df836947-3368-4fd6-b9bc-e61ccaf1eb22",
+              "name": "Payload Is Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "010e2922-947a-4185-aa1b-e5bc5daff9b6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4c2ac46-3171-4488-9396-05d42b64a51b",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "880a1760-6eec-46bf-93d9-e75accf4aa0d",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ab2002d-7b67-401d-a39e-85d5f66dabc6",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95927d22-85fa-4085-99b3-4ffdb450be7c",
+          "name": "Add indicators to a Community Threat",
+          "request": {
+            "name": "Add indicators to a Community Threat",
+            "description": {
+              "content": "Add InsightIDR Community Threat indicators to a Community Threat with the given Community Threat key. The following Community Threat indicators are supported in the request body formatted as JSON, STIX XML, or CSV: <br/><ul><li>IP addresses</li><li>Process hashes</li><li>Domain names</li><li>URLs</li></ul>The request content type is expected to match the specified format: \"application/json\" for \"json\" format, \"text/xml\" for \"stix_xml\" format and \"text/csv\" for \"csv\" format. See request samples on the right.<br/>The multipart file upload (with multipart/form-data content type) is also supported by the endpoint. The maximum file size is 50 MB.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "customthreats",
+                "key",
+                ":key",
+                "indicators",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "(Required) The input format."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f970c562-32cb-4489-a9eb-cfa2e7ba3f31",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"threat\": {\n    \"indicator_count\": 1,\n    \"name\": \"Threat\",\n    \"published\": true,\n    \"note\": \"Notes\"\n  },\n  \"rejected_indicators\": [\n    \"blacklisted\",\n    \"invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56dd1abb-4671-4a3e-8d7f-d64864eab8af",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20da85e0-3a49-4368-b38c-a61ab130f77e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25eb7343-4d0c-4c04-b153-bf16346e7bd3",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69aa393c-1ab0-4ccb-a872-c0accbd1f993",
+              "name": "Entity Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb0b92f1-ca12-42ad-a06a-b78e411d77fb",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "825378a7-3e89-465d-b6e8-e6ea2d6c0e21",
+              "name": "Payload Is Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b45034-04ed-4217-9879-a24df6cb62ec",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f73abcc4-681b-4b78-a823-31a5c39bc75c",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68da978b-8d76-424b-b51b-020bf167754d",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6699ef73-a250-4a6c-b292-59e69c37ea98",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "indicators",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of a Community Threat for which the indicators are going to be added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ips\": [\n    \"192.168.0.1\"\n  ],\n  \"hashes\": [\n    \"b95663ec7339033cf1fde459a34b6606\"\n  ],\n  \"domain_names\": [\n    \"rapid7.com\"\n  ],\n  \"urls\": [\n    \"http://example.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbef5bc2-c772-47c5-9378-af9c0ae33d1f",
+          "name": "Delete a Community Threat",
+          "request": {
+            "name": "Delete a Community Threat",
+            "description": {
+              "content": "Delete an owned InsightIDR Community Threat.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idr",
+                "v1",
+                "customthreats",
+                "key",
+                ":key",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28f8ffed-3c5b-40de-a040-1e56f64f6096",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"indicator_count\": 1,\n  \"name\": \"Threat\",\n  \"published\": true,\n  \"note\": \"Notes\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dd83d68-f2f6-4d76-8189-a8b5bb7ae1db",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3af6866a-1efd-46f3-9c43-f561d302e139",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92d838b3-8197-45a9-b091-334ba6632b59",
+              "name": "Insufficient Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8307b9b7-b697-4306-afbc-a7fd42269351",
+              "name": "Threat with key threatKey was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a29f3f6-e0c3-425a-bde3-4b376027934b",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ded43e21-31ef-44e1-b15e-bc821d5024f7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ce0ade2-1931-4c5f-9869-20a2c4856700",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d1bb993-2635-46f8-b7c6-2f6f01bf13ac",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac315737-ca9d-440f-b0b8-637b24ce6f3b",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idr",
+                    "v1",
+                    "customthreats",
+                    "key",
+                    ":key",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"A human-readable message describing the error that occurred.\",\n  \"correlation_id\": \"6b6503c8-2da9-41c0-94cb-2f34069e00cd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://[region].api.insight.rapid7.com/ias/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c484fd98-a3c2-4362-980c-c2c3b3759811",
+    "name": "InsightAppSec Accounts Community Threats API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href='https://insight.help.rapid7.com/docs/api-overview'>Learn about basic concepts and capabilities</a></li><li><a href='https://insight.help.rapid7.com/docs/managing-platform-api-keys'>Get an Insight platform API key to set up authentication</a></li><li><a href='https://insight.help.rapid7.com/docs/product-apis'>See available Insight product APIs</a></li><li><a href='https://insightappsec.help.rapid7.com/docs'>Learn more about InsightAppSec</a></li></ul><p>After you've got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user's API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href=\"#pagination\"><h2 id=\"pagination\">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a \"status\" and a \"message\" property indicating the cause of the error, a \"r7-correlation-id\" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an \"error_code\" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response \"r7-correlation-id\" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional \"errors\" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>",
+      "type": "text/plain"
+    }
+  }
+}

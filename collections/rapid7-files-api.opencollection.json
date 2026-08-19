@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Files API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Files, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Files is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new File."
+        },
+        {
+          "info": {
+            "name": "Get File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a File <br/><b> NOTE: This API allows for the retrieval of both File Information and File Contents depending on which Mime-Type the client advertises acceptance of in the <code>Accept</code> header passed in the call.</b></br>When retrieving only the File Information the client should supply an <code>Accept</code> header value that indicates acceptance of the <code>application/json</code> mime type only.</br>To download the File Contents the client is required to supply <code>Accept</code> h"
+        },
+        {
+          "info": {
+            "name": "Upload File Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload a File's Content. <b> NOTE: this <i>requires</i> the use of the <code>Content-Type: application/octet-stream</code> header</b>."
+        },
+        {
+          "info": {
+            "name": "Update File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing File."
+        },
+        {
+          "info": {
+            "name": "Delete File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/files/:file-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "file-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing File."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

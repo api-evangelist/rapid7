@@ -1,0 +1,250 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Apps API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Apps, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Apps is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new App.<li>When using a user API key the associated user will be added to the App</li><li>When using an org API key no user will be added to the App</li>"
+        },
+        {
+          "info": {
+            "name": "Get App",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an App"
+        },
+        {
+          "info": {
+            "name": "Update App",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing App"
+        },
+        {
+          "info": {
+            "name": "Delete App",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing App"
+        },
+        {
+          "info": {
+            "name": "Get App Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all Tags applied to an App"
+        },
+        {
+          "info": {
+            "name": "Add App Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a Tag to an App"
+        },
+        {
+          "info": {
+            "name": "Remove App Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/tags/:tag-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tag-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a Tag from an App"
+        },
+        {
+          "info": {
+            "name": "Get App Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get users associated with an App"
+        },
+        {
+          "info": {
+            "name": "Add App User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Associate a user to an App"
+        },
+        {
+          "info": {
+            "name": "Remove App User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/apps/:app-id/users/:user-id",
+            "params": [
+              {
+                "name": "app-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Dissociate a user from an App"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

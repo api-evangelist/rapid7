@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Health Metrics API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve health metrics by org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/health-metrics",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve.  Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 100."
+              },
+              {
+                "name": "resourceTypes",
+                "value": "agent,collectors",
+                "type": "query",
+                "description": "An optional, comma-separated set of resource types. Only resources whose type matches one of the entries in the list are returned. If this parameter is omitted, health metrics with any resource type may be returned."
+              },
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query",
+                "description": "Optional organization ID to get metrics for. If not specified, metrics for the user's current organization will be returned. User must have access to the specified organization."
+              }
+            ]
+          },
+          "docs": "Retrieve paginated health metrics for the given org. In the event of a 207 response, there may be two additional metadata fields in the response. 'failed_to_load' contains the the resource types that did not successfully load. 'unlicensed_resource_types' contains resource types that were requested, but for which the org does not have access to. "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,500 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Asset Group API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset Group",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/agents",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns the details for all agents."
+        },
+        {
+          "info": {
+            "name": "Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of asset group."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "A search pattern for the name of the asset group. Searches are case-insensitive contains."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all asset groups."
+        },
+        {
+          "info": {
+            "name": "Asset Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups"
+          },
+          "docs": "Creates a new asset group. The `searchCriteria` field can be passed no matter what the type of the asset group is. The asset group `type` changes when the assets are refreshed. Dynamic asset groups constantly refreshed their membership as assets are scanned whereas static asset groups do not change membership automatically. \nSee the <a href=\"#section/Responses/SearchCriteria\">Search Criteria</a> for more information on using dynamic criteria."
+        },
+        {
+          "info": {
+            "name": "Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Returns an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Updates the details of an asset group. See the search criteria endpoint (/search_criteria) for more information about building the search criteria and examples."
+        },
+        {
+          "info": {
+            "name": "Asset Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Deletes the asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Returns hypermedia links for the assets that belong to an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Updates all the assets that belong to a static asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/assets",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Removes the assets from the given static asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/assets/:assetId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Adds an asset to a static asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/assets/:assetId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Removes an asset from an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Returns the search criteria of a dynamic asset group.For a reference of valid search criteria input see the <a href=\"#operation/getAssetsSearchUsingPOST\">Asset Search</a> resource."
+        },
+        {
+          "info": {
+            "name": "Asset Group Search Criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/search_criteria",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Updates the search criteria of a dynamic asset group. For a reference of valid search criteria input see the <a href=\"#operation/getAssetsSearchUsingPOST\">Asset Search</a> resource."
+        },
+        {
+          "info": {
+            "name": "Asset Group Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Returns the tags assigned to an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Updates the tags of an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Removes all tag associations from the asset group."
+        },
+        {
+          "info": {
+            "name": "Resources and operations for managing asset groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Adds a tag to an asset group."
+        },
+        {
+          "info": {
+            "name": "Resources and operations for managing asset groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/tags/:tagId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the tag."
+              }
+            ]
+          },
+          "docs": "Removes a tag from an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Returns hypermedia links for the users with access to this asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              }
+            ]
+          },
+          "docs": "Grants users with sufficient privileges access to an asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/users/:userId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Grants a user with sufficient privileges access to the asset group."
+        },
+        {
+          "info": {
+            "name": "Asset Group User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/asset_groups/:id/users/:userId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the asset group."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user."
+              }
+            ]
+          },
+          "docs": "Removes a user's access from an asset group."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

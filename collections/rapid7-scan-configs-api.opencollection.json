@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Scan Configs API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scan Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Scan Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs",
+            "params": [
+              {
+                "name": "include-errors",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Scan Configs, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Scan Configs is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p> <p>By default, the <code>errors</code> property is populated and requires validation of each scan config's options in order to do so; this can be expensive in a number of cases, such as options with a number of associated files or credentials, a"
+        },
+        {
+          "info": {
+            "name": "Create Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Scan Config"
+        },
+        {
+          "info": {
+            "name": "Get Scan Configs Options Default",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/options/default"
+          },
+          "docs": "Get the current default options"
+        },
+        {
+          "info": {
+            "name": "Get Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Update Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Scan Config"
+        },
+        {
+          "info": {
+            "name": "Delete Scan Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Scan Config"
+        },
+        {
+          "info": {
+            "name": "Get Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the current options of a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Update Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the options of a Scan Config"
+        },
+        {
+          "info": {
+            "name": "Patch Scan Config Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scan-configs/:scan-config-id/options",
+            "params": [
+              {
+                "name": "scan-config-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patch the options of a Scan Config"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

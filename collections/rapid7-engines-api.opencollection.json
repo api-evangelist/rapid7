@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Engines API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Engines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Engines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines",
+            "params": [
+              {
+                "name": "pageConfig",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Engines, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Engines is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Engine."
+        },
+        {
+          "info": {
+            "name": "Get Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine"
+        },
+        {
+          "info": {
+            "name": "Update Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Engine"
+        },
+        {
+          "info": {
+            "name": "Delete Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Engine"
+        },
+        {
+          "info": {
+            "name": "Get Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Regenerate Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Regenerate an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Delete Engine Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/credential",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Engine Credential"
+        },
+        {
+          "info": {
+            "name": "Upgrade Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/engines/:engine-id/upgrade",
+            "params": [
+              {
+                "name": "engine-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upgrade an Engine. In order to upgrade the engine must be in IDLE state and not have latest version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

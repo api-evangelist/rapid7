@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Blackouts API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Blackouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Blackouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Blackouts, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Blackouts is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Create Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Blackout"
+        },
+        {
+          "info": {
+            "name": "Get Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Blackout"
+        },
+        {
+          "info": {
+            "name": "Update Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Blackout"
+        },
+        {
+          "info": {
+            "name": "Delete Blackout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/blackouts/:blackout-id",
+            "params": [
+              {
+                "name": "blackout-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Blackout"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

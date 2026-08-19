@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Variances Documentation API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variances Documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vulnerability Variances Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/variances/documentation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get full description  for all vulnerabilities according to CWE (Common Weakness Enumeration) / CVE (Common Vulnerability Enumeration) and provide recommendations to fix them."
+        },
+        {
+          "info": {
+            "name": "Get Vulnerability Variance Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/vulnerabilities/:vuln-id/variances/:variance-id/documentation",
+            "params": [
+              {
+                "name": "vuln-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "variance-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get full description about a specific vulnerability according to CWE (Common Weakness Enumeration) / CVE (Common Vulnerability Enumeration) and provide recommendations to fix it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

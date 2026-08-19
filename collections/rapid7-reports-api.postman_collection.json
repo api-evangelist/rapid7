@@ -1,0 +1,1623 @@
+{
+  "item": [
+    {
+      "id": "2a9e6c40-f3a3-4308-b077-ece0c3f417e6",
+      "name": "Reports",
+      "description": {
+        "content": "Reports provide the ability to share information with stakeholders at both scan and app levels. The following table lists the report templates and the various formats that are available:  <table> <thead><tr> <th>Report Type</th> <th>Report Format</th> </tr> </thead> <tbody> <tr><td><code>VULN_SUMMARY</code></td> <td><code>PDF</code> <code>HTML</code> <code>CSV</code></td> </tr> <tr> <td><code>VULN_REMEDIATION</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>PCI_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr>         <tr><td><code>PCI4_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr><tr><td><code>OWASP_2013_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2017_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2021_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2023API_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>OWASP_2025_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>GDPR_2016_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>SOX_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>HIPAA_COMPLIANCE</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>EXEC_SINGLE_APP</code> (deprecated)</td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>EXEC_ALL_APPS</code> (deprecated)</td> <td><code>PDF</code> </td> </tr> <tr><td><code>EXEC_SINGLE_APP_NEW_VULNS</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>EXEC_ALL_APP_NEW_VULNS</code></td> <td><code>PDF</code> </td> </tr> <tr><td><code>EXEC_SINGLE_APP_ALL_VULNS</code></td> <td><code>PDF</code> <code>HTML</code> </td> </tr> <tr><td><code>EXEC_ALL_APP_ALL_VULNS</code></td> <td><code>PDF</code> </td> </tr> <tr><td><code>EXEC_IAS_IVM_COMPOSITE</code></td> <td><code>PDF</code> </td> </tr> <tbody> </table>",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f2d8f1b-cd9f-444a-b28e-945af41c1a45",
+          "name": "Get Reports",
+          "request": {
+            "name": "Get Reports",
+            "description": {
+              "content": "Get a page of Reports, based on the supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Reports is \"generatedDate\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page-token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ea4d7f2-2ee5-4a69-b497-0da067d187c0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"5f4cc696-7a40-736c-00bc-6c00b6024785\",\n      \"name\": \"string\",\n      \"type\": \"SOX_COMPLIANCE\",\n      \"format\": \"PDF\",\n      \"owner\": {\n        \"id\": \"0aea740e-9f46-d041-374e-71bd9323f8dd\"\n      },\n      \"generated_date\": \"1973-05-06T02:41:37.233Z\",\n      \"app\": {\n        \"id\": \"8ec1cafa-f81c-81cf-47c3-07f5f6e68a9e\"\n      },\n      \"status\": \"PROCESSING\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"cfc15dfc-4057-14a3-4500-1e7541601117\",\n      \"name\": \"string\",\n      \"type\": \"EXEC_ALL_APPS\",\n      \"format\": \"PDF\",\n      \"owner\": {\n        \"id\": \"9063d5b5-104a-6f93-9925-b70b3308f45a\"\n      },\n      \"generated_date\": \"2009-05-07T17:57:48.772Z\",\n      \"app\": {\n        \"id\": \"96220462-9d6a-a3c0-689d-9fa19fc63f92\"\n      },\n      \"status\": \"FAILED\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"metadata\": {\n    \"index\": 9799,\n    \"size\": 6245,\n    \"sort\": \"string\",\n    \"total_data\": 5268,\n    \"total_pages\": 9066,\n    \"page_token\": \"string\"\n  },\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8b82dc9-738a-4bb2-8f62-b87fe2221811",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52b59f58-6372-40f0-85f4-a0b8bd88aa4e",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "640cad7a-3591-4843-a71d-a1900af43f57",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff34f8b7-5214-4107-a535-2b3c0b1bbf93",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c6098cb-cbc5-45b7-8c3a-d9fdf57be3ee",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd02c9c3-b697-49df-8d9b-ce42dbc3bd82",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3cc36d95-7835-4d21-ad84-f0d584029578",
+          "name": "Generate Report",
+          "request": {
+            "name": "Generate Report",
+            "description": {
+              "content": "Generate a new Report<br><br>The following table outlines per report type whether a field is required (<span>&#9989;</span>), optional (<span>&#10035;</span>) or not to be included (<span>&#10060;</span>) for report generation<table> <thead><tr> <th>Report Type</th> <th>name</th> <th>type</th> <th>format</th> <th>scanId</th> <th>filter</th> </tr> </thead> <tbody> <tr><td><code>VULN_SUMMARY</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr> <td><code>VULN_REMEDIATION</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>PCI_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>PCI4_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>OWASP_2013_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>OWASP_2017_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>OWASP_2021_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>OWASP_2023API_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>OWASP_2025_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>GDPR_2016_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>SOX_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>HIPAA_COMPLIANCE</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_SINGLE_APP</code> (deprecated)</td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_ALL_APPS</code> (deprecated)</td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_SINGLE_APP_NEW_VULNS</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_ALL_APPS_NEW_VULNS</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_SINGLE_APP_ALL_VULNS</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tr><td><code>EXEC_ALL_APPS_ALL_VULNS</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#10060;</span><br/> </td> <td><span>&#10035;</span><br/> </td> </tr> <tbody> </table>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"format\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"scan\": {\n    \"id\": \"<uuid>\"\n  },\n  \"app\": {\n    \"id\": \"<uuid>\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"<string>\",\n  \"filter\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36492b48-2d70-47cf-a819-71ae3669a288",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46db37eb-a060-4cd5-bcc8-5002fa00efcb",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5e51f05-8afb-44b7-81dc-1d7c16c91771",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc749d6e-d698-4e9a-ae43-f7e4af0666e7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7139629a-c850-463e-b1ad-cf4f254e8282",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6404d5b1-9e7c-4980-be7d-21be61f166cd",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "297271e9-2ce3-4f05-b193-e469ba1ae95f",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3404afb7-df8b-408c-83ab-865483e951af",
+              "name": "Resource validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E25\",\n  \"errors\": [\n    {\n      \"type\": \"OBJECT\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    },\n    {\n      \"type\": \"PROPERTY\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48d2c5ea-5a25-452f-9a2f-3ca3df95620f",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"PDF\",\n  \"name\": \"Weekly Report\",\n  \"type\": \"VULN_SUMMARY\",\n  \"scan\": {\n    \"id\": \"837dec0f-f5c5-c087-351d-5419b3c9dd14\"\n  },\n  \"app\": {\n    \"id\": \"c9b9fad2-641b-2705-670a-cf47c2d27dbc\"\n  },\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"month\": \"2023-12\",\n  \"filter\": \"vulnerability.app.name CONTAINS 'Weekly'\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18c52433-d5a9-4945-b12a-75b1295aaa5b",
+          "name": "Get Report",
+          "request": {
+            "name": "Get Report",
+            "description": {
+              "content": "Get a Report <br/><b> NOTE: This API allows for the retrieval of both Report Information and Report Contents depending on which Mime-Type the client advertises acceptance of in the <code>Accept</code> header passed in the call.</b></br> When retrieving only the Report Information the client should supply an <code>Accept</code> header value that indicates acceptance of the <code>application/json</code> mime type only.</br></br> To download the Report Contents the client is required to supply <code>Accept</code> header values that indicate acceptance of <code>application/pdf</code> for PDF reports, <code>application/zip</code> for HTML reports or <code>text/csv</code> for CSV reports. To ensure errors can be returned <code>application/json</code> should also be provided as the second <code>Accept</code> header value. Attempts to download a report for which the generation status is not <code>COMPLETE</code> will result in a response of \"204 No Content\".<br/> This request can be polled until the status becomes <code>COMPLETE</code>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                ":report-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "report-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6f4edacb-5cbc-4a87-b246-7e305bcb03dc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"56d6f698-9108-6caf-213f-647ab090dd6b\",\n  \"name\": \"string\",\n  \"type\": \"EXEC_ALL_APPS\",\n  \"format\": \"PDF\",\n  \"owner\": {\n    \"id\": \"db7b7583-2305-fd28-0d70-9eff7f7441ce\"\n  },\n  \"generated_date\": \"2011-09-16T05:05:32.645Z\",\n  \"app\": {\n    \"id\": \"2abcfa04-fe00-28c6-859d-2c0e2e0aac1a\"\n  },\n  \"status\": \"PROCESSING\",\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ac108b3-3b38-4b33-8765-373c45ad8b4f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72bbb8ec-831c-4eb9-90ca-ff1076b05503",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77ea4ec5-42f9-48c7-8adf-a6411356068e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0f53e58-979f-4d89-acc1-33717d751ab8",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d53530a9-f9ab-400d-8b94-a68c40924337",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a17e6d7-137b-49ca-b0de-655c9fda48ea",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce4837af-6f25-4999-8254-8200c81d52ac",
+          "name": "Delete Report",
+          "request": {
+            "name": "Delete Report",
+            "description": {
+              "content": "Delete an existing Report",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                ":report-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "report-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "002f1db8-c923-4397-82ab-7256f7c00b48",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ea0ef99-bba3-4d91-92e4-c7560c7e93a3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b222a1f-25a9-4f22-9358-734f90899530",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "796b9808-696e-47a7-b0de-dea410bcef34",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab4aea09-248c-4fed-b330-d153399c5eee",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5fa62f4-ed4c-4fdc-9eee-0fc1cdc52cb6",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7466d515-019e-46a3-9947-0dbdc768c91a",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a3c8b9f-7c7e-42e5-8170-b5c5f3199796",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"423 LOCKED\",\n  \"message\": \"string\",\n  \"errorCode\": \"E20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://[region].api.insight.rapid7.com/ias/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d94e3bb7-628e-40af-a936-61baa98dc23a",
+    "name": "InsightAppSec Accounts Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href='https://insight.help.rapid7.com/docs/api-overview'>Learn about basic concepts and capabilities</a></li><li><a href='https://insight.help.rapid7.com/docs/managing-platform-api-keys'>Get an Insight platform API key to set up authentication</a></li><li><a href='https://insight.help.rapid7.com/docs/product-apis'>See available Insight product APIs</a></li><li><a href='https://insightappsec.help.rapid7.com/docs'>Learn more about InsightAppSec</a></li></ul><p>After you've got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user's API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href=\"#pagination\"><h2 id=\"pagination\">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a \"status\" and a \"message\" property indicating the cause of the error, a \"r7-correlation-id\" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an \"error_code\" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response \"r7-correlation-id\" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional \"errors\" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>",
+      "type": "text/plain"
+    }
+  }
+}

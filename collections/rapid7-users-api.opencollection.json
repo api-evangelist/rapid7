@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Users API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/users/_search",
+            "params": [
+              {
+                "name": "index",
+                "value": "0",
+                "type": "query",
+                "description": "The optional, 0 based index of the page to retrieve. Must be an integer greater than or equal to 0."
+              },
+              {
+                "name": "size",
+                "value": "20",
+                "type": "query",
+                "description": "The optional size of the page to retrieve. Must be an integer greater than 0 or less than or equal to 1000."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A search API for users. You can search for users matching the given search criteria.<table style=\"width:max-content;border:1px solid rgba(38, 50, 56, 0.3)\" title=\"Searchable/Sortable Fields\"><tr><th>Field</th><th>Can Search?</th><th>Can Sort?</th><th>Type</th></tr><tr><td>first_name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>last_name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>name</td><td>Yes</td><td>Yes</td><td>String</td></tr><tr><td>domain</td><td>Yes</td><td>No</td"
+        },
+        {
+          "info": {
+            "name": "Get user by RRN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/idr/v1/users/:rrn",
+            "params": [
+              {
+                "name": "rrn",
+                "value": "",
+                "type": "path",
+                "description": "The RRN of the user."
+              }
+            ]
+          },
+          "docs": "Retrieve a user with the given RRN (<a href=\"https://docs.rapid7.com/insightidr/rapid7-resource-names/\">Rapid7 Resource Name</a>)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

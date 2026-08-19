@@ -1,0 +1,2142 @@
+{
+  "item": [
+    {
+      "id": "315394e3-8104-4a94-b2d5-4169c87020b4",
+      "name": "Schedules",
+      "description": {
+        "content": "A Schedule defines the automated execution of a Scan, using a specified Scan Config. Both the App and Scan Config must be created prior to creating a Schedule.  There are two options available to specify how often a schedule can occur, <b>either a frequency or a recurrence rule (rrule).</b> Only frequency supports the use of ONCE only schedules. If providing a rrule, the following fields are permitted:<ul><li><code>FREQ</code> where FREQ is one of: <code>HOURLY, DAILY, WEEKLY, MONTHLY</code> </li><li><code>INTERVAL</code></li><li><code>BYDAY</code> where BYDAY is: a single day, <code>SA,SU</code> to represent weekend, or all weekdays. </li><li><code>BYMONTHDAY</code> where BYMONTHDAY is a range between:<code> 1 - 31. </code></li><li><code>BYSETPOS</code> where BYSETPOS is one of: <code>-1, 1, 2, 3, 4</code></li><li><code>COUNT</code> where COUNT is the number of occurrences you want the blackout to run for</li></ul>If providing a rrule, the <a href=\"https://datatracker.ietf.org/doc/html/rfc2445#section-4.8.5.4\">RFC 2445 section-4.8.5.4 IETF specification</a> can be used as a guide for how to create rrules. Example: <ul><li><code>rrule = \"FREQ=MONTHLY;INTERVAL=1;BYDAY=FR;BYSETPOS=-1\"</code> represents 'Run every month on the last Friday'.</li></ul>If providing a frequency, a schedule's frequency is defined by both the type and interval; specifying a type of <code>ONCE</code> does not require an interval. The permitted types are as follows:<ul><li><code>ONCE</code></li><li><code>HOURLY</code></li><li><code>DAILY</code></li><li><code>WEEKLY</code></li><li><code>MONTHLY</code></li></ul>Either a frequency <b>or</b> a rrule must be provided for create/update operations. If a <code>frequency.type</code> other than <code>ONCE</code> is provided, the date and time of the Schedule recurrences will be calculated based on the <code>frequency</code> or <code>rrule</code> defined, until the threshold of <code>last_start</code> (if one is provided, otherwise until a date considerably far into the future).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5447760c-1ddf-425a-a764-c83b166da6a8",
+          "name": "Get Schedules",
+          "request": {
+            "name": "Get Schedules",
+            "description": {
+              "content": "Get a page of Schedules, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Schedules is \"name\" (ascending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page-token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3804cae5-4e50-4256-bbf9-7a4aee1420c1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"enabled\": false,\n      \"first_start\": \"1959-12-27T16:30:37.994Z\",\n      \"name\": \"string\",\n      \"scan_config\": {\n        \"id\": \"562380de-0254-e7cc-866f-cd96a06e31e9\"\n      },\n      \"id\": \"4d5eed94-f956-122a-1556-d070a044dc68\",\n      \"last_start\": \"1987-01-20T10:11:34.450Z\",\n      \"frequency\": {\n        \"enabled\": true,\n        \"first_start\": \"1982-07-25T19:32:28.691Z\",\n        \"name\": \"string\",\n        \"scan_config\": {\n          \"id\": \"495d94b3-2451-4bbb-ea73-95b05f5ebaa9\"\n        },\n        \"id\": \"3ba3e161-3302-e1dd-8a15-797705e7e993\",\n        \"last_start\": \"1960-11-30T01:51:38.548Z\",\n        \"rrule\": \"string\"\n      },\n      \"rrule\": \"string\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"enabled\": false,\n      \"first_start\": \"1966-06-05T09:36:19.742Z\",\n      \"name\": \"string\",\n      \"scan_config\": {\n        \"id\": \"d71b4f25-e843-7233-920a-1b9a0df24758\"\n      },\n      \"id\": \"dbd7f3bb-1424-a3f1-4e2b-6f76be6a3379\",\n      \"last_start\": \"1947-01-10T19:02:43.013Z\",\n      \"frequency\": {\n        \"enabled\": false,\n        \"first_start\": \"1971-11-01T19:57:36.257Z\",\n        \"name\": \"string\",\n        \"scan_config\": {\n          \"id\": \"131f4cdf-ceea-e6d4-c4d8-af81628fc0a2\"\n        },\n        \"id\": \"396cff1d-bde0-ac3a-31f5-498fabd7f194\",\n        \"last_start\": \"2000-01-03T18:32:24.594Z\",\n        \"rrule\": \"string\"\n      },\n      \"rrule\": \"string\",\n      \"links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"profile\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"metadata\": {\n    \"index\": 1868,\n    \"size\": 8961,\n    \"sort\": \"string\",\n    \"total_data\": 7457,\n    \"total_pages\": 9056,\n    \"page_token\": \"string\"\n  },\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d2db58c-5740-4345-aa4f-af576f71c550",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4345b6f6-0d12-4592-aca5-4cf0849ed2e7",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f96a25a8-bd5c-4113-87bf-65c71a191655",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2176080-08ca-4ff5-ad84-6a1452e0601c",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9691030-e90e-4254-82df-9fd06ce2aca6",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97e3807a-f01b-4c14-a06c-f303aa47531e",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page-token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b02f9b6e-3f66-47d2-85c5-740a047ce4c9",
+          "name": "Create Schedule",
+          "request": {
+            "name": "Create Schedule",
+            "description": {
+              "content": "Create a new Schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"<uuid>\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": \"<boolean>\",\n    \"first_start\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"scan_config\": {\n      \"id\": \"<uuid>\"\n    },\n    \"last_start\": \"<dateTime>\",\n    \"rrule\": \"<string>\"\n  },\n  \"rrule\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe88a69b-56e2-44b5-947b-e57d8f66e1cf",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bcddb867-f0b0-4e2e-aab1-ee5e67c5d4e3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a17bbc5-49bf-4cf8-99c4-90d8fda1b1bf",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54526837-051b-451e-b9f5-7405d74fff53",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebf58d51-cc63-4a20-9768-716339ef4b45",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f44a9c4-d402-4f84-983b-7ad07bce5be1",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bff62e42-9158-4580-a5c8-a49d5768f82c",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6051ebc-a6ad-4b25-95ec-acaeb066c933",
+              "name": "Resource validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"205 RESET_CONTENT\",\n  \"message\": \"string\",\n  \"errorCode\": \"E17\",\n  \"errors\": [\n    {\n      \"type\": \"PROPERTY\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    },\n    {\n      \"type\": \"OBJECT\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6a3d96a-38dc-46cd-9c0d-5662ce4e703a",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e343689e-915f-4f3c-bd89-81dc3f2ed38a",
+          "name": "Get Schedule",
+          "request": {
+            "name": "Get Schedule",
+            "description": {
+              "content": "Get a Schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae8cfbea-880e-467d-9d6e-d46147c8c6d4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"enabled\": true,\n  \"first_start\": \"1978-08-06T06:45:55.359Z\",\n  \"name\": \"string\",\n  \"scan_config\": {\n    \"id\": \"3b0324db-55ce-be78-a55b-4bebec30754f\"\n  },\n  \"id\": \"d5ce2af7-bb9a-78bf-896a-bd40c83c48b2\",\n  \"last_start\": \"1952-01-31T09:41:15.584Z\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"1977-09-10T01:57:30.554Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"476a206c-9d0f-ecc6-aeb5-eb2103f9c9af\"\n    },\n    \"id\": \"b46b91cd-0f0b-7251-5ca7-26074b2d8bec\",\n    \"last_start\": \"2010-03-06T02:15:31.060Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"string\",\n  \"links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"profile\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32fa212f-40ea-4215-bc64-254e85da9b76",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a01b4c0-a13f-4a95-9987-73d3c04e5036",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fb52e17-3b1a-408c-a343-ca35b1b23295",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "055dea17-afe9-45db-8966-2ed3967036a6",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4c1bb10-0995-44b1-a22b-e0ef8c1d6987",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7de18ae1-8e13-4390-81c3-3673d3657729",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "870c41cb-10d2-4583-aff2-b15a65ec80ae",
+          "name": "Update Schedule",
+          "request": {
+            "name": "Update Schedule",
+            "description": {
+              "content": "Update an existing Schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"<uuid>\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": \"<boolean>\",\n    \"first_start\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"scan_config\": {\n      \"id\": \"<uuid>\"\n    },\n    \"last_start\": \"<dateTime>\",\n    \"rrule\": \"<string>\"\n  },\n  \"rrule\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8d1d4488-50af-4feb-9a9d-ec585413dd4e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aaa0930d-1c51-4d46-8fe5-4495e1f4b847",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a1d7da9-59d0-4bd6-be1e-2d0346e760bb",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d86be1c6-75b5-4b52-9d89-ddafa623d038",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25df14fc-4f0b-406b-99db-36e250ae1f32",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8335de2-132c-43cd-b8ac-ad436e58f0e2",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44a979c6-bfbb-4468-92b7-663903a028b6",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d99c7c4c-2e20-4c95-84c1-20423218850e",
+              "name": "Resource validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"205 RESET_CONTENT\",\n  \"message\": \"string\",\n  \"errorCode\": \"E17\",\n  \"errors\": [\n    {\n      \"type\": \"PROPERTY\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    },\n    {\n      \"type\": \"OBJECT\",\n      \"context\": \"string\",\n      \"explanation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3af7f212-37dd-41a0-bf1a-1549d5f34f64",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"first_start\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"scan_config\": {\n    \"id\": \"f27b4c7a-b4eb-20da-ea10-e2693d8551e8\"\n  },\n  \"last_start\": \"<dateTime>\",\n  \"frequency\": {\n    \"enabled\": true,\n    \"first_start\": \"2015-01-21T12:39:28.719Z\",\n    \"name\": \"string\",\n    \"scan_config\": {\n      \"id\": \"a751da9b-358d-8c3d-05ab-e9601227b34d\"\n    },\n    \"last_start\": \"2010-06-11T02:44:17.229Z\",\n    \"rrule\": \"string\"\n  },\n  \"rrule\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "607da2d4-e066-460d-8c5c-4dba6b85e7e0",
+          "name": "Delete Schedule",
+          "request": {
+            "name": "Delete Schedule",
+            "description": {
+              "content": "Delete an existing Schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "schedule-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e64345e6-c8ae-4873-abcc-223d505da7cf",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fde2fec3-757f-401a-8384-cb1aacebf5ed",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d57651e-75b4-4680-afa7-809e854a859a",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fa1c523-156c-447b-97b9-2cfa5ce7bb60",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a45cc7b3-843c-4c12-9e8c-f7728333785d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b143cfb8-5f59-4c07-902e-7c7561efbb29",
+              "name": "Action conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1706786-9916-4e1b-9a3d-9ded8567f78b",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57ef5137-0e59-4683-99db-306795b8e352",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "schedule-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"502 BAD_GATEWAY\",\n  \"message\": \"string\",\n  \"errorCode\": \"E9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://[region].api.insight.rapid7.com/ias/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5b868949-adc4-457f-a115-dbc45ee6ca73",
+    "name": "InsightAppSec Accounts Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>Welcome to the reference documentation for the public APIs available for InsightAppSec.</p><p>Here are a few resources to help you learn how to start using our APIs:</p><ul><li><a href='https://insight.help.rapid7.com/docs/api-overview'>Learn about basic concepts and capabilities</a></li><li><a href='https://insight.help.rapid7.com/docs/managing-platform-api-keys'>Get an Insight platform API key to set up authentication</a></li><li><a href='https://insight.help.rapid7.com/docs/product-apis'>See available Insight product APIs</a></li><li><a href='https://insightappsec.help.rapid7.com/docs'>Learn more about InsightAppSec</a></li></ul><p>After you've got the basics down, you can use this API guide to find examples of requests and responses.</p></p><h2>Permissions</h2><p>This API uses the platform role of a user's API key to inherit a set of permissions.</p><p><b>Notes</b>:<li>Platform Admins do not require explicit access to an App in order to see it, or anything associated with it</li><li>Organization keys will inherit Product Admin permissions.</li></p><table><thead><tr><th>Role</th><th>Permissions</th></tr></thead><tbody><tr><td>Product Admin</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Manage Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Administer Vulnerability Comments</code></li><li><code>Manage Engines</code></li><li><code>Manage Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Global Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Write</td><td><li><code>Manage Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Manage Scan Configs</code><li><code>Manage Scans</code></li><li><code>Manage Vulnerabilities</code></li><li><code>Manage Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Manage Schedules</code></li><li><code>Manage Blackouts</code></li><li><code>Manage Files</code></li><li><code>Manage Tags</code></li><li><code>Manage PDF Report</code></li></td></tr><tr><td>Read Only</td><td><li><code>Read Apps</code></li><li><code>Read Attack Templates</code></li><li><code>Read Targets</code><li><code>Read Scan Configs</code><li><code>Read Scans</code></li><li><code>Read Vulnerabilities</code></li><li><code>Read Vulnerability Comments</code></li><li><code>Read Engines</code></li><li><code>Read Engine Groups</code></li><li><code>Read Schedules</code></li><li><code>Read Blackouts</code></li><li><code>Read Files</code></li><li><code>Read Tags</code></li><li><code>Read PDF Report</code></li></td></tr></tbody><table><a href=\"#pagination\"><h2 id=\"pagination\">Pagination Parameters</h2></a><p>The following query parameters can be used to control the order, offset and size of the returned data</p><table><thead><tr><th>Parameter</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>index</code></td><td><p>The 0-based index of the page of data desired (default: 0)<p></td><td><code>?index=2</code></td></tr><tr><td><code>size</code></td><td><p>The size of the page of data desired (min: 1, max: 1000, default: 50)<p></td><td><code>?size=10</code></td></tr><tr><td><code>sort</code></td><td><p>The sort terms and (optional) directions for the desired ordering of data (default: specific to each resource)<p></td><td><code>?sort=scan.submit_time,DESC,scan.status</code></td></tr><tr><td><code>page-token</code></td><td><p>The page token, used as an alternative to <code>index</code> (default: Not provided)<p></td><td><code>?page-token=NDM0NTk0NTIyOjo6X1M6OjpiYW5hbmFz</code></td></tr></tbody></table><h3>Paging using a page token</h3><p>When intending to page beyond the 10,000th result, or as an alternative to using the <code>index</code> query parameter, the <code>page-token</code> option may be used instead. After retrieving the first page, the <code>page_token</code> will be present in the <code>metadata</code> section of the response.<br />For example, with <code>size=99</code>, <code>index=0</code> to <code>index=99</code> may be used. To load the next page, use the <code>page_token</code> value used in the response e.g. <code>?page-token=NDM0NTk0NTIyO</code> </p><h2>Creating resources</h2><p>As is generally the accepted practice with REST-ful APIs, creating a resource can be performed by sending an appropriately formatted POST request. Any ID provided for a new resource in a POST request <i>body</i> will simply be ignored (and a new one generated internally and returned as part of the resource in subsequent GET requests), and POST requests to URLs following a format similar to <code>.../resource/<ID></code> are unsupported and should respond with <code>415 Method Not Allowed</code>. All requests which successfully create a resource and respond with <code>201 Created</code> will contain a <code>Location</code> header the value of which is an absolute URI for the resource (the ID of which can be determined as the last section of the path in the given URI). For example:<br /><code>Location: https://us.api.insight.rapid7.com/ias/v1/scans/12345678-1234-5678-90AB-1234567890AB</code></p><h2>Date, Time and Timezone Support</h2><p>The value of date and date-time type properties are fixed to the common ISO-8601 format. Unless otherwise specified, all date or date-time data in response bodies are expressed in UTC, and it is also expected that data provided in request bodies are also expressed in UTC.</p><h3>Schedules and Blackouts</h3><p>The <code>first_start</code> and <code>first_end</code> properties of both Blackouts and Schedules, and the <code>last_start</code> property of Blackouts may be specified with a timezone. If the timezone is not specified, it is assumed to be UTC. For example:<br /><code>2019-08-12T14:00:00.000000Z[Asia/Tokyo]</code><br />It is also possible to specify the timezone as an offset of either <code>GMT</code> or <code>UTC</code>. For example:<br /><code>2019-09-04T15:00:00.000000Z[GMT+03:00]</code></p><table><thead><tr><th>Value</th><th>Format</th><th>Notes</th></tr></thead><tbody><tr><td>Date</td><td>YYYY-MM-DD</td><td>Defaults to 12 am UTC (if used for a date &amp; time)</td></tr><tr><td>Date &amp; time only</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]</td><td>Defaults to UTC</td></tr><tr><td>Date &amp; time in UTC</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z</td><td></td></tr><tr><td>Date &amp; time with specific timezone</td><td>YYYY-MM-DD'T'hh:mm:ss[.nnn]Z[TimeZoneId]</td><td></td></tr></tbody></table><h2>Searching and Filtering</h2><p>One characteristic of a powerful API is support for complex search and filtering of resources using a flexible query language. It is entirely possible to provide basic search and filtering functionality on standard GET resource collection operations using HTTP query parameters, but this becomes restrictive when attempting to encode boolean logic. Other solutions are also possible but come with equally restrictive compromises. The most effective way to facilitate this complex search and filtering is to provide it as a top-level API with a robust Domain-Specific Language (DSL).</p><p>For simple data retrieval that supports paging and sorting functionality, use the traditional resource-specific GET collection operations; for more complex data retrieval that supports a user-crafted query DSL, use the global Search operation.</p><h2>Errors</h2><p>Any response from the API with an HTTP Status Code in the 4xx or 5xx range indicates an error. If in the 4xx range it indicates a client-side error, where in the 5xx range it indicates a server-side error. All responses indicating an error should be JSON formatted, and contain both a \"status\" and a \"message\" property indicating the cause of the error, a \"r7-correlation-id\" header should also always be returned in the format of a UUID, which uniquely identifies the HTTP exchange that took place and caused the error (this header is present on <i>every</i> request). On some occasions, an \"error_code\" property will be included in the response body, which can provide the support team further context into the cause of the error in cases where the message is not explicitly clear.</p><p>When contacting support about error responses received from the API, please attempt to include, at minimum:<ul><li>A description of the requests intent</li><li>The request URL</li><li>The request body</li><li>The error response body</li><li>The error response \"r7-correlation-id\" header</li></ul></p><h3>Validation Errors</h3><p>Specifically, when a response with an HTTP Status Code of 422 is returned, this indicates a validation error, almost always received in a response from a non-idempotent request (normally PUT, POST or DELETE). In this case, there should be an additional \"errors\" property included in the JSON response body that should describe the cause of the validation exception; this will almost always require a modification to the request body to resolve. </p>",
+      "type": "text/plain"
+    }
+  }
+}

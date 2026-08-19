@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Reports API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Reports, based on the supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Reports is \"generatedDate\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Generate Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a new Report<br><br>The following table outlines per report type whether a field is required (<span>&#9989;</span>), optional (<span>&#10035;</span>) or not to be included (<span>&#10060;</span>) for report generation<table> <thead><tr> <th>Report Type</th> <th>name</th> <th>type</th> <th>format</th> <th>scanId</th> <th>filter</th> </tr> </thead> <tbody> <tr><td><code>VULN_SUMMARY</code></td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span><br/> </td> <td><span>&#9989;</span"
+        },
+        {
+          "info": {
+            "name": "Get Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Report <br/><b> NOTE: This API allows for the retrieval of both Report Information and Report Contents depending on which Mime-Type the client advertises acceptance of in the <code>Accept</code> header passed in the call.</b></br> When retrieving only the Report Information the client should supply an <code>Accept</code> header value that indicates acceptance of the <code>application/json</code> mime type only.</br></br> To download the Report Contents the client is required to supply <cod"
+        },
+        {
+          "info": {
+            "name": "Delete Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

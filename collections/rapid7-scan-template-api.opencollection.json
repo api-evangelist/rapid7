@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Scan Template API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scan Template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_templates"
+          },
+          "docs": "Returns all scan templates."
+        },
+        {
+          "info": {
+            "name": "Scan Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_templates"
+          },
+          "docs": "Creates a new scan template."
+        },
+        {
+          "info": {
+            "name": "Scan Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan template"
+              }
+            ]
+          },
+          "docs": "Returns a scan template."
+        },
+        {
+          "info": {
+            "name": "Scan Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan template"
+              }
+            ]
+          },
+          "docs": "Updates a scan template."
+        },
+        {
+          "info": {
+            "name": "Scan Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scan_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan template"
+              }
+            ]
+          },
+          "docs": "Deletes a scan template."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

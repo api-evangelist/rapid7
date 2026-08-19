@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Scans API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans",
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page-token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a page of Scans, based on supplied <a href=\"#pagination\">pagination parameters</a>. <p>The default sort for Scans is \"submit_time\" (descending); for a full list of sortable properties, refer to the Search Catalog detailed in the Search API.</p>"
+        },
+        {
+          "info": {
+            "name": "Submit Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Scan"
+        },
+        {
+          "info": {
+            "name": "Delete Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/action",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get any current Scan action"
+        },
+        {
+          "info": {
+            "name": "Submit Scan Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/action",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new Scan action"
+        },
+        {
+          "info": {
+            "name": "Get Scan Engine Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/engine-events",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the engine events from a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Execution Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/execution-details",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get real-time details of the execution of a Scan"
+        },
+        {
+          "info": {
+            "name": "Get Scan Platform Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/scans/:scan-id/platform-events",
+            "params": [
+              {
+                "name": "scan-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the platform events from a Scan"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

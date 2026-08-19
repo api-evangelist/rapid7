@@ -1,0 +1,271 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Report API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Report Formats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/report_formats"
+          },
+          "docs": "Returns all available report formats. A report format indicates an output file format specification (e.g. PDF, XML, etc). Some printable formats may be templated, and others may not. The supported templates for each formated are provided."
+        },
+        {
+          "info": {
+            "name": "Report Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/report_templates"
+          },
+          "docs": "Returns all available report templates."
+        },
+        {
+          "info": {
+            "name": "Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/report_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report template;"
+              }
+            ]
+          },
+          "docs": "Returns the details of a report template. Report templates govern the contents generated within a report. "
+        },
+        {
+          "info": {
+            "name": "Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all defined report configurations."
+        },
+        {
+          "info": {
+            "name": "Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports"
+          },
+          "docs": "Configures a new report for generation. Report types are controlled through either or both a format and template. Non-templatized (`export`) report formats do not require a template and have their output format preset. Templatized (`document` and `file`) report formats support a report template that governs the content of the output and the output format can be chosen from a list of supported formats."
+        },
+        {
+          "info": {
+            "name": "Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              }
+            ]
+          },
+          "docs": "Returns the configuration details of a report."
+        },
+        {
+          "info": {
+            "name": "Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              }
+            ]
+          },
+          "docs": "Updates the configuration details of a report."
+        },
+        {
+          "info": {
+            "name": "Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              }
+            ]
+          },
+          "docs": "Deletes the configuration of a report."
+        },
+        {
+          "info": {
+            "name": "Report Generation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id/generate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              }
+            ]
+          },
+          "docs": "Generates a configured report and returns the instance identifier of the report."
+        },
+        {
+          "info": {
+            "name": "Report Histories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id/history",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              }
+            ]
+          },
+          "docs": "Returns all historical details for generation of the report over time."
+        },
+        {
+          "info": {
+            "name": "Report History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id/history/:instance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              },
+              {
+                "name": "instance",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report instance."
+              }
+            ]
+          },
+          "docs": "Returns the details for a generation of the report."
+        },
+        {
+          "info": {
+            "name": "Report History",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id/history/:instance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              },
+              {
+                "name": "instance",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report instance."
+              }
+            ]
+          },
+          "docs": "Deletes an instance of a generated report."
+        },
+        {
+          "info": {
+            "name": "Report Download",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/reports/:id/history/:instance/output",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report."
+              },
+              {
+                "name": "instance",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the report instance."
+              }
+            ]
+          },
+          "docs": "Returns the contents of a generated report. The report content is usually returned in a GZip compressed format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

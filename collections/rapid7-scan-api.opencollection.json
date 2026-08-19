@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "InsightAppSec Accounts Scan API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scan",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scans",
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Return running scans or past scans (true/false value)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns all scans."
+        },
+        {
+          "info": {
+            "name": "Scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scans/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan."
+              }
+            ]
+          },
+          "docs": "Returns the specified scan."
+        },
+        {
+          "info": {
+            "name": "Scan Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/scans/:id/:status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the scan."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "The status of the scan."
+              }
+            ]
+          },
+          "docs": "Updates the scan status. Can pause, resume, and stop scans using this resource. In order to stop a scan the scan must be running or paused. In order to resume a scan the scan must be paused. In order to pause a scan the scan must be running."
+        },
+        {
+          "info": {
+            "name": "Site Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scans",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Return running scans or past scans (true/false value)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page (zero-based) to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page to retrieve."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The criteria to sort the records by, in the format: `property[,ASC|DESC]`. The default sort order is ascending. Multiple sort criteria can be specified using multiple sort query parameters."
+              }
+            ]
+          },
+          "docs": "Returns the scans for the specified site."
+        },
+        {
+          "info": {
+            "name": "Site Scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://[region].api.insight.rapid7.com/ias/v1/api/3/sites/:id/scans",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the site."
+              },
+              {
+                "name": "overrideBlackout",
+                "value": "",
+                "type": "query",
+                "description": "Whether to request for the override of an scan blackout window."
+              }
+            ]
+          },
+          "docs": "Starts a scan for the specified site."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
