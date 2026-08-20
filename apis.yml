@@ -68,6 +68,11 @@ apis:
   tags:
   - Identity
   - Platform
+  - Organization
+  - Audit
+  tags_raw:
+  - Identity
+  - Platform
   - Organizations
   - Audit
   properties:
@@ -99,6 +104,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -123,6 +130,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -352,6 +361,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -482,6 +493,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - Scans
+  tags_raw:
   - Scan
   properties:
   - type: OpenAPI
@@ -690,6 +703,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
