@@ -8,6 +8,18 @@ description: Rapid7 is a cybersecurity company providing the Insight Platform wi
   and integrations. Authentication is performed with an organization or user API key
   passed in the `X-Api-Key` header.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
@@ -803,6 +815,9 @@ apis:
   - type: OpenAPI
     url: openapi/rapid7-vulnerability-result-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/rapid7-capability-edges.yml
+  name: Rapid7 Business Capability Map
 - type: AgenticAccess
   url: agentic-access/rapid7-agentic-access.yml
 - type: VulnerabilityDisclosure
