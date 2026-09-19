@@ -598,6 +598,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
