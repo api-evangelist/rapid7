@@ -1,0 +1,190 @@
+slug: rapid7
+provider: Rapid7
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 18
+edges:
+- tag: Vulnerabilities
+  spec_file: rapid7-vulnerabilities-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.95
+  evidence: GET /vulnerabilities  get-vulnerabilities  Get Vulnerabilities; GET /vulnerabilities/{vuln-id}/discoveries
+  reason: Lists, retrieves and updates vulnerabilities and their discoveries plus attack modules — vulnerability
+    scanning and remediation management.
+- tag: Investigations
+  spec_file: rapid7-investigations-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.9
+  evidence: PUT /idr/v1/investigations/{id}/status/{status}  setStatus  Set the status of an investigation;
+    PUT /idr/v1/investigations/{id}/assignee  assignUserToInvestigation
+  reason: InsightIDR investigation lifecycle — status, assignment, bulk close, with AlertInfo schema —
+    is SOC security incident triage and response, i.e. Threat Detection & Response Management.
+- tag: Vulnerability
+  spec_file: rapid7-vulnerability-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.9
+  evidence: GET /api/3/exploits/{id}/vulnerabilities  getExploitVulnerabilities  Exploitable Vulnerabilities;
+    GET /api/3/solutions  getSolutions
+  reason: Exposes vulnerabilities, exploits, malware kits and remediation solutions — vulnerability identification
+    and remediation content.
+- tag: Vulnerability Check
+  spec_file: rapid7-vulnerability-check-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.9
+  evidence: GET /api/3/vulnerabilities/{id}/checks  getVulnerabilityChecksForVulnerability  Vulnerability
+    Checks
+  reason: Catalogue of the checks used to detect vulnerabilities during scans — vulnerability scanning
+    capability.
+- tag: Vulnerability Result
+  spec_file: rapid7-vulnerability-result-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.9
+  evidence: GET /api/3/assets/{id}/vulnerabilities  getAssetVulnerabilities; POST /api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/validations  createVulnerabilityValidation
+  reason: Retrieval of scan-discovered vulnerabilities per asset and service plus exploit validations
+    — unambiguously vulnerability scanning and remediation management.
+- tag: Remediation
+  spec_file: rapid7-remediation-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.88
+  evidence: GET /api/3/assets/{id}/vulnerabilities/{vulnerabilityId}/solution  getAssetVulnerabilitySolutions  Asset
+    Vulnerability Solution
+  reason: Returns remediation solutions for a vulnerability on an asset — squarely vulnerability remediation
+    within vulnerability management.
+- tag: Scan
+  spec_file: rapid7-scan-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: POST /api/3/sites/{id}/scans  startScan  Site Scans; POST /api/3/scans/{id}/{status}  setScanStatus
+  reason: Starting and controlling vulnerability scans against sites/assets in InsightVM — vulnerability
+    scanning operations.
+- tag: Scans
+  spec_file: rapid7-scans-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: POST /scans  submit-scan  Submit Scan; GET /scans/{scan-id}/execution-details  Get Scan Execution
+    Details
+  reason: Submission, control and execution monitoring of application security scans — vulnerability scanning
+    and remediation lifecycle, not software test management.
+- tag: User
+  spec_file: rapid7-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /api/3/roles/{id}/users  getRoleUsers  Users With Role; GET /api/3/privileges  getPrivileges;
+    GET /api/3/authentication_sources
+  reason: Operations manage users, roles, privileges and authentication sources — classic identity and
+    access administration.
+- tag: Variances Documentation
+  spec_file: rapid7-variances-documentation-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: POST /vulnerabilities/variances/documentation  get-documentation-by-variances  Get Vulnerability
+    Variances Documentation
+  reason: Retrieves documentation for vulnerability variances (evidence of a detected app vulnerability)
+    — squarely vulnerability management.
+- tag: Vulnerability Exception
+  spec_file: rapid7-vulnerability-exception-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: POST /api/3/vulnerability_exceptions  createVulnerabilityException; PUT /api/3/vulnerability_exceptions/{id}/expires  Exception
+    Expiration
+  reason: Creating, approving/status-changing and expiring vulnerability exceptions (risk acceptance /
+    exclusion from findings) is core vulnerability remediation governance in a scanner platform.
+- tag: Community Threats
+  spec_file: rapid7-community-threats-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: POST /idr/v1/customthreats/key/{key}/indicators/add  addIndicators  Add indicators to a Community
+    Threat
+  reason: Management of custom threat definitions and their indicators of compromise feeding InsightIDR
+    detection — threat intelligence supporting threat detection and response.
+- tag: Scan Configs
+  spec_file: rapid7-scan-configs-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.78
+  evidence: POST /scan-configs  create-scan-config  Create Scan Config; schemas AttackerConfig, ScanConfigOptions,
+    SslCertConfig
+  reason: Configuration of application security scan definitions (attacker config, scope constraints,
+    auth macros) driving vulnerability scans — vulnerability scanning setup.
+- tag: Vulnerability Comments
+  spec_file: rapid7-vulnerability-comments-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.78
+  evidence: GET /vulnerabilities/{vuln-id}/comments  Get Vulnerability Comments; schema EntityModelVulnerabilityComment
+  reason: Comment threads attached to application-security vulnerabilities in InsightAppSec; the object
+    under management is a security vulnerability finding, so this is collaboration within Vulnerability
+    Management rather than a generic commenting utility.
+- tag: Scan Template
+  spec_file: rapid7-scan-template-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.75
+  evidence: POST /api/3/scan_templates  createScanTemplate  Scan Templates
+  reason: CRUD over vulnerability scan templates that define how scans assess assets — part of vulnerability
+    scanning configuration.
+- tag: Vulnerability History
+  spec_file: rapid7-vulnerability-history-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.75
+  evidence: GET /vulnerabilities/{vuln-id}/history  Get Vulnerability History; schemas VulnerabilityChange,
+    VulnerabilityUpdate
+  reason: Audit trail of state changes on a security vulnerability finding — part of tracking vulnerability
+    remediation lifecycle.
+- tag: Scan Engine
+  spec_file: rapid7-scan-engine-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.72
+  evidence: GET /api/3/scan_engines  getScanEngines  Scan Engines; POST /api/3/scan_engine_pools  createScanEnginePool
+  reason: Management of vulnerability scan engines and engine pools assigned to sites — the scanning infrastructure
+    of vulnerability management. Slightly lower confidence as it is infrastructure administration.
+- tag: Site
+  spec_file: rapid7-site-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.7
+  evidence: GET /api/3/sites/{id}/assets  getSiteAssets  Site Assets
+  reason: InsightVM 'sites' group assets into scan scopes with alerting; the operations manage assets
+    under a scan site, which supports vulnerability scanning/remediation scope management rather than
+    any other capability.
