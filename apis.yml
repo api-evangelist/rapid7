@@ -68,8 +68,6 @@ apis:
     url: https://help.rapid7.com/insightvm/en-us/api/integrations.html
   - type: Examples
     url: https://github.com/rapid7/insightvm-api-examples
-  - url: graphql/rapid7-graphql.md
-    type: GraphQL
 - aid: rapid7:insight-platform-api
   name: Rapid7 Insight Platform API
   description: >-
