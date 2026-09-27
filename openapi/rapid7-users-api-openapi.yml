@@ -222,50 +222,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PageMetadata:
-      required:
-      - index
-      - size
-      - total_data
-      - total_pages
-      type: object
-      properties:
-        index:
-          type: integer
-          description: 'The 0 based index of the page retrieved. '
-          format: int32
-          example: 0
-        size:
-          type: integer
-          description: 'The size of the page requested. '
-          format: int32
-          example: 20
-        total_pages:
-          type: integer
-          description: 'The total number of pages available with the given filter parameters. '
-          format: int32
-          example: 1
-        total_data:
-          type: integer
-          description: 'The total number of results available with the given filter parameters. '
-          format: int64
-          example: 15
-      description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
-    SearchRequestSort:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field to sort by.
-          example: name
-        order:
-          type: string
-          description: The sorting direction. Sorting is case-insensitive when sorting strings.
-          enum:
-          - ASC
-          - DESC
-          - ASC,DESC
-      description: The sorting information.
     UserV2:
       required:
       - domain
@@ -325,19 +281,50 @@ components:
             $ref: '#/components/schemas/UserV2'
         metadata:
           $ref: '#/components/schemas/PageMetadata'
-    SearchRequest:
+    PageMetadata:
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
       type: object
       properties:
-        search:
-          type: array
-          description: The criteria for which entities to return.
-          items:
-            $ref: '#/components/schemas/SearchRequestCriteria'
-        sort:
-          type: array
-          description: The sorting information.
-          items:
-            $ref: '#/components/schemas/SearchRequestSort'
+        index:
+          type: integer
+          description: 'The 0 based index of the page retrieved. '
+          format: int32
+          example: 0
+        size:
+          type: integer
+          description: 'The size of the page requested. '
+          format: int32
+          example: 20
+        total_pages:
+          type: integer
+          description: 'The total number of pages available with the given filter parameters. '
+          format: int32
+          example: 1
+        total_data:
+          type: integer
+          description: 'The total number of results available with the given filter parameters. '
+          format: int64
+          example: 15
+      description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
+    SearchRequestSort:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to sort by.
+          example: name
+        order:
+          type: string
+          description: The sorting direction. Sorting is case-insensitive when sorting strings.
+          enum:
+          - ASC
+          - DESC
+          - ASC,DESC
+      description: The sorting information.
     ErrorResponse:
       required:
       - message
@@ -351,6 +338,19 @@ components:
           type: string
           description: An identifier that uniquely identifies the failed request.
           example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
+    SearchRequest:
+      type: object
+      properties:
+        search:
+          type: array
+          description: The criteria for which entities to return.
+          items:
+            $ref: '#/components/schemas/SearchRequestCriteria'
+        sort:
+          type: array
+          description: The sorting information.
+          items:
+            $ref: '#/components/schemas/SearchRequestSort'
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

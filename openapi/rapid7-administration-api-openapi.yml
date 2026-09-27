@@ -308,301 +308,6 @@ paths:
       security: []
 components:
   schemas:
-    LicenseScanning:
-      type: object
-      properties:
-        discovery:
-          type: boolean
-          example: true
-          description: Whether discovery scanning may be used.
-        policy:
-          example: 'true'
-          description: Details as to whether policy scanning and what benchmarks are available.
-          $ref: '#/components/schemas/LicensePolicyScanning'
-        scada:
-          type: boolean
-          example: true
-          description: Whether SCADA scanning may be used.
-        virtual:
-          type: boolean
-          example: true
-          description: Whether virtual scanning may be used.
-        webApplication:
-          type: boolean
-          example: true
-          description: Whether web scanning may be used.
-      description: ''
-    InstallSize:
-      type: object
-      properties:
-        backups:
-          example: ''
-          description: The disk space used by backups.
-          $ref: '#/components/schemas/BackupsSize'
-        database:
-          example: ''
-          description: The disk space used by the database.
-          $ref: '#/components/schemas/DatabaseSize'
-        directory:
-          type: string
-          example: ''
-          description: The installation directory.
-        reports:
-          example: ''
-          description: The disk space used by reports.
-          $ref: '#/components/schemas/ReportSize'
-        scans:
-          example: ''
-          description: The disk space used by scans.
-          $ref: '#/components/schemas/ScanSize'
-        total:
-          example: ''
-          description: Total disk space used by the installation.
-          $ref: '#/components/schemas/InstallationTotalSize'
-      description: ''
-    ReportSize:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 24789050
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 23.6 MB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    ScanSettings:
-      type: object
-      properties:
-        connectionTimeout:
-          type: string
-          example: PT15S
-          description: 'The connection timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15S"`.'
-        incremental:
-          type: boolean
-          example: true
-          description: Whether incremental scan results is enabled.
-        maximumThreads:
-          type: integer
-          format: int32
-          example: -1
-          description: The maximum number of scan threads to use in any scan. -1 means this is set by the scan template.
-        readTimeout:
-          type: string
-          example: PT15M
-          description: 'The read timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15M"`.'
-        statusIdleTimeout:
-          type: string
-          example: PT3M
-          description: 'The idle timeout when checking the status of running scans, in ISO 8601 format. For example: `"PT3M"`.'
-        statusThreads:
-          type: integer
-          format: int32
-          example: 3
-          description: The number of threads to use when checking the status of running scans.
-      description: ''
-    LicenseLimits:
-      type: object
-      properties:
-        assets:
-          type: integer
-          format: int32
-          example: 100000
-          description: The maximum number of assets that can be assessed.
-        assetsWithHostedEngine:
-          type: integer
-          format: int32
-          example: 1000
-          description: The maximum number of assets that may be scanned with the hosted scan engine.
-        scanEngines:
-          type: integer
-          format: int32
-          example: 100
-          description: The maximum number of scan engines that may be used.
-        users:
-          type: integer
-          format: int32
-          example: 1000
-          description: The maximum number of users allowed.
-      description: ''
-    ConsoleCommandOutput:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        output:
-          type: string
-          example: ''
-          description: The output of the command that was executed.
-      description: ''
-    InstallationTotalSize:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 12125933077
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 11.3 GB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    EnvironmentProperties:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        properties:
-          type: object
-          example: ''
-          description: Key-value pairs for system and environment properties that are currently defined.
-      description: ''
-    LicensePolicyScanning:
-      type: object
-      properties:
-        benchmarks:
-          example: ''
-          description: The benchmarks available to policy scan.
-          $ref: '#/components/schemas/LicensePolicyScanningBenchmarks'
-        scanning:
-          type: boolean
-          example: true
-          description: Whether policy scanning is allowed.
-      description: ''
-    UpdateId:
-      type: object
-      properties:
-        productId:
-          type: string
-          example: '281474976711146'
-          description: Product update identifier.
-        versionId:
-          type: string
-          example: '490'
-          description: Version update identifier.
-      description: ''
-    UpdateSettings:
-      type: object
-      properties:
-        contentAutoUpdate:
-          type: boolean
-          example: true
-          description: Whether automatic content updates are enabled.
-        enabled:
-          type: boolean
-          example: true
-          description: Whether updates are enabled.
-        productAutoUpdate:
-          type: boolean
-          example: true
-          description: Whether automatic product updates are enabled.
-      description: ''
-    InternalServerError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '500'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '500'
-      description: ''
-    CPUInfo:
-      type: object
-      properties:
-        clockSpeed:
-          type: integer
-          format: int32
-          example: 2600
-          description: The clock speed of the host, in MHz.
-        count:
-          type: integer
-          format: int32
-          example: 8
-          description: The number of CPUs.
-      description: ''
-    DiskTotal:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 499004735488
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 464.7 GB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    NotFoundError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
-      description: ''
-    AuthenticationSettings:
-      type: object
-      properties:
-        2fa:
-          type: boolean
-          example: false
-          description: Whether two-factor authentication is enabled.
-        loginLockThreshold:
-          type: integer
-          format: int32
-          example: 'true'
-          description: The maximum number of failed login attempts for an account becomes locked.
-      description: ''
-    BackupsSize:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 0
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 0 bytes
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
     UpdateInfo:
       type: object
       properties:
@@ -622,49 +327,6 @@ components:
           type: string
           example: '2200922472'
           description: The most recent product update.
-      description: ''
-    JVMInfo:
-      type: object
-      properties:
-        name:
-          type: string
-          example: OpenJDK 64-Bit Server VM
-          description: The name of the Java Virtual Machine.
-        startTime:
-          type: string
-          example: '2018-02-13T20:35:35.076Z'
-          description: The date and time the Java Virtual Machine last started.
-        uptime:
-          type: string
-          example: PT8H21M7.978S
-          description: 'Total up-time of the Java Virtual Machine, in ISO 8601 format. For example: `"PT1H4M24.214S"`.'
-        vendor:
-          type: string
-          example: Azul Systems, Inc.
-          description: The vendor of the Java Virtual Machine.
-        version:
-          type: string
-          example: 25.102-b14
-          description: The version of the Java Virtual Machine.
-      description: ''
-    DatabaseConnectionSettings:
-      type: object
-      properties:
-        maximumAdministrationPoolSize:
-          type: integer
-          format: int32
-          example: -1
-          description: The maximum number of administrative connections in the connection pool. -1 means unlimited.
-        maximumPoolSize:
-          type: integer
-          format: int32
-          example: -1
-          description: The maximum number of connections in the connection pool. -1 means unlimited.
-        maximumPreparedStatementPoolSize:
-          type: integer
-          format: int32
-          example: 256
-          description: The maximum number of prepared statements in the prepared statement pool. -1 means unlimited.
       description: ''
     License:
       type: object
@@ -711,26 +373,18 @@ components:
           - Revoked
           - Unknown
       description: ''
-    ServiceUnavailableError:
+    MemoryFree:
       type: object
-      required:
-      - status
       properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
+        bytes:
+          type: integer
+          format: int64
+          example: 45006848
+          description: The raw value in bytes.
+        formatted:
           type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
+          example: 42.9 MB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
       description: ''
     WebSettings:
       type: object
@@ -755,31 +409,19 @@ components:
           example: PT10M
           description: 'Session timeout duration, in ISO 8601 format. For example: `"PT10M"`.'
       description: ''
-    Link:
+    LicensePolicyScanning:
       type: object
       properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    MemoryInfo:
-      type: object
-      properties:
-        free:
+        benchmarks:
           example: ''
-          description: Free memory.
-          $ref: '#/components/schemas/MemoryFree'
-        total:
-          example: ''
-          description: Total memory usage.
-          $ref: '#/components/schemas/MemoryTotal'
+          description: The benchmarks available to policy scan.
+          $ref: '#/components/schemas/LicensePolicyScanningBenchmarks'
+        scanning:
+          type: boolean
+          example: true
+          description: Whether policy scanning is allowed.
       description: ''
-    BadRequestError:
+    ServiceUnavailableError:
       type: object
       required:
       - status
@@ -795,10 +437,114 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '400'
+          example: '503'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '400'
+          - '503'
+      description: ''
+    DatabaseSettings:
+      type: object
+      properties:
+        connection:
+          example: ''
+          description: Details connection settings for the database.
+          $ref: '#/components/schemas/DatabaseConnectionSettings'
+        host:
+          type: string
+          example: 127.0.0.1
+          description: The database host.
+        maintenanceThreadPoolSize:
+          type: integer
+          format: int32
+          example: 20
+          description: The maximum number of parallel tasks when executing maintenance tasks.
+        port:
+          type: integer
+          format: int32
+          example: 5432
+          description: The database port.
+        url:
+          type: string
+          example: //127.0.0.1:5432/nexpose
+          description: The database connection URL.
+        user:
+          type: string
+          example: nxpgsql
+          description: The database user.
+        vendor:
+          type: string
+          example: postgresql
+          description: The database vendor.
+      description: ''
+    DiskFree:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 166532222976
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 155.1 GB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    VersionInfo:
+      type: object
+      properties:
+        build:
+          type: string
+          example: 2017-12-10-14-11
+          description: The build number.
+        changeset:
+          type: string
+          example: 7061fb4e7c355160df79a77d8983bed2af01f2bf
+          description: The changeset of the source build.
+        platform:
+          type: string
+          example: Linux64
+          description: The platform of the build.
+        semantic:
+          type: string
+          example: 6.4.65
+          description: The semantic version number of the installation.
+        update:
+          example: ''
+          description: Version update details.
+          $ref: '#/components/schemas/UpdateInfo'
+      description: ''
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
       description: ''
     Settings:
       type: object
@@ -861,6 +607,469 @@ components:
           example: ''
           description: Details the web server settings.
           $ref: '#/components/schemas/WebSettings'
+      description: ''
+    CPUInfo:
+      type: object
+      properties:
+        clockSpeed:
+          type: integer
+          format: int32
+          example: 2600
+          description: The clock speed of the host, in MHz.
+        count:
+          type: integer
+          format: int32
+          example: 8
+          description: The number of CPUs.
+      description: ''
+    BadRequestError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '400'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '400'
+      description: ''
+    InstallationTotalSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 12125933077
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 11.3 GB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    UpdateSettings:
+      type: object
+      properties:
+        contentAutoUpdate:
+          type: boolean
+          example: true
+          description: Whether automatic content updates are enabled.
+        enabled:
+          type: boolean
+          example: true
+          description: Whether updates are enabled.
+        productAutoUpdate:
+          type: boolean
+          example: true
+          description: Whether automatic product updates are enabled.
+      description: ''
+    LicenseLimits:
+      type: object
+      properties:
+        assets:
+          type: integer
+          format: int32
+          example: 100000
+          description: The maximum number of assets that can be assessed.
+        assetsWithHostedEngine:
+          type: integer
+          format: int32
+          example: 1000
+          description: The maximum number of assets that may be scanned with the hosted scan engine.
+        scanEngines:
+          type: integer
+          format: int32
+          example: 100
+          description: The maximum number of scan engines that may be used.
+        users:
+          type: integer
+          format: int32
+          example: 1000
+          description: The maximum number of users allowed.
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    ConsoleCommandOutput:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        output:
+          type: string
+          example: ''
+          description: The output of the command that was executed.
+      description: ''
+    EnvironmentProperties:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        properties:
+          type: object
+          example: ''
+          description: Key-value pairs for system and environment properties that are currently defined.
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    ScanSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 1370433223
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 1.3 GB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    DiskTotal:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 499004735488
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 464.7 GB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    Links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    UpdateId:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: '281474976711146'
+          description: Product update identifier.
+        versionId:
+          type: string
+          example: '490'
+          description: Version update identifier.
+      description: ''
+    AuthenticationSettings:
+      type: object
+      properties:
+        2fa:
+          type: boolean
+          example: false
+          description: Whether two-factor authentication is enabled.
+        loginLockThreshold:
+          type: integer
+          format: int32
+          example: 'true'
+          description: The maximum number of failed login attempts for an account becomes locked.
+      description: ''
+    RiskSettings:
+      type: object
+      properties:
+        adjustWithCriticality:
+          type: boolean
+          example: true
+          description: Whether risk is adjusted using criticality tags.
+        criticalityModifiers:
+          example: ''
+          description: If `adjustWithCriticality` is enabled, details the risk modifiers by criticality tag.
+          $ref: '#/components/schemas/RiskModifierSettings'
+        model:
+          type: string
+          example: real_risk
+          description: The risk model used to compute risk.
+      description: ''
+    SmtpSettings:
+      type: object
+      properties:
+        host:
+          type: string
+          example: mail@acme.com
+          description: The host to send to.
+        port:
+          type: integer
+          format: int32
+          example: 25
+          description: The port to send to.
+        sender:
+          type: string
+          example: security@acme.com
+          description: The sender to send from.
+      description: ''
+    MemoryTotal:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 17179869184
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 16 GB
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    ScanSettings:
+      type: object
+      properties:
+        connectionTimeout:
+          type: string
+          example: PT15S
+          description: 'The connection timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15S"`.'
+        incremental:
+          type: boolean
+          example: true
+          description: Whether incremental scan results is enabled.
+        maximumThreads:
+          type: integer
+          format: int32
+          example: -1
+          description: The maximum number of scan threads to use in any scan. -1 means this is set by the scan template.
+        readTimeout:
+          type: string
+          example: PT15M
+          description: 'The read timeout when establishing connections to remote scan engines, in ISO 8601 format. For example: `"PT15M"`.'
+        statusIdleTimeout:
+          type: string
+          example: PT3M
+          description: 'The idle timeout when checking the status of running scans, in ISO 8601 format. For example: `"PT3M"`.'
+        statusThreads:
+          type: integer
+          format: int32
+          example: 3
+          description: The number of threads to use when checking the status of running scans.
+      description: ''
+    RiskModifierSettings:
+      type: object
+      properties:
+        high:
+          type: number
+          format: double
+          example: 1.5
+          description: High critical adjustment modifier.
+        low:
+          type: number
+          format: double
+          example: 0.75
+          description: Low critical adjustment modifier.
+        medium:
+          type: number
+          format: double
+          example: 1.0
+          description: Medium critical adjustment modifier.
+        veryHigh:
+          type: number
+          format: double
+          example: 2.0
+          description: Very high critical adjustment modifier.
+        veryLow:
+          type: number
+          format: double
+          example: 0.5
+          description: Very low critical adjustment modifier.
+      description: ''
+    InstallSize:
+      type: object
+      properties:
+        backups:
+          example: ''
+          description: The disk space used by backups.
+          $ref: '#/components/schemas/BackupsSize'
+        database:
+          example: ''
+          description: The disk space used by the database.
+          $ref: '#/components/schemas/DatabaseSize'
+        directory:
+          type: string
+          example: ''
+          description: The installation directory.
+        reports:
+          example: ''
+          description: The disk space used by reports.
+          $ref: '#/components/schemas/ReportSize'
+        scans:
+          example: ''
+          description: The disk space used by scans.
+          $ref: '#/components/schemas/ScanSize'
+        total:
+          example: ''
+          description: Total disk space used by the installation.
+          $ref: '#/components/schemas/InstallationTotalSize'
+      description: ''
+    JVMInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          example: OpenJDK 64-Bit Server VM
+          description: The name of the Java Virtual Machine.
+        startTime:
+          type: string
+          example: '2018-02-13T20:35:35.076Z'
+          description: The date and time the Java Virtual Machine last started.
+        uptime:
+          type: string
+          example: PT8H21M7.978S
+          description: 'Total up-time of the Java Virtual Machine, in ISO 8601 format. For example: `"PT1H4M24.214S"`.'
+        vendor:
+          type: string
+          example: Azul Systems, Inc.
+          description: The vendor of the Java Virtual Machine.
+        version:
+          type: string
+          example: 25.102-b14
+          description: The version of the Java Virtual Machine.
+      description: ''
+    LicenseReporting:
+      type: object
+      properties:
+        advanced:
+          type: boolean
+          example: true
+          description: Whether advanced reporting is available.
+        customizableCSVExport:
+          type: boolean
+          example: true
+          description: Whether customizable CSV Export is available.
+        pci:
+          type: boolean
+          example: true
+          description: Whether PCI reporting is available.
+      description: ''
+    BackupsSize:
+      type: object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 0
+          description: The raw value in bytes.
+        formatted:
+          type: string
+          example: 0 bytes
+          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    DatabaseConnectionSettings:
+      type: object
+      properties:
+        maximumAdministrationPoolSize:
+          type: integer
+          format: int32
+          example: -1
+          description: The maximum number of administrative connections in the connection pool. -1 means unlimited.
+        maximumPoolSize:
+          type: integer
+          format: int32
+          example: -1
+          description: The maximum number of connections in the connection pool. -1 means unlimited.
+        maximumPreparedStatementPoolSize:
+          type: integer
+          format: int32
+          example: 256
+          description: The maximum number of prepared statements in the prepared statement pool. -1 means unlimited.
+      description: ''
+    LicenseScanning:
+      type: object
+      properties:
+        discovery:
+          type: boolean
+          example: true
+          description: Whether discovery scanning may be used.
+        policy:
+          example: 'true'
+          description: Details as to whether policy scanning and what benchmarks are available.
+          $ref: '#/components/schemas/LicensePolicyScanning'
+        scada:
+          type: boolean
+          example: true
+          description: Whether SCADA scanning may be used.
+        virtual:
+          type: boolean
+          example: true
+          description: Whether virtual scanning may be used.
+        webApplication:
+          type: boolean
+          example: true
+          description: Whether web scanning may be used.
+      description: ''
+    DiskInfo:
+      type: object
+      properties:
+        free:
+          example: ''
+          description: Available disk space.
+          $ref: '#/components/schemas/DiskFree'
+        installation:
+          example: ''
+          description: Details regarding the size of disk used by the console installation.
+          $ref: '#/components/schemas/InstallSize'
+        total:
+          example: ''
+          description: Total disk space.
+          $ref: '#/components/schemas/DiskTotal'
       description: ''
     Info:
       type: object
@@ -937,121 +1146,18 @@ components:
           example: 5 GB
           description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
       description: ''
-    RiskModifierSettings:
-      type: object
-      properties:
-        high:
-          type: number
-          format: double
-          example: 1.5
-          description: High critical adjustment modifier.
-        low:
-          type: number
-          format: double
-          example: 0.75
-          description: Low critical adjustment modifier.
-        medium:
-          type: number
-          format: double
-          example: 1.0
-          description: Medium critical adjustment modifier.
-        veryHigh:
-          type: number
-          format: double
-          example: 2.0
-          description: Very high critical adjustment modifier.
-        veryLow:
-          type: number
-          format: double
-          example: 0.5
-          description: Very low critical adjustment modifier.
-      description: ''
-    DatabaseSettings:
-      type: object
-      properties:
-        connection:
-          example: ''
-          description: Details connection settings for the database.
-          $ref: '#/components/schemas/DatabaseConnectionSettings'
-        host:
-          type: string
-          example: 127.0.0.1
-          description: The database host.
-        maintenanceThreadPoolSize:
-          type: integer
-          format: int32
-          example: 20
-          description: The maximum number of parallel tasks when executing maintenance tasks.
-        port:
-          type: integer
-          format: int32
-          example: 5432
-          description: The database port.
-        url:
-          type: string
-          example: //127.0.0.1:5432/nexpose
-          description: The database connection URL.
-        user:
-          type: string
-          example: nxpgsql
-          description: The database user.
-        vendor:
-          type: string
-          example: postgresql
-          description: The database vendor.
-      description: ''
-    VersionInfo:
-      type: object
-      properties:
-        build:
-          type: string
-          example: 2017-12-10-14-11
-          description: The build number.
-        changeset:
-          type: string
-          example: 7061fb4e7c355160df79a77d8983bed2af01f2bf
-          description: The changeset of the source build.
-        platform:
-          type: string
-          example: Linux64
-          description: The platform of the build.
-        semantic:
-          type: string
-          example: 6.4.65
-          description: The semantic version number of the installation.
-        update:
-          example: ''
-          description: Version update details.
-          $ref: '#/components/schemas/UpdateInfo'
-      description: ''
-    ScanSize:
+    ReportSize:
       type: object
       properties:
         bytes:
           type: integer
           format: int64
-          example: 1370433223
+          example: 24789050
           description: The raw value in bytes.
         formatted:
           type: string
-          example: 1.3 GB
+          example: 23.6 MB
           description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    RiskSettings:
-      type: object
-      properties:
-        adjustWithCriticality:
-          type: boolean
-          example: true
-          description: Whether risk is adjusted using criticality tags.
-        criticalityModifiers:
-          example: ''
-          description: If `adjustWithCriticality` is enabled, details the risk modifiers by criticality tag.
-          $ref: '#/components/schemas/RiskModifierSettings'
-        model:
-          type: string
-          example: real_risk
-          description: The risk model used to compute risk.
       description: ''
     Features:
       type: object
@@ -1109,82 +1215,6 @@ components:
           description: The scanning features available in the license.
           $ref: '#/components/schemas/LicenseScanning'
       description: ''
-    LicenseReporting:
-      type: object
-      properties:
-        advanced:
-          type: boolean
-          example: true
-          description: Whether advanced reporting is available.
-        customizableCSVExport:
-          type: boolean
-          example: true
-          description: Whether customizable CSV Export is available.
-        pci:
-          type: boolean
-          example: true
-          description: Whether PCI reporting is available.
-      description: ''
-    DiskFree:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 166532222976
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 155.1 GB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    MemoryFree:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 45006848
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 42.9 MB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
-    MemoryTotal:
-      type: object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 17179869184
-          description: The raw value in bytes.
-        formatted:
-          type: string
-          example: 16 GB
-          description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
-      description: ''
     LicensePolicyScanningBenchmarks:
       type: object
       properties:
@@ -1209,47 +1239,17 @@ components:
           example: true
           description: Whether policy scanning for USGCB benchmarks is allowed.
       description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    DiskInfo:
+    MemoryInfo:
       type: object
       properties:
         free:
           example: ''
-          description: Available disk space.
-          $ref: '#/components/schemas/DiskFree'
-        installation:
-          example: ''
-          description: Details regarding the size of disk used by the console installation.
-          $ref: '#/components/schemas/InstallSize'
+          description: Free memory.
+          $ref: '#/components/schemas/MemoryFree'
         total:
           example: ''
-          description: Total disk space.
-          $ref: '#/components/schemas/DiskTotal'
-      description: ''
-    SmtpSettings:
-      type: object
-      properties:
-        host:
-          type: string
-          example: mail@acme.com
-          description: The host to send to.
-        port:
-          type: integer
-          format: int32
-          example: 25
-          description: The port to send to.
-        sender:
-          type: string
-          example: security@acme.com
-          description: The sender to send from.
+          description: Total memory usage.
+          $ref: '#/components/schemas/MemoryTotal'
       description: ''
   securitySchemes:
     Basic:

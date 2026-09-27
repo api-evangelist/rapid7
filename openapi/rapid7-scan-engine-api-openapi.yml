@@ -1215,31 +1215,54 @@ paths:
       security: []
 components:
   schemas:
-    PageInfo:
+    EnginePool:
       type: object
+      required:
+      - id
+      - name
       properties:
-        number:
+        engines:
+          type: array
+          description: The identifiers of the scan engines in the engine pool.
+          items:
+            type: integer
+            format: int32
+        id:
           type: integer
-          format: int64
+          format: int32
           example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
+          description: The identifier of the scan engine.
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: Corporate Scan Engine 001
+          description: The name of the scan engine.
       description: ''
-    PageOf_Site:
+    ServiceUnavailableError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
+      description: ''
+    ReferencesWith_EngineID_Link:
       type: object
       properties:
         links:
@@ -1247,33 +1270,12 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
         resources:
           type: array
-          description: The page of resources returned.
+          description: The identifiers of the associated resources.
           items:
-            $ref: '#/components/schemas/Site'
-      description: ''
-    PageOf_Scan:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Scan'
+            type: integer
+            format: int32
       description: ''
     InternalServerError:
       type: object
@@ -1296,21 +1298,40 @@ components:
           enum:
           - '500'
       description: ''
-    CreatedReference_EngineID_Link:
+    Link:
       type: object
       properties:
-        id:
-          type: integer
-          format: int32
-          example: 1
-          description: The identifier of the resource created.
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
+    BadRequestError:
+      type: object
+      required:
+      - status
+      properties:
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '400'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '400'
       description: ''
-    ReferencesWith_EngineID_Link:
+    Resources_EnginePool:
       type: object
       properties:
         links:
@@ -1320,10 +1341,9 @@ components:
             $ref: '#/components/schemas/Link'
         resources:
           type: array
-          description: The identifiers of the associated resources.
+          description: The resources returned.
           items:
-            type: integer
-            format: int32
+            $ref: '#/components/schemas/EnginePool'
       description: ''
     NotFoundError:
       type: object
@@ -1346,124 +1366,7 @@ components:
           enum:
           - '404'
       description: ''
-    Vulnerabilities:
-      type: object
-      properties:
-        critical:
-          type: integer
-          format: int64
-          example: 16
-          description: The number of critical vulnerabilities.
-          readOnly: true
-        moderate:
-          type: integer
-          format: int64
-          example: 3
-          description: The number of moderate vulnerabilities.
-          readOnly: true
-        severe:
-          type: integer
-          format: int64
-          example: 76
-          description: The number of severe vulnerabilities.
-          readOnly: true
-        total:
-          type: integer
-          format: int64
-          example: 95
-          description: The total number of vulnerabilities.
-          readOnly: true
-      description: ''
-    Resources_ScanEngine:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/ScanEngine'
-      description: ''
-    Scan:
-      type: object
-      properties:
-        assets:
-          type: integer
-          format: int32
-          example: ''
-          description: The number of assets found in the scan.
-        duration:
-          type: string
-          example: ''
-          description: The duration of the scan in ISO8601 format.
-        endTime:
-          type: string
-          example: ''
-          description: The end time of the scan in ISO8601 format.
-        engineId:
-          type: integer
-          format: int32
-          example: ''
-          description: The identifier of the scan engine.
-        engineName:
-          type: string
-          example: ''
-          description: The name of the scan engine.
-        id:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the scan.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: ''
-          description: The reason for the scan status.
-        scanName:
-          type: string
-          example: ''
-          description: The user-driven scan name for the scan.
-        scanType:
-          type: string
-          example: ''
-          description: 'The scan type (automated, manual, scheduled). '
-        startTime:
-          type: string
-          example: ''
-          description: The start time of the scan in ISO8601 format.
-        startedBy:
-          type: string
-          example: ''
-          description: The name of the user that started the scan.
-        status:
-          type: string
-          example: ''
-          description: The scan status.
-          enum:
-          - aborted
-          - unknown
-          - running
-          - finished
-          - stopped
-          - error
-          - paused
-          - dispatched
-          - integrating
-        vulnerabilities:
-          example: ''
-          description: The vulnerability synopsis of the scan.
-          $ref: '#/components/schemas/Vulnerabilities'
-      description: ''
-    ServiceUnavailableError:
+    UnauthorizedError:
       type: object
       required:
       - status
@@ -1479,10 +1382,65 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '503'
+          example: '401'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '503'
+          - '401'
+      description: ''
+    PageOf_Site:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/Site'
+      description: ''
+    Links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    ReferenceWith_EngineID_Link:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: <id>
+          description: The identifier of the resource.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    Resources_ScanEngine:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/ScanEngine'
       description: ''
     Site:
       type: object
@@ -1564,52 +1522,71 @@ components:
           readOnly: true
           $ref: '#/components/schemas/Vulnerabilities'
       description: ''
-    ReferenceWith_EngineID_Link:
+    Vulnerabilities:
+      type: object
+      properties:
+        critical:
+          type: integer
+          format: int64
+          example: 16
+          description: The number of critical vulnerabilities.
+          readOnly: true
+        moderate:
+          type: integer
+          format: int64
+          example: 3
+          description: The number of moderate vulnerabilities.
+          readOnly: true
+        severe:
+          type: integer
+          format: int64
+          example: 76
+          description: The number of severe vulnerabilities.
+          readOnly: true
+        total:
+          type: integer
+          format: int64
+          example: 95
+          description: The total number of vulnerabilities.
+          readOnly: true
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
+    CreatedReference_EngineID_Link:
       type: object
       properties:
         id:
           type: integer
           format: int32
-          example: <id>
-          description: The identifier of the resource.
+          example: 1
+          description: The identifier of the resource created.
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-      description: ''
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    BadRequestError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '400'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '400'
       description: ''
     ReferencesWith_SiteID_Link:
       type: object
@@ -1625,62 +1602,6 @@ components:
           items:
             type: integer
             format: int32
-      description: ''
-    EnginePool:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        engines:
-          type: array
-          description: The identifiers of the scan engines in the engine pool.
-          items:
-            type: integer
-            format: int32
-        id:
-          type: integer
-          format: int32
-          example: 6
-          description: The identifier of the scan engine.
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: Corporate Scan Engine 001
-          description: The name of the scan engine.
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
       description: ''
     ScanEngine:
       type: object
@@ -1759,7 +1680,82 @@ components:
           - pending-authorization
           - unknown
       description: ''
-    Resources_EnginePool:
+    Scan:
+      type: object
+      properties:
+        assets:
+          type: integer
+          format: int32
+          example: ''
+          description: The number of assets found in the scan.
+        duration:
+          type: string
+          example: ''
+          description: The duration of the scan in ISO8601 format.
+        endTime:
+          type: string
+          example: ''
+          description: The end time of the scan in ISO8601 format.
+        engineId:
+          type: integer
+          format: int32
+          example: ''
+          description: The identifier of the scan engine.
+        engineName:
+          type: string
+          example: ''
+          description: The name of the scan engine.
+        id:
+          type: integer
+          format: int64
+          example: ''
+          description: The identifier of the scan.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: ''
+          description: The reason for the scan status.
+        scanName:
+          type: string
+          example: ''
+          description: The user-driven scan name for the scan.
+        scanType:
+          type: string
+          example: ''
+          description: 'The scan type (automated, manual, scheduled). '
+        startTime:
+          type: string
+          example: ''
+          description: The start time of the scan in ISO8601 format.
+        startedBy:
+          type: string
+          example: ''
+          description: The name of the user that started the scan.
+        status:
+          type: string
+          example: ''
+          description: The scan status.
+          enum:
+          - aborted
+          - unknown
+          - running
+          - finished
+          - stopped
+          - error
+          - paused
+          - dispatched
+          - integrating
+        vulnerabilities:
+          example: ''
+          description: The vulnerability synopsis of the scan.
+          $ref: '#/components/schemas/Vulnerabilities'
+      description: ''
+    PageOf_Scan:
       type: object
       properties:
         links:
@@ -1767,11 +1763,15 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
         resources:
           type: array
-          description: The resources returned.
+          description: The page of resources returned.
           items:
-            $ref: '#/components/schemas/EnginePool'
+            $ref: '#/components/schemas/Scan'
       description: ''
   securitySchemes:
     Basic:

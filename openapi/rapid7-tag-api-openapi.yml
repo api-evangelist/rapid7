@@ -1247,6 +1247,45 @@ paths:
       security: []
 components:
   schemas:
+    ReferencesWith_AssetGroupID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
     ReferenceWith_TagID_Link:
       type: object
       properties:
@@ -1260,6 +1299,174 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    SwaggerSearchCriteriaFilter:
+      type: object
+      properties:
+        field:
+          type: string
+          example: ''
+          description: The filter field for the search criteria.
+        lower:
+          type: object
+          example: ''
+          description: The lower value to match in a range criteria.
+        operator:
+          type: string
+          example: ''
+          description: The operator on how to match the search criteria.
+        upper:
+          type: object
+          example: ''
+          description: The upper value to match in a range criteria.
+        value:
+          type: object
+          example: ''
+          description: The single value to match using the operator.
+        values:
+          type: array
+          description: An array of values to match using the operator.
+          items:
+            type: object
+      description: ''
+    ReferencesWith_SiteID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    TaggedAssetReferences:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            $ref: '#/components/schemas/TagLink'
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    TagLink:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 78
+          description: The identifier of the tagged asset.
+        sources:
+          type: array
+          description: The source(s) by which a tag is-applied to an asset.
+          items:
+            type: string
+            enum:
+            - site
+            - asset-group
+            - criteria
+            - tag
+            - unknown
+      description: ''
+    ServiceUnavailableError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
+      description: ''
+    Links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    PageOf_Tag:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/Tag'
       description: ''
     InternalServerError:
       type: object
@@ -1294,99 +1501,21 @@ components:
           example: self
           description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
       description: ''
-    TagLink:
+    SearchCriteria:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 78
-          description: The identifier of the tagged asset.
-        sources:
+        filters:
           type: array
-          description: The source(s) by which a tag is-applied to an asset.
+          description: Filters used to match assets. See <a href="#section/Responses/SearchCriteria">Search Criteria</a> for more information on the structure and format.
           items:
-            type: string
-            enum:
-            - site
-            - asset-group
-            - criteria
-            - tag
-            - unknown
-      description: ''
-    SwaggerSearchCriteriaFilter:
-      type: object
-      properties:
-        field:
+            $ref: '#/components/schemas/SwaggerSearchCriteriaFilter'
+        match:
           type: string
-          example: ''
-          description: The filter field for the search criteria.
-        lower:
-          type: object
-          example: ''
-          description: The lower value to match in a range criteria.
-        operator:
-          type: string
-          example: ''
-          description: The operator on how to match the search criteria.
-        upper:
-          type: object
-          example: ''
-          description: The upper value to match in a range criteria.
-        value:
-          type: object
-          example: ''
-          description: The single value to match using the operator.
-        values:
-          type: array
-          description: An array of values to match using the operator.
-          items:
-            type: object
-      description: ''
-    PageInfo:
-      type: object
-      properties:
-        number:
-          type: integer
-          format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
-      description: ''
-    NotFoundError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
+          example: all
+          description: Operator to determine how to match filters. `all` requires that all filters match for an asset to be included. `any` requires only one filter to match for an asset to be included.
           enum:
-          - '404'
+          - any
+          - all
       description: ''
     BadRequestError:
       type: object
@@ -1408,99 +1537,6 @@ components:
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
           - '400'
-      description: ''
-    ReferencesWith_SiteID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    TaggedAssetReferences:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            $ref: '#/components/schemas/TagLink'
-      description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    SearchCriteria:
-      type: object
-      properties:
-        filters:
-          type: array
-          description: Filters used to match assets. See <a href="#section/Responses/SearchCriteria">Search Criteria</a> for more information on the structure and format.
-          items:
-            $ref: '#/components/schemas/SwaggerSearchCriteriaFilter'
-        match:
-          type: string
-          example: all
-          description: Operator to determine how to match filters. `all` requires that all filters match for an asset to be included. `any` requires only one filter to match for an asset to be included.
-          enum:
-          - any
-          - all
-      description: ''
-    PageOf_Tag:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Tag'
       description: ''
     Tag:
       type: object
@@ -1549,42 +1585,6 @@ components:
           type: string
           example: custom
           description: The type of the tag.
-      description: ''
-    ReferencesWith_AssetGroupID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
       description: ''
   securitySchemes:
     Basic:

@@ -654,6 +654,56 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    AttackModule:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the attack module
+          readOnly: true
+        module_config_id:
+          type: string
+          format: uuid
+          description: The ID of the configuration for the attack module
+        enabled:
+          type: boolean
+          description: A flag to indicate if this module should be enabled
+        parameter_locations:
+          type: array
+          description: The list of parameter locations for this attack module
+          items:
+            type: string
+            description: The list of parameter locations for this attack module
+            enum:
+            - DIRECTORY
+            - FILE
+            - PATH
+            - QUERY
+            - FRAGMENT
+            - POST
+            - HTTP_HEADER
+            - COOKIE
+            - REFERER
+          uniqueItems: true
+        severity:
+          type: string
+          description: The severity that should be used for this attack module
+          enum:
+          - CRITICAL
+          - HIGH
+          - MEDIUM
+          - LOW
+          - INFORMATIONAL
+          - SAFE
+        max_findings:
+          type: integer
+          format: int32
+          description: The maximum findings per attack module
+      required:
+      - max_findings
+      - module_config_id
+      - severity
+      title: AttackModule
     PageMetadata:
       properties:
         index:
@@ -672,85 +722,6 @@ components:
           format: int64
         page_token:
           type: string
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    PageAttackTemplate:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelAttackTemplate'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    AttackTemplate:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the attack template
-          readOnly: true
-        name:
-          type: string
-          description: The name of the attack template
-        description:
-          type: string
-          description: The description of the attack template
-        system_defined:
-          type: boolean
-          description: 'A read-only flag that indicates if the Attack Template is system-defined (immutable) '
-          readOnly: true
-        browser_encoding_enabled:
-          type: boolean
-          description: A flag that is used to enforce browser encoding on all attacks
-        attack_prioritization:
-          type: string
-          description: The Attack Prioritization type
-          enum:
-          - SEQUENTIAL
-          - SMART
-          - RANDOMIZED
-        advanced_attacks_enabled:
-          type: boolean
-          description: A flag to enable advanced Attacks
-        false_positive_regex:
-          type: string
-          description: Regex used to indicate a false positive
-          maxLength: 200
-          minLength: 0
-      required:
-      - name
-      title: AttackTemplate
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
     Error:
       properties:
         status:
@@ -865,61 +836,23 @@ components:
           - E999
           readOnly: true
       title: Error
-    ModuleConfig:
+    ValidationError:
       properties:
-        id:
+        type:
           type: string
-          format: uuid
-          description: The ID of the default attack module
-          readOnly: true
-        name:
-          type: string
-          description: The name of the default attack module
-        description:
-          type: string
-          description: The description of the default attack module
-        types:
-          type: array
-          description: The type of the default attack module
-          items:
-            type: string
-            description: The type of the default attack module
-            enum:
-            - ACTIVE
-            - PASSIVE
-          uniqueItems: true
-        max_findings:
-          type: integer
-          format: int32
-          description: The maximum findings of the default attack module
-        severity:
-          type: string
-          description: The severity of the default attack module
+          description: The type of the validation error
           enum:
-          - CRITICAL
-          - HIGH
-          - MEDIUM
-          - LOW
-          - INFORMATIONAL
-          - SAFE
-        parameter_locations:
-          type: array
-          description: The list of parameters locations for default attack module
-          items:
-            type: string
-            description: The list of parameters locations for default attack module
-            enum:
-            - DIRECTORY
-            - FILE
-            - PATH
-            - QUERY
-            - FRAGMENT
-            - POST
-            - HTTP_HEADER
-            - COOKIE
-            - REFERER
-          uniqueItems: true
-      title: ModuleConfig
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
     EntityModelAttackTemplate:
       properties:
         id:
@@ -962,6 +895,55 @@ components:
           readOnly: true
       required:
       - name
+    AttackTemplate:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the attack template
+          readOnly: true
+        name:
+          type: string
+          description: The name of the attack template
+        description:
+          type: string
+          description: The description of the attack template
+        system_defined:
+          type: boolean
+          description: 'A read-only flag that indicates if the Attack Template is system-defined (immutable) '
+          readOnly: true
+        browser_encoding_enabled:
+          type: boolean
+          description: A flag that is used to enforce browser encoding on all attacks
+        attack_prioritization:
+          type: string
+          description: The Attack Prioritization type
+          enum:
+          - SEQUENTIAL
+          - SMART
+          - RANDOMIZED
+        advanced_attacks_enabled:
+          type: boolean
+          description: A flag to enable advanced Attacks
+        false_positive_regex:
+          type: string
+          description: Regex used to indicate a false positive
+          maxLength: 200
+          minLength: 0
+      required:
+      - name
+      title: AttackTemplate
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -1082,26 +1064,49 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    AttackModule:
+    ModuleConfig:
       properties:
         id:
           type: string
           format: uuid
-          description: The ID of the attack module
+          description: The ID of the default attack module
           readOnly: true
-        module_config_id:
+        name:
           type: string
-          format: uuid
-          description: The ID of the configuration for the attack module
-        enabled:
-          type: boolean
-          description: A flag to indicate if this module should be enabled
-        parameter_locations:
+          description: The name of the default attack module
+        description:
+          type: string
+          description: The description of the default attack module
+        types:
           type: array
-          description: The list of parameter locations for this attack module
+          description: The type of the default attack module
           items:
             type: string
-            description: The list of parameter locations for this attack module
+            description: The type of the default attack module
+            enum:
+            - ACTIVE
+            - PASSIVE
+          uniqueItems: true
+        max_findings:
+          type: integer
+          format: int32
+          description: The maximum findings of the default attack module
+        severity:
+          type: string
+          description: The severity of the default attack module
+          enum:
+          - CRITICAL
+          - HIGH
+          - MEDIUM
+          - LOW
+          - INFORMATIONAL
+          - SAFE
+        parameter_locations:
+          type: array
+          description: The list of parameters locations for default attack module
+          items:
+            type: string
+            description: The list of parameters locations for default attack module
             enum:
             - DIRECTORY
             - FILE
@@ -1113,22 +1118,17 @@ components:
             - COOKIE
             - REFERER
           uniqueItems: true
-        severity:
-          type: string
-          description: The severity that should be used for this attack module
-          enum:
-          - CRITICAL
-          - HIGH
-          - MEDIUM
-          - LOW
-          - INFORMATIONAL
-          - SAFE
-        max_findings:
-          type: integer
-          format: int32
-          description: The maximum findings per attack module
-      required:
-      - max_findings
-      - module_config_id
-      - severity
-      title: AttackModule
+      title: ModuleConfig
+    PageAttackTemplate:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelAttackTemplate'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true

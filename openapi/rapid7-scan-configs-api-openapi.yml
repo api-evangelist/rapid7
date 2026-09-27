@@ -574,7 +574,791 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    BinaryContentType:
+    WebServiceParameter:
+      properties:
+        value:
+          type: string
+        getxPath:
+          type: string
+    ChromeHostConfig:
+      properties:
+        disable_logging:
+          type: boolean
+    TokenReplacementConfig:
+      properties:
+        global_token_replacement_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalTokenReplacement'
+    CrawlerMonitoringConfig:
+      properties:
+        client_poll_period_seconds:
+          type: integer
+          format: int64
+        client_inactivity_timeout_seconds:
+          type: integer
+          format: int64
+        service_poll_period_seconds:
+          type: integer
+          format: int64
+        service_termination_timeout_milliseconds:
+          type: integer
+          format: int64
+        service_consecutive_error_limit:
+          type: integer
+          format: int64
+        resources_poll_period_seconds:
+          type: integer
+          format: int64
+        service_recovery_attempt_limit:
+          type: integer
+          format: int64
+    TrafficFile:
+      properties:
+        traffic_file_name:
+          type: string
+        traffic_file_password:
+          type: string
+        attack_as_sequence:
+          type: boolean
+        begin_attack_request:
+          type: integer
+          format: int64
+        end_attack_request:
+          type: integer
+          format: int64
+    HmacConfig:
+      properties:
+        hmac_header_generator_dll_filename:
+          type: string
+        hmac_username:
+          type: string
+        hmac_api_key:
+          type: string
+        hmac_hash_algorithm:
+          type: integer
+          format: int64
+    FrameworksCrawlConfig:
+      properties:
+        enable_frameworks_crawling:
+          type: boolean
+        react_js_detection_regex:
+          type: string
+        framework_config_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/FrameworkConfig'
+    MultiRegexUrlParserConfig:
+      properties:
+        parser_name:
+          type: string
+        rule_regex:
+          type: string
+        path_regex:
+          type: string
+        path_parameter_groups:
+          type: string
+        query_regex:
+          type: string
+        query_parameter_groups:
+          type: string
+    CrawlerInitializationConfig:
+      properties:
+        secure:
+          type: boolean
+        host:
+          type: string
+        port:
+          type: integer
+          format: int64
+        version:
+          type: string
+        browser_pool_size:
+          type: integer
+          format: int64
+        track_progress:
+          type: boolean
+        return_request:
+          type: string
+          enum:
+          - 'NO'
+          - RAW_REQUEST_DATA
+          - PROCESSED_REQUEST_DATA
+        track_request:
+          type: string
+          enum:
+          - NONE
+          - ENDPOINT_CALL
+          - ENDPOINT_CALL_AND_RAW_REQUEST
+          - ENDPOINT_CALL_AND_PROCESSED_REQUEST
+        node_js_max_old_space_size:
+          type: integer
+          format: int64
+        browser_idle_timeout_seconds:
+          type: integer
+          format: int64
+        browser_close_after_request_count:
+          type: integer
+          format: int64
+        browser_acquisition_timeout_minutes:
+          type: integer
+          format: int64
+    ChatbotConfig:
+      properties:
+        url:
+          type: string
+        open_ui_selector:
+          type: string
+        open_ui_text:
+          type: string
+        open_ui_max_wait_ms:
+          type: integer
+          format: int64
+        prompt_value:
+          type: string
+        prompt_selector:
+          type: string
+        prompt_text:
+          type: string
+        submit_selector:
+          type: string
+        submit_text:
+          type: string
+        response_selector:
+          type: string
+        response_min_wait_ms:
+          type: integer
+          format: int64
+        response_max_wait_ms:
+          type: integer
+          format: int64
+        response_inactivity_ms:
+          type: integer
+          format: int64
+        response_ignore_regex:
+          type: string
+        response_min_length:
+          type: integer
+          format: int64
+        show_in_browser:
+          type: boolean
+        macro_file:
+          $ref: '#/components/schemas/MacroFile__1'
+    HtmlContentType:
+      properties:
+        value:
+          type: string
+    GraphQlConfigObject:
+      properties:
+        enabled:
+          type: boolean
+        introspection_schema_file_path:
+          type: string
+        graph_ql_endpoint_url:
+          type: string
+        verb:
+          type: string
+          enum:
+          - POST
+          - GET
+        max_requests:
+          type: integer
+          format: int64
+        query_type:
+          type: string
+          enum:
+          - QUERY
+          - MUTATION
+          - QUERY_AND_MUTATION
+        host_name:
+          type: string
+        introspection_query_url:
+          type: string
+    SeleniumFile:
+      properties:
+        selenium_file_name:
+          type: string
+    CustomParameterFile:
+      properties:
+        name:
+          type: string
+        file_name:
+          type: string
+    app:
+      description: The App that the Scan is associated with
+      properties:
+        id:
+          type: string
+          format: uuid
+    MacroFile__1:
+      properties:
+        macro_file_name:
+          type: string
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        show_in_browser:
+          type: boolean
+        replay_speed:
+          type: number
+          format: double
+        asap_mode:
+          type: boolean
+        asap_mode_min_delay:
+          type: integer
+          format: int64
+        extra_delay_after_macro:
+          type: integer
+          format: int64
+        attack_as_sequence:
+          type: boolean
+        sequence_config:
+          $ref: '#/components/schemas/SequenceConfig'
+        web_driver_config:
+          $ref: '#/components/schemas/WebDriverConfig'
+    BrowserDoNotDownloadExtension:
+      properties:
+        value:
+          type: string
+    DefaultDoNotAttackParam:
+      properties:
+        parameter_name:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    AlfDataFile:
+      properties:
+        type:
+          type: string
+        dataset:
+          type: string
+        content_file:
+          type: string
+        content:
+          type: string
+    EntityModelScanConfig:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan Config
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Scan Config
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the Scan Config
+          maxLength: 2000
+          minLength: 0
+        app:
+          $ref: '#/components/schemas/app'
+        attack_template:
+          $ref: '#/components/schemas/attack_template'
+        incremental:
+          type: boolean
+          description: A flag to enable incremental scanning
+        assignment:
+          $ref: '#/components/schemas/EngineAssignment'
+        errors:
+          type: array
+          description: A list of errors that detail any current validation failures
+          items:
+            type: string
+            description: A list of errors that detail any current validation failures
+            readOnly: true
+          readOnly: true
+          uniqueItems: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - app
+      - attack_template
+      - name
+    ScanModuleParameterFiles:
+      properties:
+        module_id:
+          type: number
+          format: double
+        custom_parameter_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomParameterFile'
+    GlobalTokenReplacement:
+      properties:
+        extraction_parameter_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        extraction_parameter:
+          type: string
+        extraction_parameter_match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+        injection_parameter_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        injection_parameter:
+          type: string
+        injection_parameter_match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    ManualCrawlingConfig:
+      properties:
+        traffic_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrafficFile'
+    AuthConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NONE
+          - FORM
+          - MACRO
+          - SESSION_TAKEOVER
+          - SELENIUM
+          - TRAFFIC
+          - REMOTE_BOOTSTRAP
+        http_auth:
+          type: boolean
+        relogin_after_session_loss:
+          type: boolean
+        logout_detection:
+          type: boolean
+        assume_successful_login:
+          type: boolean
+        verify_not_loggedin:
+          type: boolean
+        postpone_login_action:
+          type: boolean
+        warning_only_on_login_fail:
+          type: boolean
+        create_non_authenticated_session:
+          type: boolean
+        treat_failed_relogin_as_error:
+          type: boolean
+        restart_proxy_before_relogin:
+          type: boolean
+        template_login_macro:
+          type: boolean
+        denylist_single_password_forms:
+          type: boolean
+        denylist_multi_password_forms:
+          type: boolean
+        reset_cookies:
+          type: boolean
+        do_not_update_cookies_from_requests:
+          type: boolean
+        username_form:
+          type: string
+        password_form:
+          type: string
+        username_http:
+          type: string
+        password_http:
+          type: string
+        auto_logon_security:
+          type: string
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+        login_link_regex:
+          type: string
+        logged_in_regex:
+          type: string
+        logged_in_header_regex:
+          type: string
+        session_loss_regex:
+          type: string
+        session_loss_header_regex:
+          type: string
+        logout_link_regex:
+          type: string
+        logout_post_body_regex:
+          type: string
+        canary_page:
+          type: string
+        session_loss_on_canary_page_regex:
+          type: string
+        session_loss_on_canary_page_header_regex:
+          type: string
+        session_cookie_regex:
+          type: string
+        session_cookie_lifespan:
+          type: number
+          format: double
+        url_session_token_regex:
+          type: string
+        post_session_token_regex:
+          type: string
+        response_body_token_regex:
+          type: string
+        second_response_body_token_regex:
+          type: string
+        http_header_with_token_replacement:
+          type: string
+        second_http_header_with_token_replacement:
+          type: string
+        logout_detection_frequency:
+          type: integer
+          format: int64
+        discovery_max_links:
+          type: integer
+          format: int64
+        login_max_links:
+          type: integer
+          format: int64
+        discovery_depth:
+          type: integer
+          format: int64
+        login_depth:
+          type: integer
+          format: int64
+        max_macro_relogin_attempts:
+          type: integer
+          format: int64
+        discovery_prioritization:
+          type: string
+          enum:
+          - FIRST_IN_FIRST_OUT
+          - SMART
+          - DIRECTORY_BREADTH_FIRST
+          - FOUND_BREADTH_FIRST
+          - FOUND_DEPTH_FIRST
+          - JUICY
+          - LOGIN_FORM_DISCOVERY
+          - LOGIN
+        login_prioritization:
+          type: string
+          enum:
+          - FIRST_IN_FIRST_OUT
+          - SMART
+          - DIRECTORY_BREADTH_FIRST
+          - FOUND_BREADTH_FIRST
+          - FOUND_DEPTH_FIRST
+          - JUICY
+          - LOGIN_FORM_DISCOVERY
+          - LOGIN
+        remote_bootstrap_timeout_minutes:
+          type: integer
+          format: int64
+        seed_link:
+          type: string
+        discover_login_form:
+          type: boolean
+        use_browser_form_login:
+          type: boolean
+        use_single_browser:
+          type: boolean
+        ping_frequency:
+          type: integer
+          format: int64
+        ping_url:
+          type: string
+        redact_log_files:
+          type: boolean
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+        http_auth_ext_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpAuthExt'
+        token_replacement_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenReplacement'
+        hmac_config:
+          $ref: '#/components/schemas/HmacConfig'
+        oauth_config:
+          $ref: '#/components/schemas/OauthConfig'
+        msal_config:
+          $ref: '#/components/schemas/MsalConfig'
+        macro_file:
+          $ref: '#/components/schemas/MacroFile'
+        web_service_auth_config:
+          $ref: '#/components/schemas/WebServiceAuthConfig'
+        selenium_file:
+          $ref: '#/components/schemas/SeleniumFile'
+        traffic_file:
+          $ref: '#/components/schemas/TrafficFile'
+        browser_form_login_config:
+          $ref: '#/components/schemas/BrowserFormLoginConfig'
+        one_time_password_config:
+          $ref: '#/components/schemas/OneTimePasswordConfig'
+        oauth:
+          type: boolean
+    attack_template:
+      description: The attack template that the Scan Config should use
+      properties:
+        id:
+          type: string
+          format: uuid
+    HttpAuthExt:
+      properties:
+        host_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    TextExtension:
+      properties:
+        value:
+          type: string
+    NetworkSettingsConfig:
+      properties:
+        close_connection:
+          type: boolean
+        send_keep_alive_header:
+          type: boolean
+        pre_authenticate_basic_auth:
+          type: boolean
+        max_retries:
+          type: integer
+          format: int64
+        max_response_size:
+          type: integer
+          format: int64
+        max_url_length:
+          type: integer
+          format: int64
+        max_javascipt_response_size:
+          type: integer
+          format: int64
+        max_binary_response_size:
+          type: integer
+          format: int64
+        resolve_timeout:
+          type: integer
+          format: int64
+        connect_timeout:
+          type: integer
+          format: int64
+        write_timeout:
+          type: integer
+          format: int64
+        read_timeout:
+          type: integer
+          format: int64
+        assume_disconnected_timeout:
+          type: integer
+          format: int64
+        drip_delay_milli_seconds:
+          type: integer
+          format: int64
+        max_consecutive_failures:
+          type: integer
+          format: int64
+        max_unsuccessful_responses:
+          type: integer
+          format: int64
+        max_wait_time:
+          type: integer
+          format: int64
+        network_preferred_auth_scheme:
+          type: string
+          enum:
+          - NPAS_DEFAULT
+          - NPAS_NEGOTIATE
+          - NPAS_NTLM
+          - NPAS_PASSPORT
+          - NPAS_BASIC
+        use_secure_protocols:
+          type: boolean
+        secure_protocols:
+          type: array
+          items:
+            type: string
+            enum:
+            - SSL_2
+            - SSL_3
+            - TLS_1
+            - TLS_11
+            - TLS_12
+            - TLS_13
+          uniqueItems: true
+    StandardUrlParserConfig:
+      properties:
+        path_name_value_delimiters:
+          type: string
+        path_parameter_delimiters:
+          type: string
+        query_name_value_delimiters:
+          type: string
+        query_parameter_delimiters:
+          type: string
+        path_params_value_regex:
+          type: string
+        start_path_params_position:
+          type: integer
+          format: int64
+    OneTimePasswordConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NONE
+          - HOTP
+          - TOTP
+        algorithm:
+          type: string
+          enum:
+          - SHA_1
+          - SHA_224
+          - SHA_256
+          - SHA_384
+          - SHA_512
+          - SHA_3_224
+          - SHA_3_256
+          - SHA_3_384
+          - SHA_3_512
+        counter:
+          type: integer
+          format: int64
+        period:
+          type: integer
+          format: int64
+        secret:
+          type: string
+    PerformanceConfig:
+      properties:
+        max_concurrent_requests:
+          type: integer
+          format: int64
+        max_bandwidth_kb:
+          type: integer
+          format: int64
+        max_browser_reuse_count:
+          type: integer
+          format: int64
+        memory_ceiling64_bit:
+          type: integer
+          format: int64
+        anti_dos:
+          type: boolean
+        dump_user_process_memory_usage:
+          type: boolean
+        max_browser_process_lifetime:
+          type: integer
+          format: int64
+    MsalConfig:
+      properties:
+        x509_cert_filename:
+          type: string
+        x509_cert_password:
+          type: string
+        x509_cert_store_key:
+          type: string
+        tenant_id:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: string
+        token_refresh_period:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            zero:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            positive:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  duration_estimated:
+                    type: boolean
+                  time_based:
+                    type: boolean
+                  date_based:
+                    type: boolean
+        authority_url:
+          type: string
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    MacroFile:
+      properties:
+        macro_file_name:
+          type: string
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        replay_speed:
+          type: number
+          format: double
+        extra_delay_after_macro:
+          type: integer
+          format: int64
+        attack_as_sequence:
+          type: boolean
+        sequence_config:
+          $ref: '#/components/schemas/SequenceConfig'
+    GrayListExtension:
       properties:
         value:
           type: string
@@ -584,6 +1368,839 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ParameterValue'
+    SeedUrl:
+      properties:
+        value:
+          type: string
+    UserDoNotAttackParam:
+      properties:
+        parameter_name:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    OAuthCustomField:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    DenyListExtension:
+      properties:
+        value:
+          type: string
+    ProxyExclusions:
+      properties:
+        value:
+          type: string
+    TokenReplacement:
+      properties:
+        extraction_token_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        extraction_token_regex:
+          type: string
+        injection_token_location:
+          type: string
+          enum:
+          - REQUEST_URL
+          - REQUEST_HEADER
+          - REQUEST_BODY
+          - RESPONSE_HEADER
+          - RESPONSE_BODY
+          - REQUEST_COOKIE
+        injection_token_regex:
+          type: string
+    ManualSequenceConfig:
+      properties:
+        sequence_request_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceRequest'
+    ScanConfig:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan Config
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Scan Config
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the Scan Config
+          maxLength: 2000
+          minLength: 0
+        app:
+          $ref: '#/components/schemas/app'
+        attack_template:
+          $ref: '#/components/schemas/attack_template'
+        incremental:
+          type: boolean
+          description: A flag to enable incremental scanning
+        assignment:
+          $ref: '#/components/schemas/EngineAssignment'
+        errors:
+          type: array
+          description: A list of errors that detail any current validation failures
+          items:
+            type: string
+            description: A list of errors that detail any current validation failures
+            readOnly: true
+          readOnly: true
+          uniqueItems: true
+      required:
+      - app
+      - attack_template
+      - name
+      title: ScanConfig
+    LockedCookie:
+      properties:
+        value:
+          type: string
+    ValidationErrors:
+      properties:
+        status:
+          type: string
+          description: A description of the type of error based on HTTP status code
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          readOnly: true
+        message:
+          type: string
+          description: A description of the error
+          readOnly: true
+        errorCode:
+          type: string
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
+          readOnly: true
+        errors:
+          type: array
+          description: A list of validation errors, when the HTTP status code is 422
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          readOnly: true
+      title: ValidationErrors
+    BrowserDoNotDownloadContentType:
+      properties:
+        value:
+          type: string
+    ScopeConstraint:
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum:
+          - ALL
+          - GET
+          - POST
+          - HEAD
+          - PUT
+          - PATCH
+          - DELETE
+          - TRACE
+          - CONNECT
+          - OPTIONS
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+        exclusion:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        http_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpParameter'
+    BrowserDownloadAllowlist:
+      properties:
+        value:
+          type: string
+    WebServiceConfig:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        content_type:
+          type: string
+        wsdl_regex:
+          type: string
+        auto_discover_wsdl:
+          type: boolean
+        web_services_enhancements:
+          type: boolean
+        password_option:
+          type: string
+          enum:
+          - NONE
+          - HASHED
+          - PLAIN_TEXT
+        swagger_host_name:
+          type: string
+        swagger_parse_fail:
+          type: boolean
+        use_swagger_v1:
+          type: boolean
+        save_swagger_files:
+          type: boolean
+        swagger_warning_level:
+          type: string
+          enum:
+          - STRICT
+          - MAXIMIZE_ASSESSMENT
+          - LOOSE
+        wsdl_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wsdl'
+        swagger_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SwaggerFile'
+        graph_ql_config_object_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQlConfigObject'
+    Wsdl:
+      properties:
+        value:
+          type: string
+    TextContentType:
+      properties:
+        value:
+          type: string
+    XmlContentType:
+      properties:
+        value:
+          type: string
+    ParameterValue:
+      properties:
+        parameter:
+          type: string
+        value:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    TrafficHeader:
+      properties:
+        value:
+          type: string
+    HttpParameter:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    DomElementRestriction:
+      properties:
+        enabled:
+          type: boolean
+        name:
+          type: string
+        dom_element_path_type:
+          type: string
+          enum:
+          - XPATH
+          - CSS_SELECTOR
+        dom_element_path:
+          type: string
+        cardinality_min:
+          type: integer
+          format: int64
+        cardinality_max:
+          type: integer
+          format: int64
+        exclusion:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        recursive:
+          type: boolean
+    OneTimeTokenConfig:
+      properties:
+        auto_detect_csrf:
+          type: boolean
+        max_token_lifetime:
+          type: string
+          format: date-time
+        expiration_regex:
+          type: string
+        token_name_regex:
+          type: string
+        token_value_regex:
+          type: string
+    AttackerConfig:
+      properties:
+        parameters_to_attack_before_limiting_attacks:
+          type: integer
+          format: int64
+        links_to_attack_before_limiting_attacks:
+          type: integer
+          format: int64
+        max_same_name_parameter_attack_points:
+          type: integer
+          format: int64
+        max_same_cookie_parameter_attack_points:
+          type: integer
+          format: int64
+        max_same_name_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        max_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        max_normalized_same_name_parameter_attack_points_per_link:
+          type: integer
+          format: int64
+        apply_crawler_constraints:
+          type: boolean
+        max_number_of_scheduled_passive_attacks:
+          type: integer
+          format: int64
+        min_cookie_lifetime_for_attacks:
+          type: integer
+          format: int64
+        max404_findings_per_module:
+          type: integer
+          format: int64
+        exclude_low_confidence_findings:
+          type: boolean
+        out_of_band_host:
+          type: string
+        max_severity_for_traffic_reduction:
+          type: string
+          enum:
+          - SAFE
+          - INFORMATIONAL
+          - LOW
+          - MEDIUM
+          - HIGH
+          - CRITICAL
+        min_response_size_for_traffic_reduction:
+          type: integer
+          format: int64
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+        default_do_not_attack_param_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultDoNotAttackParam'
+        user_do_not_attack_param_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDoNotAttackParam'
+    ProxyConfig:
+      properties:
+        type:
+          type: string
+          enum:
+          - NO_PROXY
+          - INTERNET_EXPLORER_SETTINGS
+          - MANUAL_CONFIG
+          - PAC_FILE
+        http_host:
+          type: string
+        http_port:
+          type: integer
+          format: int64
+        https_host:
+          type: string
+        https_port:
+          type: integer
+          format: int64
+        pac_file:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        proxy_exclusions_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProxyExclusions'
+    AutoSequenceConfig:
+      properties:
+        sequence_ignore_extension_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceIgnoreExtension'
+        sequence_ignore_content_type_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SequenceIgnoreContentType'
+    BrowserFormLoginConfig:
+      properties:
+        use_alf:
+          type: boolean
+        enable_alf_debug:
+          type: boolean
+        enable_fallback:
+          type: boolean
+        delay_before_alf_milliseconds:
+          type: integer
+          format: int64
+        delay_after_alf_milliseconds:
+          type: integer
+          format: int64
+        initial_navigate_event_duration:
+          type: integer
+          format: int64
+        final_delay_event_duration:
+          type: integer
+          format: int64
+        alf_data_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlfDataFile'
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    SequenceConfig:
+      properties:
+        reset_session:
+          type: boolean
+        auto_sequence_config:
+          type: boolean
+        manual_sequence_config:
+          $ref: '#/components/schemas/ManualSequenceConfig'
+    MacroConfig:
+      properties:
+        sequential_macro_playback:
+          type: boolean
+        macro_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/MacroFile'
+    SequenceIgnoreContentType:
+      properties:
+        value:
+          type: string
+    ScanConfigOptions:
+      properties:
+        detailed_logging:
+          type: boolean
+        display_imminent_license_expiry_message:
+          type: boolean
+        java_script_engine:
+          type: string
+          enum:
+          - DEFAULT
+          - INTERNET_EXPLORER
+          - CHROME
+          - CHROMIUM
+        scan_module_parameter_files_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScanModuleParameterFiles'
+        crawl_config:
+          $ref: '#/components/schemas/CrawlConfig'
+        attacker_config:
+          $ref: '#/components/schemas/AttackerConfig'
+        auth_config:
+          $ref: '#/components/schemas/AuthConfig'
+        proxy_config:
+          $ref: '#/components/schemas/ProxyConfig'
+        ssl_cert_config:
+          $ref: '#/components/schemas/SslCertConfig'
+        network_settings_config:
+          $ref: '#/components/schemas/NetworkSettingsConfig'
+        performance_config:
+          $ref: '#/components/schemas/PerformanceConfig'
+        http_headers_config:
+          $ref: '#/components/schemas/HttpHeadersConfig'
+        manual_crawling_config:
+          $ref: '#/components/schemas/ManualCrawlingConfig'
+        parameter_training_config:
+          $ref: '#/components/schemas/ParameterTrainingConfig'
+        auto_sequence_config:
+          $ref: '#/components/schemas/AutoSequenceConfig'
+        macro_config:
+          $ref: '#/components/schemas/MacroConfig'
+        selenium_config:
+          $ref: '#/components/schemas/SeleniumConfig'
+        web_service_config:
+          $ref: '#/components/schemas/WebServiceConfig'
+        one_time_token_config:
+          $ref: '#/components/schemas/OneTimeTokenConfig'
+        parameter_parser_config:
+          $ref: '#/components/schemas/ParameterParserConfig'
+        parameter_value_config:
+          $ref: '#/components/schemas/ParameterValueConfig'
+        chrome_host_config:
+          $ref: '#/components/schemas/ChromeHostConfig'
+        token_replacement_config:
+          $ref: '#/components/schemas/TokenReplacementConfig'
+        chatbot_config:
+          $ref: '#/components/schemas/ChatbotConfig'
+    ParameterParserConfig:
+      properties:
+        enable_base64_parameter_values:
+          type: boolean
+        multi_regex_url_parser_config_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultiRegexUrlParserConfig'
+        standard_url_parser_config:
+          $ref: '#/components/schemas/StandardUrlParserConfig'
+    DomRestrictions:
+      properties:
+        enabled:
+          type: boolean
+        name:
+          type: string
+        initial_state:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        dom_element_restriction_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomElementRestriction'
+        scope_constraint_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeConstraint'
+    BinaryContentType:
+      properties:
+        value:
+          type: string
+    BinaryExtension:
+      properties:
+        value:
+          type: string
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    WebServiceAuthConfig:
+      properties:
+        enabled:
+          type: boolean
+        auth_wsdl:
+          type: string
+        auth_web_method:
+          type: string
+        get_auth_token_xpath:
+          type: string
+        put_auth_token_xpath:
+          type: string
+        extract_auth_token:
+          type: boolean
+        web_service_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebServiceParameter'
+    WebDriverConfig:
+      properties:
+        chrome_driver_port:
+          type: integer
+          format: int64
+        chrome_debug_port:
+          type: integer
+          format: int64
+    SequenceRequest:
+      properties:
+        sequence_request_type:
+          type: string
+          enum:
+          - READ_FROM_CACHE
+          - SEND
+          - ATTACK
+        url:
+          type: string
+    ParameterTrainingConfig:
+      properties:
+        form_population:
+          type: string
+          enum:
+          - NONE
+          - RANDOM
+          - SMART
+        training_parameter_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingParameter'
+    EngineAssignment:
+      description: The engine assignment that the Scan should use
+      properties:
+        type:
+          type: string
+          description: The type of engine assignment
+          enum:
+          - ENGINE_GROUP
+        id:
+          type: string
+          format: uuid
+          description: The ID of the assignment
+        environment:
+          type: string
+          description: The environment of the assignment
+          enum:
+          - CLOUD
+          - ON_PREMISE
+      required:
+      - environment
+      title: EngineAssignment
+    FrameworkConfig:
+      properties:
+        name:
+          type: string
+        default_config_version:
+          type: string
+        enabled:
+          type: boolean
+        head:
+          type: boolean
+        detection_regex:
+          type: string
+        healthcheck_string:
+          type: string
+        file_name:
+          type: string
+        get_all_events_script:
+          type: string
+        get_all_events_delay:
+          type: integer
+          format: int64
+        get_version_string_script:
+          type: string
+    PageScanConfig:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelScanConfig'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    HttpHeadersConfig:
+      properties:
+        http_protocol:
+          type: string
+        accept:
+          type: string
+        accept_charset:
+          type: string
+        accept_encoding:
+          type: string
+        accept_language:
+          type: string
+        cookie:
+          type: string
+        user_agent:
+          type: string
+        overwrite_with_default_headers:
+          type: boolean
+        do_not_attack_user_agent:
+          type: boolean
+        custom_headers_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomHeaders'
+        traffic_header_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrafficHeader'
+    TrainingParameter:
+      properties:
+        pattern_name:
+          type: string
+        types:
+          type: string
+        language:
+          type: string
+        match:
+          type: string
+        value:
+          type: string
+        value_match:
+          type: string
+        match_criteria:
+          type: string
+          enum:
+          - LITERAL
+          - WILDCARD
+          - REGEX
+    CustomHeaders:
+      properties:
+        value:
+          type: string
+    SeleniumConfig:
+      properties:
+        listen_for_other_scripts:
+          type: boolean
+        sequential_selenium_script_playback:
+          type: boolean
+        selenium_port:
+          type: integer
+          format: int64
+        web_driver_for_html:
+          type: string
+          enum:
+          - FIREFOX
+          - HTML_UNIT
+          - CHROME
+        chrome_binary_file_path:
+          type: string
+        selenium_file_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeleniumFile'
     CrawlConfig:
       properties:
         max_scan_time_in_minutes:
@@ -894,279 +2511,6 @@ components:
           $ref: '#/components/schemas/CrawlerInitializationConfig'
         crawler_monitoring_config:
           $ref: '#/components/schemas/CrawlerMonitoringConfig'
-    UserDoNotAttackParam:
-      properties:
-        parameter_name:
-          type: string
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    SequenceConfig:
-      properties:
-        reset_session:
-          type: boolean
-        auto_sequence_config:
-          type: boolean
-        manual_sequence_config:
-          $ref: '#/components/schemas/ManualSequenceConfig'
-    XmlContentType:
-      properties:
-        value:
-          type: string
-    TokenReplacementConfig:
-      properties:
-        global_token_replacement_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/GlobalTokenReplacement'
-    AuthConfig:
-      properties:
-        type:
-          type: string
-          enum:
-          - NONE
-          - FORM
-          - MACRO
-          - SESSION_TAKEOVER
-          - SELENIUM
-          - TRAFFIC
-          - REMOTE_BOOTSTRAP
-        http_auth:
-          type: boolean
-        relogin_after_session_loss:
-          type: boolean
-        logout_detection:
-          type: boolean
-        assume_successful_login:
-          type: boolean
-        verify_not_loggedin:
-          type: boolean
-        postpone_login_action:
-          type: boolean
-        warning_only_on_login_fail:
-          type: boolean
-        create_non_authenticated_session:
-          type: boolean
-        treat_failed_relogin_as_error:
-          type: boolean
-        restart_proxy_before_relogin:
-          type: boolean
-        template_login_macro:
-          type: boolean
-        denylist_single_password_forms:
-          type: boolean
-        denylist_multi_password_forms:
-          type: boolean
-        reset_cookies:
-          type: boolean
-        do_not_update_cookies_from_requests:
-          type: boolean
-        username_form:
-          type: string
-        password_form:
-          type: string
-        username_http:
-          type: string
-        password_http:
-          type: string
-        auto_logon_security:
-          type: string
-          enum:
-          - LOW
-          - MEDIUM
-          - HIGH
-        login_link_regex:
-          type: string
-        logged_in_regex:
-          type: string
-        logged_in_header_regex:
-          type: string
-        session_loss_regex:
-          type: string
-        session_loss_header_regex:
-          type: string
-        logout_link_regex:
-          type: string
-        logout_post_body_regex:
-          type: string
-        canary_page:
-          type: string
-        session_loss_on_canary_page_regex:
-          type: string
-        session_loss_on_canary_page_header_regex:
-          type: string
-        session_cookie_regex:
-          type: string
-        session_cookie_lifespan:
-          type: number
-          format: double
-        url_session_token_regex:
-          type: string
-        post_session_token_regex:
-          type: string
-        response_body_token_regex:
-          type: string
-        second_response_body_token_regex:
-          type: string
-        http_header_with_token_replacement:
-          type: string
-        second_http_header_with_token_replacement:
-          type: string
-        logout_detection_frequency:
-          type: integer
-          format: int64
-        discovery_max_links:
-          type: integer
-          format: int64
-        login_max_links:
-          type: integer
-          format: int64
-        discovery_depth:
-          type: integer
-          format: int64
-        login_depth:
-          type: integer
-          format: int64
-        max_macro_relogin_attempts:
-          type: integer
-          format: int64
-        discovery_prioritization:
-          type: string
-          enum:
-          - FIRST_IN_FIRST_OUT
-          - SMART
-          - DIRECTORY_BREADTH_FIRST
-          - FOUND_BREADTH_FIRST
-          - FOUND_DEPTH_FIRST
-          - JUICY
-          - LOGIN_FORM_DISCOVERY
-          - LOGIN
-        login_prioritization:
-          type: string
-          enum:
-          - FIRST_IN_FIRST_OUT
-          - SMART
-          - DIRECTORY_BREADTH_FIRST
-          - FOUND_BREADTH_FIRST
-          - FOUND_DEPTH_FIRST
-          - JUICY
-          - LOGIN_FORM_DISCOVERY
-          - LOGIN
-        remote_bootstrap_timeout_minutes:
-          type: integer
-          format: int64
-        seed_link:
-          type: string
-        discover_login_form:
-          type: boolean
-        use_browser_form_login:
-          type: boolean
-        use_single_browser:
-          type: boolean
-        ping_frequency:
-          type: integer
-          format: int64
-        ping_url:
-          type: string
-        redact_log_files:
-          type: boolean
-        scope_constraint_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScopeConstraint'
-        http_auth_ext_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/HttpAuthExt'
-        token_replacement_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenReplacement'
-        hmac_config:
-          $ref: '#/components/schemas/HmacConfig'
-        oauth_config:
-          $ref: '#/components/schemas/OauthConfig'
-        msal_config:
-          $ref: '#/components/schemas/MsalConfig'
-        macro_file:
-          $ref: '#/components/schemas/MacroFile'
-        web_service_auth_config:
-          $ref: '#/components/schemas/WebServiceAuthConfig'
-        selenium_file:
-          $ref: '#/components/schemas/SeleniumFile'
-        traffic_file:
-          $ref: '#/components/schemas/TrafficFile'
-        browser_form_login_config:
-          $ref: '#/components/schemas/BrowserFormLoginConfig'
-        one_time_password_config:
-          $ref: '#/components/schemas/OneTimePasswordConfig'
-        oauth:
-          type: boolean
-    SeleniumConfig:
-      properties:
-        listen_for_other_scripts:
-          type: boolean
-        sequential_selenium_script_playback:
-          type: boolean
-        selenium_port:
-          type: integer
-          format: int64
-        web_driver_for_html:
-          type: string
-          enum:
-          - FIREFOX
-          - HTML_UNIT
-          - CHROME
-        chrome_binary_file_path:
-          type: string
-        selenium_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeleniumFile'
-    CrawlerInitializationConfig:
-      properties:
-        secure:
-          type: boolean
-        host:
-          type: string
-        port:
-          type: integer
-          format: int64
-        version:
-          type: string
-        browser_pool_size:
-          type: integer
-          format: int64
-        track_progress:
-          type: boolean
-        return_request:
-          type: string
-          enum:
-          - 'NO'
-          - RAW_REQUEST_DATA
-          - PROCESSED_REQUEST_DATA
-        track_request:
-          type: string
-          enum:
-          - NONE
-          - ENDPOINT_CALL
-          - ENDPOINT_CALL_AND_RAW_REQUEST
-          - ENDPOINT_CALL_AND_PROCESSED_REQUEST
-        node_js_max_old_space_size:
-          type: integer
-          format: int64
-        browser_idle_timeout_seconds:
-          type: integer
-          format: int64
-        browser_close_after_request_count:
-          type: integer
-          format: int64
-        browser_acquisition_timeout_minutes:
-          type: integer
-          format: int64
     OauthConfig:
       properties:
         resource_owner_url:
@@ -1213,1134 +2557,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OAuthCustomField'
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    HttpAuthExt:
-      properties:
-        host_name:
-          type: string
-        username:
-          type: string
-        password:
-          type: string
-    TextExtension:
-      properties:
-        value:
-          type: string
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
-    ValidationErrors:
-      properties:
-        status:
-          type: string
-          description: A description of the type of error based on HTTP status code
-          enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-          readOnly: true
-        message:
-          type: string
-          description: A description of the error
-          readOnly: true
-        errorCode:
-          type: string
-          description: An optional code which may help support indicate the underlying cause of the error
-          enum:
-          - E1
-          - E2
-          - E3
-          - E4
-          - E5
-          - E6
-          - E7
-          - E8
-          - E9
-          - E10
-          - E11
-          - E12
-          - E13
-          - E14
-          - E15
-          - E16
-          - E17
-          - E18
-          - E19
-          - E20
-          - E22
-          - E23
-          - E24
-          - E25
-          - E26
-          - E27
-          - E28
-          - E999
-          readOnly: true
-        errors:
-          type: array
-          description: A list of validation errors, when the HTTP status code is 422
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          readOnly: true
-      title: ValidationErrors
-    AutoSequenceConfig:
-      properties:
-        sequence_ignore_extension_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SequenceIgnoreExtension'
-        sequence_ignore_content_type_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SequenceIgnoreContentType'
-    ParameterTrainingConfig:
-      properties:
-        form_population:
-          type: string
-          enum:
-          - NONE
-          - RANDOM
-          - SMART
-        training_parameter_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrainingParameter'
-    ProxyConfig:
-      properties:
-        type:
-          type: string
-          enum:
-          - NO_PROXY
-          - INTERNET_EXPLORER_SETTINGS
-          - MANUAL_CONFIG
-          - PAC_FILE
-        http_host:
-          type: string
-        http_port:
-          type: integer
-          format: int64
-        https_host:
-          type: string
-        https_port:
-          type: integer
-          format: int64
-        pac_file:
-          type: string
-        username:
-          type: string
-        password:
-          type: string
-        proxy_exclusions_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProxyExclusions'
-    ScanModuleParameterFiles:
-      properties:
-        module_id:
-          type: number
-          format: double
-        custom_parameter_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomParameterFile'
-    Wsdl:
-      properties:
-        value:
-          type: string
-    SequenceRequest:
-      properties:
-        sequence_request_type:
-          type: string
-          enum:
-          - READ_FROM_CACHE
-          - SEND
-          - ATTACK
-        url:
-          type: string
-    ScopeConstraint:
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-          enum:
-          - ALL
-          - GET
-          - POST
-          - HEAD
-          - PUT
-          - PATCH
-          - DELETE
-          - TRACE
-          - CONNECT
-          - OPTIONS
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-        exclusion:
-          type: string
-          enum:
-          - INCLUDE
-          - EXCLUDE
-        http_parameter_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/HttpParameter'
-    app:
-      description: The App that the Scan is associated with
-      properties:
-        id:
-          type: string
-          format: uuid
-    OneTimePasswordConfig:
-      properties:
-        type:
-          type: string
-          enum:
-          - NONE
-          - HOTP
-          - TOTP
-        algorithm:
-          type: string
-          enum:
-          - SHA_1
-          - SHA_224
-          - SHA_256
-          - SHA_384
-          - SHA_512
-          - SHA_3_224
-          - SHA_3_256
-          - SHA_3_384
-          - SHA_3_512
-        counter:
-          type: integer
-          format: int64
-        period:
-          type: integer
-          format: int64
-        secret:
-          type: string
-    WebServiceAuthConfig:
-      properties:
-        enabled:
-          type: boolean
-        auth_wsdl:
-          type: string
-        auth_web_method:
-          type: string
-        get_auth_token_xpath:
-          type: string
-        put_auth_token_xpath:
-          type: string
-        extract_auth_token:
-          type: boolean
-        web_service_parameter_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebServiceParameter'
-    BrowserDoNotDownloadContentType:
-      properties:
-        value:
-          type: string
-    FrameworkConfig:
-      properties:
-        name:
-          type: string
-        default_config_version:
-          type: string
-        enabled:
-          type: boolean
-        head:
-          type: boolean
-        detection_regex:
-          type: string
-        healthcheck_string:
-          type: string
-        file_name:
-          type: string
-        get_all_events_script:
-          type: string
-        get_all_events_delay:
-          type: integer
-          format: int64
-        get_version_string_script:
-          type: string
-    HttpParameter:
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    ParameterValue:
-      properties:
-        parameter:
-          type: string
-        value:
-          type: string
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    BrowserDownloadAllowlist:
-      properties:
-        value:
-          type: string
-    AttackerConfig:
-      properties:
-        parameters_to_attack_before_limiting_attacks:
-          type: integer
-          format: int64
-        links_to_attack_before_limiting_attacks:
-          type: integer
-          format: int64
-        max_same_name_parameter_attack_points:
-          type: integer
-          format: int64
-        max_same_cookie_parameter_attack_points:
-          type: integer
-          format: int64
-        max_same_name_parameter_attack_points_per_link:
-          type: integer
-          format: int64
-        max_parameter_attack_points_per_link:
-          type: integer
-          format: int64
-        max_normalized_same_name_parameter_attack_points_per_link:
-          type: integer
-          format: int64
-        apply_crawler_constraints:
-          type: boolean
-        max_number_of_scheduled_passive_attacks:
-          type: integer
-          format: int64
-        min_cookie_lifetime_for_attacks:
-          type: integer
-          format: int64
-        max404_findings_per_module:
-          type: integer
-          format: int64
-        exclude_low_confidence_findings:
-          type: boolean
-        out_of_band_host:
-          type: string
-        max_severity_for_traffic_reduction:
-          type: string
-          enum:
-          - SAFE
-          - INFORMATIONAL
-          - LOW
-          - MEDIUM
-          - HIGH
-          - CRITICAL
-        min_response_size_for_traffic_reduction:
-          type: integer
-          format: int64
-        scope_constraint_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScopeConstraint'
-        default_do_not_attack_param_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/DefaultDoNotAttackParam'
-        user_do_not_attack_param_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDoNotAttackParam'
-    ChromeHostConfig:
-      properties:
-        disable_logging:
-          type: boolean
-    SequenceIgnoreContentType:
-      properties:
-        value:
-          type: string
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    MultiRegexUrlParserConfig:
-      properties:
-        parser_name:
-          type: string
-        rule_regex:
-          type: string
-        path_regex:
-          type: string
-        path_parameter_groups:
-          type: string
-        query_regex:
-          type: string
-        query_parameter_groups:
-          type: string
-    ManualSequenceConfig:
-      properties:
-        sequence_request_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SequenceRequest'
-    EntityModelScanConfig:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Scan Config
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Scan Config
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the Scan Config
-          maxLength: 2000
-          minLength: 0
-        app:
-          $ref: '#/components/schemas/app'
-        attack_template:
-          $ref: '#/components/schemas/attack_template'
-        incremental:
-          type: boolean
-          description: A flag to enable incremental scanning
-        assignment:
-          $ref: '#/components/schemas/EngineAssignment'
-        errors:
-          type: array
-          description: A list of errors that detail any current validation failures
-          items:
-            type: string
-            description: A list of errors that detail any current validation failures
-            readOnly: true
-          readOnly: true
-          uniqueItems: true
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - app
-      - attack_template
-      - name
-    EngineAssignment:
-      description: The engine assignment that the Scan should use
-      properties:
-        type:
-          type: string
-          description: The type of engine assignment
-          enum:
-          - ENGINE_GROUP
-        id:
-          type: string
-          format: uuid
-          description: The ID of the assignment
-        environment:
-          type: string
-          description: The environment of the assignment
-          enum:
-          - CLOUD
-          - ON_PREMISE
-      required:
-      - environment
-      title: EngineAssignment
-    DefaultDoNotAttackParam:
-      properties:
-        parameter_name:
-          type: string
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    WebServiceParameter:
-      properties:
-        value:
-          type: string
-        getxPath:
-          type: string
-    SwaggerFile:
-      properties:
-        value:
-          type: string
-        preferred_content_type:
-          type: string
-        json_file_url:
-          type: string
-        host_name:
-          type: string
-    SslCertConfig:
-      properties:
-        type:
-          type: string
-          enum:
-          - NO_CERT
-          - CERTIFICATE
-        file:
-          type: string
-        password:
-          type: string
-        serial_number:
-          type: string
-        issuer_name_base64:
-          type: string
-    OneTimeTokenConfig:
-      properties:
-        auto_detect_csrf:
-          type: boolean
-        max_token_lifetime:
-          type: string
-          format: date-time
-        expiration_regex:
-          type: string
-        token_name_regex:
-          type: string
-        token_value_regex:
-          type: string
-    TrainingParameter:
-      properties:
-        pattern_name:
-          type: string
-        types:
-          type: string
-        language:
-          type: string
-        match:
-          type: string
-        value:
-          type: string
-        value_match:
-          type: string
-        match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    WebDriverConfig:
-      properties:
-        chrome_driver_port:
-          type: integer
-          format: int64
-        chrome_debug_port:
-          type: integer
-          format: int64
-    TrafficFile:
-      properties:
-        traffic_file_name:
-          type: string
-        traffic_file_password:
-          type: string
-        attack_as_sequence:
-          type: boolean
-        begin_attack_request:
-          type: integer
-          format: int64
-        end_attack_request:
-          type: integer
-          format: int64
-    GraphQlConfigObject:
-      properties:
-        enabled:
-          type: boolean
-        introspection_schema_file_path:
-          type: string
-        graph_ql_endpoint_url:
-          type: string
-        verb:
-          type: string
-          enum:
-          - POST
-          - GET
-        max_requests:
-          type: integer
-          format: int64
-        query_type:
-          type: string
-          enum:
-          - QUERY
-          - MUTATION
-          - QUERY_AND_MUTATION
-        host_name:
-          type: string
-        introspection_query_url:
-          type: string
-    SeleniumFile:
-      properties:
-        selenium_file_name:
-          type: string
-    ManualCrawlingConfig:
-      properties:
-        traffic_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrafficFile'
-    GlobalTokenReplacement:
-      properties:
-        extraction_parameter_location:
-          type: string
-          enum:
-          - REQUEST_URL
-          - REQUEST_HEADER
-          - REQUEST_BODY
-          - RESPONSE_HEADER
-          - RESPONSE_BODY
-          - REQUEST_COOKIE
-        extraction_parameter:
-          type: string
-        extraction_parameter_match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-        injection_parameter_location:
-          type: string
-          enum:
-          - REQUEST_URL
-          - REQUEST_HEADER
-          - REQUEST_BODY
-          - RESPONSE_HEADER
-          - RESPONSE_BODY
-          - REQUEST_COOKIE
-        injection_parameter:
-          type: string
-        injection_parameter_match_criteria:
-          type: string
-          enum:
-          - LITERAL
-          - WILDCARD
-          - REGEX
-    StandardUrlParserConfig:
-      properties:
-        path_name_value_delimiters:
-          type: string
-        path_parameter_delimiters:
-          type: string
-        query_name_value_delimiters:
-          type: string
-        query_parameter_delimiters:
-          type: string
-        path_params_value_regex:
-          type: string
-        start_path_params_position:
-          type: integer
-          format: int64
-    HmacConfig:
-      properties:
-        hmac_header_generator_dll_filename:
-          type: string
-        hmac_username:
-          type: string
-        hmac_api_key:
-          type: string
-        hmac_hash_algorithm:
-          type: integer
-          format: int64
-    NetworkSettingsConfig:
-      properties:
-        close_connection:
-          type: boolean
-        send_keep_alive_header:
-          type: boolean
-        pre_authenticate_basic_auth:
-          type: boolean
-        max_retries:
-          type: integer
-          format: int64
-        max_response_size:
-          type: integer
-          format: int64
-        max_url_length:
-          type: integer
-          format: int64
-        max_javascipt_response_size:
-          type: integer
-          format: int64
-        max_binary_response_size:
-          type: integer
-          format: int64
-        resolve_timeout:
-          type: integer
-          format: int64
-        connect_timeout:
-          type: integer
-          format: int64
-        write_timeout:
-          type: integer
-          format: int64
-        read_timeout:
-          type: integer
-          format: int64
-        assume_disconnected_timeout:
-          type: integer
-          format: int64
-        drip_delay_milli_seconds:
-          type: integer
-          format: int64
-        max_consecutive_failures:
-          type: integer
-          format: int64
-        max_unsuccessful_responses:
-          type: integer
-          format: int64
-        max_wait_time:
-          type: integer
-          format: int64
-        network_preferred_auth_scheme:
-          type: string
-          enum:
-          - NPAS_DEFAULT
-          - NPAS_NEGOTIATE
-          - NPAS_NTLM
-          - NPAS_PASSPORT
-          - NPAS_BASIC
-        use_secure_protocols:
-          type: boolean
-        secure_protocols:
-          type: array
-          items:
-            type: string
-            enum:
-            - SSL_2
-            - SSL_3
-            - TLS_1
-            - TLS_11
-            - TLS_12
-            - TLS_13
-          uniqueItems: true
-    AlfDataFile:
-      properties:
-        type:
-          type: string
-        dataset:
-          type: string
-        content_file:
-          type: string
-        content:
-          type: string
-    TokenReplacement:
-      properties:
-        extraction_token_location:
-          type: string
-          enum:
-          - REQUEST_URL
-          - REQUEST_HEADER
-          - REQUEST_BODY
-          - RESPONSE_HEADER
-          - RESPONSE_BODY
-          - REQUEST_COOKIE
-        extraction_token_regex:
-          type: string
-        injection_token_location:
-          type: string
-          enum:
-          - REQUEST_URL
-          - REQUEST_HEADER
-          - REQUEST_BODY
-          - RESPONSE_HEADER
-          - RESPONSE_BODY
-          - REQUEST_COOKIE
-        injection_token_regex:
-          type: string
-    attack_template:
-      description: The attack template that the Scan Config should use
-      properties:
-        id:
-          type: string
-          format: uuid
-    CrawlerMonitoringConfig:
-      properties:
-        client_poll_period_seconds:
-          type: integer
-          format: int64
-        client_inactivity_timeout_seconds:
-          type: integer
-          format: int64
-        service_poll_period_seconds:
-          type: integer
-          format: int64
-        service_termination_timeout_milliseconds:
-          type: integer
-          format: int64
-        service_consecutive_error_limit:
-          type: integer
-          format: int64
-        resources_poll_period_seconds:
-          type: integer
-          format: int64
-        service_recovery_attempt_limit:
-          type: integer
-          format: int64
-    SeedUrl:
-      properties:
-        value:
-          type: string
-    ChatbotConfig:
-      properties:
-        url:
-          type: string
-        open_ui_selector:
-          type: string
-        open_ui_text:
-          type: string
-        open_ui_max_wait_ms:
-          type: integer
-          format: int64
-        prompt_value:
-          type: string
-        prompt_selector:
-          type: string
-        prompt_text:
-          type: string
-        submit_selector:
-          type: string
-        submit_text:
-          type: string
-        response_selector:
-          type: string
-        response_min_wait_ms:
-          type: integer
-          format: int64
-        response_max_wait_ms:
-          type: integer
-          format: int64
-        response_inactivity_ms:
-          type: integer
-          format: int64
-        response_ignore_regex:
-          type: string
-        response_min_length:
-          type: integer
-          format: int64
-        show_in_browser:
-          type: boolean
-        macro_file:
-          $ref: '#/components/schemas/MacroFile__1'
-    MacroConfig:
-      properties:
-        sequential_macro_playback:
-          type: boolean
-        macro_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/MacroFile'
-    ParameterParserConfig:
-      properties:
-        enable_base64_parameter_values:
-          type: boolean
-        multi_regex_url_parser_config_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/MultiRegexUrlParserConfig'
-        standard_url_parser_config:
-          $ref: '#/components/schemas/StandardUrlParserConfig'
-    CustomHeaders:
-      properties:
-        value:
-          type: string
-    BinaryExtension:
-      properties:
-        value:
-          type: string
-    MacroFile:
-      properties:
-        macro_file_name:
-          type: string
-        java_script_engine:
-          type: string
-          enum:
-          - DEFAULT
-          - INTERNET_EXPLORER
-          - CHROME
-          - CHROMIUM
-        replay_speed:
-          type: number
-          format: double
-        extra_delay_after_macro:
-          type: integer
-          format: int64
-        attack_as_sequence:
-          type: boolean
-        sequence_config:
-          $ref: '#/components/schemas/SequenceConfig'
-    PageScanConfig:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelScanConfig'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    TextContentType:
-      properties:
-        value:
-          type: string
-    WebServiceConfig:
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        content_type:
-          type: string
-        wsdl_regex:
-          type: string
-        auto_discover_wsdl:
-          type: boolean
-        web_services_enhancements:
-          type: boolean
-        password_option:
-          type: string
-          enum:
-          - NONE
-          - HASHED
-          - PLAIN_TEXT
-        swagger_host_name:
-          type: string
-        swagger_parse_fail:
-          type: boolean
-        use_swagger_v1:
-          type: boolean
-        save_swagger_files:
-          type: boolean
-        swagger_warning_level:
-          type: string
-          enum:
-          - STRICT
-          - MAXIMIZE_ASSESSMENT
-          - LOOSE
-        wsdl_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Wsdl'
-        swagger_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/SwaggerFile'
-        graph_ql_config_object_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphQlConfigObject'
-    HttpHeadersConfig:
-      properties:
-        http_protocol:
-          type: string
-        accept:
-          type: string
-        accept_charset:
-          type: string
-        accept_encoding:
-          type: string
-        accept_language:
-          type: string
-        cookie:
-          type: string
-        user_agent:
-          type: string
-        overwrite_with_default_headers:
-          type: boolean
-        do_not_attack_user_agent:
-          type: boolean
-        custom_headers_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomHeaders'
-        traffic_header_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrafficHeader'
-    HtmlContentType:
-      properties:
-        value:
-          type: string
-    FrameworksCrawlConfig:
-      properties:
-        enable_frameworks_crawling:
-          type: boolean
-        react_js_detection_regex:
-          type: string
-        framework_config_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/FrameworkConfig'
-    DomElementRestriction:
-      properties:
-        enabled:
-          type: boolean
-        name:
-          type: string
-        dom_element_path_type:
-          type: string
-          enum:
-          - XPATH
-          - CSS_SELECTOR
-        dom_element_path:
-          type: string
-        cardinality_min:
-          type: integer
-          format: int64
-        cardinality_max:
-          type: integer
-          format: int64
-        exclusion:
-          type: string
-          enum:
-          - INCLUDE
-          - EXCLUDE
-        recursive:
-          type: boolean
-    CustomParameterFile:
-      properties:
-        name:
-          type: string
-        file_name:
-          type: string
-    BrowserFormLoginConfig:
-      properties:
-        use_alf:
-          type: boolean
-        enable_alf_debug:
-          type: boolean
-        enable_fallback:
-          type: boolean
-        delay_before_alf_milliseconds:
-          type: integer
-          format: int64
-        delay_after_alf_milliseconds:
-          type: integer
-          format: int64
-        initial_navigate_event_duration:
-          type: integer
-          format: int64
-        final_delay_event_duration:
-          type: integer
-          format: int64
-        alf_data_file_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlfDataFile'
     Error:
       properties:
         status:
@@ -2455,248 +2671,32 @@ components:
           - E999
           readOnly: true
       title: Error
-    ScanConfigOptions:
-      properties:
-        detailed_logging:
-          type: boolean
-        display_imminent_license_expiry_message:
-          type: boolean
-        java_script_engine:
-          type: string
-          enum:
-          - DEFAULT
-          - INTERNET_EXPLORER
-          - CHROME
-          - CHROMIUM
-        scan_module_parameter_files_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScanModuleParameterFiles'
-        crawl_config:
-          $ref: '#/components/schemas/CrawlConfig'
-        attacker_config:
-          $ref: '#/components/schemas/AttackerConfig'
-        auth_config:
-          $ref: '#/components/schemas/AuthConfig'
-        proxy_config:
-          $ref: '#/components/schemas/ProxyConfig'
-        ssl_cert_config:
-          $ref: '#/components/schemas/SslCertConfig'
-        network_settings_config:
-          $ref: '#/components/schemas/NetworkSettingsConfig'
-        performance_config:
-          $ref: '#/components/schemas/PerformanceConfig'
-        http_headers_config:
-          $ref: '#/components/schemas/HttpHeadersConfig'
-        manual_crawling_config:
-          $ref: '#/components/schemas/ManualCrawlingConfig'
-        parameter_training_config:
-          $ref: '#/components/schemas/ParameterTrainingConfig'
-        auto_sequence_config:
-          $ref: '#/components/schemas/AutoSequenceConfig'
-        macro_config:
-          $ref: '#/components/schemas/MacroConfig'
-        selenium_config:
-          $ref: '#/components/schemas/SeleniumConfig'
-        web_service_config:
-          $ref: '#/components/schemas/WebServiceConfig'
-        one_time_token_config:
-          $ref: '#/components/schemas/OneTimeTokenConfig'
-        parameter_parser_config:
-          $ref: '#/components/schemas/ParameterParserConfig'
-        parameter_value_config:
-          $ref: '#/components/schemas/ParameterValueConfig'
-        chrome_host_config:
-          $ref: '#/components/schemas/ChromeHostConfig'
-        token_replacement_config:
-          $ref: '#/components/schemas/TokenReplacementConfig'
-        chatbot_config:
-          $ref: '#/components/schemas/ChatbotConfig'
-    DenyListExtension:
-      properties:
-        value:
-          type: string
-    ScanConfig:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Scan Config
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Scan Config
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the Scan Config
-          maxLength: 2000
-          minLength: 0
-        app:
-          $ref: '#/components/schemas/app'
-        attack_template:
-          $ref: '#/components/schemas/attack_template'
-        incremental:
-          type: boolean
-          description: A flag to enable incremental scanning
-        assignment:
-          $ref: '#/components/schemas/EngineAssignment'
-        errors:
-          type: array
-          description: A list of errors that detail any current validation failures
-          items:
-            type: string
-            description: A list of errors that detail any current validation failures
-            readOnly: true
-          readOnly: true
-          uniqueItems: true
-      required:
-      - app
-      - attack_template
-      - name
-      title: ScanConfig
-    PerformanceConfig:
-      properties:
-        max_concurrent_requests:
-          type: integer
-          format: int64
-        max_bandwidth_kb:
-          type: integer
-          format: int64
-        max_browser_reuse_count:
-          type: integer
-          format: int64
-        memory_ceiling64_bit:
-          type: integer
-          format: int64
-        anti_dos:
-          type: boolean
-        dump_user_process_memory_usage:
-          type: boolean
-        max_browser_process_lifetime:
-          type: integer
-          format: int64
-    MacroFile__1:
-      properties:
-        macro_file_name:
-          type: string
-        java_script_engine:
-          type: string
-          enum:
-          - DEFAULT
-          - INTERNET_EXPLORER
-          - CHROME
-          - CHROMIUM
-        show_in_browser:
-          type: boolean
-        replay_speed:
-          type: number
-          format: double
-        asap_mode:
-          type: boolean
-        asap_mode_min_delay:
-          type: integer
-          format: int64
-        extra_delay_after_macro:
-          type: integer
-          format: int64
-        attack_as_sequence:
-          type: boolean
-        sequence_config:
-          $ref: '#/components/schemas/SequenceConfig'
-        web_driver_config:
-          $ref: '#/components/schemas/WebDriverConfig'
-    OAuthCustomField:
-      properties:
-        name:
-          type: string
-        value:
-          type: string
     SequenceIgnoreExtension:
       properties:
         value:
           type: string
-    BrowserDoNotDownloadExtension:
+    SslCertConfig:
       properties:
-        value:
-          type: string
-    LockedCookie:
-      properties:
-        value:
-          type: string
-    GrayListExtension:
-      properties:
-        value:
-          type: string
-    MsalConfig:
-      properties:
-        x509_cert_filename:
-          type: string
-        x509_cert_password:
-          type: string
-        x509_cert_store_key:
-          type: string
-        tenant_id:
-          type: string
-        client_id:
-          type: string
-        client_secret:
-          type: string
-        scope:
-          type: string
-        token_refresh_period:
-          type: object
-          properties:
-            seconds:
-              type: integer
-              format: int64
-            zero:
-              type: boolean
-            nano:
-              type: integer
-              format: int32
-            negative:
-              type: boolean
-            positive:
-              type: boolean
-            units:
-              type: array
-              items:
-                type: object
-                properties:
-                  duration_estimated:
-                    type: boolean
-                  time_based:
-                    type: boolean
-                  date_based:
-                    type: boolean
-        authority_url:
-          type: string
-    DomRestrictions:
-      properties:
-        enabled:
-          type: boolean
-        name:
-          type: string
-        initial_state:
+        type:
           type: string
           enum:
-          - INCLUDE
-          - EXCLUDE
-        dom_element_restriction_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomElementRestriction'
-        scope_constraint_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScopeConstraint'
-    ProxyExclusions:
+          - NO_CERT
+          - CERTIFICATE
+        file:
+          type: string
+        password:
+          type: string
+        serial_number:
+          type: string
+        issuer_name_base64:
+          type: string
+    SwaggerFile:
       properties:
         value:
           type: string
-    TrafficHeader:
-      properties:
-        value:
+        preferred_content_type:
+          type: string
+        json_file_url:
+          type: string
+        host_name:
           type: string

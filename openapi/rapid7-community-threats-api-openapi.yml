@@ -506,21 +506,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ThreatUpdateResult:
-      required:
-      - threat
-      type: object
-      properties:
-        threat:
-          $ref: '#/components/schemas/Threat'
-        rejected_indicators:
-          type: array
-          description: The list of indicators that have been rejected during the update.
-          example:
-          - blacklisted
-          - invalid
-          items:
-            type: string
     Threat:
       required:
       - indicator_count
@@ -547,6 +532,11 @@ components:
           format: int64
           example: 1
       description: The information about the threat.
+    DeleteThreatEvent:
+      type: object
+      properties:
+        reason:
+          type: string
     ErrorResponse:
       required:
       - message
@@ -560,11 +550,21 @@ components:
           type: string
           description: An identifier that uniquely identifies the failed request.
           example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
-    DeleteThreatEvent:
+    ThreatUpdateResult:
+      required:
+      - threat
       type: object
       properties:
-        reason:
-          type: string
+        threat:
+          $ref: '#/components/schemas/Threat'
+        rejected_indicators:
+          type: array
+          description: The list of indicators that have been rejected during the update.
+          example:
+          - blacklisted
+          - invalid
+          items:
+            type: string
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

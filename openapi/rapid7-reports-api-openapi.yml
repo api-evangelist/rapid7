@@ -485,6 +485,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    app:
+      description: The App that the Scan is associated with
+      properties:
+        id:
+          type: string
+          format: uuid
     PageMetadata:
       properties:
         index:
@@ -503,87 +509,15 @@ components:
           format: int64
         page_token:
           type: string
-    EntityModelReport:
+    ReferenceResource:
+      description: The last editor of the comment
       properties:
         id:
           type: string
           format: uuid
-        name:
-          type: string
-          description: The name of the Report
-          readOnly: true
-        type:
-          type: string
-          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
-          enum:
-          - VULN_SUMMARY
-          - VULN_REMEDIATION
-          - PCI_COMPLIANCE
-          - PCI4_COMPLIANCE
-          - OWASP_2013_COMPLIANCE
-          - OWASP_2017_COMPLIANCE
-          - OWASP_2021_COMPLIANCE
-          - OWASP_2023API_COMPLIANCE
-          - OWASP_2025_COMPLIANCE
-          - GDPR_2016_COMPLIANCE
-          - SOX_COMPLIANCE
-          - HIPAA_COMPLIANCE
-          - EXEC_SINGLE_APP
-          - EXEC_ALL_APPS
-          - EXEC_SINGLE_APP_NEW_VULNS
-          - EXEC_ALL_APPS_NEW_VULNS
-          - EXEC_SINGLE_APP_ALL_VULNS
-          - EXEC_ALL_APPS_ALL_VULNS
-          - EXEC_IAS_IVM_COMPOSITE
-          - TARGET_DISCOVERY
-          readOnly: true
-        format:
-          type: string
-          description: The format of the Report
-          enum:
-          - HTML
-          - CSV
-          - PDF
-          readOnly: true
-        owner:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        generated_date:
-          type: string
-          format: date-time
-          description: The time the Report was generated
-          readOnly: true
-        app:
-          $ref: '#/components/schemas/ReferenceResource'
-        status:
-          type: string
-          description: The status of the Report
-          enum:
-          - PROCESSING
-          - FAILED
-          - COMPLETE
-          readOnly: true
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+      readOnly: true
+      required:
+      - id
     ReportGeneration:
       properties:
         name:
@@ -644,36 +578,14 @@ components:
       - name
       - type
       title: Report Generation
-    app:
-      description: The App that the Scan is associated with
+    ReadOnlyIdResource:
+      description: The ID of the module
       properties:
         id:
           type: string
           format: uuid
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
-    PageReport:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelReport'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
           readOnly: true
+      readOnly: true
     Error:
       properties:
         status:
@@ -788,28 +700,39 @@ components:
           - E999
           readOnly: true
       title: Error
-    ReferenceResource:
-      description: The last editor of the comment
-      properties:
-        id:
-          type: string
-          format: uuid
-      readOnly: true
-      required:
-      - id
     scan:
       description: The Scan associated with the Report
       properties:
         id:
           type: string
           format: uuid
-    ReadOnlyIdResource:
-      description: The ID of the module
+    ValidationError:
       properties:
-        id:
+        type:
           type: string
-          format: uuid
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
           readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
       readOnly: true
     ValidationErrors:
       properties:
@@ -931,3 +854,80 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    EntityModelReport:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: The name of the Report
+          readOnly: true
+        type:
+          type: string
+          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
+          enum:
+          - VULN_SUMMARY
+          - VULN_REMEDIATION
+          - PCI_COMPLIANCE
+          - PCI4_COMPLIANCE
+          - OWASP_2013_COMPLIANCE
+          - OWASP_2017_COMPLIANCE
+          - OWASP_2021_COMPLIANCE
+          - OWASP_2023API_COMPLIANCE
+          - OWASP_2025_COMPLIANCE
+          - GDPR_2016_COMPLIANCE
+          - SOX_COMPLIANCE
+          - HIPAA_COMPLIANCE
+          - EXEC_SINGLE_APP
+          - EXEC_ALL_APPS
+          - EXEC_SINGLE_APP_NEW_VULNS
+          - EXEC_ALL_APPS_NEW_VULNS
+          - EXEC_SINGLE_APP_ALL_VULNS
+          - EXEC_ALL_APPS_ALL_VULNS
+          - EXEC_IAS_IVM_COMPOSITE
+          - TARGET_DISCOVERY
+          readOnly: true
+        format:
+          type: string
+          description: The format of the Report
+          enum:
+          - HTML
+          - CSV
+          - PDF
+          readOnly: true
+        owner:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        generated_date:
+          type: string
+          format: date-time
+          description: The time the Report was generated
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReferenceResource'
+        status:
+          type: string
+          description: The status of the Report
+          enum:
+          - PROCESSING
+          - FAILED
+          - COMPLETE
+          readOnly: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    PageReport:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelReport'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true

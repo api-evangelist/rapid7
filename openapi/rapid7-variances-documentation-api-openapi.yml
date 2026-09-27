@@ -143,45 +143,31 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ValidationError:
+    VarianceFilterRequest:
       properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    VarianceDocumentation:
-      properties:
-        references:
-          type: object
-          additionalProperties:
+        variance_ids:
+          type: array
+          items:
             type: string
-            description: ${public-api.docs.models.vulnerability.properties.variance-documentation.references}
-            readOnly: true
-          description: Reference to CWE (Common Weakness Enumeration)/CVE (Common Vulnerability Enumeration) documentation
-          readOnly: true
-        description:
-          type: string
-          description: The vulnerability description
-          readOnly: true
-        recommendation:
-          type: string
-          description: How to fix or prevent the vulnerability
-          readOnly: true
-        id:
+            format: uuid
+          uniqueItems: true
+        scan_id:
           type: string
           format: uuid
-      title: VarianceDocumentation
+        vuln_uuids:
+          type: array
+          deprecated: true
+          items:
+            type: string
+            format: uuid
+            deprecated: true
+          uniqueItems: true
+        vuln_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          uniqueItems: true
     Error:
       properties:
         status:
@@ -296,31 +282,23 @@ components:
           - E999
           readOnly: true
       title: Error
-    VarianceFilterRequest:
+    ValidationError:
       properties:
-        variance_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          uniqueItems: true
-        scan_id:
+        type:
           type: string
-          format: uuid
-        vuln_uuids:
-          type: array
-          deprecated: true
-          items:
-            type: string
-            format: uuid
-            deprecated: true
-          uniqueItems: true
-        vuln_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          uniqueItems: true
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -441,3 +419,25 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    VarianceDocumentation:
+      properties:
+        references:
+          type: object
+          additionalProperties:
+            type: string
+            description: ${public-api.docs.models.vulnerability.properties.variance-documentation.references}
+            readOnly: true
+          description: Reference to CWE (Common Weakness Enumeration)/CVE (Common Vulnerability Enumeration) documentation
+          readOnly: true
+        description:
+          type: string
+          description: The vulnerability description
+          readOnly: true
+        recommendation:
+          type: string
+          description: How to fix or prevent the vulnerability
+          readOnly: true
+        id:
+          type: string
+          format: uuid
+      title: VarianceDocumentation

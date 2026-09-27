@@ -756,6 +756,8 @@ apis:
   humanURL: https://help.rapid7.com/insightvm/en-us/api/api.html
   baseURL: https://us.api.insight.rapid7.com/vm/v4
   tags:
+  - Vulnerabilities
+  tags_raw:
   - Vulnerability
   properties:
   - type: OpenAPI

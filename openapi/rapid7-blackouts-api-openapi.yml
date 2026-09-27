@@ -348,23 +348,15 @@ components:
           format: int64
         page_token:
           type: string
-    ValidationError:
+    ReferenceResource:
+      description: The last editor of the comment
       properties:
-        type:
+        id:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+          format: uuid
+      readOnly: true
+      required:
+      - id
     PageBlackout:
       properties:
         data:
@@ -378,85 +370,6 @@ components:
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
-    Blackout:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Blackout
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Blackout
-          maxLength: 200
-          minLength: 1
-        scope:
-          type: string
-          description: The scope of the Blackout
-          enum:
-          - APP
-          - GLOBAL
-          readOnly: true
-        enabled:
-          type: boolean
-          description: The enabled property of the Blackout
-        active:
-          type: boolean
-          description: The current active status of the Blackout
-          readOnly: true
-        app:
-          $ref: '#/components/schemas/ReferenceResource'
-        first_start:
-          type: string
-          format: date-time
-          description: The first start date and time of the Blackout
-        first_end:
-          type: string
-          format: date-time
-          description: The first end date and time of the Blackout
-        last_start:
-          type: string
-          format: date-time
-          description: The last start date and time of the Blackout
-        frequency:
-          $ref: '#/components/schemas/Frequency'
-        rrule:
-          type: string
-          description: The rrule describes how (and if) the blackout should repeat. Should not be included if a frequency has been provided.
-      required:
-      - enabled
-      - first_end
-      - first_start
-      - name
-      title: Blackout
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
-    Frequency:
-      description: The frequency at which the Blackout applies. Should not be included if a rrule has been provided.
-      properties:
-        type:
-          type: string
-          description: The type of the Frequency
-          enum:
-          - ONCE
-          - HOURLY
-          - DAILY
-          - WEEKLY
-          - MONTHLY
-        interval:
-          type: integer
-          format: int32
-          description: The interval of the Frequency
-      title: Frequency
     EntityModelBlackout:
       properties:
         id:
@@ -626,15 +539,102 @@ components:
           - E999
           readOnly: true
       title: Error
-    ReferenceResource:
-      description: The last editor of the comment
+    Blackout:
       properties:
         id:
           type: string
           format: uuid
-      readOnly: true
+          description: The ID of the Blackout
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Blackout
+          maxLength: 200
+          minLength: 1
+        scope:
+          type: string
+          description: The scope of the Blackout
+          enum:
+          - APP
+          - GLOBAL
+          readOnly: true
+        enabled:
+          type: boolean
+          description: The enabled property of the Blackout
+        active:
+          type: boolean
+          description: The current active status of the Blackout
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReferenceResource'
+        first_start:
+          type: string
+          format: date-time
+          description: The first start date and time of the Blackout
+        first_end:
+          type: string
+          format: date-time
+          description: The first end date and time of the Blackout
+        last_start:
+          type: string
+          format: date-time
+          description: The last start date and time of the Blackout
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+        rrule:
+          type: string
+          description: The rrule describes how (and if) the blackout should repeat. Should not be included if a frequency has been provided.
       required:
-      - id
+      - enabled
+      - first_end
+      - first_start
+      - name
+      title: Blackout
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    Frequency:
+      description: The frequency at which the Blackout applies. Should not be included if a rrule has been provided.
+      properties:
+        type:
+          type: string
+          description: The type of the Frequency
+          enum:
+          - ONCE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+        interval:
+          type: integer
+          format: int32
+          description: The interval of the Frequency
+      title: Frequency
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
     ValidationErrors:
       properties:
         status:

@@ -432,6 +432,108 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse2'
 components:
   schemas:
+    RRN:
+      type: object
+      properties:
+        partition:
+          type: string
+        service:
+          type: string
+        regionCode:
+          type: string
+        organizationId:
+          type: string
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        resource:
+          type: string
+    Creator:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A type that denotes who or what created a resource.
+          enum:
+          - USER
+          - ORG_API_KEY
+          - SYSTEM
+          example: USER
+        name:
+          type: string
+          description: The name of who or what created a resource.
+          example: John Doe
+      required:
+      - name
+      - type
+    Attachment:
+      type: object
+      properties:
+        rrn:
+          $ref: '#/components/schemas/RRN'
+          description: The RRN of the attachment.
+          example: rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
+        creator:
+          $ref: '#/components/schemas/Creator'
+          description: Who or what created the resource.
+        created_time:
+          type: string
+          description: The time the attachment was created as an ISO formatted timestamp.
+          example: '2018-06-06T16:56:42Z'
+        file_name:
+          type: string
+          description: The original filename of the uploaded attachment.
+          example: screenshot.png
+        mime_type:
+          type: string
+          description: The mime type of the attachment.
+          example: image/png
+        size:
+          type: integer
+          format: int64
+          description: The size in bytes of the attachment.
+          example: 12345
+        scan_status:
+          type: string
+          description: The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.
+          example: CLEAN
+      required:
+      - created_time
+      - creator
+      - file_name
+      - mime_type
+      - rrn
+      - scan_status
+      - size
+    PageMetadata2:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: The 0 based index of the page retrieved.
+          example: 0
+        size:
+          type: integer
+          format: int32
+          description: The size of the page requested.
+          example: 20
+        total_pages:
+          type: integer
+          format: int32
+          description: The total number of pages available with the given filter parameters.
+          example: 1
+        total_data:
+          type: integer
+          format: int64
+          description: The total number of results available with the given filter parameters.
+          example: 15
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
     CommentCreateRequest:
       type: object
       description: The information needed by the request body to create comments.
@@ -454,23 +556,19 @@ components:
           uniqueItems: true
       required:
       - target
-    RRN:
+    ErrorResponse2:
       type: object
       properties:
-        partition:
+        message:
           type: string
-        service:
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
           type: string
-        regionCode:
-          type: string
-        organizationId:
-          type: string
-        resourceTypes:
-          type: array
-          items:
-            type: string
-        resource:
-          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: An identifier that uniquely identifies the failed request.
+      required:
+      - message
     PageComment:
       type: object
       properties:
@@ -521,104 +619,6 @@ components:
       - creator
       - rrn
       - target
-    PageMetadata2:
-      type: object
-      properties:
-        index:
-          type: integer
-          format: int32
-          description: The 0 based index of the page retrieved.
-          example: 0
-        size:
-          type: integer
-          format: int32
-          description: The size of the page requested.
-          example: 20
-        total_pages:
-          type: integer
-          format: int32
-          description: The total number of pages available with the given filter parameters.
-          example: 1
-        total_data:
-          type: integer
-          format: int64
-          description: The total number of results available with the given filter parameters.
-          example: 15
-      required:
-      - index
-      - size
-      - total_data
-      - total_pages
-    Creator:
-      type: object
-      properties:
-        type:
-          type: string
-          description: A type that denotes who or what created a resource.
-          enum:
-          - USER
-          - ORG_API_KEY
-          - SYSTEM
-          example: USER
-        name:
-          type: string
-          description: The name of who or what created a resource.
-          example: John Doe
-      required:
-      - name
-      - type
-    ErrorResponse2:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: An identifier that uniquely identifies the failed request.
-      required:
-      - message
-    Attachment:
-      type: object
-      properties:
-        rrn:
-          $ref: '#/components/schemas/RRN'
-          description: The RRN of the attachment.
-          example: rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
-        creator:
-          $ref: '#/components/schemas/Creator'
-          description: Who or what created the resource.
-        created_time:
-          type: string
-          description: The time the attachment was created as an ISO formatted timestamp.
-          example: '2018-06-06T16:56:42Z'
-        file_name:
-          type: string
-          description: The original filename of the uploaded attachment.
-          example: screenshot.png
-        mime_type:
-          type: string
-          description: The mime type of the attachment.
-          example: image/png
-        size:
-          type: integer
-          format: int64
-          description: The size in bytes of the attachment.
-          example: 12345
-        scan_status:
-          type: string
-          description: The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.
-          example: CLEAN
-      required:
-      - created_time
-      - creator
-      - file_name
-      - mime_type
-      - rrn
-      - scan_status
-      - size
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

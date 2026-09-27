@@ -436,6 +436,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse1'
 components:
   schemas:
+    UploadAttachmentRequest:
+      type: object
+      properties:
+        filedata:
+          type: array
+          description: The list of files to upload as attachments.
+          items:
+            type: string
+            format: binary
     RRN:
       type: object
       properties:
@@ -466,6 +475,20 @@ components:
           example: An identifier that uniquely identifies the failed request.
       required:
       - message
+    PageAttachment:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/Attachment'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata1'
+          description: The pagination parameters used to generate this page result.
+      required:
+      - data
+      - metadata
     PageMetadata1:
       type: object
       properties:
@@ -512,20 +535,6 @@ components:
       required:
       - name
       - type
-    PageAttachment:
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            $ref: '#/components/schemas/Attachment'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata1'
-          description: The pagination parameters used to generate this page result.
-      required:
-      - data
-      - metadata
     Attachment:
       type: object
       properties:
@@ -565,15 +574,6 @@ components:
       - rrn
       - scan_status
       - size
-    UploadAttachmentRequest:
-      type: object
-      properties:
-        filedata:
-          type: array
-          description: The list of files to upload as attachments.
-          items:
-            type: string
-            format: binary
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs
