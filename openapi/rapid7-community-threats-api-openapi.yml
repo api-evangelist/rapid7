@@ -506,32 +506,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Threat:
-      required:
-      - indicator_count
-      - name
-      - published
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the threat.
-          example: Threat
-        note:
-          type: string
-          description: Notes about this threat.
-          example: Notes
-        published:
-          type: boolean
-          description: Indicates whether this threat has been published.
-          example: true
-        indicator_count:
-          minimum: 0
-          type: integer
-          description: The number of indicators in this threat.
-          format: int64
-          example: 1
-      description: The information about the threat.
     DeleteThreatEvent:
       type: object
       properties:
@@ -565,6 +539,32 @@ components:
           - invalid
           items:
             type: string
+    Threat:
+      required:
+      - indicator_count
+      - name
+      - published
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the threat.
+          example: Threat
+        note:
+          type: string
+          description: Notes about this threat.
+          example: Notes
+        published:
+          type: boolean
+          description: Indicates whether this threat has been published.
+          example: true
+        indicator_count:
+          minimum: 0
+          type: integer
+          description: The number of indicators in this threat.
+          format: int64
+          example: 1
+      description: The information about the threat.
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

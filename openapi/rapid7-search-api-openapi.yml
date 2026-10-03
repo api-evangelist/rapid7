@@ -103,37 +103,6 @@ paths:
                 $ref: '#/components/schemas/ValidationErrors'
 components:
   schemas:
-    PageObject:
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
     Error:
       properties:
         status:
@@ -248,23 +217,46 @@ components:
           - E999
           readOnly: true
       title: Error
-    ValidationError:
+    PageObject:
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    SearchRequest:
       properties:
         type:
           type: string
-          description: The type of the validation error
+          description: The type of resource to Search
           enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
+          - APP
+          - SCAN
+          - SCAN_CONFIG
+          - VULNERABILITY
+          - VULNERABILITY_DISCOVERY
+          - ATTACK_TEMPLATE
+          - TARGET
+          - ENGINE
+          - ENGINE_GROUP
+          - SCHEDULE
+          - BLACKOUT
+          - FILE
+          - TAG
+          - REPORT
+        query:
           type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+          description: The query for the Search
+      required:
+      - query
+      - type
+      title: SearchRequest
     Link:
       properties:
         rel:
@@ -396,30 +388,38 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    SearchRequest:
+    ValidationError:
       properties:
         type:
           type: string
-          description: The type of resource to Search
+          description: The type of the validation error
           enum:
-          - APP
-          - SCAN
-          - SCAN_CONFIG
-          - VULNERABILITY
-          - VULNERABILITY_DISCOVERY
-          - ATTACK_TEMPLATE
-          - TARGET
-          - ENGINE
-          - ENGINE_GROUP
-          - SCHEDULE
-          - BLACKOUT
-          - FILE
-          - TAG
-          - REPORT
-        query:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
           type: string
-          description: The query for the Search
-      required:
-      - query
-      - type
-      title: SearchRequest
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string

@@ -473,7 +473,54 @@ paths:
         description: A comment describing the change of the policy override status.
 components:
   schemas:
-    PageOf_PolicyOverride:
+    CreatedReference_PolicyOverrideID_Link:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          description: The identifier of the resource created.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
+    Links:
       type: object
       properties:
         links:
@@ -481,39 +528,66 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyOverride'
       description: ''
-    PageInfo:
+    ServiceUnavailableError:
       type: object
+      required:
+      - status
       properties:
-        number:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
+      description: ''
+    PolicyOverride:
+      type: object
+      required:
+      - scope
+      - state
+      - submit
+      properties:
+        expires:
+          type: string
+          example: ''
+          description: The date the policy override is set to expire. Date is represented in ISO 8601 format.
+        id:
           type: integer
           format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
+          example: ''
+          description: The identifier of the policy override.
+          readOnly: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        review:
+          example: ''
+          description: Details regarding the review and/or approval of the policy override.
+          readOnly: true
+          $ref: '#/components/schemas/PolicyOverrideReviewer'
+        scope:
+          example: ''
+          description: The scope of the policy override. Indicates which assets' policy compliance results are to be affected by the override.
+          $ref: '#/components/schemas/PolicyOverrideScope'
+        state:
+          type: string
+          example: ''
+          description: "The state of the policy override. Can be one of the following values: \n| Value            | Description                                                                         | Affects Compliance Results | \n| ---------------- | ----------------------------------------------------------------------------------- |:--------------------------:| \n| `\"deleted\"`      | The policy override has been deleted.                                               |                            | \n| `\"expired\"`      | The policy override had an expiration date and it has expired.                      |                            | \n| `\"approved\"`     | The policy override was submitted and approved.                                     | &check;                    | \n| `\"rejected\"`     | The policy override was rejected by the reviewer.                                   |                            | \n| `\"under-review\"` | The policy override was submitted but not yet approved or rejected by the reviewer. |                            | \n"
+        submit:
+          example: ''
+          description: Details regarding the submission of the policy override.
+          $ref: '#/components/schemas/PolicyOverrideSubmitter'
       description: ''
     PolicyOverrideScope:
       type: object
@@ -565,82 +639,34 @@ components:
           example: ''
           description: "The scope of assets affected by the policy override. Can be one of the following values: \n| Value                              | Description                                                                                                                                                 | \n| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | \n| `\"all-assets\"`                     | Overrides the compliance result of all assets evaluated with the specified policy rule.                                                                     | \n| `\"specific-asset\"`                 | Overrides the compliance result of a single asset evaluated with the specified policy rule.                                                                 | \n| `\"specific-asset-until-next-scan\"` | Overrides the compliance result of a single asset evaluated with the specified policy rule until the next time asset is evaluated against that policy rule. | \n"
       description: ''
-    NotFoundError:
+    PolicyOverrideReviewer:
       type: object
-      required:
-      - status
       properties:
+        comment:
+          type: string
+          example: ''
+          description: A comment from the reviewer detailing the review. Cannot exceed 1024 characters.
+          readOnly: true
+        date:
+          type: string
+          example: ''
+          description: The date the review took place.
+          readOnly: true
         links:
           type: array
-          description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        message:
+        name:
           type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
-      description: ''
-    CreatedReference_PolicyOverrideID_Link:
-      type: object
-      properties:
-        id:
+          example: ''
+          description: The identifier of the user that reviewed the policy override.
+          readOnly: true
+        user:
           type: integer
-          format: int64
-          example: 1
-          description: The identifier of the resource created.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
+          format: int32
+          example: ''
+          description: The login name of the user that reviewed the policy override.
+          readOnly: true
       description: ''
     PolicyOverrideSubmitter:
       type: object
@@ -672,59 +698,7 @@ components:
           description: The identifier of the user that submitted the policy override.
           readOnly: true
       description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    Resources_PolicyOverride:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyOverride'
-      description: ''
-    PolicyOverrideReviewer:
-      type: object
-      properties:
-        comment:
-          type: string
-          example: ''
-          description: A comment from the reviewer detailing the review. Cannot exceed 1024 characters.
-          readOnly: true
-        date:
-          type: string
-          example: ''
-          description: The date the review took place.
-          readOnly: true
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The identifier of the user that reviewed the policy override.
-          readOnly: true
-        user:
-          type: integer
-          format: int32
-          example: ''
-          description: The login name of the user that reviewed the policy override.
-          readOnly: true
-      description: ''
-    InternalServerError:
+    NotFoundError:
       type: object
       required:
       - status
@@ -740,22 +714,87 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '500'
+          example: '404'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '500'
+          - '404'
       description: ''
-    Link:
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    PageOf_PolicyOverride:
       type: object
       properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyOverride'
+      description: ''
+    Resources_PolicyOverride:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyOverride'
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
       description: ''
     BadRequestError:
       type: object
@@ -777,45 +816,6 @@ components:
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
           - '400'
-      description: ''
-    PolicyOverride:
-      type: object
-      required:
-      - scope
-      - state
-      - submit
-      properties:
-        expires:
-          type: string
-          example: ''
-          description: The date the policy override is set to expire. Date is represented in ISO 8601 format.
-        id:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the policy override.
-          readOnly: true
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-        review:
-          example: ''
-          description: Details regarding the review and/or approval of the policy override.
-          readOnly: true
-          $ref: '#/components/schemas/PolicyOverrideReviewer'
-        scope:
-          example: ''
-          description: The scope of the policy override. Indicates which assets' policy compliance results are to be affected by the override.
-          $ref: '#/components/schemas/PolicyOverrideScope'
-        state:
-          type: string
-          example: ''
-          description: "The state of the policy override. Can be one of the following values: \n| Value            | Description                                                                         | Affects Compliance Results | \n| ---------------- | ----------------------------------------------------------------------------------- |:--------------------------:| \n| `\"deleted\"`      | The policy override has been deleted.                                               |                            | \n| `\"expired\"`      | The policy override had an expiration date and it has expired.                      |                            | \n| `\"approved\"`     | The policy override was submitted and approved.                                     | &check;                    | \n| `\"rejected\"`     | The policy override was rejected by the reviewer.                                   |                            | \n| `\"under-review\"` | The policy override was submitted but not yet approved or rejected by the reviewer. |                            | \n"
-        submit:
-          example: ''
-          description: Details regarding the submission of the policy override.
-          $ref: '#/components/schemas/PolicyOverrideSubmitter'
       description: ''
   securitySchemes:
     Basic:

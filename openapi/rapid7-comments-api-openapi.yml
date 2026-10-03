@@ -432,41 +432,28 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse2'
 components:
   schemas:
-    RRN:
+    CommentCreateRequest:
       type: object
+      description: The information needed by the request body to create comments.
       properties:
-        partition:
+        target:
           type: string
-        service:
+          description: The target of the comment, which determines where it will appear within InsightIDR.
+          example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210
+        body:
           type: string
-        regionCode:
-          type: string
-        organizationId:
-          type: string
-        resourceTypes:
+          description: The body of the comment.
+          example: Here is my comment.
+        attachments:
           type: array
+          description: An array of attachment RRNs to associate with the comment.
+          example:
+          - rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
           items:
             type: string
-        resource:
-          type: string
-    Creator:
-      type: object
-      properties:
-        type:
-          type: string
-          description: A type that denotes who or what created a resource.
-          enum:
-          - USER
-          - ORG_API_KEY
-          - SYSTEM
-          example: USER
-        name:
-          type: string
-          description: The name of who or what created a resource.
-          example: John Doe
+          uniqueItems: true
       required:
-      - name
-      - type
+      - target
     Attachment:
       type: object
       properties:
@@ -506,83 +493,41 @@ components:
       - rrn
       - scan_status
       - size
-    PageMetadata2:
+    Creator:
       type: object
       properties:
-        index:
-          type: integer
-          format: int32
-          description: The 0 based index of the page retrieved.
-          example: 0
-        size:
-          type: integer
-          format: int32
-          description: The size of the page requested.
-          example: 20
-        total_pages:
-          type: integer
-          format: int32
-          description: The total number of pages available with the given filter parameters.
-          example: 1
-        total_data:
-          type: integer
-          format: int64
-          description: The total number of results available with the given filter parameters.
-          example: 15
+        type:
+          type: string
+          description: A type that denotes who or what created a resource.
+          enum:
+          - USER
+          - ORG_API_KEY
+          - SYSTEM
+          example: USER
+        name:
+          type: string
+          description: The name of who or what created a resource.
+          example: John Doe
       required:
-      - index
-      - size
-      - total_data
-      - total_pages
-    CommentCreateRequest:
+      - name
+      - type
+    RRN:
       type: object
-      description: The information needed by the request body to create comments.
       properties:
-        target:
+        partition:
           type: string
-          description: The target of the comment, which determines where it will appear within InsightIDR.
-          example: rrn:investigation:us:01234567-89ab-cdef-0000-123123123123:investigation:ABCDEF543210
-        body:
+        service:
           type: string
-          description: The body of the comment.
-          example: Here is my comment.
-        attachments:
+        regionCode:
+          type: string
+        organizationId:
+          type: string
+        resourceTypes:
           type: array
-          description: An array of attachment RRNs to associate with the comment.
-          example:
-          - rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
           items:
             type: string
-          uniqueItems: true
-      required:
-      - target
-    ErrorResponse2:
-      type: object
-      properties:
-        message:
+        resource:
           type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: An identifier that uniquely identifies the failed request.
-      required:
-      - message
-    PageComment:
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            $ref: '#/components/schemas/Comment'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata2'
-          description: The pagination parameters used to generate this page result.
-      required:
-      - data
-      - metadata
     Comment:
       type: object
       properties:
@@ -619,6 +564,61 @@ components:
       - creator
       - rrn
       - target
+    ErrorResponse2:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: An identifier that uniquely identifies the failed request.
+      required:
+      - message
+    PageComment:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/Comment'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata2'
+          description: The pagination parameters used to generate this page result.
+      required:
+      - data
+      - metadata
+    PageMetadata2:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: The 0 based index of the page retrieved.
+          example: 0
+        size:
+          type: integer
+          format: int32
+          description: The size of the page requested.
+          example: 20
+        total_pages:
+          type: integer
+          format: int32
+          description: The total number of pages available with the given filter parameters.
+          example: 1
+        total_data:
+          type: integer
+          format: int64
+          description: The total number of results available with the given filter parameters.
+          example: 15
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

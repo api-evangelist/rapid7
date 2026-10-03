@@ -330,108 +330,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    RequiredIdResource:
-      description: The Scan Config of the Schedule
-      properties:
-        id:
-          type: string
-          format: uuid
-      required:
-      - id
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    Schedule:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Schedule
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Schedule
-          maxLength: 200
-          minLength: 1
-        enabled:
-          type: boolean
-          description: The enabled property of the Schedule
-        scan_config:
-          $ref: '#/components/schemas/RequiredIdResource'
-        first_start:
-          type: string
-          format: date-time
-          description: The first start date and time of the Schedule
-        last_start:
-          type: string
-          format: date-time
-          description: The last start date and time of the Schedule
-        frequency:
-          $ref: '#/components/schemas/frequency'
-        rrule:
-          type: string
-          description: The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided.
-      required:
-      - enabled
-      - first_start
-      - name
-      - scan_config
-      title: Schedule
-    EntityModelSchedule:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Schedule
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Schedule
-          maxLength: 200
-          minLength: 1
-        enabled:
-          type: boolean
-          description: The enabled property of the Schedule
-        scan_config:
-          $ref: '#/components/schemas/RequiredIdResource'
-        first_start:
-          type: string
-          format: date-time
-          description: The first start date and time of the Schedule
-        last_start:
-          type: string
-          format: date-time
-          description: The last start date and time of the Schedule
-        frequency:
-          $ref: '#/components/schemas/frequency'
-        rrule:
-          type: string
-          description: The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided.
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - enabled
-      - first_start
-      - name
-      - scan_config
     Error:
       properties:
         status:
@@ -546,47 +444,14 @@ components:
           - E999
           readOnly: true
       title: Error
-    ValidationError:
+    RequiredIdResource:
+      description: The Scan Config of the Schedule
       properties:
-        type:
+        id:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    PageSchedule:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelSchedule'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
+          format: uuid
+      required:
+      - id
     ValidationErrors:
       properties:
         status:
@@ -707,6 +572,30 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    PageSchedule:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelSchedule'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
     frequency:
       description: The frequency describes how (and if) the Schedule should repeat. Should not be included if a rrule has been provided.
       properties:
@@ -733,6 +622,117 @@ components:
           type: string
           format: date-time
           description: The last start date and time of the Schedule
+        rrule:
+          type: string
+          description: The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided.
+      required:
+      - enabled
+      - first_start
+      - name
+      - scan_config
+      title: Schedule
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    EntityModelSchedule:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Schedule
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Schedule
+          maxLength: 200
+          minLength: 1
+        enabled:
+          type: boolean
+          description: The enabled property of the Schedule
+        scan_config:
+          $ref: '#/components/schemas/RequiredIdResource'
+        first_start:
+          type: string
+          format: date-time
+          description: The first start date and time of the Schedule
+        last_start:
+          type: string
+          format: date-time
+          description: The last start date and time of the Schedule
+        frequency:
+          $ref: '#/components/schemas/frequency'
+        rrule:
+          type: string
+          description: The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided.
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - enabled
+      - first_start
+      - name
+      - scan_config
+    Schedule:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Schedule
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Schedule
+          maxLength: 200
+          minLength: 1
+        enabled:
+          type: boolean
+          description: The enabled property of the Schedule
+        scan_config:
+          $ref: '#/components/schemas/RequiredIdResource'
+        first_start:
+          type: string
+          format: date-time
+          description: The first start date and time of the Schedule
+        last_start:
+          type: string
+          format: date-time
+          description: The last start date and time of the Schedule
+        frequency:
+          $ref: '#/components/schemas/frequency'
         rrule:
           type: string
           description: The rrule describes how (and if) the schedule should repeat. Should not be included if a frequency has been provided.

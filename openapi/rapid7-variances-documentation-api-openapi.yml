@@ -143,31 +143,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    VarianceFilterRequest:
-      properties:
-        variance_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          uniqueItems: true
-        scan_id:
-          type: string
-          format: uuid
-        vuln_uuids:
-          type: array
-          deprecated: true
-          items:
-            type: string
-            format: uuid
-            deprecated: true
-          uniqueItems: true
-        vuln_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          uniqueItems: true
     Error:
       properties:
         status:
@@ -282,23 +257,31 @@ components:
           - E999
           readOnly: true
       title: Error
-    ValidationError:
+    VarianceFilterRequest:
       properties:
-        type:
+        variance_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          uniqueItems: true
+        scan_id:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+          format: uuid
+        vuln_uuids:
+          type: array
+          deprecated: true
+          items:
+            type: string
+            format: uuid
+            deprecated: true
+          uniqueItems: true
+        vuln_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          uniqueItems: true
     ValidationErrors:
       properties:
         status:
@@ -441,3 +424,20 @@ components:
           type: string
           format: uuid
       title: VarianceDocumentation
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true

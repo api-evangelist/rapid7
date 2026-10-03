@@ -1625,7 +1625,7 @@ paths:
       security: []
 components:
   schemas:
-    ReferencesWith_WebApplicationID_Link:
+    Resources_Software:
       type: object
       properties:
         links:
@@ -1635,10 +1635,426 @@ components:
             $ref: '#/components/schemas/Link'
         resources:
           type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/Software'
+      description: ''
+    SwaggerSearchCriteriaFilter:
+      type: object
+      properties:
+        field:
+          type: string
+          example: ''
+          description: The filter field for the search criteria.
+        lower:
+          type: object
+          example: ''
+          description: The lower value to match in a range criteria.
+        operator:
+          type: string
+          example: ''
+          description: The operator on how to match the search criteria.
+        upper:
+          type: object
+          example: ''
+          description: The upper value to match in a range criteria.
+        value:
+          type: object
+          example: ''
+          description: The single value to match using the operator.
+        values:
+          type: array
+          description: An array of values to match using the operator.
+          items:
+            type: object
+      description: ''
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
+    PageOf_OperatingSystem:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/OperatingSystem'
+      description: ''
+    Links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    AssetVulnerabilities:
+      type: object
+      properties:
+        critical:
+          type: integer
+          format: int64
+          example: 16
+          description: The number of critical vulnerabilities.
+          readOnly: true
+        exploits:
+          type: integer
+          format: int64
+          example: 4
+          description: The number of distinct exploits that can exploit any of the vulnerabilities on the asset.
+          readOnly: true
+        malwareKits:
+          type: integer
+          format: int64
+          example: 0
+          description: The number of distinct malware kits that vulnerabilities on the asset are susceptible to.
+          readOnly: true
+        moderate:
+          type: integer
+          format: int64
+          example: 3
+          description: The number of moderate vulnerabilities.
+          readOnly: true
+        severe:
+          type: integer
+          format: int64
+          example: 76
+          description: The number of severe vulnerabilities.
+          readOnly: true
+        total:
+          type: integer
+          format: int64
+          example: 95
+          description: The total number of vulnerabilities.
+          readOnly: true
+      description: ''
+    GroupAccount:
+      type: object
+      required:
+      - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 972
+          description: The identifier of the user group.
+        name:
+          type: string
+          example: Administrators
+          description: The name of the user group.
+      description: ''
+    PageOf_Asset:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/Asset'
+      description: ''
+    ReferenceWithEndpointIDLink:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        port:
+          type: integer
+          format: int32
+          example: 22
+          description: The port of the service.
+        protocol:
+          type: string
+          example: tcp
+          description: The protocol of the service.
+          enum:
+          - ip
+          - icmp
+          - igmp
+          - ggp
+          - tcp
+          - pup
+          - udp
+          - idp
+          - esp
+          - nd
+          - raw
+      description: ''
+    BadRequestError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '400'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '400'
+      description: ''
+    UniqueId:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          example: c56b2c59-4e9b-4b89-85e2-13f8146eb071
+          description: The unique identifier.
+        source:
+          type: string
+          example: WQL
+          description: The source of the unique identifier.
+      description: ''
+    Address:
+      type: object
+      properties:
+        ip:
+          type: string
+          example: 123.245.34.235
+          description: The IPv4 or IPv6 address.
+        mac:
+          type: string
+          example: 12:34:56:78:90:AB
+          description: The Media Access Control (MAC) address. The format is six groups of two hexadecimal digits separated by colons.
+      description: ''
+    Resources_GroupAccount:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/GroupAccount'
+      description: ''
+    ServiceLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        port:
+          type: integer
+          format: int32
+          example: 22
+          description: The port of the service.
+        protocol:
+          type: string
+          example: tcp
+          description: The protocol of the service.
+          enum:
+          - ip
+          - icmp
+          - igmp
+          - ggp
+          - tcp
+          - pup
+          - udp
+          - idp
+          - esp
+          - nd
+          - raw
+        rel:
+          type: string
+          example: Service
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
+    HostName:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: corporate-workstation-1102DC.acme.com
+          description: The host name (local or FQDN).
+        source:
+          type: string
+          example: DNS
+          description: The source used to detect the host name. `user` indicates the host name source is user-supplied (e.g. in a site target definition).
+          enum:
+          - user
+          - dns
+          - netbios
+          - dce
+          - epsec
+          - ldap
+          - other
+      description: ''
+    TagAssetSource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 92
+          description: If the `source` is `"asset-group"` or `"site"` the identifier of the asset group or site that causes the tag to apply to the asset.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        source:
+          type: string
+          example: site
+          description: The source by which a tag applies to an asset.
+          enum:
+          - site
+          - asset-group
+          - criteria
+          - tag
+          - unknown
+      description: ''
+    OperatingSystemCpe:
+      type: object
+      required:
+      - part
+      properties:
+        edition:
+          type: string
+          example: enterprise
+          description: 'Edition-related terms applied by the vendor to the product. '
+        language:
+          type: string
+          example: ''
+          description: Defines the language supported in the user interface of the product being described. The format is of the language tag adheres to <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5646">RFC5646</a>.
+        other:
+          type: string
+          example: ''
+          description: 'Captures any other general descriptive or identifying information which is vendor- or product-specific and which does not logically fit in any other attribute value. '
+        part:
+          type: string
+          example: o
+          description: A single letter code that designates the particular platform part that is being identified.
+          enum:
+          - o
+          - a
+          - h
+        product:
+          type: string
+          example: windows_server_2008
+          description: the most common and recognizable title or name of the product.
+        swEdition:
+          type: string
+          example: ''
+          description: 'Characterizes how the product is tailored to a particular market or class of end users. '
+        targetHW:
+          type: string
+          example: ''
+          description: 'Characterize the instruction set architecture on which the product operates. '
+        targetSW:
+          type: string
+          example: ''
+          description: Characterize the software computing environment within which the product operates.
+        update:
+          type: string
+          example: sp1
+          description: Vendor-specific alphanumeric strings characterizing the particular update, service pack, or point release of the product.
+        v2.2:
+          type: string
+          example: cpe:/o:microsoft:windows_server_2008:-:sp1:enterprise
+          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="https://cpe.mitre.org/files/cpe-specification_2.2.pdf">CPE 2.2</a> format.
+        v2.3:
+          type: string
+          example: cpe:2.3:o:microsoft:windows_server_2008:-:sp1:enterprise:*:*:*:*:*
+          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf">CPE 2.3</a> format.
+        vendor:
+          type: string
+          example: microsoft
+          description: The person or organization that manufactured or created the product.
+        version:
+          type: string
+          example: '-'
+          description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
+      description: ''
+    Resources_File:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/File'
+      description: ''
+    Resources_Configuration:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/Configuration'
+      description: ''
+    ReferencesWith_ReferenceWithEndpointIDLink_ServiceLink:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/ServiceLink'
+        resources:
+          type: array
           description: The identifiers of the associated resources.
           items:
-            type: integer
-            format: int64
+            $ref: '#/components/schemas/ReferenceWithEndpointIDLink'
       description: ''
     Service:
       type: object
@@ -1719,7 +2135,7 @@ components:
           items:
             $ref: '#/components/schemas/WebApplication'
       description: ''
-    Resources_Configuration:
+    Resources_UserAccount:
       type: object
       properties:
         links:
@@ -1730,338 +2146,48 @@ components:
         resources:
           type: array
           description: The resources returned.
-          items:
-            $ref: '#/components/schemas/Configuration'
-      description: ''
-    AssetTag:
-      type: object
-      required:
-      - name
-      - type
-      properties:
-        color:
-          type: string
-          example: default
-          description: The color to use when rendering the tag in a user interface.
-          enum:
-          - default
-          - blue
-          - green
-          - orange
-          - red
-          - purple
-        created:
-          type: string
-          example: '2017-10-07T23:50:01.205Z'
-          description: The date and time the tag was created.
-        id:
-          type: integer
-          format: int32
-          example: 6
-          description: The identifier of the tag.
-          readOnly: true
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: My Custom Tag
-          description: The name (label) of the tab.
-        riskModifier:
-          type: object
-          example: '2.0'
-          description: 'The amount to adjust risk of an asset tagged with this tag. '
-        searchCriteria:
-          $ref: '#/components/schemas/SearchCriteria'
-        source:
-          type: string
-          example: custom
-          description: The source of the tag.
-          readOnly: true
-          enum:
-          - built-in
-          - custom
-        sources:
-          type: array
-          description: The source(s) by which a tag is-applied to an asset.
-          items:
-            $ref: '#/components/schemas/TagAssetSource'
-        type:
-          type: string
-          example: custom
-          description: The type of the tag.
-          enum:
-          - custom
-          - location
-          - owner
-          - criticality
-      description: ''
-    AssetHistory:
-      type: object
-      properties:
-        date:
-          type: string
-          example: '2018-04-09T06:23:49Z'
-          description: The date the asset information was collected or changed.
-        description:
-          type: string
-          example: ''
-          description: Additional information describing the change.
-        scanId:
-          type: integer
-          format: int64
-          example: 12
-          description: If a scan-oriented change, the identifier of the corresponding scan the asset was scanned in.
-        type:
-          type: string
-          example: SCAN
-          description: "The type of change. May be one of: \n| Type                                | Source of Data                                              | \n| ----------------------------------- | ----------------------------------------------------------- | \n| `ASSET-IMPORT`, `EXTERNAL-IMPORT`   | External source such as the API                             | \n| `EXTERNAL-IMPORT-APPSPIDER`         | Rapid7 InsightAppSec (previously known as AppSpider)        | \n| `SCAN`                              | Scan engine scan                                            | \n| `AGENT-IMPORT`                      | Rapid7 Insight Agent                                        | \n| `ACTIVE-SYNC`                       | ActiveSync                                                  | \n| `SCAN-LOG-IMPORT`                   | Manual import of a scan log                                 | \n| `VULNERABILITY_EXCEPTION_APPLIED`   | Vulnerability exception applied                             | \n| `VULNERABILITY_EXCEPTION_UNAPPLIED` | Vulnerability exception unapplied                           |"
-        user:
-          type: string
-          example: ''
-          description: If a vulnerability exception change, the login name of the user that performed the operation.
-        version:
-          type: integer
-          format: int32
-          example: 8
-          description: 'The version number of the change (a chronological incrementing number starting from 1). '
-        vulnerabilityExceptionId:
-          type: integer
-          format: int32
-          example: ''
-          description: If a vulnerability exception change, the identifier of the vulnerability exception that caused the change.
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
-      description: ''
-    Resources_File:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/File'
-      description: ''
-    InternalServerError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '500'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '500'
-      description: ''
-    ServiceLink:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        port:
-          type: integer
-          format: int32
-          example: 22
-          description: The port of the service.
-        protocol:
-          type: string
-          example: tcp
-          description: The protocol of the service.
-          enum:
-          - ip
-          - icmp
-          - igmp
-          - ggp
-          - tcp
-          - pup
-          - udp
-          - idp
-          - esp
-          - nd
-          - raw
-        rel:
-          type: string
-          example: Service
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    Asset:
-      type: object
-      properties:
-        addresses:
-          type: array
-          description: All addresses discovered on the asset.
-          items:
-            $ref: '#/components/schemas/Address'
-        assessedForPolicies:
-          type: boolean
-          example: false
-          description: Whether the asset has been assessed for policies at least once.
-          readOnly: true
-        assessedForVulnerabilities:
-          type: boolean
-          example: true
-          description: Whether the asset has been assessed for vulnerabilities at least once.
-          readOnly: true
-        configurations:
-          type: array
-          description: Configuration key-values pairs enumerated on the asset.
-          items:
-            $ref: '#/components/schemas/Configuration'
-        databases:
-          type: array
-          description: The databases enumerated on the asset.
-          items:
-            $ref: '#/components/schemas/Database'
-        files:
-          type: array
-          description: The files discovered with searching on the asset.
-          items:
-            $ref: '#/components/schemas/File'
-        history:
-          type: array
-          description: The history of changes to the asset over time.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/AssetHistory'
-        hostName:
-          type: string
-          example: corporate-workstation-1102DC.acme.com
-          description: The primary host name (local or FQDN) of the asset.
-        hostNames:
-          type: array
-          description: All host names or aliases discovered on the asset.
-          items:
-            $ref: '#/components/schemas/HostName'
-        id:
-          type: integer
-          format: int64
-          example: 282
-          description: The identifier of the asset.
-        ids:
-          type: array
-          description: Unique identifiers found on the asset, such as hardware or operating system identifiers.
-          items:
-            $ref: '#/components/schemas/UniqueId'
-        ip:
-          type: string
-          example: 182.34.74.202
-          description: The primary IPv4 or IPv6 address of the asset.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        mac:
-          type: string
-          example: AB:12:CD:34:EF:56
-          description: The primary Media Access Control (MAC) address of the asset. The format is six groups of two hexadecimal digits separated by colons.
-        os:
-          type: string
-          example: Microsoft Windows Server 2008 Enterprise Edition SP1
-          description: The full description of the operating system of the asset.
-        osFingerprint:
-          example: ''
-          description: The details of the operating system of the asset.
-          $ref: '#/components/schemas/OperatingSystem'
-        rawRiskScore:
-          type: number
-          format: double
-          example: 31214.3
-          description: The base risk score of the asset.
-          readOnly: true
-        riskScore:
-          type: number
-          format: double
-          example: 37457.16
-          description: The risk score (with criticality adjustments) of the asset.
-          readOnly: true
-        services:
-          type: array
-          description: The services discovered on the asset.
-          items:
-            $ref: '#/components/schemas/Service'
-        software:
-          type: array
-          description: The software discovered on the asset.
-          items:
-            $ref: '#/components/schemas/Software'
-        type:
-          type: string
-          example: ''
-          description: The type of asset.
-          enum:
-          - unknown
-          - guest
-          - hypervisor
-          - physical
-          - mobile
-        userGroups:
-          type: array
-          description: The group accounts enumerated on the asset.
-          items:
-            $ref: '#/components/schemas/GroupAccount'
-        users:
-          type: array
-          description: The user accounts enumerated on the asset.
           items:
             $ref: '#/components/schemas/UserAccount'
-        vulnerabilities:
-          example: ''
-          description: Summary information for vulnerabilities on the asset.
-          readOnly: true
-          $ref: '#/components/schemas/AssetVulnerabilities'
       description: ''
-    Link:
+    Software:
       type: object
       properties:
-        href:
+        configurations:
+          type: array
+          description: The attributes of the software.
+          items:
+            $ref: '#/components/schemas/Configuration'
+        cpe:
+          example: ''
+          description: The Common Platform Enumeration (CPE) of the software.
+          $ref: '#/components/schemas/SoftwareCpe'
+        description:
           type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
+          example: Microsoft Outlook 2013 15.0.4867.1000
+          description: The description of the software.
+        family:
           type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+          example: Office 2013
+          description: The family of the software.
+        id:
+          type: integer
+          format: int64
+        product:
+          type: string
+          example: Outlook 2013
+          description: The product of the software.
+        type:
+          type: string
+          example: Productivity
+          description: The version of the software.
+        vendor:
+          type: string
+          example: Microsoft
+          description: The vendor of the software.
+        version:
+          type: string
+          example: 15.0.4867.1000
+          description: The version of the software.
       description: ''
     SoftwareCpe:
       type: object
@@ -2125,20 +2251,7 @@ components:
           example: '-'
           description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
       description: ''
-    CreatedOrUpdatedReference:
-      type: object
-      properties:
-        id:
-          type: object
-          example: '3'
-          description: The identifier of the resource created or updated.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    BadRequestError:
+    InternalServerError:
       type: object
       required:
       - status
@@ -2154,525 +2267,10 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '400'
+          example: '500'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '400'
-      description: ''
-    HostName:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          example: corporate-workstation-1102DC.acme.com
-          description: The host name (local or FQDN).
-        source:
-          type: string
-          example: DNS
-          description: The source used to detect the host name. `user` indicates the host name source is user-supplied (e.g. in a site target definition).
-          enum:
-          - user
-          - dns
-          - netbios
-          - dce
-          - epsec
-          - ldap
-          - other
-      description: ''
-    Database:
-      type: object
-      required:
-      - name
-      properties:
-        description:
-          type: string
-          example: Microsoft SQL Server
-          description: The description of the database instance.
-        id:
-          type: integer
-          format: int32
-          example: 13
-          description: The identifier of the database.
-        name:
-          type: string
-          example: MSSQL
-          description: The name of the database instance.
-      description: ''
-    NotFoundError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
-      description: ''
-    SwaggerSearchCriteriaFilter:
-      type: object
-      properties:
-        field:
-          type: string
-          example: ''
-          description: The filter field for the search criteria.
-        lower:
-          type: object
-          example: ''
-          description: The lower value to match in a range criteria.
-        operator:
-          type: string
-          example: ''
-          description: The operator on how to match the search criteria.
-        upper:
-          type: object
-          example: ''
-          description: The upper value to match in a range criteria.
-        value:
-          type: object
-          example: ''
-          description: The single value to match using the operator.
-        values:
-          type: array
-          description: An array of values to match using the operator.
-          items:
-            type: object
-      description: ''
-    TagAssetSource:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 92
-          description: If the `source` is `"asset-group"` or `"site"` the identifier of the asset group or site that causes the tag to apply to the asset.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        source:
-          type: string
-          example: site
-          description: The source by which a tag applies to an asset.
-          enum:
-          - site
-          - asset-group
-          - criteria
-          - tag
-          - unknown
-      description: ''
-    PageOf_Asset:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Asset'
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    SearchCriteria:
-      type: object
-      properties:
-        filters:
-          type: array
-          description: Filters used to match assets. See <a href="#section/Responses/SearchCriteria">Search Criteria</a> for more information on the structure and format.
-          items:
-            $ref: '#/components/schemas/SwaggerSearchCriteriaFilter'
-        match:
-          type: string
-          example: all
-          description: Operator to determine how to match filters. `all` requires that all filters match for an asset to be included. `any` requires only one filter to match for an asset to be included.
-          enum:
-          - any
-          - all
-      description: ''
-    Address:
-      type: object
-      properties:
-        ip:
-          type: string
-          example: 123.245.34.235
-          description: The IPv4 or IPv6 address.
-        mac:
-          type: string
-          example: 12:34:56:78:90:AB
-          description: The Media Access Control (MAC) address. The format is six groups of two hexadecimal digits separated by colons.
-      description: ''
-    Resources_Database:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/Database'
-      description: ''
-    PageOf_OperatingSystem:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/OperatingSystem'
-      description: ''
-    WebPage:
-      type: object
-      properties:
-        linkType:
-          type: string
-          example: html-ref
-          description: The type of link used to traverse or detect the page.
-          enum:
-          - seed
-          - html-ref
-          - robots
-          - js-string
-          - query-param
-          - pdf
-          - css
-          - implied-dir
-          - rss
-          - redirection
-          - sitemap
-          - backup
-          - vck-rewrite
-          - non-ref-guess
-          - soft-404
-        path:
-          type: string
-          example: /docs/config/index.html
-          description: The path to the page (URI).
-        response:
-          type: integer
-          format: int32
-          example: 200
-          description: The HTTP response code observed with retrieving the page.
-      description: ''
-    OperatingSystem:
-      type: object
-      properties:
-        architecture:
-          type: string
-          example: x86
-          description: The architecture of the operating system.
-        configurations:
-          type: array
-          description: Configuration key-values pairs enumerated on the operating system.
-          items:
-            $ref: '#/components/schemas/Configuration'
-        cpe:
-          example: ''
-          description: The Common Platform Enumeration (CPE) of the operating system.
-          $ref: '#/components/schemas/OperatingSystemCpe'
-        description:
-          type: string
-          example: Microsoft Windows Server 2008 Enterprise Edition SP1
-          description: The description of the operating system (containing vendor, family, product, version and architecture in a single string).
-        family:
-          type: string
-          example: Windows
-          description: The family of the operating system.
-        id:
-          type: integer
-          format: int64
-          example: 35
-          description: The identifier of the operating system.
-        product:
-          type: string
-          example: Windows Server 2008 Enterprise Edition
-          description: The name of the operating system.
-        systemName:
-          type: string
-          example: Microsoft Windows
-          description: A combination of vendor and family (with redundancies removed), suitable for grouping.
-        type:
-          type: string
-          example: Workstation
-          description: The type of operating system.
-        vendor:
-          type: string
-          example: Microsoft
-          description: The vendor of the operating system.
-        version:
-          type: string
-          example: SP1
-          description: The version of the operating system.
-      description: ''
-    WebApplication:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 30712
-          description: The identifier of the web application.
-        pages:
-          type: array
-          description: The pages discovered on the web application.
-          items:
-            $ref: '#/components/schemas/WebPage'
-        root:
-          type: string
-          example: /
-          description: The web root of the web application.
-        virtualHost:
-          type: string
-          example: 102.89.22.253
-          description: The virtual host of the web application.
-      description: ''
-    Resources_Software:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/Software'
-      description: ''
-    UniqueId:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          example: c56b2c59-4e9b-4b89-85e2-13f8146eb071
-          description: The unique identifier.
-        source:
-          type: string
-          example: WQL
-          description: The source of the unique identifier.
-      description: ''
-    CreatedReference:
-      type: object
-      properties:
-        id:
-          type: object
-          example: '1'
-          description: The identifier of the resource created.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    Resources_UserAccount:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/UserAccount'
-      description: ''
-    Resources_AssetTag:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/AssetTag'
-      description: ''
-    OperatingSystemCpe:
-      type: object
-      required:
-      - part
-      properties:
-        edition:
-          type: string
-          example: enterprise
-          description: 'Edition-related terms applied by the vendor to the product. '
-        language:
-          type: string
-          example: ''
-          description: Defines the language supported in the user interface of the product being described. The format is of the language tag adheres to <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5646">RFC5646</a>.
-        other:
-          type: string
-          example: ''
-          description: 'Captures any other general descriptive or identifying information which is vendor- or product-specific and which does not logically fit in any other attribute value. '
-        part:
-          type: string
-          example: o
-          description: A single letter code that designates the particular platform part that is being identified.
-          enum:
-          - o
-          - a
-          - h
-        product:
-          type: string
-          example: windows_server_2008
-          description: the most common and recognizable title or name of the product.
-        swEdition:
-          type: string
-          example: ''
-          description: 'Characterizes how the product is tailored to a particular market or class of end users. '
-        targetHW:
-          type: string
-          example: ''
-          description: 'Characterize the instruction set architecture on which the product operates. '
-        targetSW:
-          type: string
-          example: ''
-          description: Characterize the software computing environment within which the product operates.
-        update:
-          type: string
-          example: sp1
-          description: Vendor-specific alphanumeric strings characterizing the particular update, service pack, or point release of the product.
-        v2.2:
-          type: string
-          example: cpe:/o:microsoft:windows_server_2008:-:sp1:enterprise
-          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="https://cpe.mitre.org/files/cpe-specification_2.2.pdf">CPE 2.2</a> format.
-        v2.3:
-          type: string
-          example: cpe:2.3:o:microsoft:windows_server_2008:-:sp1:enterprise:*:*:*:*:*
-          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf">CPE 2.3</a> format.
-        vendor:
-          type: string
-          example: microsoft
-          description: The person or organization that manufactured or created the product.
-        version:
-          type: string
-          example: '-'
-          description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
-      description: ''
-    PageInfo:
-      type: object
-      properties:
-        number:
-          type: integer
-          format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
-      description: ''
-    ReferenceWithEndpointIDLink:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        port:
-          type: integer
-          format: int32
-          example: 22
-          description: The port of the service.
-        protocol:
-          type: string
-          example: tcp
-          description: The protocol of the service.
-          enum:
-          - ip
-          - icmp
-          - igmp
-          - ggp
-          - tcp
-          - pup
-          - udp
-          - idp
-          - esp
-          - nd
-          - raw
+          - '500'
       description: ''
     File:
       type: object
@@ -2701,6 +2299,90 @@ components:
           enum:
           - file
           - directory
+      description: ''
+    CreatedOrUpdatedReference:
+      type: object
+      properties:
+        id:
+          type: object
+          example: '3'
+          description: The identifier of the resource created or updated.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    AssetHistory:
+      type: object
+      properties:
+        date:
+          type: string
+          example: '2018-04-09T06:23:49Z'
+          description: The date the asset information was collected or changed.
+        description:
+          type: string
+          example: ''
+          description: Additional information describing the change.
+        scanId:
+          type: integer
+          format: int64
+          example: 12
+          description: If a scan-oriented change, the identifier of the corresponding scan the asset was scanned in.
+        type:
+          type: string
+          example: SCAN
+          description: "The type of change. May be one of: \n| Type                                | Source of Data                                              | \n| ----------------------------------- | ----------------------------------------------------------- | \n| `ASSET-IMPORT`, `EXTERNAL-IMPORT`   | External source such as the API                             | \n| `EXTERNAL-IMPORT-APPSPIDER`         | Rapid7 InsightAppSec (previously known as AppSpider)        | \n| `SCAN`                              | Scan engine scan                                            | \n| `AGENT-IMPORT`                      | Rapid7 Insight Agent                                        | \n| `ACTIVE-SYNC`                       | ActiveSync                                                  | \n| `SCAN-LOG-IMPORT`                   | Manual import of a scan log                                 | \n| `VULNERABILITY_EXCEPTION_APPLIED`   | Vulnerability exception applied                             | \n| `VULNERABILITY_EXCEPTION_UNAPPLIED` | Vulnerability exception unapplied                           |"
+        user:
+          type: string
+          example: ''
+          description: If a vulnerability exception change, the login name of the user that performed the operation.
+        version:
+          type: integer
+          format: int32
+          example: 8
+          description: 'The version number of the change (a chronological incrementing number starting from 1). '
+        vulnerabilityExceptionId:
+          type: integer
+          format: int32
+          example: ''
+          description: If a vulnerability exception change, the identifier of the vulnerability exception that caused the change.
+      description: ''
+    ReferencesWith_WebApplicationID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int64
+      description: ''
+    ServiceUnavailableError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
       description: ''
     AssetCreate:
       type: object
@@ -2836,45 +2518,129 @@ components:
           readOnly: true
           $ref: '#/components/schemas/AssetVulnerabilities'
       description: ''
-    AssetVulnerabilities:
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    OperatingSystem:
       type: object
       properties:
-        critical:
+        architecture:
+          type: string
+          example: x86
+          description: The architecture of the operating system.
+        configurations:
+          type: array
+          description: Configuration key-values pairs enumerated on the operating system.
+          items:
+            $ref: '#/components/schemas/Configuration'
+        cpe:
+          example: ''
+          description: The Common Platform Enumeration (CPE) of the operating system.
+          $ref: '#/components/schemas/OperatingSystemCpe'
+        description:
+          type: string
+          example: Microsoft Windows Server 2008 Enterprise Edition SP1
+          description: The description of the operating system (containing vendor, family, product, version and architecture in a single string).
+        family:
+          type: string
+          example: Windows
+          description: The family of the operating system.
+        id:
           type: integer
           format: int64
-          example: 16
-          description: The number of critical vulnerabilities.
-          readOnly: true
-        exploits:
+          example: 35
+          description: The identifier of the operating system.
+        product:
+          type: string
+          example: Windows Server 2008 Enterprise Edition
+          description: The name of the operating system.
+        systemName:
+          type: string
+          example: Microsoft Windows
+          description: A combination of vendor and family (with redundancies removed), suitable for grouping.
+        type:
+          type: string
+          example: Workstation
+          description: The type of operating system.
+        vendor:
+          type: string
+          example: Microsoft
+          description: The vendor of the operating system.
+        version:
+          type: string
+          example: SP1
+          description: The version of the operating system.
+      description: ''
+    UserAccount:
+      type: object
+      properties:
+        fullName:
+          type: string
+          example: Smith, John
+          description: The full name of the user account.
+        id:
+          type: integer
+          format: int32
+          example: 8952
+          description: The identifier of the user account.
+        name:
+          type: string
+          example: john_smith
+          description: The name of the user account.
+      description: ''
+    WebApplication:
+      type: object
+      properties:
+        id:
           type: integer
           format: int64
-          example: 4
-          description: The number of distinct exploits that can exploit any of the vulnerabilities on the asset.
-          readOnly: true
-        malwareKits:
-          type: integer
-          format: int64
-          example: 0
-          description: The number of distinct malware kits that vulnerabilities on the asset are susceptible to.
-          readOnly: true
-        moderate:
-          type: integer
-          format: int64
-          example: 3
-          description: The number of moderate vulnerabilities.
-          readOnly: true
-        severe:
-          type: integer
-          format: int64
-          example: 76
-          description: The number of severe vulnerabilities.
-          readOnly: true
-        total:
-          type: integer
-          format: int64
-          example: 95
-          description: The total number of vulnerabilities.
-          readOnly: true
+          example: 30712
+          description: The identifier of the web application.
+        pages:
+          type: array
+          description: The pages discovered on the web application.
+          items:
+            $ref: '#/components/schemas/WebPage'
+        root:
+          type: string
+          example: /
+          description: The web root of the web application.
+        virtualHost:
+          type: string
+          example: 102.89.22.253
+          description: The virtual host of the web application.
+      description: ''
+    Resources_Database:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/Database'
       description: ''
     PageOf_Software:
       type: object
@@ -2894,79 +2660,23 @@ components:
           items:
             $ref: '#/components/schemas/Software'
       description: ''
-    UserAccount:
+    SearchCriteria:
       type: object
       properties:
-        fullName:
-          type: string
-          example: Smith, John
-          description: The full name of the user account.
-        id:
-          type: integer
-          format: int32
-          example: 8952
-          description: The identifier of the user account.
-        name:
-          type: string
-          example: john_smith
-          description: The name of the user account.
-      description: ''
-    GroupAccount:
-      type: object
-      required:
-      - name
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 972
-          description: The identifier of the user group.
-        name:
-          type: string
-          example: Administrators
-          description: The name of the user group.
-      description: ''
-    Software:
-      type: object
-      properties:
-        configurations:
+        filters:
           type: array
-          description: The attributes of the software.
+          description: Filters used to match assets. See <a href="#section/Responses/SearchCriteria">Search Criteria</a> for more information on the structure and format.
           items:
-            $ref: '#/components/schemas/Configuration'
-        cpe:
-          example: ''
-          description: The Common Platform Enumeration (CPE) of the software.
-          $ref: '#/components/schemas/SoftwareCpe'
-        description:
+            $ref: '#/components/schemas/SwaggerSearchCriteriaFilter'
+        match:
           type: string
-          example: Microsoft Outlook 2013 15.0.4867.1000
-          description: The description of the software.
-        family:
-          type: string
-          example: Office 2013
-          description: The family of the software.
-        id:
-          type: integer
-          format: int64
-        product:
-          type: string
-          example: Outlook 2013
-          description: The product of the software.
-        type:
-          type: string
-          example: Productivity
-          description: The version of the software.
-        vendor:
-          type: string
-          example: Microsoft
-          description: The vendor of the software.
-        version:
-          type: string
-          example: 15.0.4867.1000
-          description: The version of the software.
+          example: all
+          description: Operator to determine how to match filters. `all` requires that all filters match for an asset to be included. `any` requires only one filter to match for an asset to be included.
+          enum:
+          - any
+          - all
       description: ''
-    Resources_GroupAccount:
+    Resources_AssetTag:
       type: object
       properties:
         links:
@@ -2978,7 +2688,53 @@ components:
           type: array
           description: The resources returned.
           items:
-            $ref: '#/components/schemas/GroupAccount'
+            $ref: '#/components/schemas/AssetTag'
+      description: ''
+    WebPage:
+      type: object
+      properties:
+        linkType:
+          type: string
+          example: html-ref
+          description: The type of link used to traverse or detect the page.
+          enum:
+          - seed
+          - html-ref
+          - robots
+          - js-string
+          - query-param
+          - pdf
+          - css
+          - implied-dir
+          - rss
+          - redirection
+          - sitemap
+          - backup
+          - vck-rewrite
+          - non-ref-guess
+          - soft-404
+        path:
+          type: string
+          example: /docs/config/index.html
+          description: The path to the page (URI).
+        response:
+          type: integer
+          format: int32
+          example: 200
+          description: The HTTP response code observed with retrieving the page.
+      description: ''
+    CreatedReference:
+      type: object
+      properties:
+        id:
+          type: object
+          example: '1'
+          description: The identifier of the resource created.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
       description: ''
     Configuration:
       type: object
@@ -2994,19 +2750,263 @@ components:
           example: <value>
           description: The configuration value.
       description: ''
-    ReferencesWith_ReferenceWithEndpointIDLink_ServiceLink:
+    Asset:
       type: object
+      properties:
+        addresses:
+          type: array
+          description: All addresses discovered on the asset.
+          items:
+            $ref: '#/components/schemas/Address'
+        assessedForPolicies:
+          type: boolean
+          example: false
+          description: Whether the asset has been assessed for policies at least once.
+          readOnly: true
+        assessedForVulnerabilities:
+          type: boolean
+          example: true
+          description: Whether the asset has been assessed for vulnerabilities at least once.
+          readOnly: true
+        configurations:
+          type: array
+          description: Configuration key-values pairs enumerated on the asset.
+          items:
+            $ref: '#/components/schemas/Configuration'
+        databases:
+          type: array
+          description: The databases enumerated on the asset.
+          items:
+            $ref: '#/components/schemas/Database'
+        files:
+          type: array
+          description: The files discovered with searching on the asset.
+          items:
+            $ref: '#/components/schemas/File'
+        history:
+          type: array
+          description: The history of changes to the asset over time.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/AssetHistory'
+        hostName:
+          type: string
+          example: corporate-workstation-1102DC.acme.com
+          description: The primary host name (local or FQDN) of the asset.
+        hostNames:
+          type: array
+          description: All host names or aliases discovered on the asset.
+          items:
+            $ref: '#/components/schemas/HostName'
+        id:
+          type: integer
+          format: int64
+          example: 282
+          description: The identifier of the asset.
+        ids:
+          type: array
+          description: Unique identifiers found on the asset, such as hardware or operating system identifiers.
+          items:
+            $ref: '#/components/schemas/UniqueId'
+        ip:
+          type: string
+          example: 182.34.74.202
+          description: The primary IPv4 or IPv6 address of the asset.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        mac:
+          type: string
+          example: AB:12:CD:34:EF:56
+          description: The primary Media Access Control (MAC) address of the asset. The format is six groups of two hexadecimal digits separated by colons.
+        os:
+          type: string
+          example: Microsoft Windows Server 2008 Enterprise Edition SP1
+          description: The full description of the operating system of the asset.
+        osFingerprint:
+          example: ''
+          description: The details of the operating system of the asset.
+          $ref: '#/components/schemas/OperatingSystem'
+        rawRiskScore:
+          type: number
+          format: double
+          example: 31214.3
+          description: The base risk score of the asset.
+          readOnly: true
+        riskScore:
+          type: number
+          format: double
+          example: 37457.16
+          description: The risk score (with criticality adjustments) of the asset.
+          readOnly: true
+        services:
+          type: array
+          description: The services discovered on the asset.
+          items:
+            $ref: '#/components/schemas/Service'
+        software:
+          type: array
+          description: The software discovered on the asset.
+          items:
+            $ref: '#/components/schemas/Software'
+        type:
+          type: string
+          example: ''
+          description: The type of asset.
+          enum:
+          - unknown
+          - guest
+          - hypervisor
+          - physical
+          - mobile
+        userGroups:
+          type: array
+          description: The group accounts enumerated on the asset.
+          items:
+            $ref: '#/components/schemas/GroupAccount'
+        users:
+          type: array
+          description: The user accounts enumerated on the asset.
+          items:
+            $ref: '#/components/schemas/UserAccount'
+        vulnerabilities:
+          example: ''
+          description: Summary information for vulnerabilities on the asset.
+          readOnly: true
+          $ref: '#/components/schemas/AssetVulnerabilities'
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
       properties:
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
-            $ref: '#/components/schemas/ServiceLink'
-        resources:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    AssetTag:
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        color:
+          type: string
+          example: default
+          description: The color to use when rendering the tag in a user interface.
+          enum:
+          - default
+          - blue
+          - green
+          - orange
+          - red
+          - purple
+        created:
+          type: string
+          example: '2017-10-07T23:50:01.205Z'
+          description: The date and time the tag was created.
+        id:
+          type: integer
+          format: int32
+          example: 6
+          description: The identifier of the tag.
+          readOnly: true
+        links:
           type: array
-          description: The identifiers of the associated resources.
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
           items:
-            $ref: '#/components/schemas/ReferenceWithEndpointIDLink'
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: My Custom Tag
+          description: The name (label) of the tab.
+        riskModifier:
+          type: object
+          example: '2.0'
+          description: 'The amount to adjust risk of an asset tagged with this tag. '
+        searchCriteria:
+          $ref: '#/components/schemas/SearchCriteria'
+        source:
+          type: string
+          example: custom
+          description: The source of the tag.
+          readOnly: true
+          enum:
+          - built-in
+          - custom
+        sources:
+          type: array
+          description: The source(s) by which a tag is-applied to an asset.
+          items:
+            $ref: '#/components/schemas/TagAssetSource'
+        type:
+          type: string
+          example: custom
+          description: The type of the tag.
+          enum:
+          - custom
+          - location
+          - owner
+          - criticality
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
+    Database:
+      type: object
+      required:
+      - name
+      properties:
+        description:
+          type: string
+          example: Microsoft SQL Server
+          description: The description of the database instance.
+        id:
+          type: integer
+          format: int32
+          example: 13
+          description: The identifier of the database.
+        name:
+          type: string
+          example: MSSQL
+          description: The name of the database instance.
       description: ''
   securitySchemes:
     Basic:

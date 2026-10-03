@@ -743,67 +743,6 @@ components:
       required:
       - name
       title: App
-    RequiredIdResource:
-      description: The Scan Config of the Schedule
-      properties:
-        id:
-          type: string
-          format: uuid
-      required:
-      - id
-    PageApp:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelApp'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    ReferenceResource:
-      description: The last editor of the comment
-      properties:
-        id:
-          type: string
-          format: uuid
-      readOnly: true
-      required:
-      - id
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
-    IdResource:
-      properties:
-        id:
-          type: string
-          format: uuid
     Error:
       properties:
         status:
@@ -918,6 +857,49 @@ components:
           - E999
           readOnly: true
       title: Error
+    RequiredIdResource:
+      description: The Scan Config of the Schedule
+      properties:
+        id:
+          type: string
+          format: uuid
+      required:
+      - id
+    PageApp:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelApp'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    Tag:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Tag
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Tag
+          maxLength: 100
+          minLength: 1
+        creator:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        create_time:
+          type: string
+          description: The time the Tag was created
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+      required:
+      - name
+      title: Tag
     EntityModelApp:
       properties:
         id:
@@ -942,34 +924,6 @@ components:
           readOnly: true
       required:
       - name
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -1090,25 +1044,71 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Tag:
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    ReadOnlyIdResource:
+      description: The ID of the module
       properties:
         id:
           type: string
           format: uuid
-          description: The ID of the Tag
           readOnly: true
-        name:
+      readOnly: true
+    IdResource:
+      properties:
+        id:
           type: string
-          description: The name of the Tag
-          maxLength: 100
-          minLength: 1
-        creator:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        create_time:
+          format: uuid
+    ValidationError:
+      properties:
+        type:
           type: string
-          description: The time the Tag was created
-          example: '2021-08-03T14:07:37'
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
           readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    ReferenceResource:
+      description: The last editor of the comment
+      properties:
+        id:
+          type: string
+          format: uuid
+      readOnly: true
       required:
-      - name
-      title: Tag
+      - id
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string

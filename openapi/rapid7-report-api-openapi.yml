@@ -757,35 +757,6 @@ paths:
       security: []
 components:
   schemas:
-    ReportStorage:
-      type: object
-      properties:
-        location:
-          type: string
-          example: monthly_reports/site/corporate
-          description: 'The location to storage an additional copy of the report. This is a sub-path post-fixed to `$(install_dir)/nsc/reports/$(user)/`. Variables such as `$(report_name)`, `$(date)`, and `$(time)` may be used to generate the directory structure. '
-        path:
-          type: string
-          example: $(install_dir)/nsc/reports/$(user)/monthly_reports/site/corporate
-          description: The full path to the additional copy storage location.
-          readOnly: true
-      description: ''
-    ReportEmailSmtp:
-      type: object
-      properties:
-        global:
-          type: boolean
-          example: true
-          description: Whether to use global SMTP settings. If enabled, `sender` and `relay` may not be specified.
-        relay:
-          type: string
-          example: mail.acme.com
-          description: SMTP relay host or IP address.
-        sender:
-          type: string
-          example: john_smith@acme.com
-          description: SMTP sender address.
-      description: ''
     ReportConfigDatabaseCredentialsResource:
       type: object
       properties:
@@ -799,294 +770,18 @@ components:
           example: admin
           description: Database user name. Only used when the format is `"database-export"`.
       description: ''
-    RiskTrendResource:
+    ReportStorage:
       type: object
       properties:
-        allAssets:
-          example: ''
-          description: Trend settings for a trend across all assets in the scope of the report.
-          $ref: '#/components/schemas/RiskTrendAllAssetsResource'
-        assetGroupMembership:
+        location:
           type: string
-          example: historical
-          description: Whether all asset groups in the history of deployment or those as of the report generation time are to be included.
-          enum:
-          - historical
-          - generation
-        assetGroups:
+          example: monthly_reports/site/corporate
+          description: 'The location to storage an additional copy of the report. This is a sub-path post-fixed to `$(install_dir)/nsc/reports/$(user)/`. Variables such as `$(report_name)`, `$(date)`, and `$(time)` may be used to generate the directory structure. '
+        path:
           type: string
-          example: total
-          description: Whether to include a trend for the 5 highest-risk asset groups in the scope of the report (either the average or total risk). Only allowed if asset groups are specified in the report scope.
-          enum:
-          - average
-          - total
-        assets:
-          type: boolean
-          example: true
-          description: Whether to include a trend for the 5 highest-risk assets in the scope of the report.
-        from:
-          type: string
-          example: P3M
-          description: The start date of the risk trend, which can either be a duration or a specific date and time.
-          enum:
-          - P1Y
-          - P6M
-          - P3M
-          - P1M
-          - <date>
-        sites:
-          type: string
-          example: average
-          description: Whether to include a trend for the 5 highest-risk sites in the scope of the report (either the average or total risk). Only allowed if sites are specified in the report scope.
-          enum:
-          - average
-          - total
-        tagMembership:
-          type: string
-          example: historical
-          description: Whether all assets tagged in the history of deployment or those tagged as of the report generation time are to be included.
-          enum:
-          - historical
-          - generation
-        tags:
-          type: string
-          example: average
-          description: Whether to include a trend for the 5 highest-risk tags for assets in the scope of the report (either the average or total risk). Only allowed if tags are specified in the report scope.
-          enum:
-          - average
-          - total
-        to:
-          type: string
-          example: ''
-          description: The end date of the risk trend (empty if `from` is a duration).
-      description: ''
-    ReportFrequency:
-      type: object
-      properties:
-        nextRuntimes:
-          type: array
-          description: The next scheduled run-times for generation of the report when type is `schedule`.
+          example: $(install_dir)/nsc/reports/$(user)/monthly_reports/site/corporate
+          description: The full path to the additional copy storage location.
           readOnly: true
-          items:
-            type: string
-        repeat:
-          example: ''
-          description: How often the report generates when type is `schedule`.
-          $ref: '#/components/schemas/ReportRepeat'
-        start:
-          type: string
-          example: '2018-03-01T04:31:56Z'
-          description: When the report starts generating when type is `schedule`.
-        type:
-          type: string
-          example: schedule
-          description: The frequency to generate the report. `schedule` generates the report every scheduled time interval, and requires the `repeat` and `start` properties to be specified. `scan` generates the report after any scan of any element in the scope of the report. `none` does not generate the report automatically. Defaults to `none`.
-          enum:
-          - schedule
-          - scan
-          - none
-      description: ''
-    CreatedReference_int_Link:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 1
-          description: The identifier of the resource created.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    ReportRepeat:
-      type: object
-      required:
-      - every
-      - interval
-      properties:
-        dayOfWeek:
-          type: string
-          example: ''
-          description: The day of the week the scheduled task should repeat. This property only applies to schedules with a `every` value of `"day-of-month"`.
-        every:
-          type: string
-          example: date-of-month
-          description: "The frequency schedule repeats. Each value represents a different unit of time and is used in conjunction with the property `interval`. For example, a schedule can repeat hourly, daily, monthly, etc. The following table describes each supported value: \n| Value | Description | \n| ---------- | ---------------- | \n| hour | Specifies the schedule repeats in hourly increments. | \n| day | Specifies the schedule repeats in daily increments. | \n| week | Specifies the schedule repeats in weekly increments. | \n| date-of-month | Specifies the schedule repeats nth day of the `interval` month. Requires the property `dateOfMonth` to be specified. For example, if `dateOfMonth` is `17` and the `interval` is `2`, then the schedule will repeat every 2 months on the 17th day of the month. | \n| day-of-month | Specifies the schedule repeats on a monthly interval but instead of a specific date being specified, the day of the week and week of the month are specified. Requires the properties `dayOfWeek` and `weekOfMonth` to be specified. For example, if `dayOfWeek` is `\"friday\"`, `weekOfMonth` is `3`, and the `interval` is `4`, then the schedule will repeat every 4 months on the 3rd Friday of the month. | \n"
-        interval:
-          type: integer
-          format: int32
-          example: 1
-          description: The interval time the schedule should repeat. The is depends on the value set in `every`. For example, if the value in property `every` is set to `"day"` and `interval` is set to `2`, then the schedule will repeat every 2 days.
-          minimum: 1
-        weekOfMonth:
-          type: integer
-          format: int32
-          example: ''
-          description: The week of the month the scheduled task should repeat. For This property only applies to schedules with a `every` value of `"day-of-month"`. Each week of the month is counted in 7-day increments. For example, week 1 consists of days 1-7 of the month while week 2 consists of days 8-14 of the month and so forth.
-          minimum: 1
-          maximum: 6
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
-      description: ''
-    ReportConfigDatabaseResource:
-      type: object
-      properties:
-        credentials:
-          example: ''
-          description: Credential information for the target database. Only used when the format is `"database-export"`.
-          readOnly: true
-          $ref: '#/components/schemas/ReportConfigDatabaseCredentialsResource'
-        host:
-          type: string
-          example: database.acme.com
-          description: The database server host to export to.
-        name:
-          type: string
-          example: database
-          description: The name of the database to export to.
-        port:
-          type: integer
-          format: int32
-          example: 3306
-          description: The database server port to export to.
-        vendor:
-          type: string
-          example: mysql
-          description: The type of the database server.
-          enum:
-          - oracle
-          - mssql
-          - mysql
-      description: ''
-    InternalServerError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '500'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '500'
-      description: ''
-    ReportConfigScopeResource:
-      type: object
-      properties:
-        assetGroups:
-          type: array
-          description: Identifiers of the asset groups in the scope of the report.
-          items:
-            type: integer
-            format: int32
-        assets:
-          type: array
-          description: Identifiers of the assets in the scope of the report.
-          items:
-            type: integer
-            format: int64
-        scan:
-          type: integer
-          format: int64
-          example: 68
-          description: Identifiers of the scans in the scope of the report.
-        sites:
-          type: array
-          description: Identifiers of the sites in the scope of the report.
-          items:
-            type: integer
-            format: int32
-        tags:
-          type: array
-          description: Identifiers of the tags in the scope of the report.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    ReportEmail:
-      type: object
-      properties:
-        access:
-          type: string
-          example: zip
-          description: The format to distribute the report in when sending to users who have explicit access to the report.
-          enum:
-          - file
-          - zip
-          - url
-          - none
-        additional:
-          type: string
-          example: file
-          description: The format to distribute the report to additional recipients.
-          enum:
-          - file
-          - zip
-          - none
-        additionalRecipients:
-          type: array
-          description: The email address of additional recipients to distribute the report to.
-          items:
-            type: string
-        assetAccess:
-          type: boolean
-          example: true
-          description: Whether to distribute the report to all users to have access to assets in the report.
-        owner:
-          type: string
-          example: file
-          description: The format to distribute the report to the owner.
-          enum:
-          - file
-          - url
-          - zip
-          - none
-        smtp:
-          example: ''
-          description: SMTP delivery settings.
-          $ref: '#/components/schemas/ReportEmailSmtp'
       description: ''
     ReportInstance:
       type: object
@@ -1125,100 +820,17 @@ components:
           example: https://hostname:3780/reports/...
           description: The URI of the report accessible through the web console. Refer to the `Download` relation hyperlink for a download URI.
       description: ''
-    BadRequestError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '400'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '400'
-      description: ''
-    NotFoundError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    AvailableReportFormat:
+    Link:
       type: object
       properties:
-        format:
+        href:
           type: string
-          example: pdf
-          description: The output file-format of a report.
-          enum:
-          - arf-xml
-          - csv-export
-          - cyberscope-xml
-          - database-export
-          - pdf
-          - html
-          - nexpose-simple-xml
-          - oval-xml
-          - qualys-xml
-          - rtf
-          - scap-xml
-          - sql-query
-          - text
-          - xccdf-xml
-          - xccdf-csv
-          - xml
-          - xml-export
-          - xml-export-v2
-        templates:
-          type: array
-          description: The report template identifiers that can be used within a report format.
-          items:
-            type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
       description: ''
     Links:
       type: object
@@ -1228,224 +840,6 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-      description: ''
-    ReferenceWithReportIDLink:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 1
-          description: The identifier of the report instance.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    ReportConfigCategoryFilters:
-      type: object
-      properties:
-        excluded:
-          type: array
-          description: The vulnerability categories to exclude. Defaults to no categories.
-          items:
-            type: string
-        included:
-          type: array
-          description: The vulnerability categories to include. Defaults to all categories.
-          items:
-            type: string
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    ReportConfigFiltersResource:
-      type: object
-      properties:
-        categories:
-          example: ''
-          description: Vulnerability categories to include or exclude. Only `included` or `excluded` may be specified, but not both.
-          $ref: '#/components/schemas/ReportConfigCategoryFilters'
-        severity:
-          type: string
-          example: ''
-          description: The vulnerability severities to include. Defaults to `all`.
-          enum:
-          - all
-          - critical
-          - critical-and-severe
-        statuses:
-          type: array
-          description: The vulnerability statuses to include. Defaults to [ `vulnerable`, `vulnerable-version`, `potentially-vulnerable` ].
-          items:
-            type: string
-            enum:
-            - vulnerable
-            - vulnerable-version
-            - potentially-vulnerable
-            - vulnerable-and-validated
-      description: ''
-    Resources_ReportInstance:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/ReportInstance'
-      description: ''
-    RemediationResource:
-      type: object
-      properties:
-        solutions:
-          type: integer
-          format: int32
-          example: 25
-          description: The number of remediations to display.
-          minimum: 1
-        sort:
-          type: string
-          example: ''
-          description: The attribute to prioritize remediation impact. Only supported for the `prioritized-remediations` and `prioritized-remediations-with-details` templates.
-          enum:
-          - assets
-          - vulnerabilities
-          - malware_kits
-          - exploits
-          - riskscore
-      description: ''
-    PageOf_Report:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Report'
-      description: ''
-    RangeResource:
-      type: object
-      properties:
-        every:
-          type: string
-          example: day
-          description: If `from` is a custom date the interval amount between reporting periods.
-          enum:
-          - day
-          - month
-          - year
-        from:
-          type: string
-          example: ''
-          description: The start date of the trend, which can either be a duration or a specific date and time.
-          enum:
-          - P1Y
-          - P6M
-          - P3M
-          - P1M
-          - <date>
-        interval:
-          type: integer
-          format: int32
-          example: 7
-          description: 'If `from` is a custom date the interval between reporting periods. '
-        to:
-          type: string
-          example: ''
-          description: The end date of the trend (empty if `from` is a duration).
-      description: ''
-    Resources_AvailableReportFormat:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/AvailableReportFormat'
-      description: ''
-    ReportTemplate:
-      type: object
-      properties:
-        builtin:
-          type: boolean
-          example: true
-          description: Whether the report template is builtin.
-        description:
-          type: string
-          example: Provides comprehensive details about discovered assets, vulnerabilities, and users.
-          description: The description of the report template.
-        id:
-          type: string
-          example: audit-report
-          description: The identifier of the report template;
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: Audit Report
-          description: The name of the report template.
-        sections:
-          type: array
-          description: The sections that comprise the `document` report template.
-          items:
-            type: string
-        type:
-          type: string
-          example: document
-          description: The type of the report template. `document` is a templatized, typically printable, report that has various sections of content. `export` is data-oriented output, typically CSV. `file` is a printable report template using a report template file.
-          enum:
-          - document
-          - export
-          - file
-      description: ''
-    PageInfo:
-      type: object
-      properties:
-        number:
-          type: integer
-          format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
       description: ''
     RiskTrendAllAssetsResource:
       type: object
@@ -1587,7 +981,28 @@ components:
           example: 2.3.0
           description: The version of the report Data Model to report against. Only used when the format is `"sql-query"`.
       description: ''
-    Resources_ReportTemplate:
+    BadRequestError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '400'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '400'
+      description: ''
+    PageOf_Report:
       type: object
       properties:
         links:
@@ -1595,11 +1010,362 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
         resources:
           type: array
-          description: The resources returned.
+          description: The page of resources returned.
           items:
-            $ref: '#/components/schemas/ReportTemplate'
+            $ref: '#/components/schemas/Report'
+      description: ''
+    ReportTemplate:
+      type: object
+      properties:
+        builtin:
+          type: boolean
+          example: true
+          description: Whether the report template is builtin.
+        description:
+          type: string
+          example: Provides comprehensive details about discovered assets, vulnerabilities, and users.
+          description: The description of the report template.
+        id:
+          type: string
+          example: audit-report
+          description: The identifier of the report template;
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: Audit Report
+          description: The name of the report template.
+        sections:
+          type: array
+          description: The sections that comprise the `document` report template.
+          items:
+            type: string
+        type:
+          type: string
+          example: document
+          description: The type of the report template. `document` is a templatized, typically printable, report that has various sections of content. `export` is data-oriented output, typically CSV. `file` is a printable report template using a report template file.
+          enum:
+          - document
+          - export
+          - file
+      description: ''
+    ReportConfigDatabaseResource:
+      type: object
+      properties:
+        credentials:
+          example: ''
+          description: Credential information for the target database. Only used when the format is `"database-export"`.
+          readOnly: true
+          $ref: '#/components/schemas/ReportConfigDatabaseCredentialsResource'
+        host:
+          type: string
+          example: database.acme.com
+          description: The database server host to export to.
+        name:
+          type: string
+          example: database
+          description: The name of the database to export to.
+        port:
+          type: integer
+          format: int32
+          example: 3306
+          description: The database server port to export to.
+        vendor:
+          type: string
+          example: mysql
+          description: The type of the database server.
+          enum:
+          - oracle
+          - mssql
+          - mysql
+      description: ''
+    RiskTrendResource:
+      type: object
+      properties:
+        allAssets:
+          example: ''
+          description: Trend settings for a trend across all assets in the scope of the report.
+          $ref: '#/components/schemas/RiskTrendAllAssetsResource'
+        assetGroupMembership:
+          type: string
+          example: historical
+          description: Whether all asset groups in the history of deployment or those as of the report generation time are to be included.
+          enum:
+          - historical
+          - generation
+        assetGroups:
+          type: string
+          example: total
+          description: Whether to include a trend for the 5 highest-risk asset groups in the scope of the report (either the average or total risk). Only allowed if asset groups are specified in the report scope.
+          enum:
+          - average
+          - total
+        assets:
+          type: boolean
+          example: true
+          description: Whether to include a trend for the 5 highest-risk assets in the scope of the report.
+        from:
+          type: string
+          example: P3M
+          description: The start date of the risk trend, which can either be a duration or a specific date and time.
+          enum:
+          - P1Y
+          - P6M
+          - P3M
+          - P1M
+          - <date>
+        sites:
+          type: string
+          example: average
+          description: Whether to include a trend for the 5 highest-risk sites in the scope of the report (either the average or total risk). Only allowed if sites are specified in the report scope.
+          enum:
+          - average
+          - total
+        tagMembership:
+          type: string
+          example: historical
+          description: Whether all assets tagged in the history of deployment or those tagged as of the report generation time are to be included.
+          enum:
+          - historical
+          - generation
+        tags:
+          type: string
+          example: average
+          description: Whether to include a trend for the 5 highest-risk tags for assets in the scope of the report (either the average or total risk). Only allowed if tags are specified in the report scope.
+          enum:
+          - average
+          - total
+        to:
+          type: string
+          example: ''
+          description: The end date of the risk trend (empty if `from` is a duration).
+      description: ''
+    CreatedReference_int_Link:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+          description: The identifier of the resource created.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    RangeResource:
+      type: object
+      properties:
+        every:
+          type: string
+          example: day
+          description: If `from` is a custom date the interval amount between reporting periods.
+          enum:
+          - day
+          - month
+          - year
+        from:
+          type: string
+          example: ''
+          description: The start date of the trend, which can either be a duration or a specific date and time.
+          enum:
+          - P1Y
+          - P6M
+          - P3M
+          - P1M
+          - <date>
+        interval:
+          type: integer
+          format: int32
+          example: 7
+          description: 'If `from` is a custom date the interval between reporting periods. '
+        to:
+          type: string
+          example: ''
+          description: The end date of the trend (empty if `from` is a duration).
+      description: ''
+    ReportConfigCategoryFilters:
+      type: object
+      properties:
+        excluded:
+          type: array
+          description: The vulnerability categories to exclude. Defaults to no categories.
+          items:
+            type: string
+        included:
+          type: array
+          description: The vulnerability categories to include. Defaults to all categories.
+          items:
+            type: string
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    ServiceUnavailableError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    AvailableReportFormat:
+      type: object
+      properties:
+        format:
+          type: string
+          example: pdf
+          description: The output file-format of a report.
+          enum:
+          - arf-xml
+          - csv-export
+          - cyberscope-xml
+          - database-export
+          - pdf
+          - html
+          - nexpose-simple-xml
+          - oval-xml
+          - qualys-xml
+          - rtf
+          - scap-xml
+          - sql-query
+          - text
+          - xccdf-xml
+          - xccdf-csv
+          - xml
+          - xml-export
+          - xml-export-v2
+        templates:
+          type: array
+          description: The report template identifiers that can be used within a report format.
+          items:
+            type: string
+      description: ''
+    ReportEmailSmtp:
+      type: object
+      properties:
+        global:
+          type: boolean
+          example: true
+          description: Whether to use global SMTP settings. If enabled, `sender` and `relay` may not be specified.
+        relay:
+          type: string
+          example: mail.acme.com
+          description: SMTP relay host or IP address.
+        sender:
+          type: string
+          example: john_smith@acme.com
+          description: SMTP sender address.
+      description: ''
+    ReportEmail:
+      type: object
+      properties:
+        access:
+          type: string
+          example: zip
+          description: The format to distribute the report in when sending to users who have explicit access to the report.
+          enum:
+          - file
+          - zip
+          - url
+          - none
+        additional:
+          type: string
+          example: file
+          description: The format to distribute the report to additional recipients.
+          enum:
+          - file
+          - zip
+          - none
+        additionalRecipients:
+          type: array
+          description: The email address of additional recipients to distribute the report to.
+          items:
+            type: string
+        assetAccess:
+          type: boolean
+          example: true
+          description: Whether to distribute the report to all users to have access to assets in the report.
+        owner:
+          type: string
+          example: file
+          description: The format to distribute the report to the owner.
+          enum:
+          - file
+          - url
+          - zip
+          - none
+        smtp:
+          example: ''
+          description: SMTP delivery settings.
+          $ref: '#/components/schemas/ReportEmailSmtp'
       description: ''
     ReportSize:
       type: object
@@ -1613,6 +1379,240 @@ components:
           type: string
           example: 23.6 MB
           description: The value formatted in human-readable notation (e.g. GB, MB, KB, bytes).
+      description: ''
+    RemediationResource:
+      type: object
+      properties:
+        solutions:
+          type: integer
+          format: int32
+          example: 25
+          description: The number of remediations to display.
+          minimum: 1
+        sort:
+          type: string
+          example: ''
+          description: The attribute to prioritize remediation impact. Only supported for the `prioritized-remediations` and `prioritized-remediations-with-details` templates.
+          enum:
+          - assets
+          - vulnerabilities
+          - malware_kits
+          - exploits
+          - riskscore
+      description: ''
+    Resources_ReportInstance:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/ReportInstance'
+      description: ''
+    ReportConfigScopeResource:
+      type: object
+      properties:
+        assetGroups:
+          type: array
+          description: Identifiers of the asset groups in the scope of the report.
+          items:
+            type: integer
+            format: int32
+        assets:
+          type: array
+          description: Identifiers of the assets in the scope of the report.
+          items:
+            type: integer
+            format: int64
+        scan:
+          type: integer
+          format: int64
+          example: 68
+          description: Identifiers of the scans in the scope of the report.
+        sites:
+          type: array
+          description: Identifiers of the sites in the scope of the report.
+          items:
+            type: integer
+            format: int32
+        tags:
+          type: array
+          description: Identifiers of the tags in the scope of the report.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    Resources_AvailableReportFormat:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/AvailableReportFormat'
+      description: ''
+    ReportConfigFiltersResource:
+      type: object
+      properties:
+        categories:
+          example: ''
+          description: Vulnerability categories to include or exclude. Only `included` or `excluded` may be specified, but not both.
+          $ref: '#/components/schemas/ReportConfigCategoryFilters'
+        severity:
+          type: string
+          example: ''
+          description: The vulnerability severities to include. Defaults to `all`.
+          enum:
+          - all
+          - critical
+          - critical-and-severe
+        statuses:
+          type: array
+          description: The vulnerability statuses to include. Defaults to [ `vulnerable`, `vulnerable-version`, `potentially-vulnerable` ].
+          items:
+            type: string
+            enum:
+            - vulnerable
+            - vulnerable-version
+            - potentially-vulnerable
+            - vulnerable-and-validated
+      description: ''
+    ReferenceWithReportIDLink:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+          description: The identifier of the report instance.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    ReportRepeat:
+      type: object
+      required:
+      - every
+      - interval
+      properties:
+        dayOfWeek:
+          type: string
+          example: ''
+          description: The day of the week the scheduled task should repeat. This property only applies to schedules with a `every` value of `"day-of-month"`.
+        every:
+          type: string
+          example: date-of-month
+          description: "The frequency schedule repeats. Each value represents a different unit of time and is used in conjunction with the property `interval`. For example, a schedule can repeat hourly, daily, monthly, etc. The following table describes each supported value: \n| Value | Description | \n| ---------- | ---------------- | \n| hour | Specifies the schedule repeats in hourly increments. | \n| day | Specifies the schedule repeats in daily increments. | \n| week | Specifies the schedule repeats in weekly increments. | \n| date-of-month | Specifies the schedule repeats nth day of the `interval` month. Requires the property `dateOfMonth` to be specified. For example, if `dateOfMonth` is `17` and the `interval` is `2`, then the schedule will repeat every 2 months on the 17th day of the month. | \n| day-of-month | Specifies the schedule repeats on a monthly interval but instead of a specific date being specified, the day of the week and week of the month are specified. Requires the properties `dayOfWeek` and `weekOfMonth` to be specified. For example, if `dayOfWeek` is `\"friday\"`, `weekOfMonth` is `3`, and the `interval` is `4`, then the schedule will repeat every 4 months on the 3rd Friday of the month. | \n"
+        interval:
+          type: integer
+          format: int32
+          example: 1
+          description: The interval time the schedule should repeat. The is depends on the value set in `every`. For example, if the value in property `every` is set to `"day"` and `interval` is set to `2`, then the schedule will repeat every 2 days.
+          minimum: 1
+        weekOfMonth:
+          type: integer
+          format: int32
+          example: ''
+          description: The week of the month the scheduled task should repeat. For This property only applies to schedules with a `every` value of `"day-of-month"`. Each week of the month is counted in 7-day increments. For example, week 1 consists of days 1-7 of the month while week 2 consists of days 8-14 of the month and so forth.
+          minimum: 1
+          maximum: 6
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
+    ReportFrequency:
+      type: object
+      properties:
+        nextRuntimes:
+          type: array
+          description: The next scheduled run-times for generation of the report when type is `schedule`.
+          readOnly: true
+          items:
+            type: string
+        repeat:
+          example: ''
+          description: How often the report generates when type is `schedule`.
+          $ref: '#/components/schemas/ReportRepeat'
+        start:
+          type: string
+          example: '2018-03-01T04:31:56Z'
+          description: When the report starts generating when type is `schedule`.
+        type:
+          type: string
+          example: schedule
+          description: The frequency to generate the report. `schedule` generates the report every scheduled time interval, and requires the `repeat` and `start` properties to be specified. `scan` generates the report after any scan of any element in the scope of the report. `none` does not generate the report automatically. Defaults to `none`.
+          enum:
+          - schedule
+          - scan
+          - none
+      description: ''
+    Resources_ReportTemplate:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/ReportTemplate'
       description: ''
   securitySchemes:
     Basic:

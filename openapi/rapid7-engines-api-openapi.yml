@@ -561,152 +561,6 @@ paths:
                 $ref: '#/components/schemas/ValidationErrors'
 components:
   schemas:
-    engine_group:
-      description: The Engine Group the Engine is assigned to
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Engine
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Engine
-          maxLength: 200
-          minLength: 1
-        status:
-          type: string
-          description: The status of the Engine
-          enum:
-          - INITIALIZING
-          - LICENSING
-          - TERMINATING
-          - IDLE
-          - OFFLINE
-          - SCANNING
-          - UPGRADING
-          - PARKED
-          - FAILED
-          readOnly: true
-        failure_reason:
-          type: string
-          description: The reason the Engine may have failed
-          enum:
-          - TERMINATION_FAILED
-          - INITIALIZATION_FAILED
-          - UPGRADE_FAILED
-          - GENERAL_FAILURE
-          readOnly: true
-        latest_version:
-          type: boolean
-          description: A read only flag which indicates if the Engine is latest version
-          readOnly: true
-        upgradeable:
-          type: boolean
-          description: A read only flag which indicates if the Engine is capable of upgrading
-          readOnly: true
-        auto_upgrade:
-          type: boolean
-          description: 'A flag which can be set to mark the Engine for auto upgrade '
-      required:
-      - auto_upgrade
-      - name
-      title: Engine
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    Sort:
-      properties:
-        empty:
-          type: boolean
-        unsorted:
-          type: boolean
-        sorted:
-          type: boolean
-    EntityModelEngine:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Engine
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Engine
-          maxLength: 200
-          minLength: 1
-        engine_group:
-          $ref: '#/components/schemas/engine_group'
-        status:
-          type: string
-          description: The status of the Engine
-          enum:
-          - INITIALIZING
-          - LICENSING
-          - TERMINATING
-          - IDLE
-          - OFFLINE
-          - SCANNING
-          - UPGRADING
-          - PARKED
-          - FAILED
-          readOnly: true
-        failure_reason:
-          type: string
-          description: The reason the Engine may have failed
-          enum:
-          - TERMINATION_FAILED
-          - INITIALIZATION_FAILED
-          - UPGRADE_FAILED
-          - GENERAL_FAILURE
-          readOnly: true
-        latest_version:
-          type: boolean
-          description: A read only flag which indicates if the Engine is latest version
-          readOnly: true
-        upgradeable:
-          type: boolean
-          description: A read only flag which indicates if the Engine is capable of upgrading
-          readOnly: true
-        auto_upgrade:
-          type: boolean
-          description: 'A flag which can be set to mark the Engine for auto upgrade '
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - auto_upgrade
-      - name
-    PageEngine:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelEngine'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
     Error:
       properties:
         status:
@@ -840,34 +694,12 @@ components:
           type: boolean
         unpaged:
           type: boolean
-    ValidationError:
+    CredentialResource:
       properties:
-        type:
+        api_key:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
+      required:
+      - api_key
     ValidationErrors:
       properties:
         status:
@@ -988,6 +820,180 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    Sort:
+      properties:
+        empty:
+          type: boolean
+        unsorted:
+          type: boolean
+        sorted:
+          type: boolean
+    engine_group:
+      description: The Engine Group the Engine is assigned to
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Engine
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Engine
+          maxLength: 200
+          minLength: 1
+        status:
+          type: string
+          description: The status of the Engine
+          enum:
+          - INITIALIZING
+          - LICENSING
+          - TERMINATING
+          - IDLE
+          - OFFLINE
+          - SCANNING
+          - UPGRADING
+          - PARKED
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Engine may have failed
+          enum:
+          - TERMINATION_FAILED
+          - INITIALIZATION_FAILED
+          - UPGRADE_FAILED
+          - GENERAL_FAILURE
+          readOnly: true
+        latest_version:
+          type: boolean
+          description: A read only flag which indicates if the Engine is latest version
+          readOnly: true
+        upgradeable:
+          type: boolean
+          description: A read only flag which indicates if the Engine is capable of upgrading
+          readOnly: true
+        auto_upgrade:
+          type: boolean
+          description: 'A flag which can be set to mark the Engine for auto upgrade '
+      required:
+      - auto_upgrade
+      - name
+      title: Engine
+    PageEngine:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelEngine'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    EntityModelEngine:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Engine
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Engine
+          maxLength: 200
+          minLength: 1
+        engine_group:
+          $ref: '#/components/schemas/engine_group'
+        status:
+          type: string
+          description: The status of the Engine
+          enum:
+          - INITIALIZING
+          - LICENSING
+          - TERMINATING
+          - IDLE
+          - OFFLINE
+          - SCANNING
+          - UPGRADING
+          - PARKED
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Engine may have failed
+          enum:
+          - TERMINATION_FAILED
+          - INITIALIZATION_FAILED
+          - UPGRADE_FAILED
+          - GENERAL_FAILURE
+          readOnly: true
+        latest_version:
+          type: boolean
+          description: A read only flag which indicates if the Engine is latest version
+          readOnly: true
+        upgradeable:
+          type: boolean
+          description: A read only flag which indicates if the Engine is capable of upgrading
+          readOnly: true
+        auto_upgrade:
+          type: boolean
+          description: 'A flag which can be set to mark the Engine for auto upgrade '
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - auto_upgrade
+      - name
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
     Engine:
       properties:
         id:
@@ -1040,9 +1046,3 @@ components:
       - auto_upgrade
       - name
       title: Engine
-    CredentialResource:
-      properties:
-        api_key:
-          type: string
-      required:
-      - api_key

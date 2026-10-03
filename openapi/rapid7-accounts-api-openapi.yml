@@ -228,6 +228,106 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SearchRequest:
+      type: object
+      properties:
+        search:
+          type: array
+          description: The criteria for which entities to return.
+          items:
+            $ref: '#/components/schemas/SearchRequestCriteria'
+        sort:
+          type: array
+          description: The sorting information.
+          items:
+            $ref: '#/components/schemas/SearchRequestSort'
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
+    UserSummaryV2:
+      required:
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this user.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6
+        name:
+          type: string
+          description: The name for this user.
+          example: John Doe
+      description: The user this account is associated with.
+    SearchRequestSort:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to sort by.
+          example: name
+        order:
+          type: string
+          description: The sorting direction. Sorting is case-insensitive when sorting strings.
+          enum:
+          - ASC
+          - DESC
+          - ASC,DESC
+      description: The sorting information.
+    AccountV2:
+      required:
+      - authentication_service
+      - disabled
+      - name
+      - rrn
+      - user
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this account.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:account:83002c85d7c6
+        name:
+          type: string
+          description: The name for this account.
+          example: jdoe@acme.com
+        domain:
+          type: string
+          description: The domain that this account is associated with.
+          example: tor.acme.com
+        disabled:
+          type: boolean
+          description: True if the account is disabled.
+        user:
+          $ref: '#/components/schemas/UserSummaryV2'
+        authentication_service:
+          type: string
+          description: The service to which this account is tied, which is responsible for authenticating this account.
+          example: ACTIVE_DIRECTORY
+      description: Information about an account
+    PageAccountV2:
+      required:
+      - data
+      - metadata
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/AccountV2'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
     SearchRequestCriteria:
       type: object
       properties:
@@ -275,106 +375,6 @@ components:
           format: int64
           example: 15
       description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
-    PageAccountV2:
-      required:
-      - data
-      - metadata
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            $ref: '#/components/schemas/AccountV2'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-    SearchRequestSort:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field to sort by.
-          example: name
-        order:
-          type: string
-          description: The sorting direction. Sorting is case-insensitive when sorting strings.
-          enum:
-          - ASC
-          - DESC
-          - ASC,DESC
-      description: The sorting information.
-    UserSummaryV2:
-      required:
-      - name
-      - rrn
-      type: object
-      properties:
-        rrn:
-          type: string
-          description: The unique identifier for this user.
-          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6
-        name:
-          type: string
-          description: The name for this user.
-          example: John Doe
-      description: The user this account is associated with.
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
-    SearchRequest:
-      type: object
-      properties:
-        search:
-          type: array
-          description: The criteria for which entities to return.
-          items:
-            $ref: '#/components/schemas/SearchRequestCriteria'
-        sort:
-          type: array
-          description: The sorting information.
-          items:
-            $ref: '#/components/schemas/SearchRequestSort'
-    AccountV2:
-      required:
-      - authentication_service
-      - disabled
-      - name
-      - rrn
-      - user
-      type: object
-      properties:
-        rrn:
-          type: string
-          description: The unique identifier for this account.
-          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:account:83002c85d7c6
-        name:
-          type: string
-          description: The name for this account.
-          example: jdoe@acme.com
-        domain:
-          type: string
-          description: The domain that this account is associated with.
-          example: tor.acme.com
-        disabled:
-          type: boolean
-          description: True if the account is disabled.
-        user:
-          $ref: '#/components/schemas/UserSummaryV2'
-        authentication_service:
-          type: string
-          description: The service to which this account is tied, which is responsible for authenticating this account.
-          example: ACTIVE_DIRECTORY
-      description: Information about an account
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

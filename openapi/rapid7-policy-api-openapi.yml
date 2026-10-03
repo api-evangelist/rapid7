@@ -1856,392 +1856,6 @@ paths:
       security: []
 components:
   schemas:
-    PolicyRule:
-      type: object
-      properties:
-        assets:
-          example: ''
-          description: A summary of asset compliance.
-          $ref: '#/components/schemas/AssetPolicyAssessment'
-        benchmark:
-          example: ''
-          description: Information about the policy benchmark.
-          $ref: '#/components/schemas/PolicyBenchmark'
-        description:
-          type: string
-          example: ''
-          description: A description of the rule.
-        id:
-          type: string
-          example: ''
-          description: The textual representation of the policy rule identifier.
-        isCustom:
-          type: boolean
-          example: false
-          description: A flag indicating whether the policy rule is custom.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the rule.
-        role:
-          type: string
-          example: ''
-          description: The role of the policy rule. It's value determines how it's results affect compliance.
-          enum:
-          - full
-          - unscored
-          - unchecked
-        scope:
-          type: string
-          example: ''
-          description: The textual representation of the policy rule scope. Policy rules that are automatically available have `"Built-in"` scope, whereas policy rules created by users have scope as `"Custom"`.
-        status:
-          type: string
-          example: ''
-          description: The overall compliance status of the policy rule.
-          enum:
-          - PASS
-          - FAIL
-          - NOT_APPLICABLE
-        surrogateId:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the policy rule.
-        title:
-          type: string
-          example: ''
-          description: The title of the policy rule as visible to the user.
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
-      description: ''
-    InternalServerError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '500'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '500'
-      description: ''
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    PolicyControl:
-      type: object
-      properties:
-        cceItemId:
-          type: string
-          example: ''
-          description: The identifier of the CCE item.
-        ccePlatform:
-          type: string
-          example: ''
-          description: The platform of the CCE.
-        controlName:
-          type: string
-          example: ''
-          description: The name of the control mapping.
-        id:
-          type: string
-          example: ''
-          description: The textual representation of the control identifier.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        publishedDate:
-          type: integer
-          format: int64
-          example: ''
-          description: The published date of the control mapping.
-      description: ''
-    PageOf_PolicyItem:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyItem'
-      description: ''
-    NotFoundError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
-      description: ''
-    PageOf_AssetPolicy:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/AssetPolicy'
-      description: ''
-    PolicyRuleAssessmentResource:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        total:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policy rules.
-        totalFailed:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policy rules that are not compliant against all assets.
-        totalNotApplicable:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policy rules that are not applicable against all assets.
-        totalPassed:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policy rules that are compliant against all assets.
-        unscored:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policy rules that have a role of `"unscored"`.
-      description: ''
-    PolicyMetadataResource:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the policy.
-        title:
-          type: string
-          example: ''
-          description: The title of the policy as visible to the user.
-        version:
-          type: string
-          example: ''
-          description: The version of the policy.
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    PolicyBenchmark:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the policy's benchmark.
-        title:
-          type: string
-          example: ''
-          description: The title of the policy benchmark.
-        version:
-          type: string
-          example: ''
-          description: The version number of the benchmark that includes the policy.
-      description: ''
-    PageOf_PolicyAsset:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyAsset'
-      description: ''
-    AssetPolicyAssessment:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        total:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of assets.
-        totalFailed:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of assets that are not compliant.
-        totalNotApplicable:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of assets that are not applicable.
-        totalPassed:
-          type: integer
-          format: int32
-      description: ''
-    PolicySummaryResource:
-      type: object
-      properties:
-        decreasedCompliance:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policies whose overall compliance has decreased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
-        increasedCompliance:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policies whose overall compliance has increased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        numberOfPolicies:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policies available in the Security Console.
-        overallCompliance:
-          type: number
-          format: float
-          example: ''
-          description: The ratio of compliant rules to the total number of rules across all policies.
-        scannedPolicies:
-          type: integer
-          format: int32
-          example: ''
-          description: The total number of policies that were evaluated against assets and have applicable results. The assets considered in the calculation are based on the user's list of accessible assets.
-      description: ''
     PageOf_PolicyGroup:
       type: object
       properties:
@@ -2259,405 +1873,6 @@ components:
           description: The page of resources returned.
           items:
             $ref: '#/components/schemas/PolicyGroup'
-      description: ''
-    PolicyItem:
-      type: object
-      properties:
-        assets:
-          example: ''
-          description: A summary of asset compliance.
-          $ref: '#/components/schemas/AssetPolicyAssessment'
-        description:
-          type: string
-          example: ''
-          description: A description of the policy rule or group.
-        hasOverride:
-          type: boolean
-          example: false
-          description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
-        id:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the policy rule or group.
-        isUnscored:
-          type: boolean
-          example: false
-          description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the policy rule or group.
-        policy:
-          example: ''
-          description: Information about the policy.
-          $ref: '#/components/schemas/PolicyMetadataResource'
-        rules:
-          example: ''
-          description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
-          $ref: '#/components/schemas/PolicyRuleAssessmentResource'
-        scope:
-          type: string
-          example: ''
-          description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
-        status:
-          type: string
-          example: ''
-          description: The overall compliance status of the policy rule or group.
-          enum:
-          - PASS
-          - FAIL
-          - NOT_APPLICABLE
-        title:
-          type: string
-          example: ''
-          description: The title of the policy rule, or group, as visible to the user.
-        type:
-          type: string
-          example: ''
-          description: Indicates whether the resource represents either a policy rule or group.
-          enum:
-          - rule
-          - group
-      description: ''
-    PageOf_PolicyControl:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyControl'
-      description: ''
-    OperatingSystem:
-      type: object
-      properties:
-        architecture:
-          type: string
-          example: x86
-          description: The architecture of the operating system.
-        configurations:
-          type: array
-          description: Configuration key-values pairs enumerated on the operating system.
-          items:
-            $ref: '#/components/schemas/Configuration'
-        cpe:
-          example: ''
-          description: The Common Platform Enumeration (CPE) of the operating system.
-          $ref: '#/components/schemas/OperatingSystemCpe'
-        description:
-          type: string
-          example: Microsoft Windows Server 2008 Enterprise Edition SP1
-          description: The description of the operating system (containing vendor, family, product, version and architecture in a single string).
-        family:
-          type: string
-          example: Windows
-          description: The family of the operating system.
-        id:
-          type: integer
-          format: int64
-          example: 35
-          description: The identifier of the operating system.
-        product:
-          type: string
-          example: Windows Server 2008 Enterprise Edition
-          description: The name of the operating system.
-        systemName:
-          type: string
-          example: Microsoft Windows
-          description: A combination of vendor and family (with redundancies removed), suitable for grouping.
-        type:
-          type: string
-          example: Workstation
-          description: The type of operating system.
-        vendor:
-          type: string
-          example: Microsoft
-          description: The vendor of the operating system.
-        version:
-          type: string
-          example: SP1
-          description: The version of the operating system.
-      description: ''
-    Policy:
-      type: object
-      properties:
-        enabled:
-          type: array
-          description: The identifiers of the policies enabled to be checked during a scan. No policies are enabled by default.
-          items:
-            type: integer
-            format: int64
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        recursiveWindowsFSSearch:
-          type: boolean
-          example: false
-          description: Whether recursive windows file searches are enabled, if your internal security practices require this capability. Recursive file searches can increase scan times by several hours, depending on the number of files and other factors, so this setting is disabled for Windows systems by default. Defaults to `false`.
-        storeSCAP:
-          type: boolean
-          example: false
-          description: Whether Asset Reporting Format (ARF) results are stored. If you are required to submit reports of your policy scan results to the U.S. government in ARF for SCAP certification, you will need to store SCAP data so that it can be exported in this format. Note that stored SCAP data can accumulate rapidly, which can have a significant impact on file storage. Defaults to `false`.
-      description: ''
-    PolicyAsset:
-      type: object
-      properties:
-        hostname:
-          type: string
-          example: ''
-          description: The primary host name (local or FQDN) of the asset.
-        id:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the asset.
-        ip:
-          type: string
-          example: ''
-          description: The primary IPv4 or IPv6 address of the asset.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        os:
-          example: ''
-          description: The full description of the operating system of the asset.
-          $ref: '#/components/schemas/OperatingSystem'
-        status:
-          type: string
-          example: ''
-          description: 'The overall compliance status of the asset. '
-          enum:
-          - passed
-          - failed
-          - notApplicable
-      description: ''
-    PageOf_Policy:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Policy'
-      description: ''
-    AssetPolicyItem:
-      type: object
-      properties:
-        assets:
-          example: ''
-          description: A summary of asset compliance.
-          $ref: '#/components/schemas/AssetPolicyAssessment'
-        description:
-          type: string
-          example: ''
-          description: A description of the policy rule or group.
-        hasOverride:
-          type: boolean
-          example: false
-          description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
-        id:
-          type: integer
-          format: int64
-          example: ''
-          description: The identifier of the policy rule or group.
-        isUnscored:
-          type: boolean
-          example: false
-          description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the policy rule or group.
-        policy:
-          example: ''
-          description: Information about the policy.
-          $ref: '#/components/schemas/PolicyMetadataResource'
-        rules:
-          example: ''
-          description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
-          $ref: '#/components/schemas/PolicyRuleAssessmentResource'
-        scope:
-          type: string
-          example: ''
-          description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
-        status:
-          type: string
-          example: ''
-          description: The asset's rule compliance status.
-          enum:
-          - PASS
-          - FAIL
-          - NOT_APPLICABLE
-        title:
-          type: string
-          example: ''
-          description: The title of the policy rule, or group, as visible to the user.
-        type:
-          type: string
-          example: ''
-          description: Indicates whether the resource represents either a policy rule or group.
-          enum:
-          - rule
-          - group
-      description: ''
-    PageOf_PolicyRule:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/PolicyRule'
-      description: ''
-    OperatingSystemCpe:
-      type: object
-      required:
-      - part
-      properties:
-        edition:
-          type: string
-          example: enterprise
-          description: 'Edition-related terms applied by the vendor to the product. '
-        language:
-          type: string
-          example: ''
-          description: Defines the language supported in the user interface of the product being described. The format is of the language tag adheres to <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5646">RFC5646</a>.
-        other:
-          type: string
-          example: ''
-          description: 'Captures any other general descriptive or identifying information which is vendor- or product-specific and which does not logically fit in any other attribute value. '
-        part:
-          type: string
-          example: o
-          description: A single letter code that designates the particular platform part that is being identified.
-          enum:
-          - o
-          - a
-          - h
-        product:
-          type: string
-          example: windows_server_2008
-          description: the most common and recognizable title or name of the product.
-        swEdition:
-          type: string
-          example: ''
-          description: 'Characterizes how the product is tailored to a particular market or class of end users. '
-        targetHW:
-          type: string
-          example: ''
-          description: 'Characterize the instruction set architecture on which the product operates. '
-        targetSW:
-          type: string
-          example: ''
-          description: Characterize the software computing environment within which the product operates.
-        update:
-          type: string
-          example: sp1
-          description: Vendor-specific alphanumeric strings characterizing the particular update, service pack, or point release of the product.
-        v2.2:
-          type: string
-          example: cpe:/o:microsoft:windows_server_2008:-:sp1:enterprise
-          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="https://cpe.mitre.org/files/cpe-specification_2.2.pdf">CPE 2.2</a> format.
-        v2.3:
-          type: string
-          example: cpe:2.3:o:microsoft:windows_server_2008:-:sp1:enterprise:*:*:*:*:*
-          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf">CPE 2.3</a> format.
-        vendor:
-          type: string
-          example: microsoft
-          description: The person or organization that manufactured or created the product.
-        version:
-          type: string
-          example: '-'
-          description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
-      description: ''
-    PageInfo:
-      type: object
-      properties:
-        number:
-          type: integer
-          format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
-      description: ''
-    PageOf_AssetPolicyItem:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/AssetPolicyItem'
       description: ''
     AssetPolicy:
       type: object
@@ -2763,19 +1978,506 @@ components:
           example: ''
           description: The number of rules defined in the policy with a role of "unscored". These rules will not affect rule compliance scoring for the policy.
       description: ''
-    Configuration:
+    Link:
       type: object
-      required:
-      - name
       properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
+    PolicyAsset:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: ''
+          description: The primary host name (local or FQDN) of the asset.
+        id:
+          type: integer
+          format: int64
+          example: ''
+          description: The identifier of the asset.
+        ip:
+          type: string
+          example: ''
+          description: The primary IPv4 or IPv6 address of the asset.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        os:
+          example: ''
+          description: The full description of the operating system of the asset.
+          $ref: '#/components/schemas/OperatingSystem'
+        status:
+          type: string
+          example: ''
+          description: 'The overall compliance status of the asset. '
+          enum:
+          - passed
+          - failed
+          - notApplicable
+      description: ''
+    PageOf_PolicyAsset:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyAsset'
+      description: ''
+    PageOf_PolicyControl:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyControl'
+      description: ''
+    PolicyBenchmark:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
         name:
           type: string
-          example: <name>
-          description: The name of the configuration value.
-        value:
+          example: ''
+          description: The name of the policy's benchmark.
+        title:
           type: string
-          example: <value>
-          description: The configuration value.
+          example: ''
+          description: The title of the policy benchmark.
+        version:
+          type: string
+          example: ''
+          description: The version number of the benchmark that includes the policy.
+      description: ''
+    PageOf_PolicyRule:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyRule'
+      description: ''
+    PolicyControl:
+      type: object
+      properties:
+        cceItemId:
+          type: string
+          example: ''
+          description: The identifier of the CCE item.
+        ccePlatform:
+          type: string
+          example: ''
+          description: The platform of the CCE.
+        controlName:
+          type: string
+          example: ''
+          description: The name of the control mapping.
+        id:
+          type: string
+          example: ''
+          description: The textual representation of the control identifier.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        publishedDate:
+          type: integer
+          format: int64
+          example: ''
+          description: The published date of the control mapping.
+      description: ''
+    PageOf_PolicyItem:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/PolicyItem'
+      description: ''
+    PageOf_AssetPolicy:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/AssetPolicy'
+      description: ''
+    OperatingSystemCpe:
+      type: object
+      required:
+      - part
+      properties:
+        edition:
+          type: string
+          example: enterprise
+          description: 'Edition-related terms applied by the vendor to the product. '
+        language:
+          type: string
+          example: ''
+          description: Defines the language supported in the user interface of the product being described. The format is of the language tag adheres to <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5646">RFC5646</a>.
+        other:
+          type: string
+          example: ''
+          description: 'Captures any other general descriptive or identifying information which is vendor- or product-specific and which does not logically fit in any other attribute value. '
+        part:
+          type: string
+          example: o
+          description: A single letter code that designates the particular platform part that is being identified.
+          enum:
+          - o
+          - a
+          - h
+        product:
+          type: string
+          example: windows_server_2008
+          description: the most common and recognizable title or name of the product.
+        swEdition:
+          type: string
+          example: ''
+          description: 'Characterizes how the product is tailored to a particular market or class of end users. '
+        targetHW:
+          type: string
+          example: ''
+          description: 'Characterize the instruction set architecture on which the product operates. '
+        targetSW:
+          type: string
+          example: ''
+          description: Characterize the software computing environment within which the product operates.
+        update:
+          type: string
+          example: sp1
+          description: Vendor-specific alphanumeric strings characterizing the particular update, service pack, or point release of the product.
+        v2.2:
+          type: string
+          example: cpe:/o:microsoft:windows_server_2008:-:sp1:enterprise
+          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="https://cpe.mitre.org/files/cpe-specification_2.2.pdf">CPE 2.2</a> format.
+        v2.3:
+          type: string
+          example: cpe:2.3:o:microsoft:windows_server_2008:-:sp1:enterprise:*:*:*:*:*
+          description: The full CPE string in the <a target="_blank" rel="noopener noreferrer" href="http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf">CPE 2.3</a> format.
+        vendor:
+          type: string
+          example: microsoft
+          description: The person or organization that manufactured or created the product.
+        version:
+          type: string
+          example: '-'
+          description: Vendor-specific alphanumeric strings characterizing the particular release version of the product.
+      description: ''
+    AssetPolicyAssessment:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        total:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of assets.
+        totalFailed:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of assets that are not compliant.
+        totalNotApplicable:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of assets that are not applicable.
+        totalPassed:
+          type: integer
+          format: int32
+      description: ''
+    PageOf_AssetPolicyItem:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/AssetPolicyItem'
+      description: ''
+    PageOf_Policy:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/Policy'
+      description: ''
+    PolicyRule:
+      type: object
+      properties:
+        assets:
+          example: ''
+          description: A summary of asset compliance.
+          $ref: '#/components/schemas/AssetPolicyAssessment'
+        benchmark:
+          example: ''
+          description: Information about the policy benchmark.
+          $ref: '#/components/schemas/PolicyBenchmark'
+        description:
+          type: string
+          example: ''
+          description: A description of the rule.
+        id:
+          type: string
+          example: ''
+          description: The textual representation of the policy rule identifier.
+        isCustom:
+          type: boolean
+          example: false
+          description: A flag indicating whether the policy rule is custom.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: ''
+          description: The name of the rule.
+        role:
+          type: string
+          example: ''
+          description: The role of the policy rule. It's value determines how it's results affect compliance.
+          enum:
+          - full
+          - unscored
+          - unchecked
+        scope:
+          type: string
+          example: ''
+          description: The textual representation of the policy rule scope. Policy rules that are automatically available have `"Built-in"` scope, whereas policy rules created by users have scope as `"Custom"`.
+        status:
+          type: string
+          example: ''
+          description: The overall compliance status of the policy rule.
+          enum:
+          - PASS
+          - FAIL
+          - NOT_APPLICABLE
+        surrogateId:
+          type: integer
+          format: int64
+          example: ''
+          description: The identifier of the policy rule.
+        title:
+          type: string
+          example: ''
+          description: The title of the policy rule as visible to the user.
+      description: ''
+    PolicyItem:
+      type: object
+      properties:
+        assets:
+          example: ''
+          description: A summary of asset compliance.
+          $ref: '#/components/schemas/AssetPolicyAssessment'
+        description:
+          type: string
+          example: ''
+          description: A description of the policy rule or group.
+        hasOverride:
+          type: boolean
+          example: false
+          description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
+        id:
+          type: integer
+          format: int64
+          example: ''
+          description: The identifier of the policy rule or group.
+        isUnscored:
+          type: boolean
+          example: false
+          description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: ''
+          description: The name of the policy rule or group.
+        policy:
+          example: ''
+          description: Information about the policy.
+          $ref: '#/components/schemas/PolicyMetadataResource'
+        rules:
+          example: ''
+          description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
+          $ref: '#/components/schemas/PolicyRuleAssessmentResource'
+        scope:
+          type: string
+          example: ''
+          description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
+        status:
+          type: string
+          example: ''
+          description: The overall compliance status of the policy rule or group.
+          enum:
+          - PASS
+          - FAIL
+          - NOT_APPLICABLE
+        title:
+          type: string
+          example: ''
+          description: The title of the policy rule, or group, as visible to the user.
+        type:
+          type: string
+          example: ''
+          description: Indicates whether the resource represents either a policy rule or group.
+          enum:
+          - rule
+          - group
+      description: ''
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    PolicyRuleAssessmentResource:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        total:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policy rules.
+        totalFailed:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policy rules that are not compliant against all assets.
+        totalNotApplicable:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policy rules that are not applicable against all assets.
+        totalPassed:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policy rules that are compliant against all assets.
+        unscored:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policy rules that have a role of `"unscored"`.
       description: ''
     PolicyGroup:
       type: object
@@ -2831,6 +2533,304 @@ components:
           type: string
           example: ''
           description: The title of the policy group as visible to the user.
+      description: ''
+    ServiceUnavailableError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '503'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '503'
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    OperatingSystem:
+      type: object
+      properties:
+        architecture:
+          type: string
+          example: x86
+          description: The architecture of the operating system.
+        configurations:
+          type: array
+          description: Configuration key-values pairs enumerated on the operating system.
+          items:
+            $ref: '#/components/schemas/Configuration'
+        cpe:
+          example: ''
+          description: The Common Platform Enumeration (CPE) of the operating system.
+          $ref: '#/components/schemas/OperatingSystemCpe'
+        description:
+          type: string
+          example: Microsoft Windows Server 2008 Enterprise Edition SP1
+          description: The description of the operating system (containing vendor, family, product, version and architecture in a single string).
+        family:
+          type: string
+          example: Windows
+          description: The family of the operating system.
+        id:
+          type: integer
+          format: int64
+          example: 35
+          description: The identifier of the operating system.
+        product:
+          type: string
+          example: Windows Server 2008 Enterprise Edition
+          description: The name of the operating system.
+        systemName:
+          type: string
+          example: Microsoft Windows
+          description: A combination of vendor and family (with redundancies removed), suitable for grouping.
+        type:
+          type: string
+          example: Workstation
+          description: The type of operating system.
+        vendor:
+          type: string
+          example: Microsoft
+          description: The vendor of the operating system.
+        version:
+          type: string
+          example: SP1
+          description: The version of the operating system.
+      description: ''
+    PolicyMetadataResource:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: ''
+          description: The name of the policy.
+        title:
+          type: string
+          example: ''
+          description: The title of the policy as visible to the user.
+        version:
+          type: string
+          example: ''
+          description: The version of the policy.
+      description: ''
+    PolicySummaryResource:
+      type: object
+      properties:
+        decreasedCompliance:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policies whose overall compliance has decreased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
+        increasedCompliance:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policies whose overall compliance has increased between the last two scans of all assets. The list of scanned policies is based on the user's list of accessible assets.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        numberOfPolicies:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policies available in the Security Console.
+        overallCompliance:
+          type: number
+          format: float
+          example: ''
+          description: The ratio of compliant rules to the total number of rules across all policies.
+        scannedPolicies:
+          type: integer
+          format: int32
+          example: ''
+          description: The total number of policies that were evaluated against assets and have applicable results. The assets considered in the calculation are based on the user's list of accessible assets.
+      description: ''
+    Policy:
+      type: object
+      properties:
+        enabled:
+          type: array
+          description: The identifiers of the policies enabled to be checked during a scan. No policies are enabled by default.
+          items:
+            type: integer
+            format: int64
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        recursiveWindowsFSSearch:
+          type: boolean
+          example: false
+          description: Whether recursive windows file searches are enabled, if your internal security practices require this capability. Recursive file searches can increase scan times by several hours, depending on the number of files and other factors, so this setting is disabled for Windows systems by default. Defaults to `false`.
+        storeSCAP:
+          type: boolean
+          example: false
+          description: Whether Asset Reporting Format (ARF) results are stored. If you are required to submit reports of your policy scan results to the U.S. government in ARF for SCAP certification, you will need to store SCAP data so that it can be exported in this format. Note that stored SCAP data can accumulate rapidly, which can have a significant impact on file storage. Defaults to `false`.
+      description: ''
+    Configuration:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: <name>
+          description: The name of the configuration value.
+        value:
+          type: string
+          example: <value>
+          description: The configuration value.
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
+    AssetPolicyItem:
+      type: object
+      properties:
+        assets:
+          example: ''
+          description: A summary of asset compliance.
+          $ref: '#/components/schemas/AssetPolicyAssessment'
+        description:
+          type: string
+          example: ''
+          description: A description of the policy rule or group.
+        hasOverride:
+          type: boolean
+          example: false
+          description: 'A flag indicating whether the policy rule has an active override applied to it. This field only applies to resources representing policy rules. '
+        id:
+          type: integer
+          format: int64
+          example: ''
+          description: The identifier of the policy rule or group.
+        isUnscored:
+          type: boolean
+          example: false
+          description: A flag indicating whether the policy rule has a role of `"unscored"`. This field only applies to resources representing policy rules.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: ''
+          description: The name of the policy rule or group.
+        policy:
+          example: ''
+          description: Information about the policy.
+          $ref: '#/components/schemas/PolicyMetadataResource'
+        rules:
+          example: ''
+          description: A summary of rule compliance for multiple policy rules. This field only applies to resources representing policy groups.
+          $ref: '#/components/schemas/PolicyRuleAssessmentResource'
+        scope:
+          type: string
+          example: ''
+          description: The textual representation of the policy rule/group scope. Policy rules or groups that are automatically available have `"Built-in"` scope, whereas policy rules or groups created by users have scope as `"Custom"`.
+        status:
+          type: string
+          example: ''
+          description: The asset's rule compliance status.
+          enum:
+          - PASS
+          - FAIL
+          - NOT_APPLICABLE
+        title:
+          type: string
+          example: ''
+          description: The title of the policy rule, or group, as visible to the user.
+        type:
+          type: string
+          example: ''
+          description: Indicates whether the resource represents either a policy rule or group.
+          enum:
+          - rule
+          - group
       description: ''
   securitySchemes:
     Basic:

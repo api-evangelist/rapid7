@@ -562,206 +562,14 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    scan_config:
-      description: The Scan Config used when the Scan was submitted, must be associated with the App specified for this Scan
+    ScanVerificationResource:
+      description: The Validation resource. Should not be included if a Specialized Scan Parameters Resource has been provided.
+      example:
+        parent_scan_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
       properties:
-        id:
+        parent_scan_id:
           type: string
           format: uuid
-    LogEvent:
-      properties:
-        time:
-          type: string
-          description: The time at which the log event occurred
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        event:
-          type: string
-          description: The log event
-          readOnly: true
-      title: LogEvent
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    EntityModelScan:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Scan
-          readOnly: true
-        app:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        scan_config:
-          $ref: '#/components/schemas/scan_config'
-        submitter:
-          $ref: '#/components/schemas/ScanSubmitter'
-        submit_time:
-          type: string
-          description: The time the Scan was submitted
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        completion_time:
-          type: string
-          description: The time the Scan was completed
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        status:
-          type: string
-          description: The status of the Scan
-          enum:
-          - PENDING
-          - QUEUED
-          - PROVISIONING
-          - RUNNING
-          - SCANNED
-          - PROCESSED
-          - COMPLETE
-          - PAUSED
-          - BLACKED_OUT
-          - AWAITING_AUTHENTICATION
-          - AUTHENTICATED
-          - PAUSING
-          - RESUMING
-          - STOPPING
-          - CANCELING
-          - AUTHENTICATING
-          - FAILED
-          readOnly: true
-        failure_reason:
-          type: string
-          description: The reason the Scan may have failed
-          enum:
-          - CANCELED
-          - NETWORK_UNAVAILABLE
-          - SYSTEM_ERROR
-          - CONFIGURATION_INVALID
-          - BAD_AUTH
-          - LICENSE_INVALID
-          - TARGETS_INVALID
-          - ENGINE_UNAVAILABLE
-          - INITIALIZATION_FAILURE
-          - SWAGGER_PARSING_ERROR
-          - DATABASE_TOO_LARGE
-          - INSUFFICIENT_DISK_SPACE
-          - INSUFFICIENT_MEMORY
-          - TOO_MANY_THREADS
-          - RASP_FAILURE
-          - BOOTSTRAP_AUTHENTICATION_FAILURE
-          - REPORT_GENERATION_FAILURE
-          readOnly: true
-        validation:
-          $ref: '#/components/schemas/ScanVerificationResource'
-        scan_type:
-          type: string
-          description: The type of Scan
-          enum:
-          - REGULAR
-          - VERIFICATION
-          - INCREMENTAL
-          example: VERIFICATION
-        specialized_scan_parameters:
-          $ref: '#/components/schemas/SpecializedScanParamsResource'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - scan_config
-    ScanExecutionDetails:
-      properties:
-        logged_in:
-          type: boolean
-          description: A flag which indicates if the Scan is using authentication during the Scan
-          readOnly: true
-        links_in_queue:
-          type: integer
-          format: int32
-          description: The number of links in the crawling queue
-          readOnly: true
-        links_crawled:
-          type: integer
-          format: int32
-          description: The number of links already crawled
-          readOnly: true
-        attacks_in_queue:
-          type: integer
-          format: int32
-          description: The number of links in the attacking queue
-          readOnly: true
-        attacked:
-          type: integer
-          format: int32
-          description: The number of attacks already performed
-          readOnly: true
-        vulnerable:
-          type: integer
-          format: int32
-          description: The number of potential findings
-          readOnly: true
-        requests:
-          type: integer
-          format: int32
-          description: The number of HTTP requests which have been executed
-          readOnly: true
-        failed_requests:
-          type: integer
-          format: int32
-          description: The number of failed HTTP requests
-          readOnly: true
-        network_speed:
-          type: integer
-          format: int32
-          description: A throughput indicator
-          readOnly: true
-        drip_delay:
-          type: integer
-          format: int32
-          description: The current delay between HTTP requests
-          readOnly: true
-      title: ScanExecutionDetails
-    ScanSubmitter:
-      description: The submitter of the Scan
-      properties:
-        type:
-          type: string
-          description: The type of submitter
-          enum:
-          - USER
-          - SCHEDULE
-          - ORGANIZATION
-          readOnly: true
-        id:
-          type: string
-          format: uuid
-          description: The ID of the submitter
-          readOnly: true
-      readOnly: true
-      title: ScanSubmitter
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
     SpecializedScanParamsResource:
       description: The Specialized Scan Parameters Resource used to start a validation scan with a subset of vulnerability ids. Should not be included if a Scan Verification Resource has been provided.
       example:
@@ -786,19 +594,6 @@ components:
             format: uuid
       required:
       - parent_scan_id
-    PageScan:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelScan'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
     Error:
       properties:
         status:
@@ -913,117 +708,66 @@ components:
           - E999
           readOnly: true
       title: Error
-    Scan:
+    ScanExecutionDetails:
+      properties:
+        logged_in:
+          type: boolean
+          description: A flag which indicates if the Scan is using authentication during the Scan
+          readOnly: true
+        links_in_queue:
+          type: integer
+          format: int32
+          description: The number of links in the crawling queue
+          readOnly: true
+        links_crawled:
+          type: integer
+          format: int32
+          description: The number of links already crawled
+          readOnly: true
+        attacks_in_queue:
+          type: integer
+          format: int32
+          description: The number of links in the attacking queue
+          readOnly: true
+        attacked:
+          type: integer
+          format: int32
+          description: The number of attacks already performed
+          readOnly: true
+        vulnerable:
+          type: integer
+          format: int32
+          description: The number of potential findings
+          readOnly: true
+        requests:
+          type: integer
+          format: int32
+          description: The number of HTTP requests which have been executed
+          readOnly: true
+        failed_requests:
+          type: integer
+          format: int32
+          description: The number of failed HTTP requests
+          readOnly: true
+        network_speed:
+          type: integer
+          format: int32
+          description: A throughput indicator
+          readOnly: true
+        drip_delay:
+          type: integer
+          format: int32
+          description: The current delay between HTTP requests
+          readOnly: true
+      title: ScanExecutionDetails
+    ReadOnlyIdResource:
+      description: The ID of the module
       properties:
         id:
           type: string
           format: uuid
-          description: The ID of the Scan
           readOnly: true
-        app:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        scan_config:
-          $ref: '#/components/schemas/scan_config'
-        submitter:
-          $ref: '#/components/schemas/ScanSubmitter'
-        submit_time:
-          type: string
-          description: The time the Scan was submitted
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        completion_time:
-          type: string
-          description: The time the Scan was completed
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        status:
-          type: string
-          description: The status of the Scan
-          enum:
-          - PENDING
-          - QUEUED
-          - PROVISIONING
-          - RUNNING
-          - SCANNED
-          - PROCESSED
-          - COMPLETE
-          - PAUSED
-          - BLACKED_OUT
-          - AWAITING_AUTHENTICATION
-          - AUTHENTICATED
-          - PAUSING
-          - RESUMING
-          - STOPPING
-          - CANCELING
-          - AUTHENTICATING
-          - FAILED
-          readOnly: true
-        failure_reason:
-          type: string
-          description: The reason the Scan may have failed
-          enum:
-          - CANCELED
-          - NETWORK_UNAVAILABLE
-          - SYSTEM_ERROR
-          - CONFIGURATION_INVALID
-          - BAD_AUTH
-          - LICENSE_INVALID
-          - TARGETS_INVALID
-          - ENGINE_UNAVAILABLE
-          - INITIALIZATION_FAILURE
-          - SWAGGER_PARSING_ERROR
-          - DATABASE_TOO_LARGE
-          - INSUFFICIENT_DISK_SPACE
-          - INSUFFICIENT_MEMORY
-          - TOO_MANY_THREADS
-          - RASP_FAILURE
-          - BOOTSTRAP_AUTHENTICATION_FAILURE
-          - REPORT_GENERATION_FAILURE
-          readOnly: true
-        validation:
-          $ref: '#/components/schemas/ScanVerificationResource'
-        scan_type:
-          type: string
-          description: The type of Scan
-          enum:
-          - REGULAR
-          - VERIFICATION
-          - INCREMENTAL
-          example: VERIFICATION
-        specialized_scan_parameters:
-          $ref: '#/components/schemas/SpecializedScanParamsResource'
-      required:
-      - scan_config
-      title: Scan
-    ScanStateActionResource:
-      properties:
-        action:
-          type: string
-          enum:
-          - PAUSE
-          - RESUME
-          - STOP
-          - AUTHENTICATE
-          - CANCEL
-      required:
-      - action
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+      readOnly: true
     Link:
       properties:
         rel:
@@ -1155,11 +899,267 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    ScanVerificationResource:
-      description: The Validation resource. Should not be included if a Specialized Scan Parameters Resource has been provided.
-      example:
-        parent_scan_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+    ScanSubmitter:
+      description: The submitter of the Scan
       properties:
-        parent_scan_id:
+        type:
+          type: string
+          description: The type of submitter
+          enum:
+          - USER
+          - SCHEDULE
+          - ORGANIZATION
+          readOnly: true
+        id:
           type: string
           format: uuid
+          description: The ID of the submitter
+          readOnly: true
+      readOnly: true
+      title: ScanSubmitter
+    PageScan:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelScan'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    ScanStateActionResource:
+      properties:
+        action:
+          type: string
+          enum:
+          - PAUSE
+          - RESUME
+          - STOP
+          - AUTHENTICATE
+          - CANCEL
+      required:
+      - action
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    LogEvent:
+      properties:
+        time:
+          type: string
+          description: The time at which the log event occurred
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        event:
+          type: string
+          description: The log event
+          readOnly: true
+      title: LogEvent
+    EntityModelScan:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        scan_config:
+          $ref: '#/components/schemas/scan_config'
+        submitter:
+          $ref: '#/components/schemas/ScanSubmitter'
+        submit_time:
+          type: string
+          description: The time the Scan was submitted
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        completion_time:
+          type: string
+          description: The time the Scan was completed
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        status:
+          type: string
+          description: The status of the Scan
+          enum:
+          - PENDING
+          - QUEUED
+          - PROVISIONING
+          - RUNNING
+          - SCANNED
+          - PROCESSED
+          - COMPLETE
+          - PAUSED
+          - BLACKED_OUT
+          - AWAITING_AUTHENTICATION
+          - AUTHENTICATED
+          - PAUSING
+          - RESUMING
+          - STOPPING
+          - CANCELING
+          - AUTHENTICATING
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Scan may have failed
+          enum:
+          - CANCELED
+          - NETWORK_UNAVAILABLE
+          - SYSTEM_ERROR
+          - CONFIGURATION_INVALID
+          - BAD_AUTH
+          - LICENSE_INVALID
+          - TARGETS_INVALID
+          - ENGINE_UNAVAILABLE
+          - INITIALIZATION_FAILURE
+          - SWAGGER_PARSING_ERROR
+          - DATABASE_TOO_LARGE
+          - INSUFFICIENT_DISK_SPACE
+          - INSUFFICIENT_MEMORY
+          - TOO_MANY_THREADS
+          - RASP_FAILURE
+          - BOOTSTRAP_AUTHENTICATION_FAILURE
+          - REPORT_GENERATION_FAILURE
+          readOnly: true
+        validation:
+          $ref: '#/components/schemas/ScanVerificationResource'
+        scan_type:
+          type: string
+          description: The type of Scan
+          enum:
+          - REGULAR
+          - VERIFICATION
+          - INCREMENTAL
+          example: VERIFICATION
+        specialized_scan_parameters:
+          $ref: '#/components/schemas/SpecializedScanParamsResource'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - scan_config
+    scan_config:
+      description: The Scan Config used when the Scan was submitted, must be associated with the App specified for this Scan
+      properties:
+        id:
+          type: string
+          format: uuid
+    Scan:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Scan
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        scan_config:
+          $ref: '#/components/schemas/scan_config'
+        submitter:
+          $ref: '#/components/schemas/ScanSubmitter'
+        submit_time:
+          type: string
+          description: The time the Scan was submitted
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        completion_time:
+          type: string
+          description: The time the Scan was completed
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        status:
+          type: string
+          description: The status of the Scan
+          enum:
+          - PENDING
+          - QUEUED
+          - PROVISIONING
+          - RUNNING
+          - SCANNED
+          - PROCESSED
+          - COMPLETE
+          - PAUSED
+          - BLACKED_OUT
+          - AWAITING_AUTHENTICATION
+          - AUTHENTICATED
+          - PAUSING
+          - RESUMING
+          - STOPPING
+          - CANCELING
+          - AUTHENTICATING
+          - FAILED
+          readOnly: true
+        failure_reason:
+          type: string
+          description: The reason the Scan may have failed
+          enum:
+          - CANCELED
+          - NETWORK_UNAVAILABLE
+          - SYSTEM_ERROR
+          - CONFIGURATION_INVALID
+          - BAD_AUTH
+          - LICENSE_INVALID
+          - TARGETS_INVALID
+          - ENGINE_UNAVAILABLE
+          - INITIALIZATION_FAILURE
+          - SWAGGER_PARSING_ERROR
+          - DATABASE_TOO_LARGE
+          - INSUFFICIENT_DISK_SPACE
+          - INSUFFICIENT_MEMORY
+          - TOO_MANY_THREADS
+          - RASP_FAILURE
+          - BOOTSTRAP_AUTHENTICATION_FAILURE
+          - REPORT_GENERATION_FAILURE
+          readOnly: true
+        validation:
+          $ref: '#/components/schemas/ScanVerificationResource'
+        scan_type:
+          type: string
+          description: The type of Scan
+          enum:
+          - REGULAR
+          - VERIFICATION
+          - INCREMENTAL
+          example: VERIFICATION
+        specialized_scan_parameters:
+          $ref: '#/components/schemas/SpecializedScanParamsResource'
+      required:
+      - scan_config
+      title: Scan
