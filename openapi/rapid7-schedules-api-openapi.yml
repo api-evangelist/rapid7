@@ -452,6 +452,30 @@ components:
           format: uuid
       required:
       - id
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    PageSchedule:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelSchedule'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -572,30 +596,6 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
-    PageSchedule:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelSchedule'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
     frequency:
       description: The frequency describes how (and if) the Schedule should repeat. Should not be included if a rrule has been provided.
       properties:
@@ -648,24 +648,6 @@ components:
           type: string
           description: Details of the validation error
           readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
     EntityModelSchedule:
       properties:
         id:
@@ -706,6 +688,24 @@ components:
       - first_start
       - name
       - scan_config
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
     Schedule:
       properties:
         id:

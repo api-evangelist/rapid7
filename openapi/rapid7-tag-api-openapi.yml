@@ -1247,6 +1247,81 @@ paths:
       security: []
 components:
   schemas:
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
     ReferencesWith_SiteID_Link:
       type: object
       properties:
@@ -1310,6 +1385,20 @@ components:
           example: custom
           description: The type of the tag.
       description: ''
+    TaggedAssetReferences:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            $ref: '#/components/schemas/TagLink'
+      description: ''
     SwaggerSearchCriteriaFilter:
       type: object
       properties:
@@ -1339,27 +1428,7 @@ components:
           items:
             type: object
       description: ''
-    TagLink:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 78
-          description: The identifier of the tagged asset.
-        sources:
-          type: array
-          description: The source(s) by which a tag is-applied to an asset.
-          items:
-            type: string
-            enum:
-            - site
-            - asset-group
-            - criteria
-            - tag
-            - unknown
-      description: ''
-    TaggedAssetReferences:
+    Links:
       type: object
       properties:
         links:
@@ -1367,13 +1436,8 @@ components:
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            $ref: '#/components/schemas/TagLink'
       description: ''
-    InternalServerError:
+    BadRequestError:
       type: object
       required:
       - status
@@ -1389,64 +1453,10 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '500'
+          example: '400'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '500'
-      description: ''
-    PageOf_Tag:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/Tag'
-      description: ''
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    ReferencesWith_AssetGroupID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
+          - '400'
       description: ''
     ServiceUnavailableError:
       type: object
@@ -1469,82 +1479,38 @@ components:
           enum:
           - '503'
       description: ''
-    NotFoundError:
+    ReferencesWith_AssetGroupID_Link:
       type: object
-      required:
-      - status
       properties:
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
       description: ''
-    ReferenceWith_TagID_Link:
+    PageOf_Tag:
       type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: <id>
-          description: The identifier of the resource.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
       properties:
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    BadRequestError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
           type: array
-          description: Hypermedia links to corresponding or related resources.
+          description: The page of resources returned.
           items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '400'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '400'
+            $ref: '#/components/schemas/Tag'
       description: ''
     PageInfo:
       type: object
@@ -1569,6 +1535,40 @@ components:
           format: int64
           example: 123
           description: The total number of resources available across all pages.
+      description: ''
+    ReferenceWith_TagID_Link:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: <id>
+          description: The identifier of the resource.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    TagLink:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 78
+          description: The identifier of the tagged asset.
+        sources:
+          type: array
+          description: The source(s) by which a tag is-applied to an asset.
+          items:
+            type: string
+            enum:
+            - site
+            - asset-group
+            - criteria
+            - tag
+            - unknown
       description: ''
     SearchCriteria:
       type: object

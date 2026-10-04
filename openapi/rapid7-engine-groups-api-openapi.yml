@@ -405,26 +405,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    EngineGroup:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Engine Group
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Engine Group
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the Engine Group
-          maxLength: 2000
-          minLength: 0
-      required:
-      - name
-      title: EngineGroup
     Error:
       properties:
         status:
@@ -539,6 +519,50 @@ components:
           - E999
           readOnly: true
       title: Error
+    Link:
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    EngineGroup:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Engine Group
+          readOnly: true
+        name:
+          type: string
+          description: The name of the Engine Group
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the Engine Group
+          maxLength: 2000
+          minLength: 0
+      required:
+      - name
+      title: EngineGroup
+    PageEngineGroup:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelEngineGroup'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -659,17 +683,6 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
     PageEngine:
       properties:
         data:
@@ -683,6 +696,41 @@ components:
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
     engine_group:
       description: The Engine Group the Engine is assigned to
       properties:
@@ -734,30 +782,6 @@ components:
       - auto_upgrade
       - name
       title: Engine
-    EntityModelEngineGroup:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Engine Group
-          readOnly: true
-        name:
-          type: string
-          description: The name of the Engine Group
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the Engine Group
-          maxLength: 2000
-          minLength: 0
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - name
     EntityModelEngine:
       properties:
         id:
@@ -814,51 +838,27 @@ components:
       required:
       - auto_upgrade
       - name
-    ValidationError:
+    EntityModelEngineGroup:
       properties:
-        type:
+        id:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
+          format: uuid
+          description: The ID of the Engine Group
           readOnly: true
-        context:
+        name:
           type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
+          description: The name of the Engine Group
+          maxLength: 200
+          minLength: 1
+        description:
           type: string
-          description: Details of the validation error
-          readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    PageEngineGroup:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelEngineGroup'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
+          description: The description of the Engine Group
+          maxLength: 2000
+          minLength: 0
         links:
           type: array
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
+      required:
+      - name

@@ -217,46 +217,6 @@ components:
           - E999
           readOnly: true
       title: Error
-    PageObject:
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    SearchRequest:
-      properties:
-        type:
-          type: string
-          description: The type of resource to Search
-          enum:
-          - APP
-          - SCAN
-          - SCAN_CONFIG
-          - VULNERABILITY
-          - VULNERABILITY_DISCOVERY
-          - ATTACK_TEMPLATE
-          - TARGET
-          - ENGINE
-          - ENGINE_GROUP
-          - SCHEDULE
-          - BLACKOUT
-          - FILE
-          - TAG
-          - REPORT
-        query:
-          type: string
-          description: The query for the Search
-      required:
-      - query
-      - type
-      title: SearchRequest
     Link:
       properties:
         rel:
@@ -388,6 +348,19 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    PageObject:
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
     ValidationError:
       properties:
         type:
@@ -423,3 +396,30 @@ components:
           format: int64
         page_token:
           type: string
+    SearchRequest:
+      properties:
+        type:
+          type: string
+          description: The type of resource to Search
+          enum:
+          - APP
+          - SCAN
+          - SCAN_CONFIG
+          - VULNERABILITY
+          - VULNERABILITY_DISCOVERY
+          - ATTACK_TEMPLATE
+          - TARGET
+          - ENGINE
+          - ENGINE_GROUP
+          - SCHEDULE
+          - BLACKOUT
+          - FILE
+          - TAG
+          - REPORT
+        query:
+          type: string
+          description: The query for the Search
+      required:
+      - query
+      - type
+      title: SearchRequest

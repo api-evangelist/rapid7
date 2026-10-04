@@ -394,71 +394,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse3'
 components:
   schemas:
-    ClosedInvestigations:
-      type: object
-      properties:
-        ids:
-          type: array
-          description: The IDs of the investigations that were closed by the request.
-          example:
-          - 581134c9-2510-4010-865c-7ae81761315b
-          - 114c706d-e64a-4731-997b-9115beef3026
-          items:
-            type: string
-          uniqueItems: true
-        num_closed:
-          type: integer
-          format: int32
-          description: The number of investigations closed by the request.
-          example: 2
-      required:
-      - ids
-      - num_closed
-    AlertInfo:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The alert's type.
-          example: Account Created
-        type_description:
-          type: string
-          description: An optional description of this type of alert.
-          example: A new account has been created.
-        first_event_time:
-          type: string
-          description: The time the first event involved in this alert occurred.
-          example: '2018-06-06T16:56:42Z'
-      required:
-      - type
-    Assignee:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the assigned user.
-          example: Ellen Example
-        email:
-          type: string
-          description: The email of the assigned user.
-          example: example@test.com
-      required:
-      - email
-      - name
-    PageInvestigation:
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match, this will be an empty list.
-          items:
-            $ref: '#/components/schemas/Investigation'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata3'
-          description: 'The pagination parameters used to generate this page result. '
-      required:
-      - data
-      - metadata
     AssignUserToInvestigationRequest:
       type: object
       description: Details about which user to assign.
@@ -548,19 +483,20 @@ components:
       - source
       - status
       - title
-    ErrorResponse3:
+    Assignee:
       type: object
       properties:
-        message:
+        name:
           type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
+          description: The name of the assigned user.
+          example: Ellen Example
+        email:
           type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: An identifier that uniquely identifies the failed request.
+          description: The email of the assigned user.
+          example: example@test.com
       required:
-      - message
+      - email
+      - name
     BulkCloseInvestigationsRequest:
       type: object
       description: The criteria for what investigations to close.
@@ -596,6 +532,70 @@ components:
       - from
       - source
       - to
+    ClosedInvestigations:
+      type: object
+      properties:
+        ids:
+          type: array
+          description: The IDs of the investigations that were closed by the request.
+          example:
+          - 581134c9-2510-4010-865c-7ae81761315b
+          - 114c706d-e64a-4731-997b-9115beef3026
+          items:
+            type: string
+          uniqueItems: true
+        num_closed:
+          type: integer
+          format: int32
+          description: The number of investigations closed by the request.
+          example: 2
+      required:
+      - ids
+      - num_closed
+    PageInvestigation:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match, this will be an empty list.
+          items:
+            $ref: '#/components/schemas/Investigation'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata3'
+          description: 'The pagination parameters used to generate this page result. '
+      required:
+      - data
+      - metadata
+    AlertInfo:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The alert's type.
+          example: Account Created
+        type_description:
+          type: string
+          description: An optional description of this type of alert.
+          example: A new account has been created.
+        first_event_time:
+          type: string
+          description: The time the first event involved in this alert occurred.
+          example: '2018-06-06T16:56:42Z'
+      required:
+      - type
+    ErrorResponse3:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: An identifier that uniquely identifies the failed request.
+      required:
+      - message
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

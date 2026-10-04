@@ -511,19 +511,6 @@ components:
       properties:
         reason:
           type: string
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     ThreatUpdateResult:
       required:
       - threat
@@ -539,6 +526,19 @@ components:
           - invalid
           items:
             type: string
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     Threat:
       required:
       - indicator_count

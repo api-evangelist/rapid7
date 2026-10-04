@@ -436,45 +436,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse1'
 components:
   schemas:
-    Attachment:
-      type: object
-      properties:
-        rrn:
-          $ref: '#/components/schemas/RRN'
-          description: The RRN of the attachment.
-          example: rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
-        creator:
-          $ref: '#/components/schemas/Creator'
-          description: Who or what created the resource.
-        created_time:
-          type: string
-          description: The time the attachment was created as an ISO formatted timestamp.
-          example: '2018-06-06T16:56:42Z'
-        file_name:
-          type: string
-          description: The original filename of the uploaded attachment.
-          example: screenshot.png
-        mime_type:
-          type: string
-          description: The mime type of the attachment.
-          example: image/png
-        size:
-          type: integer
-          format: int64
-          description: The size in bytes of the attachment.
-          example: 12345
-        scan_status:
-          type: string
-          description: The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.
-          example: CLEAN
-      required:
-      - created_time
-      - creator
-      - file_name
-      - mime_type
-      - rrn
-      - scan_status
-      - size
     Creator:
       type: object
       properties:
@@ -493,6 +454,34 @@ components:
       required:
       - name
       - type
+    PageMetadata1:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: The 0 based index of the page retrieved.
+          example: 0
+        size:
+          type: integer
+          format: int32
+          description: The size of the page requested.
+          example: 20
+        total_pages:
+          type: integer
+          format: int32
+          description: The total number of pages available with the given filter parameters.
+          example: 1
+        total_data:
+          type: integer
+          format: int64
+          description: The total number of results available with the given filter parameters.
+          example: 15
+      required:
+      - index
+      - size
+      - total_data
+      - total_pages
     RRN:
       type: object
       properties:
@@ -533,6 +522,45 @@ components:
           items:
             type: string
             format: binary
+    Attachment:
+      type: object
+      properties:
+        rrn:
+          $ref: '#/components/schemas/RRN'
+          description: The RRN of the attachment.
+          example: rrn:collaboration::orgId_123:attachment:d7812988-f171-4164-9309-65c32d5da28f
+        creator:
+          $ref: '#/components/schemas/Creator'
+          description: Who or what created the resource.
+        created_time:
+          type: string
+          description: The time the attachment was created as an ISO formatted timestamp.
+          example: '2018-06-06T16:56:42Z'
+        file_name:
+          type: string
+          description: The original filename of the uploaded attachment.
+          example: screenshot.png
+        mime_type:
+          type: string
+          description: The mime type of the attachment.
+          example: image/png
+        size:
+          type: integer
+          format: int64
+          description: The size in bytes of the attachment.
+          example: 12345
+        scan_status:
+          type: string
+          description: The scan status of the attachment, indicating whether the attachment has been scanned and, if so, the result. INFECTED or PENDING attachments may not be downloaded.
+          example: CLEAN
+      required:
+      - created_time
+      - creator
+      - file_name
+      - mime_type
+      - rrn
+      - scan_status
+      - size
     ErrorResponse1:
       type: object
       properties:
@@ -546,34 +574,6 @@ components:
           example: An identifier that uniquely identifies the failed request.
       required:
       - message
-    PageMetadata1:
-      type: object
-      properties:
-        index:
-          type: integer
-          format: int32
-          description: The 0 based index of the page retrieved.
-          example: 0
-        size:
-          type: integer
-          format: int32
-          description: The size of the page requested.
-          example: 20
-        total_pages:
-          type: integer
-          format: int32
-          description: The total number of pages available with the given filter parameters.
-          example: 1
-        total_data:
-          type: integer
-          format: int64
-          description: The total number of results available with the given filter parameters.
-          example: 15
-      required:
-      - index
-      - size
-      - total_data
-      - total_pages
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

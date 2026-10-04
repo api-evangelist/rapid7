@@ -599,14 +599,6 @@ components:
           - E999
           readOnly: true
       title: Error
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
     Link:
       properties:
         rel:
@@ -738,6 +730,40 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    ReadOnlyIdResource:
+      description: The ID of the module
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+      readOnly: true
+    ReferenceResource:
+      description: The last editor of the comment
+      properties:
+        id:
+          type: string
+          format: uuid
+      readOnly: true
+      required:
+      - id
     PageReport:
       properties:
         data:
@@ -833,38 +859,6 @@ components:
           format: int64
         page_token:
           type: string
-    app:
-      description: The App that the Scan is associated with
-      properties:
-        id:
-          type: string
-          format: uuid
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    ReferenceResource:
-      description: The last editor of the comment
-      properties:
-        id:
-          type: string
-          format: uuid
-      readOnly: true
-      required:
-      - id
     ReportGeneration:
       properties:
         name:
@@ -925,6 +919,12 @@ components:
       - name
       - type
       title: Report Generation
+    app:
+      description: The App that the Scan is associated with
+      properties:
+        id:
+          type: string
+          format: uuid
     scan:
       description: The Scan associated with the Report
       properties:

@@ -723,26 +723,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    App:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the App
-          readOnly: true
-        name:
-          type: string
-          description: The name of the App
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the App
-          maxLength: 2000
-          minLength: 0
-      required:
-      - name
-      title: App
     Error:
       properties:
         status:
@@ -865,19 +845,22 @@ components:
           format: uuid
       required:
       - id
-    PageApp:
+    Link:
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelApp'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
+    IdResource:
+      properties:
+        id:
+          type: string
+          format: uuid
     Tag:
       properties:
         id:
@@ -900,30 +883,19 @@ components:
       required:
       - name
       title: Tag
-    EntityModelApp:
+    PageApp:
       properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the App
-          readOnly: true
-        name:
-          type: string
-          description: The name of the App
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the App
-          maxLength: 2000
-          minLength: 0
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelApp'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
         links:
           type: array
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
-      required:
-      - name
     ValidationErrors:
       properties:
         status:
@@ -1044,30 +1016,26 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Link:
+    App:
       properties:
-        rel:
+        id:
           type: string
-        href:
-          type: string
-        profile:
-          type: string
+          format: uuid
+          description: The ID of the App
+          readOnly: true
         name:
           type: string
-      readOnly: true
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
+          description: The name of the App
+          maxLength: 200
+          minLength: 1
+        description:
           type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
-    IdResource:
-      properties:
-        id:
-          type: string
-          format: uuid
+          description: The description of the App
+          maxLength: 2000
+          minLength: 0
+      required:
+      - name
+      title: App
     ValidationError:
       properties:
         type:
@@ -1112,3 +1080,35 @@ components:
           format: int64
         page_token:
           type: string
+    ReadOnlyIdResource:
+      description: The ID of the module
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+      readOnly: true
+    EntityModelApp:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the App
+          readOnly: true
+        name:
+          type: string
+          description: The name of the App
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the App
+          maxLength: 2000
+          minLength: 0
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+      required:
+      - name

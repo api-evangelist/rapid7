@@ -696,58 +696,6 @@ components:
           - E999
           readOnly: true
       title: Error
-    Exchange:
-      description: The HTTP exchange executed as part of the attack
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Exchange
-          readOnly: true
-        request:
-          type: string
-          description: The critical section of the request payload
-          readOnly: true
-        response:
-          type: string
-          description: The critical section of the response payload
-          readOnly: true
-      readOnly: true
-      title: Exchange
-    PageVulnerabilityDiscovery:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelVulnerabilityDiscovery'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    PageVulnerability:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelVulnerability'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
     Link:
       properties:
         rel:
@@ -759,6 +707,152 @@ components:
         name:
           type: string
       readOnly: true
+    Variance:
+      description: Evidence found that indicates the presence of a Vulnerability
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Variance
+          readOnly: true
+        original_value:
+          type: string
+          description: The value of a variable prior to being attacked
+          readOnly: true
+        original_exchange:
+          $ref: '#/components/schemas/Exchange'
+        module:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        attack:
+          $ref: '#/components/schemas/StringReferenceResource'
+        attack_value:
+          type: string
+          description: The value of a variable used to attack
+          readOnly: true
+        message:
+          type: string
+          description: A message that may highlight the result of the attack
+          readOnly: true
+        proof:
+          type: string
+          description: A proof that may highlight the result of the attack
+          readOnly: true
+        references:
+          type: object
+          additionalProperties:
+            type: string
+            description: ${public-api.docs.models.vulnerability.properties.variance.references}
+            readOnly: true
+          description: ${public-api.docs.models.vulnerability.properties.variance.references}
+          readOnly: true
+        attack_exchanges:
+          type: array
+          description: The HTTP exchange executed as part of the attack
+          items:
+            $ref: '#/components/schemas/Exchange'
+          readOnly: true
+        proof_description:
+          type: string
+          description: A description of the proof that may highlight the result of the attack
+          readOnly: true
+      readOnly: true
+      title: Variance
+    EntityModelVulnerability:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Vulnerability
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        root_cause:
+          $ref: '#/components/schemas/RootCause'
+        severity:
+          type: string
+          description: The severity of the Vulnerability
+          enum:
+          - SAFE
+          - INFORMATIONAL
+          - LOW
+          - MEDIUM
+          - HIGH
+          - CRITICAL
+        status:
+          type: string
+          description: The status of the Vulnerability
+          enum:
+          - UNREVIEWED
+          - FALSE_POSITIVE
+          - VERIFIED
+          - IGNORED
+          - REMEDIATED
+          - DUPLICATE
+        first_discovered:
+          type: string
+          description: The time the Vulnerability was first discovered
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        last_discovered:
+          type: string
+          description: The time the Vulnerability was last discovered
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+        newly_discovered:
+          type: boolean
+          description: 'Indicates that the vulnerability has been found in the latest scan and has not been discovered before '
+          readOnly: true
+        variances:
+          type: array
+          description: Evidence found that indicates the presence of a Vulnerability
+          items:
+            $ref: '#/components/schemas/Variance'
+          readOnly: true
+        vector_string:
+          type: string
+          description: Textual representation of the metric values used to determine the CVSS score
+          readOnly: true
+        vulnerability_score:
+          type: number
+          format: double
+          description: CVSS score which represents the severity of an information security vulnerability
+          readOnly: true
+        insight_ui_url:
+          type: string
+          description: Direct link to the Vulnerability on InsightAppSec UI. <b>Require InsightAppSec login before use.<b>
+          readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          description: ${public-api.docs.models.vulnerability.properties.updated-time}
+          readOnly: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    StringReferenceResource:
+      description: The ID of the attack
+      properties:
+        id:
+          type: string
+      readOnly: true
+    ModuleMetadata:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the module
+          readOnly: true
+        name:
+          type: string
+          description: The name of the module
+          readOnly: true
+        description:
+          type: string
+          description: The description of the module
+          readOnly: true
+      title: ModuleMetadata
     ValidationErrors:
       properties:
         status:
@@ -879,31 +973,6 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    AttackMetadata:
-      properties:
-        id:
-          type: string
-          description: The ID of the attack
-          readOnly: true
-        type:
-          type: string
-          description: The type of the attack
-          readOnly: true
-        class:
-          type: string
-          description: The class of the attack
-          readOnly: true
-        description:
-          type: string
-          description: The description of the attack
-          readOnly: true
-      title: AttackMetadata
-    StringReferenceResource:
-      description: The ID of the attack
-      properties:
-        id:
-          type: string
-      readOnly: true
     Vulnerability:
       properties:
         id:
@@ -974,6 +1043,73 @@ components:
           description: ${public-api.docs.models.vulnerability.properties.updated-time}
           readOnly: true
       title: Vulnerability
+    PageVulnerabilityDiscovery:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelVulnerabilityDiscovery'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    Exchange:
+      description: The HTTP exchange executed as part of the attack
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the Exchange
+          readOnly: true
+        request:
+          type: string
+          description: The critical section of the request payload
+          readOnly: true
+        response:
+          type: string
+          description: The critical section of the response payload
+          readOnly: true
+      readOnly: true
+      title: Exchange
+    RootCause:
+      description: A descriptor for the location of the Vulnerability
+      properties:
+        url:
+          type: string
+          description: The URL
+          readOnly: true
+        parameter:
+          type: string
+          description: The parameter from the URL
+          readOnly: true
+        method:
+          type: string
+          description: The HTTP method
+          readOnly: true
+      readOnly: true
+      title: RootCause
+    AttackMetadata:
+      properties:
+        id:
+          type: string
+          description: The ID of the attack
+          readOnly: true
+        type:
+          type: string
+          description: The type of the attack
+          readOnly: true
+        class:
+          type: string
+          description: The class of the attack
+          readOnly: true
+        description:
+          type: string
+          description: The description of the attack
+          readOnly: true
+      title: AttackMetadata
     EntityModelVulnerabilityDiscovery:
       properties:
         id:
@@ -995,91 +1131,40 @@ components:
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
-    ModuleMetadata:
+    ReadOnlyIdResource:
+      description: The ID of the module
       properties:
         id:
           type: string
           format: uuid
-          description: The ID of the module
           readOnly: true
-        name:
-          type: string
-          description: The name of the module
-          readOnly: true
-        description:
-          type: string
-          description: The description of the module
-          readOnly: true
-      title: ModuleMetadata
-    EntityModelVulnerability:
+      readOnly: true
+    PageMetadata:
       properties:
-        id:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
           type: string
-          format: uuid
-          description: The ID of the Vulnerability
-          readOnly: true
-        app:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        root_cause:
-          $ref: '#/components/schemas/RootCause'
-        severity:
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
           type: string
-          description: The severity of the Vulnerability
-          enum:
-          - SAFE
-          - INFORMATIONAL
-          - LOW
-          - MEDIUM
-          - HIGH
-          - CRITICAL
-        status:
-          type: string
-          description: The status of the Vulnerability
-          enum:
-          - UNREVIEWED
-          - FALSE_POSITIVE
-          - VERIFIED
-          - IGNORED
-          - REMEDIATED
-          - DUPLICATE
-        first_discovered:
-          type: string
-          description: The time the Vulnerability was first discovered
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        last_discovered:
-          type: string
-          description: The time the Vulnerability was last discovered
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-        newly_discovered:
-          type: boolean
-          description: 'Indicates that the vulnerability has been found in the latest scan and has not been discovered before '
-          readOnly: true
-        variances:
+    PageVulnerability:
+      properties:
+        data:
           type: array
-          description: Evidence found that indicates the presence of a Vulnerability
           items:
-            $ref: '#/components/schemas/Variance'
-          readOnly: true
-        vector_string:
-          type: string
-          description: Textual representation of the metric values used to determine the CVSS score
-          readOnly: true
-        vulnerability_score:
-          type: number
-          format: double
-          description: CVSS score which represents the severity of an information security vulnerability
-          readOnly: true
-        insight_ui_url:
-          type: string
-          description: Direct link to the Vulnerability on InsightAppSec UI. <b>Require InsightAppSec login before use.<b>
-          readOnly: true
-        updated_time:
-          type: string
-          format: date-time
-          description: ${public-api.docs.models.vulnerability.properties.updated-time}
-          readOnly: true
+            $ref: '#/components/schemas/EntityModelVulnerability'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
         links:
           type: array
           items:
@@ -1102,74 +1187,6 @@ components:
           type: string
           description: Details of the validation error
           readOnly: true
-    Variance:
-      description: Evidence found that indicates the presence of a Vulnerability
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the Variance
-          readOnly: true
-        original_value:
-          type: string
-          description: The value of a variable prior to being attacked
-          readOnly: true
-        original_exchange:
-          $ref: '#/components/schemas/Exchange'
-        module:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        attack:
-          $ref: '#/components/schemas/StringReferenceResource'
-        attack_value:
-          type: string
-          description: The value of a variable used to attack
-          readOnly: true
-        message:
-          type: string
-          description: A message that may highlight the result of the attack
-          readOnly: true
-        proof:
-          type: string
-          description: A proof that may highlight the result of the attack
-          readOnly: true
-        references:
-          type: object
-          additionalProperties:
-            type: string
-            description: ${public-api.docs.models.vulnerability.properties.variance.references}
-            readOnly: true
-          description: ${public-api.docs.models.vulnerability.properties.variance.references}
-          readOnly: true
-        attack_exchanges:
-          type: array
-          description: The HTTP exchange executed as part of the attack
-          items:
-            $ref: '#/components/schemas/Exchange'
-          readOnly: true
-        proof_description:
-          type: string
-          description: A description of the proof that may highlight the result of the attack
-          readOnly: true
-      readOnly: true
-      title: Variance
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
     AttackDocumentation:
       properties:
         references:
@@ -1189,20 +1206,3 @@ components:
           description: A description of steps which may be taken in order to remediate Vulnerabilities discovered by the attack
           readOnly: true
       title: AttackDocumentation
-    RootCause:
-      description: A descriptor for the location of the Vulnerability
-      properties:
-        url:
-          type: string
-          description: The URL
-          readOnly: true
-        parameter:
-          type: string
-          description: The parameter from the URL
-          readOnly: true
-        method:
-          type: string
-          description: The HTTP method
-          readOnly: true
-      readOnly: true
-      title: RootCause

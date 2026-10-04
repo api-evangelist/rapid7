@@ -675,25 +675,17 @@ components:
           - E999
           readOnly: true
       title: Error
-    LuxorPageable:
+    Link:
       properties:
-        page_token:
+        rel:
           type: string
-        offset:
-          type: integer
-          format: int64
-        sort:
-          $ref: '#/components/schemas/Sort'
-        page_size:
-          type: integer
-          format: int32
-        page_number:
-          type: integer
-          format: int32
-        paged:
-          type: boolean
-        unpaged:
-          type: boolean
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
     CredentialResource:
       properties:
         api_key:
@@ -820,25 +812,54 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Link:
+    PageEngine:
       properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
-    Sort:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelEngine'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    ValidationError:
       properties:
-        empty:
-          type: boolean
-        unsorted:
-          type: boolean
-        sorted:
-          type: boolean
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
     engine_group:
       description: The Engine Group the Engine is assigned to
       properties:
@@ -890,19 +911,6 @@ components:
       - auto_upgrade
       - name
       title: Engine
-    PageEngine:
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelEngine'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
     EntityModelEngine:
       properties:
         id:
@@ -959,41 +967,25 @@ components:
       required:
       - auto_upgrade
       - name
-    ValidationError:
+    LuxorPageable:
       properties:
-        type:
+        page_token:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
+        offset:
           type: integer
           format: int64
         sort:
-          type: string
-        total_data:
+          $ref: '#/components/schemas/Sort'
+        page_size:
           type: integer
-          format: int64
-        total_pages:
+          format: int32
+        page_number:
           type: integer
-          format: int64
-        page_token:
-          type: string
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
     Engine:
       properties:
         id:
@@ -1046,3 +1038,11 @@ components:
       - auto_upgrade
       - name
       title: Engine
+    Sort:
+      properties:
+        empty:
+          type: boolean
+        unsorted:
+          type: boolean
+        sorted:
+          type: boolean

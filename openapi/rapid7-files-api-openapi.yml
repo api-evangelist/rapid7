@@ -555,14 +555,6 @@ components:
           - E999
           readOnly: true
       title: Error
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
     Link:
       properties:
         rel:
@@ -574,55 +566,6 @@ components:
         name:
           type: string
       readOnly: true
-    File:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the File
-          readOnly: true
-        name:
-          type: string
-          description: The name of the File
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          description: The description of the File
-          maxLength: 2000
-          minLength: 0
-        type:
-          type: string
-          description: The File Type of the File
-          enum:
-          - MACRO
-          - RECORDED_TRAFFIC
-          - SELENIUM
-          - WSDL
-          - SWAGGER
-          - CERTIFICATE
-          - GRAPHQL
-        locked:
-          type: boolean
-          description: The Locked property of the File
-        owner:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        content_available:
-          type: boolean
-          description: If the File Content has been uploaded
-          readOnly: true
-        last_updated_by_user:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        last_updated:
-          type: string
-          description: The time when the File was last updated
-          example: '2021-08-03T14:07:37'
-          readOnly: true
-      required:
-      - locked
-      - name
-      - type
-      title: File
     ValidationErrors:
       properties:
         status:
@@ -756,6 +699,72 @@ components:
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    File:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the File
+          readOnly: true
+        name:
+          type: string
+          description: The name of the File
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          description: The description of the File
+          maxLength: 2000
+          minLength: 0
+        type:
+          type: string
+          description: The File Type of the File
+          enum:
+          - MACRO
+          - RECORDED_TRAFFIC
+          - SELENIUM
+          - WSDL
+          - SWAGGER
+          - CERTIFICATE
+          - GRAPHQL
+        locked:
+          type: boolean
+          description: The Locked property of the File
+        owner:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        content_available:
+          type: boolean
+          description: If the File Content has been uploaded
+          readOnly: true
+        last_updated_by_user:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        last_updated:
+          type: string
+          description: The time when the File was last updated
+          example: '2021-08-03T14:07:37'
+          readOnly: true
+      required:
+      - locked
+      - name
+      - type
+      title: File
     EntityModelFile:
       properties:
         id:
@@ -809,23 +818,14 @@ components:
       - locked
       - name
       - type
-    ValidationError:
+    ReadOnlyIdResource:
+      description: The ID of the module
       properties:
-        type:
+        id:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
+          format: uuid
           readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
+      readOnly: true
     PageMetadata:
       properties:
         index:

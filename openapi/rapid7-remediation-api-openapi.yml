@@ -75,44 +75,6 @@ paths:
       security: []
 components:
   schemas:
-    Fingerprint:
-      type: object
-      properties:
-        description:
-          type: string
-          example: Ubuntu libexpat1 2.1.0-4ubuntu1.2
-          description: The description of the matched fingerprint.
-        family:
-          type: string
-          example: ''
-          description: The family of the matched fingerprint.
-        product:
-          type: string
-          example: libexpat1
-          description: The product of the matched fingerprint.
-        vendor:
-          type: string
-          example: Ubuntu
-          description: The description of the matched fingerprint.
-        version:
-          type: string
-          example: 2.1.0-4ubuntu1.2
-          description: The version of the matched fingerprint.
-      description: ''
-    Resources_MatchedSolution:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/MatchedSolution'
-      description: ''
     InternalServerError:
       type: object
       required:
@@ -133,18 +95,6 @@ components:
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
           - '500'
-      description: ''
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-          example: https://hostname:3780/api/3/...
-          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
-        rel:
-          type: string
-          example: self
-          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
       description: ''
     SolutionMatch:
       type: object
@@ -186,6 +136,39 @@ components:
           - service
           - software
       description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://hostname:3780/api/3/...
+          description: 'A hypertext reference, which is either a URI (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>) or URI template (see <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc6570">RFC 6570</a>). '
+        rel:
+          type: string
+          example: self
+          description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
+      description: ''
     NotFoundError:
       type: object
       required:
@@ -206,27 +189,6 @@ components:
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
           - '404'
-      description: ''
-    ServiceUnavailableError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '503'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '503'
       description: ''
     MatchedSolution:
       type: object
@@ -284,18 +246,6 @@ components:
           - patch
           - unknown
       description: ''
-    AdditionalInformation:
-      type: object
-      properties:
-        html:
-          type: string
-          example: ''
-          description: Hypertext Markup Language (HTML) representation of the content.
-        text:
-          type: string
-          example: ''
-          description: Textual representation of the content.
-      description: ''
     Summary:
       type: object
       properties:
@@ -308,7 +258,7 @@ components:
           example: Upgrade libexpat1
           description: Textual representation of the content.
       description: ''
-    UnauthorizedError:
+    ServiceUnavailableError:
       type: object
       required:
       - status
@@ -324,10 +274,60 @@ components:
           description: The messages indicating the cause or reason for failure.
         status:
           type: string
-          example: '401'
+          example: '503'
           description: The HTTP status code for the error (same as in the HTTP response).
           enum:
-          - '401'
+          - '503'
+      description: ''
+    Resources_MatchedSolution:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/MatchedSolution'
+      description: ''
+    Fingerprint:
+      type: object
+      properties:
+        description:
+          type: string
+          example: Ubuntu libexpat1 2.1.0-4ubuntu1.2
+          description: The description of the matched fingerprint.
+        family:
+          type: string
+          example: ''
+          description: The family of the matched fingerprint.
+        product:
+          type: string
+          example: libexpat1
+          description: The product of the matched fingerprint.
+        vendor:
+          type: string
+          example: Ubuntu
+          description: The description of the matched fingerprint.
+        version:
+          type: string
+          example: 2.1.0-4ubuntu1.2
+          description: The version of the matched fingerprint.
+      description: ''
+    AdditionalInformation:
+      type: object
+      properties:
+        html:
+          type: string
+          example: ''
+          description: Hypertext Markup Language (HTML) representation of the content.
+        text:
+          type: string
+          example: ''
+          description: Textual representation of the content.
       description: ''
     Steps:
       type: object

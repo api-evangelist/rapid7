@@ -768,48 +768,17 @@ components:
           - E999
           readOnly: true
       title: Error
-    EntityModelAttackTemplate:
+    Link:
       properties:
-        id:
+        rel:
           type: string
-          format: uuid
-          description: The ID of the attack template
-          readOnly: true
+        href:
+          type: string
+        profile:
+          type: string
         name:
           type: string
-          description: The name of the attack template
-        description:
-          type: string
-          description: The description of the attack template
-        system_defined:
-          type: boolean
-          description: 'A read-only flag that indicates if the Attack Template is system-defined (immutable) '
-          readOnly: true
-        browser_encoding_enabled:
-          type: boolean
-          description: A flag that is used to enforce browser encoding on all attacks
-        attack_prioritization:
-          type: string
-          description: The Attack Prioritization type
-          enum:
-          - SEQUENTIAL
-          - SMART
-          - RANDOMIZED
-        advanced_attacks_enabled:
-          type: boolean
-          description: A flag to enable advanced Attacks
-        false_positive_regex:
-          type: string
-          description: Regex used to indicate a false positive
-          maxLength: 200
-          minLength: 0
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-      required:
-      - name
+      readOnly: true
     PageAttackTemplate:
       properties:
         data:
@@ -943,57 +912,7 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    AttackModule:
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: The ID of the attack module
-          readOnly: true
-        module_config_id:
-          type: string
-          format: uuid
-          description: The ID of the configuration for the attack module
-        enabled:
-          type: boolean
-          description: A flag to indicate if this module should be enabled
-        parameter_locations:
-          type: array
-          description: The list of parameter locations for this attack module
-          items:
-            type: string
-            description: The list of parameter locations for this attack module
-            enum:
-            - DIRECTORY
-            - FILE
-            - PATH
-            - QUERY
-            - FRAGMENT
-            - POST
-            - HTTP_HEADER
-            - COOKIE
-            - REFERER
-          uniqueItems: true
-        severity:
-          type: string
-          description: The severity that should be used for this attack module
-          enum:
-          - CRITICAL
-          - HIGH
-          - MEDIUM
-          - LOW
-          - INFORMATIONAL
-          - SAFE
-        max_findings:
-          type: integer
-          format: int32
-          description: The maximum findings per attack module
-      required:
-      - max_findings
-      - module_config_id
-      - severity
-      title: AttackModule
-    AttackTemplate:
+    EntityModelAttackTemplate:
       properties:
         id:
           type: string
@@ -1028,20 +947,13 @@ components:
           description: Regex used to indicate a false positive
           maxLength: 200
           minLength: 0
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
       required:
       - name
-      title: AttackTemplate
-    Link:
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-      readOnly: true
     ValidationError:
       properties:
         type:
@@ -1132,3 +1044,91 @@ components:
           format: int64
         page_token:
           type: string
+    AttackModule:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the attack module
+          readOnly: true
+        module_config_id:
+          type: string
+          format: uuid
+          description: The ID of the configuration for the attack module
+        enabled:
+          type: boolean
+          description: A flag to indicate if this module should be enabled
+        parameter_locations:
+          type: array
+          description: The list of parameter locations for this attack module
+          items:
+            type: string
+            description: The list of parameter locations for this attack module
+            enum:
+            - DIRECTORY
+            - FILE
+            - PATH
+            - QUERY
+            - FRAGMENT
+            - POST
+            - HTTP_HEADER
+            - COOKIE
+            - REFERER
+          uniqueItems: true
+        severity:
+          type: string
+          description: The severity that should be used for this attack module
+          enum:
+          - CRITICAL
+          - HIGH
+          - MEDIUM
+          - LOW
+          - INFORMATIONAL
+          - SAFE
+        max_findings:
+          type: integer
+          format: int32
+          description: The maximum findings per attack module
+      required:
+      - max_findings
+      - module_config_id
+      - severity
+      title: AttackModule
+    AttackTemplate:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the attack template
+          readOnly: true
+        name:
+          type: string
+          description: The name of the attack template
+        description:
+          type: string
+          description: The description of the attack template
+        system_defined:
+          type: boolean
+          description: 'A read-only flag that indicates if the Attack Template is system-defined (immutable) '
+          readOnly: true
+        browser_encoding_enabled:
+          type: boolean
+          description: A flag that is used to enforce browser encoding on all attacks
+        attack_prioritization:
+          type: string
+          description: The Attack Prioritization type
+          enum:
+          - SEQUENTIAL
+          - SMART
+          - RANDOMIZED
+        advanced_attacks_enabled:
+          type: boolean
+          description: A flag to enable advanced Attacks
+        false_positive_regex:
+          type: string
+          description: Regex used to indicate a false positive
+          maxLength: 200
+          minLength: 0
+      required:
+      - name
+      title: AttackTemplate

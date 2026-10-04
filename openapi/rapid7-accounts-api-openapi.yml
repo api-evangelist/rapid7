@@ -228,32 +228,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SearchRequest:
-      type: object
-      properties:
-        search:
-          type: array
-          description: The criteria for which entities to return.
-          items:
-            $ref: '#/components/schemas/SearchRequestCriteria'
-        sort:
-          type: array
-          description: The sorting information.
-          items:
-            $ref: '#/components/schemas/SearchRequestSort'
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     UserSummaryV2:
       required:
       - name
@@ -269,6 +243,24 @@ components:
           description: The name for this user.
           example: John Doe
       description: The user this account is associated with.
+    SearchRequestCriteria:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to search within.
+          example: name
+        operator:
+          type: string
+          description: The search operation to perform. All operators are case-insensitive when operating on strings.
+          enum:
+          - EQUALS
+          - CONTAINS
+          - IN
+        value:
+          type: object
+          description: The value to search for.
+      description: The criteria for which entities to return.
     SearchRequestSort:
       type: object
       properties:
@@ -315,37 +307,19 @@ components:
           description: The service to which this account is tied, which is responsible for authenticating this account.
           example: ACTIVE_DIRECTORY
       description: Information about an account
-    PageAccountV2:
+    ErrorResponse:
       required:
-      - data
-      - metadata
+      - message
       type: object
       properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            $ref: '#/components/schemas/AccountV2'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-    SearchRequestCriteria:
-      type: object
-      properties:
-        field:
+        message:
           type: string
-          description: The field to search within.
-          example: name
-        operator:
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
           type: string
-          description: The search operation to perform. All operators are case-insensitive when operating on strings.
-          enum:
-          - EQUALS
-          - CONTAINS
-          - IN
-        value:
-          type: object
-          description: The value to search for.
-      description: The criteria for which entities to return.
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     PageMetadata:
       required:
       - index
@@ -375,6 +349,32 @@ components:
           format: int64
           example: 15
       description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
+    PageAccountV2:
+      required:
+      - data
+      - metadata
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/AccountV2'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+    SearchRequest:
+      type: object
+      properties:
+        search:
+          type: array
+          description: The criteria for which entities to return.
+          items:
+            $ref: '#/components/schemas/SearchRequestCriteria'
+        sort:
+          type: array
+          description: The sorting information.
+          items:
+            $ref: '#/components/schemas/SearchRequestSort'
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

@@ -430,6 +430,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    Page:
+      required:
+      - data
+      - metadata
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            type: object
+            description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     PageMetadata:
       required:
       - index
@@ -459,33 +486,6 @@ components:
           format: int64
           example: 15
       description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
-    Page:
-      required:
-      - data
-      - metadata
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            type: object
-            description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

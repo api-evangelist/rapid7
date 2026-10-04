@@ -1860,6 +1860,90 @@ paths:
       security: []
 components:
   schemas:
+    BadRequestError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '400'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '400'
+      description: ''
+    InternalServerError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '500'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '500'
+      description: ''
+    NotFoundError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '404'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '404'
+      description: ''
+    UnauthorizedError:
+      type: object
+      required:
+      - status
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        message:
+          type: string
+          example: An error has occurred.
+          description: The messages indicating the cause or reason for failure.
+        status:
+          type: string
+          example: '401'
+          description: The HTTP status code for the error (same as in the HTTP response).
+          enum:
+          - '401'
+      description: ''
     Link:
       type: object
       properties:
@@ -1871,100 +1955,6 @@ components:
           type: string
           example: self
           description: The link relation type. This value is one from the <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/rfc5988#section-6.2">Link Relation Type Registry</a> or is the type of resource being linked to.
-      description: ''
-    UserCreateRole:
-      type: object
-      required:
-      - id
-      properties:
-        allAssetGroups:
-          type: boolean
-          example: false
-          description: Whether to grant the user access to all asset groups. Defaults to `false`.
-        allSites:
-          type: boolean
-          example: false
-          description: Whether to grant the user access to all sites. Defaults to `false`.
-        id:
-          type: string
-          example: ''
-          description: The identifier of the role the user is assigned to.
-        superuser:
-          type: boolean
-          example: false
-          description: Whether the user is a superuser. Defaults to `false`.
-      description: ''
-    LocalePreferences:
-      type: object
-      properties:
-        default:
-          type: string
-          example: ''
-          description: The default language to use. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-        reports:
-          type: string
-          example: ''
-          description: The language to use to generate reports. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
-      description: ''
-    AuthenticationSource:
-      type: object
-      properties:
-        external:
-          type: boolean
-          example: false
-          description: Whether the authentication source is external (true) or internal (false).
-        id:
-          type: integer
-          format: int32
-          example: ''
-          description: The identifier of the authentication source.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-        name:
-          type: string
-          example: ''
-          description: The name of the authentication source.
-        type:
-          type: string
-          example: ''
-          description: The type of the authentication source.
-          enum:
-          - normal
-          - kerberos
-          - ldap
-          - saml
-          - admin
-      description: ''
-    Links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    Resources_AuthenticationSource:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/AuthenticationSource'
       description: ''
     User:
       type: object
@@ -2019,143 +2009,19 @@ components:
           description: The privileges and role the user is assigned.
           $ref: '#/components/schemas/UserRole'
       description: ''
-    BadRequestError:
+    CreatedReference_UserID_Link:
       type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '400'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '400'
-      description: ''
-    PageOf_User:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        page:
-          example: ''
-          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
-          $ref: '#/components/schemas/PageInfo'
-        resources:
-          type: array
-          description: The page of resources returned.
-          items:
-            $ref: '#/components/schemas/User'
-      description: ''
-    Privileges:
-      type: object
-      properties:
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          items:
-            type: string
-            enum:
-            - all-permissions
-            - create-reports
-            - configure-global-settings
-            - manage-sites
-            - manage-tags
-            - manage-static-asset-groups
-            - manage-dynamic-asset-groups
-            - manage-scan-templates
-            - manage-report-templates
-            - manage-scan-engines
-            - submit-vulnerability-exceptions
-            - approve-vulnerability-exceptions
-            - delete-vulnerability-exceptions
-            - manage-vuln-investigations
-            - view-vuln-investigations
-            - create-tickets
-            - close-tickets
-            - assign-ticket-assignee
-            - manage-site-access
-            - manage-asset-group-access
-            - manage-report-access
-            - use-restricted-report-sections
-            - manage-policies
-            - view-asset-group-asset-data
-            - manage-asset-group-assets
-            - view-site-asset-data
-            - specify-site-metadata
-            - purge-site-asset-data
-            - specify-scan-targets
-            - assign-scan-engine
-            - assign-scan-template
-            - manage-site-credentials
-            - manage-scan-alerts
-            - schedule-automatic-scans
-            - start-unscheduled-scans
-      description: ''
-    ReferencesWith_AssetGroupID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    CreateAuthenticationSource:
-      type: object
-      required:
-      - type
       properties:
         id:
           type: integer
           format: int32
-          example: ''
-          description: The identifier of the authentication source to use to authenticate the user. The source with the specified identifier must be of the type specified by `type`. If `id` is omitted, then one source of the specified `type` is selected.
-        type:
-          type: string
-          example: ''
-          description: The type of the authentication source to use to authenticate the user.
-      description: ''
-    InternalServerError:
-      type: object
-      required:
-      - status
-      properties:
+          example: 1
+          description: The identifier of the resource created.
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '500'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '500'
       description: ''
     UserEdit:
       type: object
@@ -2213,6 +2079,264 @@ components:
           description: The privileges and role to assign the user.
           $ref: '#/components/schemas/UserCreateRole'
       description: ''
+    ReferencesWith_UserID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    AuthenticationSource:
+      type: object
+      properties:
+        external:
+          type: boolean
+          example: false
+          description: Whether the authentication source is external (true) or internal (false).
+        id:
+          type: integer
+          format: int32
+          example: ''
+          description: The identifier of the authentication source.
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+        name:
+          type: string
+          example: ''
+          description: The name of the authentication source.
+        type:
+          type: string
+          example: ''
+          description: The type of the authentication source.
+          enum:
+          - normal
+          - kerberos
+          - ldap
+          - saml
+          - admin
+      description: ''
+    TokenResource:
+      type: object
+      properties:
+        key:
+          type: string
+          example: ''
+          description: The two-factor authentication token seed (key).
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    CreateAuthenticationSource:
+      type: object
+      required:
+      - type
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: ''
+          description: The identifier of the authentication source to use to authenticate the user. The source with the specified identifier must be of the type specified by `type`. If `id` is omitted, then one source of the specified `type` is selected.
+        type:
+          type: string
+          example: ''
+          description: The type of the authentication source to use to authenticate the user.
+      description: ''
+    Resources_Role:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/Role'
+      description: ''
+    ReferencesWith_AssetGroupID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    PageInfo:
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+          example: 6
+          description: The index (zero-based) of the current page returned.
+        size:
+          type: integer
+          format: int64
+          example: 10
+          description: The maximum size of the page returned.
+        totalPages:
+          type: integer
+          format: int64
+          example: 13
+          description: The total number of pages available.
+        totalResources:
+          type: integer
+          format: int64
+          example: 123
+          description: The total number of resources available across all pages.
+      description: ''
+    UserCreateRole:
+      type: object
+      required:
+      - id
+      properties:
+        allAssetGroups:
+          type: boolean
+          example: false
+          description: Whether to grant the user access to all asset groups. Defaults to `false`.
+        allSites:
+          type: boolean
+          example: false
+          description: Whether to grant the user access to all sites. Defaults to `false`.
+        id:
+          type: string
+          example: ''
+          description: The identifier of the role the user is assigned to.
+        superuser:
+          type: boolean
+          example: false
+          description: Whether the user is a superuser. Defaults to `false`.
+      description: ''
+    LocalePreferences:
+      type: object
+      properties:
+        default:
+          type: string
+          example: ''
+          description: The default language to use. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        reports:
+          type: string
+          example: ''
+          description: The language to use to generate reports. The format is a <a target="_blank" rel="noopener noreferrer" href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> language tag.
+      description: ''
+    PageOf_User:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        page:
+          example: ''
+          description: The details of pagination indicating which page was returned, and how the remaining pages can be retrieved.
+          $ref: '#/components/schemas/PageInfo'
+        resources:
+          type: array
+          description: The page of resources returned.
+          items:
+            $ref: '#/components/schemas/User'
+      description: ''
+    ReferencesWith_SiteID_Link:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          description: The identifiers of the associated resources.
+          items:
+            type: integer
+            format: int32
+      description: ''
+    Links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: Hypermedia links to corresponding or related resources.
+          items:
+            $ref: '#/components/schemas/Link'
+      description: ''
+    Privileges:
+      type: object
+      properties:
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        resources:
+          type: array
+          items:
+            type: string
+            enum:
+            - all-permissions
+            - create-reports
+            - configure-global-settings
+            - manage-sites
+            - manage-tags
+            - manage-static-asset-groups
+            - manage-dynamic-asset-groups
+            - manage-scan-templates
+            - manage-report-templates
+            - manage-scan-engines
+            - submit-vulnerability-exceptions
+            - approve-vulnerability-exceptions
+            - delete-vulnerability-exceptions
+            - manage-vuln-investigations
+            - view-vuln-investigations
+            - create-tickets
+            - close-tickets
+            - assign-ticket-assignee
+            - manage-site-access
+            - manage-asset-group-access
+            - manage-report-access
+            - use-restricted-report-sections
+            - manage-policies
+            - view-asset-group-asset-data
+            - manage-asset-group-assets
+            - view-site-asset-data
+            - specify-site-metadata
+            - purge-site-asset-data
+            - specify-scan-targets
+            - assign-scan-engine
+            - assign-scan-template
+            - manage-site-credentials
+            - manage-scan-alerts
+            - schedule-automatic-scans
+            - start-unscheduled-scans
+      description: ''
     ServiceUnavailableError:
       type: object
       required:
@@ -2234,26 +2358,19 @@ components:
           enum:
           - '503'
       description: ''
-    NotFoundError:
+    Resources_AuthenticationSource:
       type: object
-      required:
-      - status
       properties:
         links:
           type: array
           description: Hypermedia links to corresponding or related resources.
           items:
             $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '404'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '404'
+        resources:
+          type: array
+          description: The resources returned.
+          items:
+            $ref: '#/components/schemas/AuthenticationSource'
       description: ''
     Role:
       type: object
@@ -2386,123 +2503,6 @@ components:
           type: boolean
           example: false
           description: Whether the user is a superuser.
-      description: ''
-    ReferencesWith_SiteID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    TokenResource:
-      type: object
-      properties:
-        key:
-          type: string
-          example: ''
-          description: The two-factor authentication token seed (key).
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    CreatedReference_UserID_Link:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 1
-          description: The identifier of the resource created.
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-      description: ''
-    Resources_Role:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The resources returned.
-          items:
-            $ref: '#/components/schemas/Role'
-      description: ''
-    ReferencesWith_UserID_Link:
-      type: object
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        resources:
-          type: array
-          description: The identifiers of the associated resources.
-          items:
-            type: integer
-            format: int32
-      description: ''
-    UnauthorizedError:
-      type: object
-      required:
-      - status
-      properties:
-        links:
-          type: array
-          description: Hypermedia links to corresponding or related resources.
-          items:
-            $ref: '#/components/schemas/Link'
-        message:
-          type: string
-          example: An error has occurred.
-          description: The messages indicating the cause or reason for failure.
-        status:
-          type: string
-          example: '401'
-          description: The HTTP status code for the error (same as in the HTTP response).
-          enum:
-          - '401'
-      description: ''
-    PageInfo:
-      type: object
-      properties:
-        number:
-          type: integer
-          format: int64
-          example: 6
-          description: The index (zero-based) of the current page returned.
-        size:
-          type: integer
-          format: int64
-          example: 10
-          description: The maximum size of the page returned.
-        totalPages:
-          type: integer
-          format: int64
-          example: 13
-          description: The total number of pages available.
-        totalResources:
-          type: integer
-          format: int64
-          example: 123
-          description: The total number of resources available across all pages.
       description: ''
   securitySchemes:
     Basic:

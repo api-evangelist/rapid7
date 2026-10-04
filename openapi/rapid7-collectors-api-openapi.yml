@@ -130,6 +130,19 @@ components:
           description: Optional indication of how the collector is deployed.
           example: kubernetes
       description: Request body for creating a collector
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
+          type: string
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     AddCollectorResponse:
       required:
       - id
@@ -148,19 +161,6 @@ components:
           description: The name of this collector.
           example: My Collector
       description: Response from creating a collector
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     RRN1:
       type: object
       properties:

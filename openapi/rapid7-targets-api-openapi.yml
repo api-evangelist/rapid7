@@ -444,19 +444,17 @@ components:
           - E999
           readOnly: true
       title: Error
-    PageTarget:
+    Link:
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityModelTarget'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
+        rel:
+          type: string
+        href:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+      readOnly: true
     ValidationErrors:
       properties:
         status:
@@ -577,17 +575,23 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    Link:
+    ValidationError:
       properties:
-        rel:
+        type:
           type: string
-        href:
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
           type: string
-        profile:
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
           type: string
-        name:
-          type: string
-      readOnly: true
+          description: Details of the validation error
+          readOnly: true
     Target:
       properties:
         id:
@@ -607,23 +611,24 @@ components:
       required:
       - domain
       title: Target
-    ValidationError:
+    PageMetadata:
       properties:
-        type:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
           type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
           type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
     EntityModelTarget:
       properties:
         id:
@@ -647,21 +652,16 @@ components:
           readOnly: true
       required:
       - domain
-    PageMetadata:
+    PageTarget:
       properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityModelTarget'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
