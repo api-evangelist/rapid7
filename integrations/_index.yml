@@ -135,7 +135,7 @@
   channel: distribution
   evidence: https://aws.amazon.com/marketplace/seller-profile?id=1121698c-7b7b-4a71-86d3-cfc65ab72368
   source: edge
-  relationship: platform-app
+  relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
 - slug: rapid7-microsoft-azure-marketplace
@@ -147,6 +147,6 @@
   channel: distribution
   evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Rapid7
   source: edge
-  relationship: platform-app
+  relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
