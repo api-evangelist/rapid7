@@ -4,6 +4,7 @@ checked:
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
 - https://github.com/marketplace?type=actions
+- palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -61,5 +62,24 @@ edges:
   - Verified creator
   detected_by: sweep-devtools.py
   detected: '2026-10-14'
+- partner_name: Palo Alto Networks (own)
+  partner: palo-alto-networks
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://cortex.marketplace.pan.dev/marketplace/details/IntSight/
+  mirror_of: palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
+  apps:
+  - Rapid7 - Threat Command (IntSights)
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Data Enrichment & Threat Intelligence
+  badges:
+  - support:partner
 source:
 - https://github.com/marketplace?type=actions
