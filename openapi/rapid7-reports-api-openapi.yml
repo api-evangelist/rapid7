@@ -485,120 +485,66 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
+    ReportGeneration:
       properties:
-        status:
+        name:
           type: string
-          description: A description of the type of error based on HTTP status code
+          description: The name of the Report
+          example: Weekly Report
+        type:
+          type: string
+          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
           enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-          readOnly: true
-        message:
+          - VULN_SUMMARY
+          - VULN_REMEDIATION
+          - PCI_COMPLIANCE
+          - PCI4_COMPLIANCE
+          - OWASP_2013_COMPLIANCE
+          - OWASP_2017_COMPLIANCE
+          - OWASP_2021_COMPLIANCE
+          - OWASP_2023API_COMPLIANCE
+          - OWASP_2025_COMPLIANCE
+          - GDPR_2016_COMPLIANCE
+          - SOX_COMPLIANCE
+          - HIPAA_COMPLIANCE
+          - EXEC_SINGLE_APP
+          - EXEC_ALL_APPS
+          - EXEC_SINGLE_APP_NEW_VULNS
+          - EXEC_ALL_APPS_NEW_VULNS
+          - EXEC_SINGLE_APP_ALL_VULNS
+          - EXEC_ALL_APPS_ALL_VULNS
+          example: VULN_SUMMARY
+        format:
           type: string
-          description: A description of the error
-          readOnly: true
-        errorCode:
-          type: string
-          description: An optional code which may help support indicate the underlying cause of the error
+          description: The format of the Report
           enum:
-          - E1
-          - E2
-          - E3
-          - E4
-          - E5
-          - E6
-          - E7
-          - E8
-          - E9
-          - E10
-          - E11
-          - E12
-          - E13
-          - E14
-          - E15
-          - E16
-          - E17
-          - E18
-          - E19
-          - E20
-          - E22
-          - E23
-          - E24
-          - E25
-          - E26
-          - E27
-          - E28
-          - E999
-          readOnly: true
-      title: Error
+          - HTML
+          - CSV
+          - PDF
+          example: PDF
+        scan:
+          $ref: '#/components/schemas/scan'
+        app:
+          $ref: '#/components/schemas/app'
+        start:
+          type: string
+          description: The start date range scope for the Report yyyy-mm-dd
+        end:
+          type: string
+          description: The end date range scope for the Report yyyy-mm-dd
+        month:
+          type: string
+          description: The month date range scope for the Report yyyy-mm
+          example: 2023-12
+        filter:
+          type: string
+          description: Search-format filter relevant to the Report Type that narrows its scope
+          example: vulnerability.app.name CONTAINS 'Weekly'
+      required:
+      - format
+      - name
+      - type
+      title: Report Generation
     Link:
       properties:
         rel:
@@ -609,6 +555,119 @@ components:
           type: string
         name:
           type: string
+      readOnly: true
+    PageMetadata:
+      properties:
+        index:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        sort:
+          type: string
+        total_data:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        page_token:
+          type: string
+    scan:
+      description: The Scan associated with the Report
+      properties:
+        id:
+          type: string
+          format: uuid
+    EntityModelReport:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: The name of the Report
+          readOnly: true
+        type:
+          type: string
+          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
+          enum:
+          - VULN_SUMMARY
+          - VULN_REMEDIATION
+          - PCI_COMPLIANCE
+          - PCI4_COMPLIANCE
+          - OWASP_2013_COMPLIANCE
+          - OWASP_2017_COMPLIANCE
+          - OWASP_2021_COMPLIANCE
+          - OWASP_2023API_COMPLIANCE
+          - OWASP_2025_COMPLIANCE
+          - GDPR_2016_COMPLIANCE
+          - SOX_COMPLIANCE
+          - HIPAA_COMPLIANCE
+          - EXEC_SINGLE_APP
+          - EXEC_ALL_APPS
+          - EXEC_SINGLE_APP_NEW_VULNS
+          - EXEC_ALL_APPS_NEW_VULNS
+          - EXEC_SINGLE_APP_ALL_VULNS
+          - EXEC_ALL_APPS_ALL_VULNS
+          - EXEC_IAS_IVM_COMPOSITE
+          - TARGET_DISCOVERY
+          readOnly: true
+        format:
+          type: string
+          description: The format of the Report
+          enum:
+          - HTML
+          - CSV
+          - PDF
+          readOnly: true
+        owner:
+          $ref: '#/components/schemas/ReadOnlyIdResource'
+        generated_date:
+          type: string
+          format: date-time
+          description: The time the Report was generated
+          readOnly: true
+        app:
+          $ref: '#/components/schemas/ReferenceResource'
+        status:
+          type: string
+          description: The status of the Report
+          enum:
+          - PROCESSING
+          - FAILED
+          - COMPLETE
+          readOnly: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+          readOnly: true
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
+    ReadOnlyIdResource:
+      description: The ID of the module
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
       readOnly: true
     ValidationErrors:
       properties:
@@ -730,40 +789,120 @@ components:
             $ref: '#/components/schemas/ValidationError'
           readOnly: true
       title: ValidationErrors
-    ValidationError:
+    Error:
       properties:
-        type:
+        status:
           type: string
-          description: The type of the validation error
+          description: A description of the type of error based on HTTP status code
           enum:
-          - OBJECT
-          - PROPERTY
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
           readOnly: true
-        context:
+        message:
           type: string
-          description: An optional contextual indicator of a part of the request which failed validation
+          description: A description of the error
           readOnly: true
-        explanation:
+        errorCode:
           type: string
-          description: Details of the validation error
+          description: An optional code which may help support indicate the underlying cause of the error
+          enum:
+          - E1
+          - E2
+          - E3
+          - E4
+          - E5
+          - E6
+          - E7
+          - E8
+          - E9
+          - E10
+          - E11
+          - E12
+          - E13
+          - E14
+          - E15
+          - E16
+          - E17
+          - E18
+          - E19
+          - E20
+          - E22
+          - E23
+          - E24
+          - E25
+          - E26
+          - E27
+          - E28
+          - E999
           readOnly: true
-    ReadOnlyIdResource:
-      description: The ID of the module
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-      readOnly: true
-    ReferenceResource:
-      description: The last editor of the comment
-      properties:
-        id:
-          type: string
-          format: uuid
-      readOnly: true
-      required:
-      - id
+      title: Error
     PageReport:
       properties:
         data:
@@ -777,156 +916,17 @@ components:
           items:
             $ref: '#/components/schemas/Link'
           readOnly: true
-    EntityModelReport:
+    ReferenceResource:
+      description: The last editor of the comment
       properties:
         id:
           type: string
           format: uuid
-        name:
-          type: string
-          description: The name of the Report
-          readOnly: true
-        type:
-          type: string
-          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
-          enum:
-          - VULN_SUMMARY
-          - VULN_REMEDIATION
-          - PCI_COMPLIANCE
-          - PCI4_COMPLIANCE
-          - OWASP_2013_COMPLIANCE
-          - OWASP_2017_COMPLIANCE
-          - OWASP_2021_COMPLIANCE
-          - OWASP_2023API_COMPLIANCE
-          - OWASP_2025_COMPLIANCE
-          - GDPR_2016_COMPLIANCE
-          - SOX_COMPLIANCE
-          - HIPAA_COMPLIANCE
-          - EXEC_SINGLE_APP
-          - EXEC_ALL_APPS
-          - EXEC_SINGLE_APP_NEW_VULNS
-          - EXEC_ALL_APPS_NEW_VULNS
-          - EXEC_SINGLE_APP_ALL_VULNS
-          - EXEC_ALL_APPS_ALL_VULNS
-          - EXEC_IAS_IVM_COMPOSITE
-          - TARGET_DISCOVERY
-          readOnly: true
-        format:
-          type: string
-          description: The format of the Report
-          enum:
-          - HTML
-          - CSV
-          - PDF
-          readOnly: true
-        owner:
-          $ref: '#/components/schemas/ReadOnlyIdResource'
-        generated_date:
-          type: string
-          format: date-time
-          description: The time the Report was generated
-          readOnly: true
-        app:
-          $ref: '#/components/schemas/ReferenceResource'
-        status:
-          type: string
-          description: The status of the Report
-          enum:
-          - PROCESSING
-          - FAILED
-          - COMPLETE
-          readOnly: true
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Link'
-          readOnly: true
-    PageMetadata:
-      properties:
-        index:
-          type: integer
-          format: int64
-        size:
-          type: integer
-          format: int64
-        sort:
-          type: string
-        total_data:
-          type: integer
-          format: int64
-        total_pages:
-          type: integer
-          format: int64
-        page_token:
-          type: string
-    ReportGeneration:
-      properties:
-        name:
-          type: string
-          description: The name of the Report
-          example: Weekly Report
-        type:
-          type: string
-          description: The type of the Report.<br/><code>EXEC_SINGLE_APP</code> is deprecated. Use <code>EXEC_SINGLE_APP_NEW_VULNS</code> or <code>EXEC_SINGLE_APP_ALL_VULNS</code> instead. <br/><code>EXEC_ALL_APPS</code> is deprecated. Use <code>EXEC_ALL_APPS_NEW_VULNS</code> or <code>EXEC_ALL_APPS_ALL_VULNS</code> instead.
-          enum:
-          - VULN_SUMMARY
-          - VULN_REMEDIATION
-          - PCI_COMPLIANCE
-          - PCI4_COMPLIANCE
-          - OWASP_2013_COMPLIANCE
-          - OWASP_2017_COMPLIANCE
-          - OWASP_2021_COMPLIANCE
-          - OWASP_2023API_COMPLIANCE
-          - OWASP_2025_COMPLIANCE
-          - GDPR_2016_COMPLIANCE
-          - SOX_COMPLIANCE
-          - HIPAA_COMPLIANCE
-          - EXEC_SINGLE_APP
-          - EXEC_ALL_APPS
-          - EXEC_SINGLE_APP_NEW_VULNS
-          - EXEC_ALL_APPS_NEW_VULNS
-          - EXEC_SINGLE_APP_ALL_VULNS
-          - EXEC_ALL_APPS_ALL_VULNS
-          example: VULN_SUMMARY
-        format:
-          type: string
-          description: The format of the Report
-          enum:
-          - HTML
-          - CSV
-          - PDF
-          example: PDF
-        scan:
-          $ref: '#/components/schemas/scan'
-        app:
-          $ref: '#/components/schemas/app'
-        start:
-          type: string
-          description: The start date range scope for the Report yyyy-mm-dd
-        end:
-          type: string
-          description: The end date range scope for the Report yyyy-mm-dd
-        month:
-          type: string
-          description: The month date range scope for the Report yyyy-mm
-          example: 2023-12
-        filter:
-          type: string
-          description: Search-format filter relevant to the Report Type that narrows its scope
-          example: vulnerability.app.name CONTAINS 'Weekly'
+      readOnly: true
       required:
-      - format
-      - name
-      - type
-      title: Report Generation
+      - id
     app:
       description: The App that the Scan is associated with
-      properties:
-        id:
-          type: string
-          format: uuid
-    scan:
-      description: The Scan associated with the Report
       properties:
         id:
           type: string

@@ -143,6 +143,45 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    VarianceDocumentation:
+      properties:
+        references:
+          type: object
+          additionalProperties:
+            type: string
+            description: ${public-api.docs.models.vulnerability.properties.variance-documentation.references}
+            readOnly: true
+          description: Reference to CWE (Common Weakness Enumeration)/CVE (Common Vulnerability Enumeration) documentation
+          readOnly: true
+        description:
+          type: string
+          description: The vulnerability description
+          readOnly: true
+        recommendation:
+          type: string
+          description: How to fix or prevent the vulnerability
+          readOnly: true
+        id:
+          type: string
+          format: uuid
+      title: VarianceDocumentation
+    ValidationError:
+      properties:
+        type:
+          type: string
+          description: The type of the validation error
+          enum:
+          - OBJECT
+          - PROPERTY
+          readOnly: true
+        context:
+          type: string
+          description: An optional contextual indicator of a part of the request which failed validation
+          readOnly: true
+        explanation:
+          type: string
+          description: Details of the validation error
+          readOnly: true
     Error:
       properties:
         status:
@@ -402,42 +441,3 @@ components:
             type: string
             format: uuid
           uniqueItems: true
-    ValidationError:
-      properties:
-        type:
-          type: string
-          description: The type of the validation error
-          enum:
-          - OBJECT
-          - PROPERTY
-          readOnly: true
-        context:
-          type: string
-          description: An optional contextual indicator of a part of the request which failed validation
-          readOnly: true
-        explanation:
-          type: string
-          description: Details of the validation error
-          readOnly: true
-    VarianceDocumentation:
-      properties:
-        references:
-          type: object
-          additionalProperties:
-            type: string
-            description: ${public-api.docs.models.vulnerability.properties.variance-documentation.references}
-            readOnly: true
-          description: Reference to CWE (Common Weakness Enumeration)/CVE (Common Vulnerability Enumeration) documentation
-          readOnly: true
-        description:
-          type: string
-          description: The vulnerability description
-          readOnly: true
-        recommendation:
-          type: string
-          description: How to fix or prevent the vulnerability
-          readOnly: true
-        id:
-          type: string
-          format: uuid
-      title: VarianceDocumentation

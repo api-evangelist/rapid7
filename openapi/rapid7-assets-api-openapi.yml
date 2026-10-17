@@ -213,24 +213,34 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SearchRequestCriteria:
+    ErrorResponse:
+      required:
+      - message
       type: object
       properties:
-        field:
+        message:
           type: string
-          description: The field to search within.
-          example: name
-        operator:
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
           type: string
-          description: The search operation to perform. All operators are case-insensitive when operating on strings.
-          enum:
-          - EQUALS
-          - CONTAINS
-          - IN
-        value:
-          type: object
-          description: The value to search for.
-      description: The criteria for which entities to return.
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
+    AssetV2:
+      required:
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this asset.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:83002c85d7c6
+        name:
+          type: string
+          description: The user-friendly name for this asset.
+          example: morbo.tor.acme.com
+      description: The asset this local account is associated with.
     SearchRequestSort:
       type: object
       properties:
@@ -246,19 +256,6 @@ components:
           - DESC
           - ASC,DESC
       description: The sorting information.
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     PageMetadata:
       required:
       - index
@@ -301,21 +298,6 @@ components:
             $ref: '#/components/schemas/AssetV2'
         metadata:
           $ref: '#/components/schemas/PageMetadata'
-    AssetV2:
-      required:
-      - name
-      - rrn
-      type: object
-      properties:
-        rrn:
-          type: string
-          description: The unique identifier for this asset.
-          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:asset:83002c85d7c6
-        name:
-          type: string
-          description: The user-friendly name for this asset.
-          example: morbo.tor.acme.com
-      description: The asset this local account is associated with.
     SearchRequest:
       type: object
       properties:
@@ -329,6 +311,24 @@ components:
           description: The sorting information.
           items:
             $ref: '#/components/schemas/SearchRequestSort'
+    SearchRequestCriteria:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to search within.
+          example: name
+        operator:
+          type: string
+          description: The search operation to perform. All operators are case-insensitive when operating on strings.
+          enum:
+          - EQUALS
+          - CONTAINS
+          - IN
+        value:
+          type: object
+          description: The value to search for.
+      description: The criteria for which entities to return.
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

@@ -468,6 +468,38 @@ components:
       - creator
       - rrn
       - target
+    PageComment:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/Comment'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata2'
+          description: The pagination parameters used to generate this page result.
+      required:
+      - data
+      - metadata
+    Creator:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A type that denotes who or what created a resource.
+          enum:
+          - USER
+          - ORG_API_KEY
+          - SYSTEM
+          example: USER
+        name:
+          type: string
+          description: The name of who or what created a resource.
+          example: John Doe
+      required:
+      - name
+      - type
     CommentCreateRequest:
       type: object
       description: The information needed by the request body to create comments.
@@ -490,41 +522,6 @@ components:
           uniqueItems: true
       required:
       - target
-    Creator:
-      type: object
-      properties:
-        type:
-          type: string
-          description: A type that denotes who or what created a resource.
-          enum:
-          - USER
-          - ORG_API_KEY
-          - SYSTEM
-          example: USER
-        name:
-          type: string
-          description: The name of who or what created a resource.
-          example: John Doe
-      required:
-      - name
-      - type
-    RRN:
-      type: object
-      properties:
-        partition:
-          type: string
-        service:
-          type: string
-        regionCode:
-          type: string
-        organizationId:
-          type: string
-        resourceTypes:
-          type: array
-          items:
-            type: string
-        resource:
-          type: string
     ErrorResponse2:
       type: object
       properties:
@@ -605,20 +602,23 @@ components:
       - rrn
       - scan_status
       - size
-    PageComment:
+    RRN:
       type: object
       properties:
-        data:
+        partition:
+          type: string
+        service:
+          type: string
+        regionCode:
+          type: string
+        organizationId:
+          type: string
+        resourceTypes:
           type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
           items:
-            $ref: '#/components/schemas/Comment'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata2'
-          description: The pagination parameters used to generate this page result.
-      required:
-      - data
-      - metadata
+            type: string
+        resource:
+          type: string
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

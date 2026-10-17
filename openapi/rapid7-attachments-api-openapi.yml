@@ -436,24 +436,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse1'
 components:
   schemas:
-    Creator:
+    ErrorResponse1:
       type: object
       properties:
-        type:
+        message:
           type: string
-          description: A type that denotes who or what created a resource.
-          enum:
-          - USER
-          - ORG_API_KEY
-          - SYSTEM
-          example: USER
-        name:
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
           type: string
-          description: The name of who or what created a resource.
-          example: John Doe
+          description: An identifier that uniquely identifies the failed request.
+          example: An identifier that uniquely identifies the failed request.
       required:
-      - name
-      - type
+      - message
     PageMetadata1:
       type: object
       properties:
@@ -482,23 +477,6 @@ components:
       - size
       - total_data
       - total_pages
-    RRN:
-      type: object
-      properties:
-        partition:
-          type: string
-        service:
-          type: string
-        regionCode:
-          type: string
-        organizationId:
-          type: string
-        resourceTypes:
-          type: array
-          items:
-            type: string
-        resource:
-          type: string
     PageAttachment:
       type: object
       properties:
@@ -513,6 +491,24 @@ components:
       required:
       - data
       - metadata
+    Creator:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A type that denotes who or what created a resource.
+          enum:
+          - USER
+          - ORG_API_KEY
+          - SYSTEM
+          example: USER
+        name:
+          type: string
+          description: The name of who or what created a resource.
+          example: John Doe
+      required:
+      - name
+      - type
     UploadAttachmentRequest:
       type: object
       properties:
@@ -561,19 +557,23 @@ components:
       - rrn
       - scan_status
       - size
-    ErrorResponse1:
+    RRN:
       type: object
       properties:
-        message:
+        partition:
           type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
+        service:
           type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: An identifier that uniquely identifies the failed request.
-      required:
-      - message
+        regionCode:
+          type: string
+        organizationId:
+          type: string
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        resource:
+          type: string
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs

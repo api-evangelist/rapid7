@@ -222,52 +222,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    UserV2:
+    ErrorResponse:
       required:
-      - domain
-      - name
-      - rrn
+      - message
       type: object
       properties:
-        rrn:
+        message:
           type: string
-          description: The unique identifier for this user.
-          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6
-        first_name:
+          description: A human-readable message describing the error that occurred.
+          example: A human-readable message describing the error that occurred.
+        correlation_id:
           type: string
-          description: The first name of this user, if known.
-          example: John
-        last_name:
-          type: string
-          description: The last name of this user, if known.
-          example: Doe
-        name:
-          type: string
-          description: The name of this user.
-          example: John Doe
-        domain:
-          type: string
-          description: The domain this user is associated with.
-          example: tor.acme.com
-      description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-    SearchRequestCriteria:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field to search within.
-          example: name
-        operator:
-          type: string
-          description: The search operation to perform. All operators are case-insensitive when operating on strings.
-          enum:
-          - EQUALS
-          - CONTAINS
-          - IN
-        value:
-          type: object
-          description: The value to search for.
-      description: The criteria for which entities to return.
+          description: An identifier that uniquely identifies the failed request.
+          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     SearchRequestSort:
       type: object
       properties:
@@ -283,19 +250,6 @@ components:
           - DESC
           - ASC,DESC
       description: The sorting information.
-    ErrorResponse:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error that occurred.
-          example: A human-readable message describing the error that occurred.
-        correlation_id:
-          type: string
-          description: An identifier that uniquely identifies the failed request.
-          example: 6b6503c8-2da9-41c0-94cb-2f34069e00cd
     PageMetadata:
       required:
       - index
@@ -325,19 +279,6 @@ components:
           format: int64
           example: 15
       description: The pagination parameters used to generate this page result. Depending on the API, additional parameters may be dynamically present.
-    PageUserV2:
-      required:
-      - data
-      - metadata
-      type: object
-      properties:
-        data:
-          type: array
-          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
-          items:
-            $ref: '#/components/schemas/UserV2'
-        metadata:
-          $ref: '#/components/schemas/PageMetadata'
     SearchRequest:
       type: object
       properties:
@@ -351,6 +292,65 @@ components:
           description: The sorting information.
           items:
             $ref: '#/components/schemas/SearchRequestSort'
+    UserV2:
+      required:
+      - domain
+      - name
+      - rrn
+      type: object
+      properties:
+        rrn:
+          type: string
+          description: The unique identifier for this user.
+          example: rrn:uba:us:6bcf6c5b-552d-49a4-a3f5-259e0514585f:user:83002c85d7c6
+        first_name:
+          type: string
+          description: The first name of this user, if known.
+          example: John
+        last_name:
+          type: string
+          description: The last name of this user, if known.
+          example: Doe
+        name:
+          type: string
+          description: The name of this user.
+          example: John Doe
+        domain:
+          type: string
+          description: The domain this user is associated with.
+          example: tor.acme.com
+      description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+    PageUserV2:
+      required:
+      - data
+      - metadata
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of data that matches the pagination parameters. If no results match this will be an empty list.
+          items:
+            $ref: '#/components/schemas/UserV2'
+        metadata:
+          $ref: '#/components/schemas/PageMetadata'
+    SearchRequestCriteria:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field to search within.
+          example: name
+        operator:
+          type: string
+          description: The search operation to perform. All operators are case-insensitive when operating on strings.
+          enum:
+          - EQUALS
+          - CONTAINS
+          - IN
+        value:
+          type: object
+          description: The value to search for.
+      description: The criteria for which entities to return.
 externalDocs:
   description: Product docs
   url: https://insightidr.help.rapid7.com/docs
