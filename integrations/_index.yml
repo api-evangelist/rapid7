@@ -58,7 +58,9 @@
     InsightAppSec vulnerable finding) to the right Slack channel with a tight summary and a deep link back so the
     security team triages in chat.
   source: curated
-  status: pending-generation
+  status: not-a-workflow
+  evidence: https://slack.com/marketplace/AGG8EFV6E-rapid7-insightconnect
+  type: marketplace
   arazzo: null
 - slug: rapid7-github
   label: Open GitHub Security Advisories for InsightAppSec findings
