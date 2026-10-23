@@ -24,6 +24,10 @@ checked:
 - https://api.first.org/data/v1/teams
 - https://raw.githubusercontent.com/CVEProject/cve-website/dev/src/assets/data/CNAsList.json
 - https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+- https://landscape.cd.foundation/data/full.json
+- https://plugins.jenkins.io/api/plugin/
+- https://plugins.jenkins.io/api/plugins
+- https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -104,8 +108,8 @@ edges:
     - Authorized
     offerings:
     - InsightGovCloud
-    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized),
-      never per offering; Progressing / Pending / Ready / Core are participation only
+    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized), never
+      per offering; Progressing / Pending / Ready / Core are participation only
     detected_by: sweep-gov-cloud.py
     detected: '2026-10-15'
     certified_products:
@@ -138,9 +142,9 @@ edges:
     levels:
     - STAR Level 1
     certified_products: []
-    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level
-      2 / STAR for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed
-      = every instance marked (Deprecated) by the registry; service counts never recorded
+    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level 2 / STAR
+      for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed = every instance
+      marked (Deprecated) by the registry; service counts never recorded
     detected_by: sweep-compliance-assurance.py
     detected: '2026-10-20'
   detected_by: sweep-compliance-assurance.py
@@ -156,15 +160,15 @@ edges:
   category: secure-by-design software pledge
   contract_reference:
     register: CISA Secure by Design Pledge signers (cisa.gov/securebydesign/pledge)
-    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches,
-      disclosure policy, CVEs, evidence of intrusions)'
+    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches, disclosure
+      policy, CVEs, evidence of intrusions)'
     spec_file: null
     role: secure-by-design-pledge-signer
     registered_name: Rapid7
     matched_domain: rapid7.com
     matched_by: domain
-    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result
-      (no certified_products, no tier)'
+    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result (no certified_products,
+      no tier)'
     detected_by: sweep-cloud-security-star.py
     detected: '2026-10-20'
     identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
@@ -305,9 +309,9 @@ edges:
       partner_tier: EAL3+,ALC_FLR.2
       schemes:
       - CA
-    signal_note: 'certified_products = one entry per Common Criteria product CATEGORY held (highest EAL for that
-      category in partner_tier; a category held only among archived certificates is lapsed: true); certificate and
-      product counts are context, never counted'
+    signal_note: 'certified_products = one entry per Common Criteria product CATEGORY held (highest EAL for that category
+      in partner_tier; a category held only among archived certificates is lapsed: true); certificate and product counts are
+      context, never counted'
     detected_by: sweep-common-criteria-certified-products.py
     detected: '2026-10-21'
     identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
@@ -347,8 +351,8 @@ edges:
     disclosure_policy:
     - https://www.rapid7.com/security/disclosure/
     country: USA
-    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and
-      publish advisories for its scope); never a count of CVEs
+    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and publish advisories
+      for its scope); never a count of CVEs
     detected_by: sweep-vulnerability-disclosure-cna.py
     detected: '2026-10-22'
   detected_by: sweep-vulnerability-disclosure-cna.py
@@ -376,11 +380,30 @@ edges:
       team_type: CSIRT
       member_since: March 20, 2025
       country: US
-    signal_note: FIRST full membership of an incident-response / product-security team = participation; team_type
-      names CSIRT / PSIRT / SOC; never a count
+    signal_note: FIRST full membership of an incident-response / product-security team = participation; team_type names CSIRT
+      / PSIRT / SOC; never a count
     detected_by: sweep-vulnerability-disclosure-cna.py
     detected: '2026-10-22'
   detected_by: sweep-vulnerability-disclosure-cna.py
   first_seen: '2026-10-22'
+- partner_name: Jenkins (own)
+  partner: jenkins
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://plugins.jenkins.io/rapid7-insightvm-container-assessment/
+  mirror_of: jenkins/integrations/jenkins-integration-edges.yml
+  apps:
+  - InsightVM Container Image Scanner (rapid7-insightvm-container-assessment)
+  listing_count: 1
+  category: Jenkins plugin
+  signal_note: 'publisher side of the all/jenkins listing; vendor-control: rapid7-insightvm-container-assessment: maintainer
+    account ''rapid7'' is the GitHub organization on all/rapid7''s apis.yml'
+  detected: '2026-10-22'
+  detected_by: sweep-jenkins-cd-foundation-plugins.py
 source:
 - https://github.com/marketplace?type=actions
