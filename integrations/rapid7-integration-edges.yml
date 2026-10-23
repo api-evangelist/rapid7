@@ -28,6 +28,7 @@ checked:
 - https://plugins.jenkins.io/api/plugin/
 - https://plugins.jenkins.io/api/plugins
 - https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+- chef-software/integrations/chef-software-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -108,8 +109,8 @@ edges:
     - Authorized
     offerings:
     - InsightGovCloud
-    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized), never
-      per offering; Progressing / Pending / Ready / Core are participation only
+    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized),
+      never per offering; Progressing / Pending / Ready / Core are participation only
     detected_by: sweep-gov-cloud.py
     detected: '2026-10-15'
     certified_products:
@@ -142,9 +143,9 @@ edges:
     levels:
     - STAR Level 1
     certified_products: []
-    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level 2 / STAR
-      for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed = every instance
-      marked (Deprecated) by the registry; service counts never recorded
+    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level
+      2 / STAR for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed
+      = every instance marked (Deprecated) by the registry; service counts never recorded
     detected_by: sweep-compliance-assurance.py
     detected: '2026-10-20'
   detected_by: sweep-compliance-assurance.py
@@ -160,21 +161,187 @@ edges:
   category: secure-by-design software pledge
   contract_reference:
     register: CISA Secure by Design Pledge signers (cisa.gov/securebydesign/pledge)
-    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches, disclosure
-      policy, CVEs, evidence of intrusions)'
+    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches,
+      disclosure policy, CVEs, evidence of intrusions)'
     spec_file: null
     role: secure-by-design-pledge-signer
     registered_name: Rapid7
     matched_domain: rapid7.com
     matched_by: domain
-    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result (no certified_products,
-      no tier)'
+    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result
+      (no certified_products, no tier)'
     detected_by: sweep-cloud-security-star.py
     detected: '2026-10-20'
     identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   detected_by: sweep-cloud-security-star.py
   first_seen: '2026-10-20'
+- partner_name: Common Criteria Portal (CCRA certified products)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.commoncriteriaportal.org/products/
+  category: Common Criteria (ISO/IEC 15408) product certification
+  contract_reference:
+    register: Common Criteria Portal certified products + archived certificates (commoncriteriaportal.org/products/certified_products.csv,
+      certified_products-archived.csv)
+    standard: ISO/IEC 15408 Common Criteria for Information Technology Security Evaluation (CCRA)
+    spec_file: null
+    role: cc-certified-manufacturer
+    registered_name: Rapid7 LLC
+    matched_domain: rapid7.com
+    matched_by: domain
+    certified_products:
+    - product: Other Devices and Systems
+      product_type: Other Devices and Systems
+      standard: ISO/IEC 15408 Common Criteria for Information Technology Security Evaluation (CCRA)
+      lapsed: true
+      partner_tier: EAL3+,ALC_FLR.2
+      schemes:
+      - CA
+    signal_note: 'certified_products = one entry per Common Criteria product CATEGORY held (highest EAL for that
+      category in partner_tier; a category held only among archived certificates is lapsed: true); certificate and
+      product counts are context, never counted'
+    detected_by: sweep-common-criteria-certified-products.py
+    detected: '2026-10-21'
+    identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+  detected_by: sweep-common-criteria-certified-products.py
+  first_seen: '2026-10-21'
+- partner_name: CVE Program (CVE Numbering Authorities)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.cve.org/PartnerInformation/ListofPartners/partner/rapid7
+  category: Vulnerability disclosure (CVE Numbering Authority)
+  contract_reference:
+    register: CVE Program CNA list (github.com/CVEProject/cve-website CNAsList.json @ 239d3d9b68e0)
+    standard: CVE Program CNA Operational Rules (CVE Numbering Authority)
+    spec_file: null
+    role: cve-numbering-authority
+    registered_name: Rapid7, Inc.
+    matched_domain: rapid7.com
+    matched_by: domain
+    cna_id: CNA-2016-0024
+    cna_short_name: rapid7
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    cna_roles:
+    - CNA
+    scope: All Rapid7 products, and vulnerabilities discovered by Rapid7 that are not in another CNA’s scope.
+    top_level_root: MITRE Corporation
+    root: n/a
+    security_advisories:
+    - https://www.rapid7.com/db/
+    disclosure_policy:
+    - https://www.rapid7.com/security/disclosure/
+    country: USA
+    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and
+      publish advisories for its scope); never a count of CVEs
+    detected_by: sweep-vulnerability-disclosure-cna.py
+    detected: '2026-10-22'
+  detected_by: sweep-vulnerability-disclosure-cna.py
+  first_seen: '2026-10-22'
+- partner_name: FIRST (Forum of Incident Response and Security Teams)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.first.org/members/teams/rapid7_csirt
+  category: Incident response / PSIRT (FIRST member team)
+  contract_reference:
+    register: FIRST member teams (api.first.org/data/v1/teams, public JSON API)
+    standard: FIRST (Forum of Incident Response and Security Teams) membership
+    spec_file: null
+    role: first-member-team
+    registered_name: Rapid7
+    matched_domain: rapid7.com
+    matched_by: domain
+    teams:
+    - id: rapid7_csirt
+      team: Rapid7 CSIRT
+      team_type: CSIRT
+      member_since: March 20, 2025
+      country: US
+    signal_note: FIRST full membership of an incident-response / product-security team = participation; team_type
+      names CSIRT / PSIRT / SOC; never a count
+    detected_by: sweep-vulnerability-disclosure-cna.py
+    detected: '2026-10-22'
+  detected_by: sweep-vulnerability-disclosure-cna.py
+  first_seen: '2026-10-22'
+- partner_name: Jenkins (own)
+  partner: jenkins
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://plugins.jenkins.io/rapid7-insightvm-container-assessment/
+  mirror_of: jenkins/integrations/jenkins-integration-edges.yml
+  apps:
+  - InsightVM Container Image Scanner (rapid7-insightvm-container-assessment)
+  listing_count: 1
+  category: Jenkins plugin
+  signal_note: 'publisher side of the all/jenkins listing; vendor-control: rapid7-insightvm-container-assessment:
+    maintainer account ''rapid7'' is the GitHub organization on all/rapid7''s apis.yml'
+  detected: '2026-10-22'
+  detected_by: sweep-jenkins-cd-foundation-plugins.py
+- partner_name: TX-RAMP
+  partner: null
+  partner_match: register
+  partner_tier: Level 2
+  type: contract
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+  category: Texas state cloud security certification (TX-RAMP)
+  contract_reference:
+    register: TX-RAMP Certified Cloud Products (Texas DIR)
+    standard: TX-RAMP
+    spec_file: null
+    role: tx-ramp-certified
+    register_file: https://dir.texas.gov/sites/default/files/2026-10/Copy%20of%20TX-RAMP%20Certified%20Cloud%20Products_1.xlsx
+    registrations:
+    - certification_id: TX1071875
+      product: Insight Platform
+      registered_vendor: Rapid7
+      certification_level: Level 2
+      cloud_categories:
+      - SaaS
+      certification_path: TX-RAMP Fast Track
+      expires: '2027-01-26'
+      lapsed: false
+      matched_domain: rapid7.com
+      matched_by: domain
+    identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    signal_note: 'certified_products = one entry per cloud category (SaaS / PaaS / IaaS) the vendor holds a TX-RAMP
+      certification in, never per product; products are context, never counted. certification_level = the highest
+      level in that category; lapsed: true when every product in the category is past its expiry date. partner_tier
+      = the highest CURRENT level'
+    certified_products:
+    - product: SaaS
+      product_type: SaaS
+      standard: TX-RAMP
+      certification_level: Level 2
+      lapsed: false
+    detected_by: sweep-tx-ramp-certified-cloud.py
+    detected: '2026-10-22'
+  detected_by: sweep-tx-ramp-certified-cloud.py
+  first_seen: '2026-10-22'
 - partner_name: Palo Alto Networks (own)
   partner: palo-alto-networks
   partner_match: mirror
@@ -283,127 +450,24 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: Tasks
-- partner_name: Common Criteria Portal (CCRA certified products)
-  partner: null
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://www.commoncriteriaportal.org/products/
-  category: Common Criteria (ISO/IEC 15408) product certification
-  contract_reference:
-    register: Common Criteria Portal certified products + archived certificates (commoncriteriaportal.org/products/certified_products.csv,
-      certified_products-archived.csv)
-    standard: ISO/IEC 15408 Common Criteria for Information Technology Security Evaluation (CCRA)
-    spec_file: null
-    role: cc-certified-manufacturer
-    registered_name: Rapid7 LLC
-    matched_domain: rapid7.com
-    matched_by: domain
-    certified_products:
-    - product: Other Devices and Systems
-      product_type: Other Devices and Systems
-      standard: ISO/IEC 15408 Common Criteria for Information Technology Security Evaluation (CCRA)
-      lapsed: true
-      partner_tier: EAL3+,ALC_FLR.2
-      schemes:
-      - CA
-    signal_note: 'certified_products = one entry per Common Criteria product CATEGORY held (highest EAL for that category
-      in partner_tier; a category held only among archived certificates is lapsed: true); certificate and product counts are
-      context, never counted'
-    detected_by: sweep-common-criteria-certified-products.py
-    detected: '2026-10-21'
-    identity: wikidata Q85874460 'Rapid7' P856 https://www.rapid7.com/
-    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
-  detected_by: sweep-common-criteria-certified-products.py
-  first_seen: '2026-10-21'
-- partner_name: CVE Program (CVE Numbering Authorities)
-  partner: null
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://www.cve.org/PartnerInformation/ListofPartners/partner/rapid7
-  category: Vulnerability disclosure (CVE Numbering Authority)
-  contract_reference:
-    register: CVE Program CNA list (github.com/CVEProject/cve-website CNAsList.json @ 239d3d9b68e0)
-    standard: CVE Program CNA Operational Rules (CVE Numbering Authority)
-    spec_file: null
-    role: cve-numbering-authority
-    registered_name: Rapid7, Inc.
-    matched_domain: rapid7.com
-    matched_by: domain
-    cna_id: CNA-2016-0024
-    cna_short_name: rapid7
-    cna_types:
-    - Vendor
-    - Open Source
-    - Researcher
-    cna_roles:
-    - CNA
-    scope: All Rapid7 products, and vulnerabilities discovered by Rapid7 that are not in another CNA’s scope.
-    top_level_root: MITRE Corporation
-    root: n/a
-    security_advisories:
-    - https://www.rapid7.com/db/
-    disclosure_policy:
-    - https://www.rapid7.com/security/disclosure/
-    country: USA
-    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and publish advisories
-      for its scope); never a count of CVEs
-    detected_by: sweep-vulnerability-disclosure-cna.py
-    detected: '2026-10-22'
-  detected_by: sweep-vulnerability-disclosure-cna.py
-  first_seen: '2026-10-22'
-- partner_name: FIRST (Forum of Incident Response and Security Teams)
-  partner: null
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://www.first.org/members/teams/rapid7_csirt
-  category: Incident response / PSIRT (FIRST member team)
-  contract_reference:
-    register: FIRST member teams (api.first.org/data/v1/teams, public JSON API)
-    standard: FIRST (Forum of Incident Response and Security Teams) membership
-    spec_file: null
-    role: first-member-team
-    registered_name: Rapid7
-    matched_domain: rapid7.com
-    matched_by: domain
-    teams:
-    - id: rapid7_csirt
-      team: Rapid7 CSIRT
-      team_type: CSIRT
-      member_since: March 20, 2025
-      country: US
-    signal_note: FIRST full membership of an incident-response / product-security team = participation; team_type names CSIRT
-      / PSIRT / SOC; never a count
-    detected_by: sweep-vulnerability-disclosure-cna.py
-    detected: '2026-10-22'
-  detected_by: sweep-vulnerability-disclosure-cna.py
-  first_seen: '2026-10-22'
-- partner_name: Jenkins (own)
-  partner: jenkins
+- partner_name: Chef Software (chef-supermarket)
+  partner: chef-software
   partner_match: mirror
   mirror_match: register
   type: marketplace
   relationship: platform-app
   direction: third-party
   channel: partner-built
-  marketplace: own
-  evidence: https://plugins.jenkins.io/rapid7-insightvm-container-assessment/
-  mirror_of: jenkins/integrations/jenkins-integration-edges.yml
+  marketplace: chef-supermarket
+  evidence: https://supermarket.chef.io/cookbooks/github_connector
+  mirror_of: chef-software/integrations/chef-software-integration-edges.yml
   apps:
-  - InsightVM Container Image Scanner (rapid7-insightvm-container-assessment)
+  - github_connector
   listing_count: 1
-  category: Jenkins plugin
-  signal_note: 'publisher side of the all/jenkins listing; vendor-control: rapid7-insightvm-container-assessment: maintainer
-    account ''rapid7'' is the GitHub organization on all/rapid7''s apis.yml'
   detected: '2026-10-22'
-  detected_by: sweep-jenkins-cd-foundation-plugins.py
+  detected_by: mirror-platform-listings.py
+  category: configuration-management content listing (Chef cookbook)
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
 source:
 - https://github.com/marketplace?type=actions
