@@ -30,7 +30,9 @@
   use_case: When an InsightIDR investigation is created with high priority, auto-open a ServiceNow incident with
     the investigation summary, assignee, and a link back to InsightIDR so SOC handoffs to IT operations are deterministic.
   source: curated
-  status: pending-generation
+  status: not-a-workflow
+  evidence: https://store.servicenow.com/store/seller/6f5d30156f39b50084ad409e9f3ee4b0
+  type: register
   arazzo: null
 - slug: rapid7-jira
   label: Create Jira tickets for InsightVM remediation projects
